@@ -1,8 +1,8 @@
 import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath } from '/../../../utils/import-triples-for-form';
-import { SKOS } from '/../../../utils/namespaces';
+import { triplesForPath } from '../../../utils/import-triples-for-form';
+import { SKOS } from '../../../utils/namespaces';
 import rdflib from 'browser-rdflib';
 
 export default class FormInputFieldsConceptSchemeSelectorShowComponent extends InputFieldComponent {

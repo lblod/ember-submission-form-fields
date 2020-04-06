@@ -4,7 +4,6 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
   const mapping = {
     'http://lblod.data.gift/display-types/defaultInput' : `input-fields/input/show`,
     'http://lblod.data.gift/display-types/textArea' : `input-fields/text-area/show`,
-    'http://lblod.data.gift/display-types/typeDossierSelect': `input-fields/type-dossier-select/show`,
     'http://lblod.data.gift/display-types/date' : `input-fields/date/show`,
     'http://lblod.data.gift/display-types/dateTime' : `input-fields/date-time/show`,
     'http://lblod.data.gift/display-types/files' : `input-fields/files/show`,
