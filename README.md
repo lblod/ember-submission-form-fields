@@ -1,7 +1,7 @@
 ember-submission-form-fields
 ==============================================================================
 
-[Short description of the addon.]
+This addon provides a form and form-fields components to create and edit submissions. 
 
 
 Compatibility
