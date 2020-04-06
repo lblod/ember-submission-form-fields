@@ -1,6 +1,6 @@
-<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+<div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-1-2">
-    <AuLabel {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel>
+    <AuLabel class="{{if this.errors "au-c-label--error" ""}}" {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel>
   </div>
   <div class="au-o-grid__item au-u-1-2 au-u-text-right">
     {{#if this.isRequired}}
@@ -9,9 +9,10 @@
   </div>
 </div>
 <AuTextarea
-  id="{{this.inputId}}"
-  @width={{"block"}}
-  @value={{this.value}}
+        class=" {{if this.save.isRunning "au-c-textarea--disabled"}} {{if this.submit.isRunning "au-c-textarea--disabled"}} {{if this.delete.isRunning "au-c-textarea--disabled"}}"
+        id="{{this.inputId}}"
+        @width={{"block"}}
+        @value={{this.value}}
   {{on "blur" this.updateValue}}
 />
 

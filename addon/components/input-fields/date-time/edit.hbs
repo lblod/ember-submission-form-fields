@@ -1,43 +1,54 @@
-<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
-  <div class="au-o-grid__item au-u-1-2">
-    <AuLabel {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
+<div class="au-o-grid au-o-grid--flush">
+  <div class="au-o-grid__item au-u-1-4">
+    <AuLabel class="{{if this.errors "au-c-label--error" ""}}" {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
+  </div>
+  <div class="au-o-grid__item au-u-1-4 au-u-text-right">
     {{#if this.isRequired}}
       <AuPill>Verplicht</AuPill>
     {{/if}}
   </div>
 </div>
-<div class="au-o-grid">
-  <div class="au-o-grid__item au-u-1-3">
+<div class="au-o-grid au-o-grid--flush">
+  <div class="au-o-grid__item au-u-2-4">
     <WuDatepicker
-      class="{{if this.errors "au-c-input--error" ""}}"
-      id="{{this.inputId}}"
-      @tagName="div"
-      @dateFormat="DD.MM.YYYY"
-      @onChange={{this.updateValue}}
-      @value={{this.value}}
+            class="au-c-date-picker-container {{if this.errors "au-c-date-picker-container--error" ""}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}"
+            id="{{this.inputId}}"
+            @width={{"block"}}
+            @tagName="div"
+            @dateFormat="DD.MM.YYYY"
+            @onChange={{this.updateValue}}
+            @value={{this.value}}
     />
-  </div>
-  {{#if this.value}}
-  <div class="au-o-grid__item au-u-2-3">
-    <AuInput class="{{if this.errors "au-c-input--error" ""}}" {{!-- think of how one label relates to multiple input forms --}}
-      placeholder="12"
-      @value={{this.hour}}
-      @type="number"
-      @min="0"
-      @max="23"
-      {{on "blur" this.updateValue}} /> uur
-    <AuInput class="{{if this.errors "au-c-input--error" ""}}" {{!-- think of how one label relates to multiple input forms --}}
-      placeholder="00"
-      @value={{this.minutes}}
-      @type="number"
-      @min="0"
-      @max="59"
-      {{on "blur" this.updateValue}} /> min
-  </div>
-  {{/if}}
-</div>
+    <AuHelpText class="au-u-margin-bottom-tiny {{if this.errors "au-c-help-text--error" ""}}">Datum formaat: DD.MM.JJJJ</AuHelpText>
+    {{#each this.errors as |error|}}
+      <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+    {{/each}}
 
-<AuHelpText class="{{if this.errors "au-c-help-text--error" ""}}">Datum formaat: DD.MM.JJJJ</AuHelpText>
-{{#each this.errors as |error|}}
-  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
-{{/each}}
+    {{#if this.value}}
+      <div class="au-o-grid">
+        <div class="au-o-grid__item au-u-1-2">
+          <AuLabel class="{{if this.errors "au-c-label--error" ""}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}" for="{{this.inputId}}-uur">Uur</AuLabel>
+          <AuInput class="{{if this.errors "au-c-input--error" ""}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}" {{!-- think of how one label relates to multiple input forms --}}
+                   id="{{this.inputId}}-uur"
+                   @value={{this.hour}}
+                   @type="number"
+                   @min="0"
+                   @max="23"
+                   type="number"
+            {{on "blur" this.updateValue}} />
+        </div>
+        <div class="au-o-grid__item au-u-1-2">
+          <AuLabel class="{{if this.errors "au-c-label--error" ""}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}" for="{{this.inputId}}-minuten">Minuten</AuLabel>
+          <AuInput class="{{if this.errors "au-c-input--error" ""}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}" {{!-- think of how one label relates to multiple input forms --}}
+                   id="{{this.inputId}}-minuten"
+                   @value={{this.minutes}}
+                   @type="number"
+                   @min="0"
+                   @max="59"
+                   type="number"
+            {{on "blur" this.updateValue}} />
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>
