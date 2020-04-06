@@ -1,0 +1,43 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+<div class="au-o-grid">
+  <div class="au-o-grid__item au-u-1-3">
+    <WuDatepicker
+      class="{{if this.errors "au-c-input--error" ""}}"
+      id="{{this.inputId}}"
+      @tagName="div"
+      @dateFormat="DD.MM.YYYY"
+      @onChange={{this.updateValue}}
+      @value={{this.value}}
+    />
+  </div>
+  {{#if this.value}}
+  <div class="au-o-grid__item au-u-2-3">
+    <AuInput class="{{if this.errors "au-c-input--error" ""}}" {{!-- think of how one label relates to multiple input forms --}}
+      placeholder="12"
+      @value={{this.hour}}
+      @type="number"
+      @min="0"
+      @max="23"
+      {{on "blur" this.updateValue}} /> uur
+    <AuInput class="{{if this.errors "au-c-input--error" ""}}" {{!-- think of how one label relates to multiple input forms --}}
+      placeholder="00"
+      @value={{this.minutes}}
+      @type="number"
+      @min="0"
+      @max="59"
+      {{on "blur" this.updateValue}} /> min
+  </div>
+  {{/if}}
+</div>
+
+<AuHelpText class="{{if this.errors "au-c-help-text--error" ""}}">Datum formaat: DD.MM.JJJJ</AuHelpText>
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

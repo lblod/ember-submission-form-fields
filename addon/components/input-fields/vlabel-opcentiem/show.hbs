@@ -1,0 +1,56 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}}>{{@field.label}}</AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+{{#if this.showDifferentiatie}}
+  <div class="au-o-grid">
+    <div class="au-o-grid__item au-u-1-1">
+      <AuLabel form="orgaan">
+        <WuCheckbox @checked={{this.differentiatie}} @disabled="{{true}}"/> Vink aan indien er sprake is van differentiatie
+      </AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with checkboxes --}}
+    </div>
+  </div>
+{{else}}
+  <AuHelpText>Geen differentiatie opgegeven.</AuHelpText>
+{{/if}}
+
+<table class="data-table data-table--zebra data-table--tight u-spacer--tb--small">
+  <thead>
+  <tr>
+    <th>Bedrag</th>
+    <th>&nbsp;</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#if this.showTable}}
+    {{#each this.fields as |field|}}
+      <tr>
+        <td>
+          <AuInput
+            @width={{"block"}}
+            @value={{field.value}}
+            disabled={{true}}
+          />
+        </td>
+        <td>
+        </td>
+      </tr>
+    {{/each}}
+  {{else}}
+    <tr>
+      <td colspan="5" class="data-table__add-row u-align-center">
+        <AuHelpText>Er sprake is van differentiatie, daarom is er geen bedrag zichtbaar.</AuHelpText>
+      </td>
+    </tr>
+  {{/if}}
+  </tbody>
+</table>
+
+
+{{yield}}

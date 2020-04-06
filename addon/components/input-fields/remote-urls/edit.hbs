@@ -1,0 +1,72 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}}>{{@field.label}}</AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+<table class="data-table au-u-margin-bottom-tiny {{if this.errors "data-table--error" ""}}">
+  <tbody data-test-mn="url-box-list">
+    {{#each this.remoteUrls as |remoteUrl|}}
+      <tr>
+        <td>
+          <div class="au-o-grid au-o-grid--tiny">
+            <div class="au-o-grid__item au-u-3-3">
+              <AuInput
+                class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
+                placeholder="http://wwww.uw-bestuur.be/specifiek-document"
+                @width={{"block"}}
+                @value={{remoteUrl.address}}
+                {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
+              />
+            </div>
+            <div class="au-o-grid__item au-u-1-3">
+              {{#if remoteUrl.isInvalid}}
+                {{#each remoteUrl.errors as |error|}}
+                  <AuHelpText @error={{"error"}}>{{error}}</AuHelpText>
+                {{/each}}
+              {{/if}}
+            </div>
+            <div class="au-o-grid__item au-u-2-3">
+              <div class="button-group u-align-right">
+                {{#if remoteUrl.address}}
+                  <a href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer"
+                    class="u-spacer--bottom--tiny button button--small button--alt">
+                    <i class="vi vi-external vi-u-xs"></i> Test link
+                  </a>
+                {{/if}}
+                <a class="toggle u-spacer--bottom--tiny button button--small button--alt button--alt--warning" {{on "click" (fn this.removeRemoteUrl remoteUrl)}} role="button">
+                  <i class="vi vi-cross vi-u-xs"></i> Verwijder&nbsp;link
+                </a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+    <tr>
+      <td>
+        <div class="au-u-text-center">
+          {{#unless this.remoteUrls}}
+            <AuHelpText class="au-u-margin-bottom-tiny au-u-margin-bottom-top">Nog geen links toegevoegd.</AuHelpText>
+          {{/unless}}
+          <AuButton class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
+            <i class="vi vi-u-xs au-u-margin-right-tiny vi-plus button__icon" aria-hidden="true"></i> Voeg nieuwe link toe
+          </AuButton>
+          <div class="au-u-margin-bottom-tiny au-u-margin-top-tiny">
+            <AuHelpText>Enkel links naar specifieke documenten, geen overzichtspagina's.</AuHelpText>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{{#unless this.hasInvalidRemoteUrl}}
+  {{#each this.errors as |error|}}
+    <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+  {{/each}}
+{{/unless}}

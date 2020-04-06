@@ -1,0 +1,46 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}}>{{@field.label}}</AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+<table class="data-table">
+  <tbody data-test-mn="url-box-list">
+  {{#each this.remoteUrls as |remoteUrl|}}
+    <tr>
+      <td>
+        <AuInput
+          disabled={{true}}
+          @width={{"block"}}
+          @value={{remoteUrl.address}}/>
+        <div class="button-group u-spacer--top--tiny">
+          <a href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer" class="u-spacer--bottom--tiny button button--small button--alt"><i class="vi vi-external"></i>Bekijk link</a>
+          {{#if remoteUrl.downloadLink}}
+            <a href={{remoteUrl.downloadLink}} download class="u-spacer--bottom--tiny button button--small button--alt"><i class="vi vi-document-small"></i>Download opgeslagen pagina<sup>*</sup></a>
+          {{/if}}
+        </div>
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+{{#if this.remoteUrls.length}}
+  <AuHelpText class="au-u-margin-bottom-tiny"><sup>*</sup>Op het moment van versturen, wordt er een versie gedownload van de pagina die op de link te vinden is.</AuHelpText>
+{{else}}
+  <AuHelpText class="au-u-margin-bottom-tiny">Er werden geen links toegevoegd.</AuHelpText>
+{{/if}}
+
+{{#if this.errors}}
+  <WuAlert title={{'Er liep iets mis'}}>
+    <ul>
+      {{#each this.errors as |error|}}
+        <li>{{error.resultMessage}}</li>
+      {{/each}}
+    </ul>
+  </WuAlert>
+{{/if}}

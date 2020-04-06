@@ -1,0 +1,19 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}}>{{@field.label}}</AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+{{#each this.files as |fileField|}}
+  <VoMuFileCard @file={{fileField.record}} @onDelete={{this.removeFile}}/>
+{{/each}}
+<VoMuFileDropzone @onFinishUpload={{this.addFile}} @maxFileSizeMB="1024" class="{{if this.errors "upload--error"}}" />
+
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

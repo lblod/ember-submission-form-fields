@@ -1,0 +1,15 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel {{did-insert this.loadData}} for={{this.inputId}}>{{@field.label}}</AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+<AuInput
+  id="{{this.inputId}}"
+  disabled={{true}}
+  @value={{moment-format this.value "DD.MM.YYYY hh:mm"}}
+/>
