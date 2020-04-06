@@ -1,1 +1,1 @@
-export { default } from 'ember-submission-form-fields/components/input-fields/date/show';
+export { default } from 'ember-submission-form-fields/components/input-fields/date-time/show';
