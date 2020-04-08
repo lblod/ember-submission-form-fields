@@ -1,4 +1,4 @@
-import { FORM, SHACL } from './namespaces';
+import { FORM, SHACL, RDF } from './namespaces';
 import { check, checkTriples } from './constraints';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
@@ -200,10 +200,9 @@ function validateField(fieldUri, options) {
 }
 
 function validationResultsForField(fieldUri, options) {
-  const {store, formGraph, sourceGraph, sourceNode, metaGraph} = options;
-  const validationConstraints = store
-    .match(fieldUri, FORM("validations"), undefined, formGraph)
-    .map(t => t.object);
+  const { store, formGraph } = options;
+  const validationConstraints = store.match(fieldUri, FORM("validations"), undefined, formGraph)
+        .map(t => t.object);
 
   const validationResults = [];
   for (const constraintUri of validationConstraints) {
@@ -213,8 +212,20 @@ function validationResultsForField(fieldUri, options) {
   return validationResults;
 }
 
+function validationTypesForField(fieldUri, options){
+  const { store, formGraph } = options;
+  const validationConstraints = store
+    .match(fieldUri, FORM("validations"), undefined, formGraph)
+        .map(t => t.object);
+
+  const validationTypes = validationConstraints
+        .map( constraintS => store.match(constraintS, RDF('type'), undefined, formGraph)[0]) //There must be a least once
+        .map(triple => triple.object);
+  return validationTypes;
+}
+
 function validationResultsForFieldPart(triplesData, fieldUri, options){
-  const {store, formGraph, sourceGraph, sourceNode, metaGraph} = options;
+  const { store, formGraph } = options;
   const validationConstraints = store
     .match(fieldUri, FORM("validations"), undefined, formGraph)
     .map(t => t.object);
@@ -226,6 +237,7 @@ function validationResultsForFieldPart(triplesData, fieldUri, options){
   }
   return validationResults;
 }
+
 function updateSimpleFormValue(options, newValue = null, oldValue = null) {
 
   /* This might be tricky.We need to find a subject and predicate to attach the object to.
@@ -331,6 +343,7 @@ export {
   fieldsForForm,
   validateForm,
   validateField,
+  validationTypesForField,
   validationResultsForField,
   validationResultsForFieldPart,
   updateSimpleFormValue,
