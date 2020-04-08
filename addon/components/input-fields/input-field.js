@@ -18,7 +18,8 @@ export default class InputFieldComponent extends Component {
   }
 
   get isRequired() {
-    return this.validations.any(v => v.validationType == 'http://lblod.data.gift/vocabularies/forms/RequiredConstraint');
+    const validationTypes = validationTypesForField(this.args.field.uri, this.storeOptions);
+    return validationTypes.any(v => v.value == 'http://lblod.data.gift/vocabularies/forms/RequiredConstraint');
   }
 
   get storeOptions() {
