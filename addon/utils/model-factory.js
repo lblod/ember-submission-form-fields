@@ -1,5 +1,5 @@
-import Field from 'ember-submission-form-fields/models/field';
-import PropertyGroup from 'ember-submission-form-fields/models/property-group';
+import Field from '@lblod/ember-submission-form-fields/models/field';
+import PropertyGroup from '@lblod/ember-submission-form-fields/models/property-group';
 import { SHACL } from './namespaces';
 
 function createPropertyTreeFromFields( fields, { store, formGraph } ) {

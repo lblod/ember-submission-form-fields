@@ -1,1 +1,1 @@
-export { default } from 'ember-submission-form-fields/models/property-group';
+export { default } from '@lblod/ember-submission-form-fields/models/property-group';

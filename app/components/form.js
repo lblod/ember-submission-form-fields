@@ -1,1 +1,1 @@
-export { default } from 'ember-submission-form-fields/components/form';
+export { default } from '@lblod/ember-submission-form-fields/components/form';

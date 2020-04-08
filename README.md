@@ -1,4 +1,4 @@
-ember-submission-form-fields
+@lblod/ember-submission-form-fields
 ==============================================================================
 
 This addon provides form and form-fields components to create and edit submissions. 

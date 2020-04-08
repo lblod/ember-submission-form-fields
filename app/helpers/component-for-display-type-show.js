@@ -1,1 +1,1 @@
-export { default, componentForDisplayTypeShow } from 'ember-submission-form-fields/helpers/component-for-display-type-show';
+export { default, componentForDisplayTypeShow } from '@lblod/ember-submission-form-fields/helpers/component-for-display-type-show';

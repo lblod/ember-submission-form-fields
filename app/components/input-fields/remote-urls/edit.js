@@ -1,1 +1,1 @@
-export { default } from 'ember-submission-form-fields/components/input-fields/remote-urls/edit';
+export { default } from '@lblod/ember-submission-form-fields/components/input-fields/remote-urls/edit';
