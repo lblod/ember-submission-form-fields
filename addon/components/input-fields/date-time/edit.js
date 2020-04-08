@@ -28,7 +28,7 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
     let updatedValue = null;
     if (this.value) {
       this.value.setHours(this.hour, this.minutes, null, null);
-      updatedValue= this.value.toISOString();
+      updatedValue = this.value.toISOString();
     }
     const newValue = this.value ? rdflib.literal(updatedValue, XSD('dateTime')) : null;
     updateSimpleFormValue(this.storeOptions, newValue, this.nodeValue);
