@@ -17,7 +17,8 @@
           @selected={{this.selected}}
           @options={{this.options}}
           @onChange={{this.updateSelection}}
-          as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
+    @allowClear={{true}}
+    as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
     {{concept.label}}
   </PowerSelect>
 </div>
