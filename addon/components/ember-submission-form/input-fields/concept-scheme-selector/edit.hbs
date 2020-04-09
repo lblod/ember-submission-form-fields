@@ -10,14 +10,15 @@
 </div>
 <div class="{{if this.errors "ember-power-select--error" ""}}">
   <PowerSelect
-          class=" {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}"
-          id="{{this.inputId}}"
-          @searchField={{"label"}}
-          @searchEnabled={{true}}
-          @selected={{this.selected}}
-          @options={{this.options}}
-          @onChange={{this.updateSelection}}
-          as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
+    class=" {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}"
+    id="{{this.inputId}}"
+    @searchField={{"label"}}
+    @searchEnabled={{true}}
+    @selected={{this.selected}}
+    @options={{this.options}}
+    @onChange={{this.updateSelection}}
+    @allowClear={{true}}
+    as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
     {{concept.label}}
   </PowerSelect>
 </div>

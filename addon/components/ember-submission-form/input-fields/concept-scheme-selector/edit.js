@@ -60,7 +60,9 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
     matchingOptions.forEach(m => updateSimpleFormValue(this.storeOptions, undefined, m));
 
     // Insert new value in the store
-    updateSimpleFormValue(this.storeOptions, option.subject);
+    if(option){
+      updateSimpleFormValue(this.storeOptions, option.subject);
+    }
     this.loadData();
   }
 }
