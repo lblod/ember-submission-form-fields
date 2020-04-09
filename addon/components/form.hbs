@@ -14,11 +14,14 @@
                           graphs=@graphs
                           sourceNode=@sourceNode}}
             {{else}}
-              {{component (component-for-display-type-edit field.displayType)
-                          field=field
-                          formStore=@formStore
-                          graphs=@graphs
-                          sourceNode=@sourceNode}}
+              {{component
+                (component-for-display-type-edit field.displayType)
+                field=field
+                formStore=@formStore
+                graphs=@graphs
+                sourceNode=@sourceNode
+                forceShowErrors=@forceShowErrors
+              }}
             {{/if}}
           </li>
         </ul>

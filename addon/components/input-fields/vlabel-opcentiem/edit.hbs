@@ -1,6 +1,10 @@
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-1-2">
-    <AuLabel {{did-insert this.loadData}}>{{@field.label}}</AuLabel>
+    <AuLabel
+      {{did-insert this.loadData}}
+      {{did-update this.loadData @forceShowErrors}}>
+      {{@field.label}}
+    </AuLabel>
   </div>
   <div class="au-o-grid__item au-u-1-2 au-u-text-right">
     {{#if this.isRequired}}

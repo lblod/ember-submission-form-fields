@@ -9,8 +9,14 @@ import { validationResultsForField, validationTypesForField } from '../../utils/
 export default class InputFieldComponent extends Component {
   @tracked validations = []
 
+  hasRenderedPreviously = false
+
+  get canShowErrors() {
+    return this.hasRenderedPreviously || this.args.forceShowErrors;
+  }
+
   get errors() {
-    return this.validations.filter(r => !r.valid);
+    return this.canShowErrors && this.validations.filter(r => !r.valid);
   }
 
   get isValid() {
@@ -34,7 +40,10 @@ export default class InputFieldComponent extends Component {
   }
 
   loadData() {
-    this.loadValidations();
+    if(!this.hasRenderedPreviously){
+      this.hasRenderedPreviously = true;
+    }
+    else this.loadValidations();
   }
 
   loadValidations() {
