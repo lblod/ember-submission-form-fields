@@ -21,8 +21,6 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@appuniversum/appuniversum": "^0.0.5",
-    "@appuniversum/ember-appuniversum": "^0.0.12",
     "@ember/render-modifiers": "^1.0.2",
     "ember-power-select": "^3.0.6",
     "ember-auto-import": "^1.5.3",
