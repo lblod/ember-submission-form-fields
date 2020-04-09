@@ -6,7 +6,7 @@ import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
 
-export default class FormComponent extends Component {
+export default class SubFormComponent extends Component {
   @tracked fields = A()
 
   observerLabel = `form-root-${guidFor(this)}`

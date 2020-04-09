@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
@@ -35,7 +35,7 @@ class TaxEntry {
   }
 }
 
-export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFieldComponent {
+export default class FormInputFieldsVlabelOpcentiemEditComponent extends AbstractInputFieldComponent {
   inputId = 'checkbox-' + guidFor(this);
 
   @tracked taxRateSubject = null

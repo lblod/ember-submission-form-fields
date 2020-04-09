@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import {
@@ -32,7 +32,7 @@ class RemoteUrl {
   }
 }
 
-export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
+export default class FormInputFieldsRemoteUrlsEditComponent extends AbstractInputFieldComponent {
   @tracked remoteUrls = [];
 
   observerLabel = `remote-urls-${guidFor(this)}` // Could have used uuidv4, but more consistent accross components

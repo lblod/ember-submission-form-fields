@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -7,7 +7,7 @@ import { triplesForPath } from '../../../utils/import-triples-for-form';
 import { RDF } from '../../../utils/namespaces';
 import rdflib from 'browser-rdflib';
 
-export default class FormInputFieldsFilesShowComponent extends InputFieldComponent {
+export default class FormInputFieldsFilesShowComponent extends AbstractInputFieldComponent {
   @service store
 
   @tracked remoteUrls = []

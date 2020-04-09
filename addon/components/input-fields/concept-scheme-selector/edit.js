@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
@@ -12,7 +12,7 @@ function byLabel(a, b) {
   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 }
 
-export default class FormInputFieldsConceptSchemeSelectorEditComponent extends InputFieldComponent {
+export default class FormInputFieldsConceptSchemeSelectorEditComponent extends AbstractInputFieldComponent {
   inputId = 'select-' + guidFor(this); // this input field is not linked to the label yet, this technique does not work with the power-select
 
   @tracked selected = null

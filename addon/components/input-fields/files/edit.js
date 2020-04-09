@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -29,7 +29,7 @@ class FileField {
   }
 }
 
-export default class FormInputFieldsFilesEditComponent extends InputFieldComponent {
+export default class FormInputFieldsFilesEditComponent extends AbstractInputFieldComponent {
   @service store
 
   @tracked files = []

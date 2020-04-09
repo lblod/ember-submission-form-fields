@@ -6,7 +6,7 @@ import { validationResultsForField } from '../../utils/import-triples-for-form';
  * Abstract input-field component providing a base class
  * for the custom input-fields
 */
-export default class InputFieldComponent extends Component {
+export default class AbstractInputFieldComponent extends Component {
   @tracked validations = []
 
   get errors() {

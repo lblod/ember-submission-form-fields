@@ -1,4 +1,4 @@
-import InputFieldComponent from '../input-field';
+import AbstractInputFieldComponent from '../abstract-input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
@@ -10,7 +10,7 @@ const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
 const hasAdditionalTaxRate = new rdflib.NamedNode(`${lblodBesluit}/hasAdditionalTaxRate`);
 const taxRate = new rdflib.NamedNode(`${lblodBesluit}/taxRate`);
 
-export default class FormInputFieldsVlabelOpcentiemShowComponent extends InputFieldComponent  {
+export default class FormInputFieldsVlabelOpcentiemShowComponent extends AbstractInputFieldComponent  {
   inputId = 'checkbox-' + guidFor(this);
 
   @tracked taxRateSubject = null
