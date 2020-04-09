@@ -9,10 +9,10 @@ import { validationResultsForField, validationTypesForField } from '../../utils/
 export default class InputFieldComponent extends Component {
   @tracked validations = []
 
-  hasRenderedPreviously = false
+  @tracked hasBeenModified = false
 
   get canShowErrors() {
-    return this.hasRenderedPreviously || this.args.forceShowErrors;
+    return this.hasBeenModified || this.args.forceShowErrors;
   }
 
   get errors() {
@@ -40,10 +40,7 @@ export default class InputFieldComponent extends Component {
   }
 
   loadData() {
-    if(!this.hasRenderedPreviously){
-      this.hasRenderedPreviously = true;
-    }
-    else this.loadValidations();
+    this.loadValidations();
   }
 
   loadValidations() {
