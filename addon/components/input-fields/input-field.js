@@ -20,7 +20,7 @@ export default class InputFieldComponent extends Component {
   }
 
   get isValid() {
-    return this.errors.length == 0;
+    return this.validations.filter(r => !r.valid).length == 0;
   }
 
   get isRequired() {

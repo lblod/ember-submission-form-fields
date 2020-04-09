@@ -119,6 +119,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
   addFile(file) {
     this.insertFileDataObject(file.uri);
     this.files.pushObject(new FileField({ record: file, errors: [] }));
+    this.hasBeenModified = true;
     super.loadValidations(); // update validations of the form field in general
   }
 
@@ -132,6 +133,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
     } catch (error) {
       // should probably be silently logged in later implementations
     }
+    this.hasBeenModified = true;
     this.files.removeObject(fileField);
   }
 }

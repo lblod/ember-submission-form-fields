@@ -63,6 +63,7 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
     if(option){
       updateSimpleFormValue(this.storeOptions, option.subject);
     }
+    this.hasBeenModified = true;
     this.loadData();
   }
 }
