@@ -19,7 +19,12 @@
           @value={{remoteUrl.address}}/>
         <div class="button-group u-spacer--top--tiny">
           <a href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer" class="u-spacer--bottom--tiny button button--small button--alt"><i class="vi vi-external"></i>Bekijk link</a>
-          {{#if remoteUrl.downloadLink}}
+
+          {{!-- NOTE TO THE DESIGNER:
+             if you wish to provide more information to designer about the status, you could use
+             remoteUrl.downloadOngoing or remoteUrl.downloadFailed
+          --}}
+          {{#if remoteUrl.downloadSuccess}}
             <a href={{remoteUrl.downloadLink}} download class="u-spacer--bottom--tiny button button--small button--alt"><i class="vi vi-document-small"></i>Download opgeslagen pagina<sup>*</sup></a>
           {{/if}}
         </div>
