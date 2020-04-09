@@ -22,19 +22,18 @@
   },
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
-    "browser-rdflib": "^1.0.0",
+    "ember-power-select": "^3.0.6",
     "ember-auto-import": "^1.5.3",
     "ember-cli-babel": "^7.13.0",
     "ember-cli-htmlbars": "^4.2.0",
     "ember-cli-release-tag": "^0.1.5",
     "ember-moment": "^8.0.0",
+    "browser-rdflib": "^1.0.0",
     "forking-store": "^1.0.0",
     "moment": "^2.24.0",
     "uuid": "^7.0.3"
   },
   "devDependencies": {
-    "@appuniversum/appuniversum": "^0.0.5",
-    "@appuniversum/ember-appuniversum": "^0.0.12",
     "@ember/optional-features": "^1.1.0",
     "@glimmer/component": "^1.0.0",
     "babel-eslint": "^10.0.3",
