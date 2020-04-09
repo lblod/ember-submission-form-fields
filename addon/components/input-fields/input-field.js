@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { validationResultsForField } from '../../utils/import-triples-for-form';
+import { validationResultsForField, validationTypesForField } from '../../utils/import-triples-for-form';
 
 /**
  * Abstract input-field component providing a base class
