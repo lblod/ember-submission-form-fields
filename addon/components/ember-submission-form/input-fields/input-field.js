@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { validationResultsForField, validationTypesForField } from '../../../utils/import-triples-for-form';
 
 /**
@@ -16,10 +17,10 @@ export default class InputFieldComponent extends Component {
   }
 
   get errors() {
-    if(this.canShowErrors){
+    if (this.canShowErrors)
       return this.validations.filter(r => !r.valid);
-    }
-    return [];
+    else
+      return [];
   }
 
   get isValid() {
@@ -46,6 +47,7 @@ export default class InputFieldComponent extends Component {
     this.loadValidations();
   }
 
+  @action
   loadValidations() {
     this.validations = validationResultsForField(this.args.field.uri, this.storeOptions);
   }
