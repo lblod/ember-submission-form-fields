@@ -1,6 +1,8 @@
 import { FORM, SKOS } from '../namespaces';
 
 export default function conceptSchemeValidation(values, options){
+  if(!values.length) return true;
+
   //TODO: ASSUMES BAG MATCHING, FIX PLEASE
   const { constraintUri, store, metaGraph } = options;
 
