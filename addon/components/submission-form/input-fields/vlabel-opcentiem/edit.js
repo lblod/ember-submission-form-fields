@@ -42,6 +42,11 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
   @tracked fields = []
   @tracked differentiatie = false
 
+  constructor() {
+    super(...arguments);
+    this.loadProvidedValue();
+  }
+
   get isTaxRatesEmpty() {
     return this.fields.length == 0;
   }
@@ -71,12 +76,6 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
                                          schemaPrice,
                                          undefined,
                                          this.storeOptions.sourceGraph).length > 0;
-  }
-
-  @action
-  loadData() {
-    super.loadData();
-    this.loadProvidedValue();
   }
 
   loadProvidedValue() {
@@ -173,7 +172,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
     field.oldValue = field.value;
 
     this.hasBeenFocused = true;
-    super.loadValidations(); // update validation of the general field
+    super.updateValidations(); // update validation of the general field
   }
 
   @action
@@ -186,7 +185,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
     this.fields.removeObject(field);
 
     this.hasBeenFocused = true;
-    super.loadValidations(); // update validation of the general field
+    super.updateValidations(); // update validation of the general field
   }
 
   @action
@@ -199,6 +198,6 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
     this.updateAdditionalTaxRateTriple(this.differentiatie);
 
     this.hasBeenFocused = true;
-    super.loadValidations(); // update validation of the general field
+    super.updateValidations(); // update validation of the general field
   }
 }

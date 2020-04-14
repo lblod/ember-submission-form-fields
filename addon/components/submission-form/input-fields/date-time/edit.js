@@ -12,6 +12,11 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
   @tracked hour = null
   @tracked minutes = null
 
+  constructor() {
+    super(...arguments);
+    this.loadProvidedValue();
+  }
+
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
@@ -31,8 +36,7 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
       updatedValue = this.value.toISOString();
     }
     const newValue = this.value ? rdflib.literal(updatedValue, XSD('dateTime')) : null;
-    updateSimpleFormValue(this.storeOptions, newValue, this.nodeValue);
-    this.hasBeenFocused = true;
-    this.loadData();
+    super.updateValue(newValue);
+    this.loadProvidedValue();
   }
 }

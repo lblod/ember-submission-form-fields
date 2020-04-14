@@ -18,9 +18,8 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
   @tracked selected = null
   @tracked options = []
 
-  @action
-  loadData(){
-    super.loadData();
+  constructor() {
+    super(...arguments);
     this.loadOptions();
     this.loadProvidedValue();
   }
@@ -60,11 +59,11 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
     matchingOptions.forEach(m => updateSimpleFormValue(this.storeOptions, undefined, m));
 
     // Insert new value in the store
-    if(option){
+    if (option) {
       updateSimpleFormValue(this.storeOptions, option.subject);
     }
 
     this.hasBeenFocused = true;
-    this.loadData();
+    super.updateValidations();
   }
 }

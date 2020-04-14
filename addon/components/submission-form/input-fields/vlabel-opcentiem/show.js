@@ -17,6 +17,11 @@ export default class FormInputFieldsVlabelOpcentiemShowComponent extends InputFi
   @tracked fields = []
   @tracked differentiatie = false
 
+  constructor() {
+    super(...arguments);
+    this.loadProvidedValue();
+  }
+
   get isTaxRatesEmpty() {
     return this.fields.length == 0;
   }
@@ -39,12 +44,6 @@ export default class FormInputFieldsVlabelOpcentiemShowComponent extends InputFi
                                            taxRate,
                                            this.taxRateSubject,
                                            this.storeOptions.sourceGraph).length > 0;
-  }
-
-  @action
-  loadData() {
-    super.loadData();
-    this.loadProvidedValue();
   }
 
   loadProvidedValue() {

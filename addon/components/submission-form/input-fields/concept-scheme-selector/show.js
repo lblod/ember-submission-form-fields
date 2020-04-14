@@ -9,9 +9,8 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
   @tracked selected = null
   @tracked options = []
 
-  @action
-  loadData(){
-    super.loadData();
+  constructor() {
+    super(...arguments);
     this.loadOptions();
     this.loadProvidedValue();
   }

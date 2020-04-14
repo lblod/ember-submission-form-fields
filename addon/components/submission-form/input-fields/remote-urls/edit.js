@@ -39,6 +39,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   constructor() {
     super(...arguments);
+    this.loadProvidedValue();
     this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.observerLabel);
   }
 
@@ -49,17 +50,11 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   // The validation of this fields depends on the value of other fields,
   // hence we recalculate the validation on notification of a change in the store
   onStoreUpdate(){
-    super.loadValidations();
+    super.updateValidations();
   }
 
   get hasInvalidRemoteUrl() {
     return this.remoteUrls.any(url => url.isInvalid);
-  }
-
-  @action
-  loadData() {
-    super.loadData();
-    this.loadProvidedValue();
   }
 
   loadProvidedValue() {
@@ -140,6 +135,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     this.hasBeenFocused = true;
     const errors = this.validationErrorsForAddress(address).map(e => e.resultMessage);
     remoteUrl.errors = errors; // update validations specific for the address
+    // general validation of the field is handled by onStoreUpdate()
   }
 
   @action
@@ -147,6 +143,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     this.removeRemoteDataObject(current.uri);
     this.remoteUrls.removeObject(current);
     this.hasBeenFocused = true;
+    // general validation of the field is handled by onStoreUpdate()
   }
 
   validationErrorsForAddress(address) {

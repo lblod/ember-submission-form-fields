@@ -9,14 +9,12 @@ export default class FormInputFieldsDateEditComponent extends SimpleInputFieldCo
   inputId = 'date-' + guidFor(this);
 
   @action
-  updateValue(newValue){
+  updateValue(newValue) {
     let dateString = null;
     if(newValue != null) {
       dateString = newValue.toISOString().split("T")[0];
     }
     const newDate = dateString ? rdflib.literal(dateString, XSD('date')) : null;
-    updateSimpleFormValue(this.storeOptions, newDate, this.nodeValue);
-    this.hasBeenFocused = true;
-    this.loadData();
+    super.updateValue(newValue);
   }
 }

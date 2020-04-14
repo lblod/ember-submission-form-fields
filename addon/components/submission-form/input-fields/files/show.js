@@ -12,10 +12,9 @@ export default class FormInputFieldsFilesShowComponent extends InputFieldCompone
 
   @tracked files = []
 
-  @action
-  async loadData() {
-    super.loadData();
-    await this.loadProvidedValue();
+  constructor() {
+    super(...arguments);
+    this.loadProvidedValue();
   }
 
   async loadProvidedValue() {

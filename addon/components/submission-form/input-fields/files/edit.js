@@ -38,6 +38,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
 
   constructor() {
     super(...arguments);
+    this.loadProvidedValue();
     this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.observerLabel);
   }
 
@@ -48,13 +49,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
   // The validation of this fields depends on the value of other fields,
   // hence we recalculate the validation on notification of a change in the store
   onStoreUpdate() {
-    this.loadValidations();
-  }
-
-  @action
-  async loadData() {
-    super.loadData();
-    await this.loadProvidedValue();
+    super.updateValidations();
   }
 
   async loadProvidedValue() {
@@ -120,7 +115,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
     this.insertFileDataObject(file.uri);
     this.files.pushObject(new FileField({ record: file, errors: [] }));
     this.hasBeenFocused = true;
-    super.loadValidations(); // update validations of the form field in general
+    // general validation of the field is handled by onStoreUpdate()
   }
 
   @action
@@ -135,5 +130,6 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
     }
     this.hasBeenFocused = true;
     this.files.removeObject(fileField);
+    // general validation of the field is handled by onStoreUpdate()
   }
 }

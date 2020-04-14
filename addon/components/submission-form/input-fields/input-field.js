@@ -12,6 +12,11 @@ export default class InputFieldComponent extends Component {
 
   @tracked hasBeenFocused = false
 
+  constructor() {
+    super(...arguments);
+    this.updateValidations();
+  }
+
   get canShowErrors() {
     return this.hasBeenFocused || this.args.forceShowErrors;
   }
@@ -43,12 +48,7 @@ export default class InputFieldComponent extends Component {
     };
   }
 
-  loadData() {
-    this.loadValidations();
-  }
-
-  @action
-  loadValidations() {
+  updateValidations() {
     this.validations = validationResultsForField(this.args.field.uri, this.storeOptions);
   }
 }

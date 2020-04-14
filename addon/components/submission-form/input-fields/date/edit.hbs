@@ -1,8 +1,6 @@
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-2-4">
     <AuLabel class="{{if this.errors "au-c-label--error" ""}}"
-      {{did-insert this.loadData}}
-      {{did-update this.loadValidations @forceShowErrors}}
       for={{this.inputId}}>
       {{@field.label}}
     </AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
