@@ -14,7 +14,6 @@
 </div>
 <div class="{{if this.errors "ember-power-select--error"}}">
   <PowerSelect
-    class=" {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}"
     id="{{this.inputId}}"
     @searchField={{"label"}}
     @searchEnabled={{true}}

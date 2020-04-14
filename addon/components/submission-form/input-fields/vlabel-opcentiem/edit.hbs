@@ -37,7 +37,7 @@
       <tr>
         <td>
           <AuInput
-                  class="{{if field.errors "au-c-input--error"}} {{if this.save.isRunning "au-c-input--disabled"}} {{if this.submit.isRunning "au-c-input--disabled"}} {{if this.delete.isRunning "au-c-input--disabled"}}"
+                  class="{{if field.errors "au-c-input--error"}}"
                   @width={{"block"}}
                   @value={{field.value}}
             {{on "blur" (fn this.updatePrice field)}}
