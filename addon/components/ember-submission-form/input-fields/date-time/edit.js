@@ -32,7 +32,7 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
     }
     const newValue = this.value ? rdflib.literal(updatedValue, XSD('dateTime')) : null;
     updateSimpleFormValue(this.storeOptions, newValue, this.nodeValue);
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
     this.loadData();
   }
 }

@@ -10,10 +10,10 @@ import { validationResultsForField, validationTypesForField } from '../../../uti
 export default class InputFieldComponent extends Component {
   @tracked validations = []
 
-  @tracked hasBeenModified = false
+  @tracked hasBeenFocused = false
 
   get canShowErrors() {
-    return this.hasBeenModified || this.args.forceShowErrors;
+    return this.hasBeenFocused || this.args.forceShowErrors;
   }
 
   get errors() {

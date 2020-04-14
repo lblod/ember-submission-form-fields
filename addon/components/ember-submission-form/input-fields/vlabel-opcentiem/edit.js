@@ -172,7 +172,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
     this.updatePriceTriple(field.oldValue, field.value);
     field.oldValue = field.value;
 
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
     super.loadValidations(); // update validation of the general field
   }
 
@@ -185,7 +185,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
 
     this.fields.removeObject(field);
 
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
     super.loadValidations(); // update validation of the general field
   }
 
@@ -198,7 +198,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
 
     this.updateAdditionalTaxRateTriple(this.differentiatie);
 
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
     super.loadValidations(); // update validation of the general field
   }
 }

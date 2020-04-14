@@ -137,17 +137,16 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     const address = remoteUrl.address.trim();
     this.removeRemoteDataObject( remoteUrl.uri );
     this.insertRemoteDataObject({ uri: remoteUrl.uri, address });
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
     const errors = this.validationErrorsForAddress(address).map(e => e.resultMessage);
     remoteUrl.errors = errors; // update validations specific for the address
-    super.loadValidations(); // update validations of the form field in general
   }
 
   @action
   removeRemoteUrl(current) {
     this.removeRemoteDataObject(current.uri);
     this.remoteUrls.removeObject(current);
-    this.hasBeenModified = true;
+    this.hasBeenFocused = true;
   }
 
   validationErrorsForAddress(address) {
