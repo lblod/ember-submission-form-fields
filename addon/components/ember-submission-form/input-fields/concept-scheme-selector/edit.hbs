@@ -22,6 +22,7 @@
     @searchEnabled={{true}}
     @selected={{this.selected}}
     @options={{this.options}}
+    @onClose={{fn (mut this.hasBeenModified true)}}
     @onChange={{this.updateSelection}}
     @allowClear={{true}}
     as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
