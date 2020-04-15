@@ -1,0 +1,18 @@
+<div class="au-o-grid au-o-grid--flush au-u-margin-bottom-tiny">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel>{{@field.label}}</AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+
+{{#each this.files as |file|}}
+  <VoMuFileCard @file={{file}} @active={{false}}/>
+{{/each}}
+
+{{#unless this.files}}
+  <AuHelpText>Er werden geen bestanden toegevoegd.</AuHelpText>
+{{/unless}}

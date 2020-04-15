@@ -1,0 +1,24 @@
+<div class="au-o-grid au-o-grid--flush">
+  <div class="au-o-grid__item au-u-1-2">
+    <AuLabel class="{{if this.errors "au-c-label--error"}}"
+      for={{this.inputId}}>
+      {{@field.label}}
+    </AuLabel>
+  </div>
+  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
+    {{#if this.isRequired}}
+      <AuPill>Verplicht</AuPill>
+    {{/if}}
+  </div>
+</div>
+<AuInput
+        class="{{if this.errors "au-c-input--error"}}"
+        id="{{this.inputId}}"
+        @width={{"block"}}
+        @value={{this.value}}
+  {{on "blur" this.updateValue}}
+/>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

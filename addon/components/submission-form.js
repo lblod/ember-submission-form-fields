@@ -21,10 +21,7 @@ export default class SubmissionFormComponent extends Component {
         this.args.graphs.metaGraph
       );
     }, this.observerLabel);
-  }
 
-  @action
-  loadData(){
     this.getPropertyGroups( this.args.formStore,
       this.args.graphs.formGraph,
       this.args.graphs.sourceGraph,
@@ -38,7 +35,6 @@ export default class SubmissionFormComponent extends Component {
   }
 
   getPropertyGroups(store, formGraph, sourceGraph, sourceNode, metaGraph) {
-
     let fieldUris = fieldsForForm( this.args.form, {
       store,
       formGraph,
