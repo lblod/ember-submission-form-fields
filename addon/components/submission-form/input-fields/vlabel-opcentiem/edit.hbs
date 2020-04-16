@@ -45,8 +45,9 @@
           </div>
         </td>
         <td>
-          <AuButton type="button" @skin="neutral" class="toggle au-u-margin-bottom-tiny"
+          <AuButton @skin="tertiary" class="au-u-margin-bottom-tiny"
             {{on "click" (fn this.removePrice field)}}>
+            <AuIcon @icon="bin" @alignment="left" />
             Verwijder
           </AuButton>
         </td>
