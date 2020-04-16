@@ -1,13 +1,9 @@
-<div class="au-o-grid au-o-grid--flush">
-  <div class="au-o-grid__item au-u-1-2">
-    <AuLabel>{{@field.label}}</AuLabel>
-  </div>
-  <div class="au-o-grid__item au-u-1-2 au-u-text-right">
-    {{#if this.isRequired}}
-      <AuPill>Verplicht</AuPill>
-    {{/if}}
-  </div>
-</div>
+<AuLabel>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
 {{#if this.showDifferentiatie}}
   <div class="au-o-grid">
     <div class="au-o-grid__item au-u-1-1">

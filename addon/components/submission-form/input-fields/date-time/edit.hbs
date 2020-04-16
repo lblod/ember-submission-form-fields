@@ -1,16 +1,9 @@
-<div class="au-o-grid au-o-grid--flush">
-  <div class="au-o-grid__item au-u-1-4">
-    <AuLabel class="{{if this.errors "au-c-label--error"}}"
-      for={{this.inputId}}>
-      {{@field.label}}
-    </AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
-  </div>
-  <div class="au-o-grid__item au-u-1-4 au-u-text-right">
-    {{#if this.isRequired}}
-      <AuPill>Verplicht</AuPill>
-    {{/if}}
-  </div>
-</div>
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-2-4">
     <WuDatepicker
@@ -30,7 +23,12 @@
     {{#if this.value}}
       <div class="au-o-grid">
         <div class="au-o-grid__item au-u-1-2">
-          <AuLabel class="{{if this.errors "au-c-label--error"}}" for="{{this.inputId}}-uur">Uur</AuLabel>
+          <AuLabel class="{{if this.errors "au-c-label--error"}}" for="{{this.inputId}}-uur">
+            Uur
+            {{#if this.isRequired}}
+              <AuPill>Verplicht</AuPill>
+            {{/if}}
+          </AuLabel>
           <AuInput class="{{if this.errors "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms --}}
                    id="{{this.inputId}}-uur"
                    @value={{this.hour}}
@@ -41,7 +39,12 @@
             {{on "blur" this.updateValue}} />
         </div>
         <div class="au-o-grid__item au-u-1-2">
-          <AuLabel class="{{if this.errors "au-c-label--error"}}" for="{{this.inputId}}-minuten">Minuten</AuLabel>
+          <AuLabel class="{{if this.errors "au-c-label--error"}}" for="{{this.inputId}}-minuten">
+            Minuten
+            {{#if this.isRequired}}
+              <AuPill>Verplicht</AuPill>
+            {{/if}}
+          </AuLabel>
           <AuInput class="{{if this.errors "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms --}}
                    id="{{this.inputId}}-minuten"
                    @value={{this.minutes}}
