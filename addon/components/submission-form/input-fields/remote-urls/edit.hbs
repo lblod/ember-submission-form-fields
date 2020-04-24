@@ -13,7 +13,7 @@
           <div class="au-o-grid__item au-u-3-3">
             <AuInput
                     class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
-                    placeholder="http://wwww.uw-bestuur.be/specifiek-document"
+                    placeholder="http://www.uw-bestuur.be/specifiek-document"
                     @width={{"block"}}
                     @value={{remoteUrl.address}}
               {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
