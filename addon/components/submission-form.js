@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { fieldsForForm }  from '../utils/import-triples-for-form';
+import { fieldsForForm }  from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';

@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 
-import { SHACL } from '../utils/namespaces';
+import { SHACL } from '@lblod/submission-form-helpers';
 
 export default class PropertyGroupModel {
   @tracked

@@ -1,8 +1,8 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from './input-field';
-import { triplesForPath } from '../../../utils/import-triples-for-form';
-import { updateSimpleFormValue } from '../../../utils/import-triples-for-form';
+import { triplesForPath } from '@lblod/submission-form-helpers';
+import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
 
 export default class SimpleValueInputFieldComponent extends InputFieldComponent {
   @tracked value = null

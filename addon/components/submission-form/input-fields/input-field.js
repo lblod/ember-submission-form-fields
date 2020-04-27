@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validationResultsForField, validationTypesForField } from '../../../utils/import-triples-for-form';
+import { validationResultsForField, validationTypesForField } from '@lblod/submission-form-helpers';
 
 /**
  * Abstract input-field component providing a base class

@@ -2,10 +2,10 @@ import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { RDF } from '../../../../utils/namespaces';
+import { RDF } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { warn } from '@ember/debug';
-import { triplesForPath } from '../../../../utils/import-triples-for-form';
+import { triplesForPath } from '@lblod/submission-form-helpers';
 
 export default class FormInputFieldsFilesShowComponent extends InputFieldComponent {
   @service store
