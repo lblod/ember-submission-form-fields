@@ -2,8 +2,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import rdflib from 'browser-rdflib';
-import { triplesForPath, updateSimpleFormValue } from '../../../../utils/import-triples-for-form';
-import { XSD } from '../../../../utils/namespaces';
+import { triplesForPath, updateSimpleFormValue } from '@lblod/submission-form-helpers';
+import { XSD } from '@lblod/submission-form-helpers';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 
 export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFieldComponent {

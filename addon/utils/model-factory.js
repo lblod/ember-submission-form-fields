@@ -1,6 +1,6 @@
 import Field from '@lblod/ember-submission-form-fields/models/field';
 import PropertyGroup from '@lblod/ember-submission-form-fields/models/property-group';
-import { SHACL } from './namespaces';
+import { SHACL } from '@lblod/submission-form-helpers';
 
 function createPropertyTreeFromFields( fields, { store, formGraph } ) {
   let mappedFields =

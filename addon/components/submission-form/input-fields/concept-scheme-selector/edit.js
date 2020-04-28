@@ -2,8 +2,8 @@ import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath, updateSimpleFormValue} from '../../../../utils/import-triples-for-form';
-import { SKOS } from '../../../../utils/namespaces';
+import { triplesForPath, updateSimpleFormValue} from '@lblod/submission-form-helpers';
+import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 function byLabel(a, b) {

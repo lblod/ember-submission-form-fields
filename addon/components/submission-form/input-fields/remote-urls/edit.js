@@ -6,9 +6,9 @@ import {
   validationResultsForFieldPart,
   addSimpleFormValue,
   removeSimpleFormValue
-} from '../../../../utils/import-triples-for-form';
+} from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
-import { RDF, NIE } from '../../../../utils/namespaces';
+import { RDF, NIE } from '@lblod/submission-form-helpers';
 import {v4 as uuidv4} from 'uuid';
 import { guidFor } from '@ember/object/internals';
 

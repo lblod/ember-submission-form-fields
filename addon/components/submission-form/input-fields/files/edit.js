@@ -2,7 +2,7 @@ import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { RDF } from '../../../../utils/namespaces';
+import { RDF } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { guidFor } from '@ember/object/internals';
 import { warn } from '@ember/debug';
@@ -10,7 +10,7 @@ import {
   triplesForPath,
   addSimpleFormValue,
   removeSimpleFormValue
-} from '../../../../utils/import-triples-for-form';
+} from '@lblod/submission-form-helpers';
 
 class FileField {
   @tracked errors = [];

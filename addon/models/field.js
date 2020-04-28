@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 
-import { SHACL, FORM } from '../utils/namespaces';
+import { SHACL, FORM } from '@lblod/submission-form-helpers';
 
 export default class FieldModel {
 
