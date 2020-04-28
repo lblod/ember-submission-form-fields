@@ -21,7 +21,7 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@lblod/submission-form-helpers": "1.0.0",
+    "@lblod/submission-form-helpers": "^1.1.1",
     "@ember/render-modifiers": "^1.0.2",
     "ember-power-select": "^3.0.6",
     "ember-auto-import": "^1.5.3",
