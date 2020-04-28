@@ -2,7 +2,7 @@ import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { triplesForPath } from '.@lblod/submission-form-helpers';
+import { triplesForPath } from '@lblod/submission-form-helpers';
 
 import { RDF } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
