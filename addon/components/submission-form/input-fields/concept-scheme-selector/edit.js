@@ -13,7 +13,7 @@ function byLabel(a, b) {
 }
 
 export default class FormInputFieldsConceptSchemeSelectorEditComponent extends InputFieldComponent {
-  inputId = 'select-' + guidFor(this); // this input field is not linked to the label yet, this technique does not work with the power-select
+  inputId = 'select-' + guidFor(this);
 
   @tracked selected = null
   @tracked options = []

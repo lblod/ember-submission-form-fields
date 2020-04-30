@@ -3,18 +3,18 @@
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
   {{/if}}
-</AuLabel> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
+</AuLabel>
 <div class="{{if this.errors "ember-power-select--error"}}">
   <PowerSelect
-    id="{{this.inputId}}"
-    @searchField={{"label"}}
-    @searchEnabled={{true}}
-    @selected={{this.selected}}
-    @options={{this.options}}
-    @onClose={{fn (mut this.hasBeenFocused true)}}
-    @onChange={{this.updateSelection}}
-    @allowClear={{true}}
-    as |concept|> {{!-- setting ID's (to link the label to the input field) and classes does not work with power select --}}
+          @triggerId={{this.inputId}}
+          @searchField={{"label"}}
+          @searchEnabled={{true}}
+          @selected={{this.selected}}
+          @options={{this.options}}
+          @onClose={{fn (mut this.hasBeenFocused true)}}
+          @onChange={{this.updateSelection}}
+          @allowClear={{true}}
+          as |concept|>
     {{concept.label}}
   </PowerSelect>
 </div>

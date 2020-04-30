@@ -1,11 +1,13 @@
 import InputFieldComponent from '../input-field';
-import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 export default class FormInputFieldsConceptSchemeSelectorShowComponent extends InputFieldComponent {
+  inputId = 'select-' + guidFor(this);
+
   @tracked selected = null
   @tracked options = []
 
