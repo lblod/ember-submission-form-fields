@@ -9,6 +9,7 @@ import SimpleInputFieldComponent from '../simple-value-input-field';
 export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFieldComponent {
   inputId = 'date-' + guidFor(this);
 
+  @tracked value = null
   @tracked hour = null
   @tracked minutes = null
 

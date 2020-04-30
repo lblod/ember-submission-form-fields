@@ -1,7 +1,6 @@
 import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 import rdflib from 'browser-rdflib';
-import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
 import { XSD } from '@lblod/submission-form-helpers';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 

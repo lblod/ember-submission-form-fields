@@ -6,15 +6,17 @@
 </AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with the datepicker plugin --}}
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-3-4">
-    <WuDatepicker
-            class="au-c-date-picker-container {{if this.errors "au-c-date-picker-container--error"}}"
-            id="{{this.inputId}}"
-            @width={{"block"}}
-            @tagName="div"
-            @dateFormat="DD.MM.YYYY"
-            @onChange={{this.updateValue}}
-            @value={{this.value}}
-    />
+    <div class="au-c-date-picker-container {{if this.errors "au-c-date-picker-container--error"}}">
+      <div class="datepicker">
+        <WuDatepickerInput
+                id="{{this.inputId}}"
+                class="au-c-input au-c-input--block"
+                @dateFormat="DD.MM.YYYY"
+                @onChange={{this.updateValue}}
+                @rawValue={{this.value}}
+        />
+      </div>
+    </div>
   </div>
 </div>
 
