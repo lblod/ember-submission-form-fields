@@ -177,11 +177,12 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
 
   @action
   removePrice(field) {
-    this.updatePriceTriple(field.value, null);
+    if(this.taxRateSubject) {
+      this.updatePriceTriple(field.value, null);
 
-    if (!this.hasPrices)
-      this.removeTaxRate();
-
+      if (!this.hasPrices)
+        this.removeTaxRate();
+    }
     this.fields.removeObject(field);
 
     this.hasBeenFocused = true;
