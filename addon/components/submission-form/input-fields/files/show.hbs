@@ -1,11 +1,11 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}">
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
   {{@field.label}}
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
 {{#each this.files as |file|}}
-  <VoMuFileCard @file={{file}} @active={{false}}/>
+  <VoMuFileCard id="{{this.inputId}}" @file={{file}} @active={{false}}/>
 {{/each}}
 
 {{#unless this.files}}

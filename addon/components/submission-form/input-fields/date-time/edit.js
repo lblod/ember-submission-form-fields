@@ -7,7 +7,7 @@ import { XSD } from '@lblod/submission-form-helpers';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 
 export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFieldComponent {
-  inputId = 'date-' + guidFor(this);
+  inputId = 'date-time-' + guidFor(this);
 
   @tracked value = null
   @tracked hour = null

@@ -30,20 +30,20 @@ class FileField {
 }
 
 export default class FormInputFieldsFilesEditComponent extends InputFieldComponent {
+  inputId = `files-${guidFor(this)}` // TODO for now this doesn't work on the <VoMuFileDropzone/> component.
+
   @service store
 
   @tracked files = []
 
-  observerLabel = `files-${guidFor(this)}`
-
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
-    this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.observerLabel);
+    this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.inputId);
   }
 
   willDestroy(){
-    this.storeOptions.store.deregisterObserver(this.observerLabel);
+    this.storeOptions.store.deregisterObserver(this.inputId);
   }
 
   // The validation of this fields depends on the value of other fields,
