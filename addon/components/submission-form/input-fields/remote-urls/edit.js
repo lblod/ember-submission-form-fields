@@ -33,6 +33,14 @@ class RemoteUrl {
 }
 
 export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
+  inputId = `remote-urls-${guidFor(this)}`;
+  get inputFor () {
+    if(this.remoteUrls.length) {
+      return `${this.inputId}-${this.remoteUrls.length - 1}`;
+    }
+   return this.inputId;
+  }
+
   @tracked remoteUrls = [];
 
   observerLabel = `remote-urls-${guidFor(this)}` // Could have used uuidv4, but more consistent accross components

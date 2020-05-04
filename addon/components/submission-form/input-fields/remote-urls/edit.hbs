@@ -1,4 +1,4 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}">
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
   {{@field.label}}
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
@@ -6,12 +6,13 @@
 </AuLabel>
 <table class="data-table au-u-margin-bottom-tiny {{if this.errors "data-table--error"}}">
   <tbody data-test-mn="url-box-list">
-  {{#each this.remoteUrls as |remoteUrl|}}
+  {{#each this.remoteUrls as |remoteUrl index|}}
     <tr>
       <td>
         <div class="au-o-grid au-o-grid--tiny">
           <div class="au-o-grid__item au-u-3-3">
             <AuInput
+                    id="{{this.inputId}}-{{index}}"
                     class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
                     placeholder="http://www.uw-bestuur.be/specifiek-document"
                     @width={{"block"}}
@@ -49,7 +50,7 @@
         {{#unless this.remoteUrls}}
           <AuHelpText class="au-u-margin-bottom-tiny au-u-margin-bottom-top">Nog geen links toegevoegd.</AuHelpText>
         {{/unless}}
-        <AuButton class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
+        <AuButton id="{{inputId}}" class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
           <i class="vi vi-u-xs au-u-margin-right-tiny vi-plus button__icon" aria-hidden="true"></i> Voeg nieuwe link toe
         </AuButton>
         <div class="au-u-margin-bottom-tiny au-u-margin-top-tiny">

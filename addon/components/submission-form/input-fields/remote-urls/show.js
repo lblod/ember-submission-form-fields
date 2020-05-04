@@ -1,13 +1,15 @@
 import InputFieldComponent from '../input-field';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { triplesForPath } from '@lblod/submission-form-helpers';
+import { guidFor } from '@ember/object/internals';
 
 import { RDF } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
-export default class FormInputFieldsFilesShowComponent extends InputFieldComponent {
+export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldComponent {
+  inputId = 'remote-urls-' + guidFor(this);
+
   @service store
 
   @tracked remoteUrls = []

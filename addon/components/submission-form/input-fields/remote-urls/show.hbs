@@ -1,11 +1,11 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}">
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for="{{this.inputId}}">
   {{@field.label}}
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
 <table class="data-table">
-  <tbody data-test-mn="url-box-list">
+  <tbody id="{{this.inputId}}" data-test-mn="url-box-list">
   {{#each this.remoteUrls as |remoteUrl|}}
     <tr>
       <td>
