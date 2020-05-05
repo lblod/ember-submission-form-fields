@@ -9,38 +9,27 @@
   {{#each this.remoteUrls as |remoteUrl index|}}
     <tr>
       <td>
-        <div class="au-o-grid au-o-grid--tiny">
-          <div class="au-o-grid__item au-u-3-3">
-            <AuInput
-                    id="{{this.inputId}}-{{index}}"
-                    class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
-                    placeholder="http://www.uw-bestuur.be/specifiek-document"
-                    @width={{"block"}}
-                    @value={{remoteUrl.address}}
-              {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
-            />
-          </div>
-          <div class="au-o-grid__item au-u-1-3">
-            {{#if remoteUrl.isInvalid}}
-              {{#each remoteUrl.errors as |error|}}
-                <AuHelpText @error={{"error"}}>{{error}}</AuHelpText>
-              {{/each}}
-            {{/if}}
-          </div>
-          <div class="au-o-grid__item au-u-2-3">
-            <div class="button-group au-u-margin-bottom-tiny u-align-right">
-              {{#if remoteUrl.address}}
-                  {{!--Note to the designer: I tried so hard and go so far...  --}}
-                  <a class="link link--neutral u-padding--right--small" href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer">
-                    <svg class="au-c-icon au-c-icon--left au-c-icon--large" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg> Test&nbsp;link
-                    </a>
-              {{/if}}
-              <AuButton @skin="tertiary"{{on "click" (fn this.removeRemoteUrl remoteUrl)}}>
-                <AuIcon @icon="bin" @alignment="left" /> Verwijder&nbsp;link
-              </AuButton>
-            </div>
-          </div>
-        </div>
+        <AuInput
+                id="{{this.inputId}}-{{index}}"
+                class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
+                placeholder="http://www.uw-bestuur.be/specifiek-document"
+                @width={{"block"}}
+                @value={{remoteUrl.address}}
+          {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
+        />
+        {{#if remoteUrl.isInvalid}}
+          {{#each remoteUrl.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error}}</AuHelpText>
+          {{/each}}
+        {{/if}}
+        {{#if remoteUrl.address}}
+          <a class="link link--neutral u-padding--right--small" href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer">
+            <svg class="au-c-icon au-c-icon--left au-c-icon--large" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg> Test&nbsp;link
+            </a>
+        {{/if}}
+        <AuButton @skin="tertiary"{{on "click" (fn this.removeRemoteUrl remoteUrl)}}>
+          <AuIcon @icon="bin" @alignment="left" /> Verwijder&nbsp;link
+        </AuButton>
       </td>
     </tr>
   {{/each}}
