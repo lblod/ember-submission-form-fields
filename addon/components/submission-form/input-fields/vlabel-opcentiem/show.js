@@ -1,5 +1,4 @@
 import InputFieldComponent from '../input-field';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { triplesForPath } from '@lblod/submission-form-helpers';
