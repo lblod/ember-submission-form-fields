@@ -2,7 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import rdflib from 'browser-rdflib';
-import { triplesForPath, updateSimpleFormValue } from '@lblod/submission-form-helpers';
+import { triplesForPath } from '@lblod/submission-form-helpers';
 import { XSD } from '@lblod/submission-form-helpers';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 
