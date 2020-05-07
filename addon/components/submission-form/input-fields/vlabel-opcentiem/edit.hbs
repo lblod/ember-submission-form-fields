@@ -7,7 +7,6 @@
 {{#if this.showDifferentiatie}}
   <div class="au-o-grid">
     <div class="au-o-grid__item au-u-1-1">
-      <Input @type="checkbox" name="checkbox" @checked={{this.differentiatie}} class="checkbox__toggle" {{on "keydown" this.toggleDifferentiatie}} />
       <WuCheckbox @checked={{this.differentiatie}} @onClick={{this.toggleDifferentiatie}} aria-labelledby="description-checkbox-differentiatie"/>
       <AuLabel id="description-checkbox-differentiatie">
         Vink aan indien er sprake is van differentiatie
