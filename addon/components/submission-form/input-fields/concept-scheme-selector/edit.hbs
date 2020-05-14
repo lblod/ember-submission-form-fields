@@ -14,6 +14,8 @@
           @onClose={{fn (mut this.hasBeenFocused true)}}
           @onChange={{this.updateSelection}}
           @allowClear={{true}}
+          @loadingMessage="Aan het laden..."
+          @noMatchesMessage="Geen resultaten gevonden"
           as |concept|>
     {{concept.label}}
   </PowerSelect>
