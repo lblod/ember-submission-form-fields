@@ -23,6 +23,7 @@
       <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
     {{/each}}
 
+    {{!--  Temporally disabled hour & min input fields
     {{#if this.value}}
       <div class="au-o-grid">
         <div class="au-o-grid__item au-u-1-2">
@@ -33,7 +34,7 @@
             {{/if}}
           </AuLabel>
           <AuInput class="{{if this.errors
-                               "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms --}}
+                               "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms
                    id="{{this.inputId}}-uur"
                    @value={{this.hour}}
                    @type="number"
@@ -50,7 +51,7 @@
             {{/if}}
           </AuLabel>
           <AuInput class="{{if this.errors
-                               "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms --}}
+                               "au-c-input--error"}}" {{!-- think of how one label relates to multiple input forms
                    id="{{this.inputId}}-minuten"
                    @value={{this.minutes}}
                    @type="number"
@@ -61,5 +62,6 @@
         </div>
       </div>
     {{/if}}
+    --}}
   </div>
 </div>
