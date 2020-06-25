@@ -4,6 +4,8 @@ import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath, updateSimpleFormValue} from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
+import {timeout} from 'ember-concurrency';
+import {task, restartableTask} from 'ember-concurrency-decorators';
 import rdflib from 'browser-rdflib';
 
 function byLabel(a, b) {
@@ -17,6 +19,10 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
 
   @tracked selected = null
   @tracked options = []
+
+  get subset() {
+    return this.options.slice(0, 50);
+  }
 
   constructor() {
     super(...arguments);
@@ -61,5 +67,11 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
 
     this.hasBeenFocused = true;
     super.updateValidations();
+  }
+
+  @restartableTask
+  * search(term) {
+    yield timeout(600);
+    return this.options.filter(value => value.label.toLowerCase().includes(term.toLowerCase()));
   }
 }

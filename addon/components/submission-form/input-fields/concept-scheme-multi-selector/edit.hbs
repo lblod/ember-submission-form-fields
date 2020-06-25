@@ -7,10 +7,12 @@
 <div class="{{if this.errors "ember-power-select--error"}}">
   <PowerSelectMultiple
           @triggerId={{this.inputId}}
+          @search={{perform this.search}}
           @searchField={{"label"}}
+          @searchPlaceholder={{"Typ hier om te zoeken..."}}
           @searchEnabled={{true}}
           @selected={{this.selected}}
-          @options={{this.options}}
+          @options={{this.subset}}
           @onClose={{fn (mut this.hasBeenFocused true)}}
           @onChange={{this.updateSelection}}
           @allowClear={{true}}
