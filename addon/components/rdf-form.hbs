@@ -1,0 +1,26 @@
+<div class="au-c-form">
+  <ul class="au-o-grid au-o-grid--small">
+    {{#each this.fields as |field|}}
+      <li class="au-o-grid__item au-u-1-1">
+        {{#if @show}}
+          {{component (component-for-display-type-show field.displayType)
+                      field=field
+                      formStore=@formStore
+                      graphs=@graphs
+                      sourceNode=@sourceNode}}
+        {{else}}
+          {{component
+                  (component-for-display-type-edit field.displayType)
+                  field=field
+                  formStore=@formStore
+                  graphs=@graphs
+                  sourceNode=@sourceNode
+                  forceShowErrors=@forceShowErrors
+          }}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
+{{yield}}
