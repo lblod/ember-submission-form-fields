@@ -10,7 +10,8 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/files': `submission-form/input-fields/files/edit`,
     'http://lblod.data.gift/display-types/remoteUrls': `submission-form/input-fields/remote-urls/edit`,
     'http://lblod.data.gift/display-types/vLabelOpcentiem': `submission-form/input-fields/vlabel-opcentiem/edit`,
-    'http://lblod.data.gift/display-types/checkbox': `submission-form/input-fields/checkbox/edit`
+    'http://lblod.data.gift/display-types/checkbox': `submission-form/input-fields/checkbox/edit`,
+    'http://lblod.data.gift/display-types/conceptSchemeMultiSelector': `submission-form/input-fields/concept-scheme-multi-selector/edit`,
   };
 
   return mapping[displayTypeUri] || '';

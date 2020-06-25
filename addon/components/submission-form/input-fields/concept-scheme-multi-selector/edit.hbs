@@ -1,0 +1,26 @@
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<div class="{{if this.errors "ember-power-select--error"}}">
+  <PowerSelectMultiple
+          @triggerId={{this.inputId}}
+          @searchField={{"label"}}
+          @searchEnabled={{true}}
+          @selected={{this.selected}}
+          @options={{this.options}}
+          @onClose={{fn (mut this.hasBeenFocused true)}}
+          @onChange={{this.updateSelection}}
+          @allowClear={{true}}
+          @loadingMessage="Aan het laden..."
+          @noMatchesMessage="Geen resultaten gevonden"
+          as |concept|>
+    {{concept.label}}
+  </PowerSelectMultiple>
+</div>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
