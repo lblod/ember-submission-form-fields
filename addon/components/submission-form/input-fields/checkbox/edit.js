@@ -13,14 +13,5 @@ export default class FormInputFieldsCheckboxEditComponent extends SimpleInputFie
   updateValue(e) {
     this.value = e.target.checked;
     super.updateValue(this.value);
-
-    //e.preventDefault();
-    //if(this.value) {
-    //  super.updateValue(null)
-    //} else {
-    //  super.updateValue('enabled');
-    //}
-    // TODO
-    // super.updateValue(this.value && this.value.trim());
   }
 }
