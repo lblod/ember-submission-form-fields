@@ -2,11 +2,11 @@ import {guidFor} from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
-import {RDF, triplesForPath} from "@lblod/submission-form-helpers";
+import {triplesForPath} from "@lblod/submission-form-helpers";
 import rdflib from "browser-rdflib";
 import {v4 as uuidv4} from 'uuid';
 
-const BASE = `http://data.lblod.info/date-range/`;
+const BASE = 'http://data.lblod.info/form-fields/date-range/';
 const PREFIX = new rdflib.Namespace(BASE);
 
 
@@ -34,12 +34,10 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
     }
   }
 
-  // TODO: shows if the component has a range
   get isEnabled() {
     return !!this.subject
   }
 
-  // TODO: remove the subject and its children
   @action
   reset() {
     const triples = [
@@ -56,7 +54,6 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
     this.loadProvidedValue();
   }
 
-  // TODO: create a subject and default dates
   @action
   enable() {
     this.subject = new rdflib.NamedNode(`${BASE}${uuidv4()}`);
