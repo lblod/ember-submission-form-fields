@@ -44,26 +44,32 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
 
     const updated = createPropertyTreeFromFields(fieldUris, {store, formGraph: graphs.formGraph})
       .find(g => g.uri.equals(group.uri));
-    //Procedure to render only new fields. So we don't rerender the full form.
     this.updateFields(updated);
   }
 
   updateFields(group) {
+    // NOTE: these are not updated fields, this contains all the fields
+    // Regardless if there where updated or not.
+    let updatedFields = group.fields;
+
+    //Procedure to render only new fields. So we don't rerender the full form.
+
     //Remove obsolete fields
     const toRemove = [];
     this.fields.forEach(field => {
-      if(!group.fields.find(uField => uField.uri.equals(field.uri))){
+      if(!updatedFields.find(uField => uField.uri.equals(field.uri))){
         toRemove.push(field);
       }
     });
     this.fields.removeObjects(toRemove);
 
     //Add the new fields, keep the existing ones
-    group.fields.forEach((field, i) => {
+    updatedFields.forEach((field, i) => {
       const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
-      if (existingField) {
+      if(existingField){
         this.fields.replace(i, 1, [existingField]);
-      } else {
+      }
+      else{
         this.fields.replace(i, 1, [field]);
       }
     });

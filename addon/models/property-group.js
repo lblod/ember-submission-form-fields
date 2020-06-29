@@ -1,6 +1,6 @@
-import { tracked } from '@glimmer/tracking';
+import {tracked} from '@glimmer/tracking';
 
-import { SHACL } from '@lblod/submission-form-helpers';
+import {SHACL} from '@lblod/submission-form-helpers';
 
 export default class PropertyGroupModel {
 
@@ -15,19 +15,28 @@ export default class PropertyGroupModel {
   @tracked
   fields = [];
 
-  constructor( uri, options ) {
+  constructor(uri, options) {
 
     this.uri = uri;
 
-    const { store, formGraph } = options;
-    this.name = store.any( uri, SHACL("name"), undefined, formGraph ).value;
-    this.order = parseInt(store.any( uri, SHACL("order"), undefined, formGraph ).value);
-    this.description = store.any( uri, SHACL("description"), undefined, formGraph ).value;
+    this.setName(options);
+
+    const {store, formGraph} = options;
+    this.order = parseInt(store.any(uri, SHACL("order"), undefined, formGraph).value);
+    this.description = store.any(uri, SHACL("description"), undefined, formGraph).value;
   }
 
-  get sortedFields(){
+  setName(options) {
+    const {store, formGraph} = options;
+    const t = store.any(this.uri, SHACL("name"), undefined, formGraph);
+    if (t) {
+      this.name = t.value;
+    }
+  }
+
+  get sortedFields() {
     return this
       .fields
-      .sort( (a,b) => a.order > b.order );
+      .sort((a, b) => a.order > b.order);
   }
 }

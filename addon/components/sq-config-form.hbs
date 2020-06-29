@@ -1,11 +1,20 @@
 <div class="au-c-form">
-  {{#each this.propertyGroups as |group|}}
-    <SubmissionForm::PropertyGroup
-            @group={{group}}
-            @formStore={{@formStore}}
-            @graphs={{@graphs}}
-            @sourceNode={{@sourceNode}}
-            @forceShowErrors={{@forceShowErrors}}
-            @show={{@show}}/>
+  {{#each this.propertyGroups as |group index|}}
+    <div class="au-u-margin-bottom-small">
+      <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{group.name}}</AuHeading>
+      <SubmissionForm::PropertyGroup
+              @form={{@form}}
+              @group={{group}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @show={{@show}}/>
+      {{#unless (eq index (sub this.propertyGroups.length 1))}}
+        <hr class="au-c-hr">
+      {{/unless }}
+    </div>
   {{/each}}
 </div>
+
+{{yield}}
