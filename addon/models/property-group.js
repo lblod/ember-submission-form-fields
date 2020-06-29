@@ -3,6 +3,9 @@ import { tracked } from '@glimmer/tracking';
 import { SHACL } from '@lblod/submission-form-helpers';
 
 export default class PropertyGroupModel {
+
+  @tracked
+  uri = '';
   @tracked
   label = "";
   @tracked
@@ -14,8 +17,9 @@ export default class PropertyGroupModel {
 
   constructor( uri, options ) {
 
-    const { store, formGraph } = options;
+    this.uri = uri;
 
+    const { store, formGraph } = options;
     this.name = store.any( uri, SHACL("name"), undefined, formGraph ).value;
     this.order = parseInt(store.any( uri, SHACL("order"), undefined, formGraph ).value);
     this.description = store.any( uri, SHACL("description"), undefined, formGraph ).value;

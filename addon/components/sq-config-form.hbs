@@ -1,0 +1,11 @@
+<div class="au-c-form">
+  {{#each this.propertyGroups as |group|}}
+    <SubmissionForm::PropertyGroup
+            @group={{group}}
+            @formStore={{@formStore}}
+            @graphs={{@graphs}}
+            @sourceNode={{@sourceNode}}
+            @forceShowErrors={{@forceShowErrors}}
+            @show={{@show}}/>
+  {{/each}}
+</div>
