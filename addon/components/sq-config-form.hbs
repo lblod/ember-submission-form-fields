@@ -1,6 +1,6 @@
-<div class="au-c-form">
+<div class="au-o-grid au-o-grid--flush">
   {{#each this.propertyGroups as |group index|}}
-    <div class="au-u-margin-bottom-small">
+    <div class="au-o-grid__item">
       <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{group.name}}</AuHeading>
       <SubmissionForm::PropertyGroup
               @form={{@form}}
@@ -16,5 +16,3 @@
     </div>
   {{/each}}
 </div>
-
-{{yield}}

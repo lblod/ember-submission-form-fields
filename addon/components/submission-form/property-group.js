@@ -48,23 +48,17 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   updateFields(group) {
-    // NOTE: these are not updated fields, this contains all the fields
-    // Regardless if there where updated or not.
-    let updatedFields = group.fields;
-
-    //Procedure to render only new fields. So we don't rerender the full form.
-
     //Remove obsolete fields
     const toRemove = [];
     this.fields.forEach(field => {
-      if(!updatedFields.find(uField => uField.uri.equals(field.uri))){
+      if(!group.fields.find(uField => uField.uri.equals(field.uri))){
         toRemove.push(field);
       }
     });
     this.fields.removeObjects(toRemove);
 
     //Add the new fields, keep the existing ones
-    updatedFields.forEach((field, i) => {
+    group.fields.forEach((field, i) => {
       const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
       if(existingField){
         this.fields.replace(i, 1, [existingField]);

@@ -16,22 +16,17 @@ export default class PropertyGroupModel {
   fields = [];
 
   constructor(uri, options) {
-
     this.uri = uri;
-
-    this.setName(options);
-
     const {store, formGraph} = options;
+    this.rdflibName = store.any(this.uri, SHACL("name"), undefined, formGraph);
     this.order = parseInt(store.any(uri, SHACL("order"), undefined, formGraph).value);
     this.description = store.any(uri, SHACL("description"), undefined, formGraph).value;
   }
 
-  setName(options) {
-    const {store, formGraph} = options;
-    const t = store.any(this.uri, SHACL("name"), undefined, formGraph);
-    if (t) {
-      this.name = t.value;
-    }
+  @tracked
+  rdflibName = null;
+  get name() {
+    return this.rdflibName && this.rdflibName.value;
   }
 
   get sortedFields() {

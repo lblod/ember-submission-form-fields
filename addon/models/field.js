@@ -14,6 +14,7 @@ export default class FieldModel {
     this.uri = uri;
     this.rdflibLabel = store.any( uri, SHACL("name"), undefined, formGraph );
     this.rdflibDescription = store.any( uri, SHACL("description"), undefined, formGraph );
+    this.rdflibHelp = store.any( uri, FORM("help"), undefined, formGraph );
     this.rdflibOrder = store.any( uri, SHACL("order"), undefined, formGraph );
     this.rdflibDisplayType = store.any( uri, FORM("displayType"), undefined, formGraph );
     this.rdflibPath = store.any( uri, SHACL("path"), undefined, formGraph );
@@ -30,6 +31,12 @@ export default class FieldModel {
   rdflibDescription = null;
   get description(){
     return this.rdflibDescription && this.rdflibDescription.value;
+  }
+
+  @tracked
+  rdflibHelp = null;
+  get help() {
+    return this.rdflibHelp && this.rdflibHelp.value;
   }
 
   @tracked
