@@ -9,24 +9,32 @@ export default class PropertyGroupModel {
   @tracked
   label = "";
   @tracked
-  order = "";
-  @tracked
-  description = "";
-  @tracked
   fields = [];
 
   constructor(uri, options) {
     this.uri = uri;
     const {store, formGraph} = options;
     this.rdflibName = store.any(this.uri, SHACL("name"), undefined, formGraph);
-    this.order = parseInt(store.any(uri, SHACL("order"), undefined, formGraph).value);
-    this.description = store.any(uri, SHACL("description"), undefined, formGraph).value;
+    this.rdflibOrder = store.any(uri, SHACL("order"), undefined, formGraph);
+    this.rdflibDescription = store.any(uri, SHACL("description"), undefined, formGraph);
   }
 
   @tracked
   rdflibName = null;
   get name() {
     return this.rdflibName && this.rdflibName.value;
+  }
+
+  @tracked
+  rdflibOrder = null;
+  get order() {
+    return this.rdflibOrder && parseInt(this.rdflibOrder.value);
+  }
+
+  @tracked
+  rdflibDescription = null;
+  get description() {
+    return this.rdflibDescription && this.rdflibDescription.value;
   }
 
   get sortedFields() {
