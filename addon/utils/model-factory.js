@@ -2,7 +2,7 @@ import Field from '@lblod/ember-submission-form-fields/models/field';
 import PropertyGroup from '@lblod/ember-submission-form-fields/models/property-group';
 import { SHACL } from '@lblod/submission-form-helpers';
 
-function createPropertyTreeFromFields( fields, { store, formGraph } ) {
+function createPropertyTreeFromFields( fields, { store, formGraph, sourceGraph, sourceNode } ) {
   let mappedFields =
       fields
       .map( (field) => store.any( field, SHACL("group"), undefined, formGraph ) );
@@ -17,7 +17,7 @@ function createPropertyTreeFromFields( fields, { store, formGraph } ) {
       }, {} );
 
   for( let fieldUri of fields ) {
-    const field = new Field( fieldUri, { store, formGraph } );
+    const field = new Field( fieldUri, { store, formGraph, sourceGraph, sourceNode } );
     let groupUri = store.any( fieldUri, SHACL("group"), undefined, formGraph );
     const group = groups[groupUri.value];
     group.fields.push( field );

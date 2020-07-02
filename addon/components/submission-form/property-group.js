@@ -42,28 +42,31 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       sourceNode
     });
 
-    const updated = createPropertyTreeFromFields(fieldUris, {store, formGraph: graphs.formGraph})
-      .find(g => g.uri.equals(group.uri));
-    this.updateFields(updated);
+    const updated = createPropertyTreeFromFields(fieldUris, {
+      store,
+      formGraph: graphs.formGraph,
+      sourceGraph: graphs.sourceGraph,
+      sourceNode
+    }).find(g => g.uri.equals(group.uri));
+    this.updateFields(updated, store, graphs, sourceNode);
   }
 
-  updateFields(group) {
+  updateFields(group, store, graphs, sourceNode) {
     //Remove obsolete fields
     const toRemove = [];
     this.fields.forEach(field => {
-      if(!group.fields.find(uField => uField.uri.equals(field.uri))){
+      if (!group.fields.find(uField => uField.uri.equals(field.uri))) {
         toRemove.push(field);
       }
     });
     this.fields.removeObjects(toRemove);
 
-    //Add the new fields, keep the existing ones
+    // Add the new fields, keep the existing ones
     group.fields.forEach((field, i) => {
       const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
-      if(existingField){
+      if (existingField && existingField.value === field.value) {
         this.fields.replace(i, 1, [existingField]);
-      }
-      else{
+      } else {
         this.fields.replace(i, 1, [field]);
       }
     });

@@ -23,6 +23,6 @@ export default class SqConfigFormComponent extends Component {
       metaGraph: graphs.metaGraph,
       sourceNode
     });
-    return createPropertyTreeFromFields(fieldUris, {store, formGraph: graphs.formGraph});
+    return createPropertyTreeFromFields(fieldUris, {store, formGraph: graphs.formGraph, sourceGraph: graphs.sourceGraph, sourceNode});
   }
 }

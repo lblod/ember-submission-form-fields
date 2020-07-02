@@ -42,7 +42,7 @@ export default class SubmissionFormComponent extends Component {
       metaGraph
     });
 
-    const propertyGroups = createPropertyTreeFromFields( fieldUris, { store, formGraph });
+    const propertyGroups = createPropertyTreeFromFields(fieldUris, {store, formGraph, sourceGraph, sourceNode});
     // NOTE: these are not updated fields, this contains all the fields
     // Regardless if there where updated or not.
     let updatedFields = [];

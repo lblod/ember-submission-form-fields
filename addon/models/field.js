@@ -9,7 +9,7 @@ export default class FieldModel {
 
   constructor( uri, options ) {
 
-    const { store, formGraph } = options;
+    const { store, formGraph, sourceGraph, sourceNode } = options;
 
     this.uri = uri;
     this.rdflibLabel = store.any( uri, SHACL("name"), undefined, formGraph );
@@ -19,6 +19,7 @@ export default class FieldModel {
     this.rdflibDisplayType = store.any( uri, FORM("displayType"), undefined, formGraph );
     this.rdflibPath = store.any( uri, SHACL("path"), undefined, formGraph );
     this.rdflibOptions = store.any( uri, FORM("options"), undefined, formGraph );
+    this.rdflibValue = store.any(sourceNode, this.rdflibPath, undefined, sourceGraph);
   }
 
   @tracked
@@ -61,5 +62,11 @@ export default class FieldModel {
   rdflibOptions = null;
   get options(){
     return this.rdflibOptions && this.rdflibOptions.value;
+  }
+
+  @tracked
+  rdflibValue = null;
+  get value(){
+    return this.rdflibValue && this.rdflibValue.value;
   }
 }
