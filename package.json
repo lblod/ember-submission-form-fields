@@ -33,8 +33,7 @@
     "ember-moment": "^8.0.0",
     "browser-rdflib": "^1.0.0",
     "forking-store": "^1.0.0",
-    "moment": "^2.24.0",
-    "uuid": "^7.0.3"
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^1.1.0",

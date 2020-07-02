@@ -1,10 +1,10 @@
 import {guidFor} from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
-import {action} from '@ember/object';
+import {action, computed} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
-import {triplesForPath} from "@lblod/submission-form-helpers";
 import rdflib from "browser-rdflib";
-import {v4 as uuidv4} from 'uuid';
+
+import {SHACL} from '@lblod/submission-form-helpers';
 
 const BASE = 'http://data.lblod.info/form-fields/date-range/';
 const PREFIX = new rdflib.Namespace(BASE);
@@ -13,9 +13,13 @@ const PREFIX = new rdflib.Namespace(BASE);
 export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-' + guidFor(this);
 
-  @tracked subject = null
   @tracked from;
   @tracked to;
+
+  paths = {
+    from: null,
+    to: null
+  }
 
   constructor() {
     super(...arguments);
@@ -23,58 +27,67 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
   }
 
   loadProvidedValue() {
-    const matches = triplesForPath(this.storeOptions);
-    const triples = matches.triples;
+    const {store, formGraph, sourceGraph, sourceNode} = this.storeOptions;
+    const field = this.args.field;
 
-    if (triples.length) {
-      this.subject = triples[0].object; // assuming only one per form
-      // we assume if we have an object, dates were set
-      this.from = this.storeOptions.store.match(this.subject, PREFIX('from'), undefined, this.storeOptions.sourceGraph)[0].object.value
-      this.to = this.storeOptions.store.match(this.subject, PREFIX('to'), undefined, this.storeOptions.sourceGraph)[0].object.value
+    this.paths = {
+      from: store.any(store.any(field.uri, PREFIX('from'), undefined, formGraph), SHACL('path'), undefined, formGraph),
+      to: store.any(store.any(field.uri, PREFIX('to'), undefined, formGraph), SHACL('path'), undefined, formGraph),
+    }
+
+    const from = store.any(sourceNode, this.paths.from, undefined, sourceGraph);
+    const to = store.any(sourceNode, this.paths.to, undefined, sourceGraph);
+
+    if (from && to) {
+      this.from = from.value;
+      this.to = to.value;
     }
   }
 
+  @computed('from', 'to')
   get isEnabled() {
-    return !!this.subject
+    return !!(this.from && this.to);
   }
 
   @action
   reset() {
-    const triples = [
-      ...this.storeOptions.store.match(this.subject, undefined, undefined, this.storeOptions.sourceGraph),
-      {
-        subject: this.storeOptions.sourceNode,
-        predicate: this.storeOptions.path,
-        object: this.subject,
-        graph: this.storeOptions.sourceGraph
-      }
-    ];
-    this.subject = null;
-    this.storeOptions.store.removeStatements(triples);
-    this.loadProvidedValue();
+      this.delete(this.paths.from);
+      this.delete(this.paths.to);
+
+      this.from = null;
+      this.to = null;
+
+      this.hasBeenFocused = true;
+      this.loadProvidedValue();
   }
 
   @action
   enable() {
-    this.subject = new rdflib.NamedNode(`${BASE}${uuidv4()}`);
-
     const yesterday = moment().subtract(1, 'day').startOf('day');
-
     const today = moment().endOf('day');
 
-    this.updateDate(yesterday.toDate(), PREFIX('from'));
-    this.updateDate(today.toDate(), PREFIX('to'));
-    super.updateValue(this.subject)
+    this.update(yesterday.toDate(), this.paths.from);
+    this.update(today.toDate(), this.paths.to);
+
+    this.hasBeenFocused = true;
+    this.loadProvidedValue();
   }
 
-  updateDate(date, prefix) {
-    // Remove the old
-    let triples = this.storeOptions.store.match(this.subject, prefix, undefined, this.storeOptions.sourceGraph);
+  delete(prefix) {
+    const triples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      prefix,
+      undefined,
+      this.storeOptions.sourceGraph);
     this.storeOptions.store.removeStatements(triples);
+  }
+
+  update(date, prefix) {
+    this.delete(prefix);
 
     // In with the new
-    triples = [{
-      subject: this.subject,
+    const triples = [{
+      subject: this.storeOptions.sourceNode,
       predicate: prefix,
       object: date.toISOString(),
       graph: this.storeOptions.sourceGraph
@@ -84,15 +97,17 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
 
   @action
   updateFrom(date) {
-    this.updateDate(date, PREFIX('from'));
+    this.update(date, this.paths.from);
+
+    this.hasBeenFocused = true;
     this.loadProvidedValue();
   }
 
   @action
   updateTo(date) {
-    this.updateDate(date, PREFIX('to'));
+    this.update(date, this.paths.to);
+
+    this.hasBeenFocused = true;
     this.loadProvidedValue();
   }
-
-
 }

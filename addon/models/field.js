@@ -19,7 +19,9 @@ export default class FieldModel {
     this.rdflibDisplayType = store.any( uri, FORM("displayType"), undefined, formGraph );
     this.rdflibPath = store.any( uri, SHACL("path"), undefined, formGraph );
     this.rdflibOptions = store.any( uri, FORM("options"), undefined, formGraph );
-    this.rdflibValue = store.any(sourceNode, this.rdflibPath, undefined, sourceGraph);
+    if(this.rdflibPath) {
+      this.rdflibValue = store.any(sourceNode, this.rdflibPath, undefined, sourceGraph);
+    }
   }
 
   @tracked
