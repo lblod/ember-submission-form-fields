@@ -52,13 +52,9 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   updateFields(group, store, graphs, sourceNode) {
-    //Remove obsolete fields
-    const toRemove = [];
-    this.fields.forEach(field => {
-      if (!group.fields.find(uField => uField.uri.equals(field.uri))) {
-        toRemove.push(field);
-      }
-    });
+
+    // Remove obsolete fields
+    let toRemove = this.fields.filter(field => !group.fields.find(uField => uField.uri.equals(field.uri)));
     this.fields.removeObjects(toRemove);
 
     // Add the new fields, keep the existing ones
@@ -70,5 +66,11 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
         this.fields.replace(i, 1, [field]);
       }
     });
+
+    // Delete source-data of removed field.
+    toRemove.forEach(field => {
+      const values = store.match(sourceNode, field.rdflibPath, undefined, graphs.sourceGraph);
+      store.removeStatements(values);
+    })
   }
 }
