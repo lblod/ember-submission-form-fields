@@ -64,7 +64,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     // Add the new fields, keep the existing ones
     group.fields.forEach((field, i) => {
       const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
-      if (existingField && existingField.value === field.value) {
+      if (existingField) {
         this.fields.replace(i, 1, [existingField]);
       } else {
         this.fields.replace(i, 1, [field]);
