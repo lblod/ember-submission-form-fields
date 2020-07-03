@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 
 import SimpleInputFieldComponent from '../simple-value-input-field';
 
-export default class FormInputFieldsCheckboxEditComponent extends SimpleInputFieldComponent {
-  inputId = 'checkbox-' + guidFor(this);
+export default class FormInputFieldsSwitchEditComponent extends SimpleInputFieldComponent {
+  inputId = 'switch-' + guidFor(this);
 
   @tracked checked = false;
 
