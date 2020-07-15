@@ -31,7 +31,7 @@
     "ember-concurrency": "^1.1.7",
     "ember-concurrency-decorators": "^1.0.0",
     "ember-moment": "^8.0.0",
-    "browser-rdflib": "^1.0.0",
+    "browser-rdflib": "^1.1.0",
     "forking-store": "^1.0.0",
     "moment": "^2.24.0"
   },

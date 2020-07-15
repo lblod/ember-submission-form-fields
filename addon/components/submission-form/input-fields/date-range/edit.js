@@ -1,14 +1,13 @@
-import {guidFor} from '@ember/object/internals';
+import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
-import {action, computed} from '@ember/object';
-import {tracked} from '@glimmer/tracking';
-import rdflib from "browser-rdflib";
+import { action, computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import rdflib from 'browser-rdflib';
 
-import {SHACL} from '@lblod/submission-form-helpers';
+import { SHACL } from '@lblod/submission-form-helpers';
 
 const BASE = 'http://data.lblod.info/form-fields/date-range/';
 const PREFIX = new rdflib.Namespace(BASE);
-
 
 export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-' + guidFor(this);
@@ -18,8 +17,8 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
 
   paths = {
     from: null,
-    to: null
-  }
+    to: null,
+  };
 
   constructor() {
     super(...arguments);
@@ -33,7 +32,7 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
     this.paths = {
       from: store.any(store.any(field.uri, PREFIX('from'), undefined, formGraph), SHACL('path'), undefined, formGraph),
       to: store.any(store.any(field.uri, PREFIX('to'), undefined, formGraph), SHACL('path'), undefined, formGraph),
-    }
+    };
 
     const from = store.any(sourceNode, this.paths.from, undefined, sourceGraph);
     const to = store.any(sourceNode, this.paths.to, undefined, sourceGraph);
@@ -51,14 +50,14 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
 
   @action
   reset() {
-      this.delete(this.paths.from);
-      this.delete(this.paths.to);
+    this.delete(this.paths.from);
+    this.delete(this.paths.to);
 
-      this.from = null;
-      this.to = null;
+    this.from = null;
+    this.to = null;
 
-      this.hasBeenFocused = true;
-      this.loadProvidedValue();
+    this.hasBeenFocused = true;
+    this.loadProvidedValue();
   }
 
   @action
@@ -86,12 +85,13 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
     this.delete(prefix);
 
     // In with the new
-    const triples = [{
-      subject: this.storeOptions.sourceNode,
-      predicate: prefix,
-      object: date.toISOString(),
-      graph: this.storeOptions.sourceGraph
-    }];
+    const triples = [
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: prefix,
+        object: date.toISOString(),
+        graph: this.storeOptions.sourceGraph,
+      }];
     this.storeOptions.store.addAll(triples);
   }
 
