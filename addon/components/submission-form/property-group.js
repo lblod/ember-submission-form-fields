@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
-import {tracked} from '@glimmer/tracking';
-import {A} from '@ember/array';
-import {fieldsForForm} from "@lblod/submission-form-helpers";
-import {createPropertyTreeFromFields} from "../../utils/model-factory";
-import {guidFor} from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
+import { fieldsForForm } from '@lblod/submission-form-helpers';
+import { createPropertyTreeFromFields } from '../../utils/model-factory';
+import { guidFor } from '@ember/object/internals';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
   @tracked fields = A();
 
-  observerLabel = `property-group-${guidFor(this)}`
+  observerLabel = `property-group-${guidFor(this)}`;
 
   constructor() {
     super(...arguments);
@@ -17,7 +17,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
         this.args.group,
         this.args.formStore,
         this.args.graphs,
-        this.args.sourceNode
+        this.args.sourceNode,
       );
     }, this.observerLabel);
 
@@ -25,7 +25,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       this.args.group,
       this.args.formStore,
       this.args.graphs,
-      this.args.sourceNode
+      this.args.sourceNode,
     );
   }
 
@@ -39,14 +39,14 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       formGraph: graphs.formGraph,
       sourceGraph: graphs.sourceGraph,
       metaGraph: graphs.metaGraph,
-      sourceNode
+      sourceNode,
     });
 
     const updated = createPropertyTreeFromFields(fieldUris, {
       store,
       formGraph: graphs.formGraph,
       sourceGraph: graphs.sourceGraph,
-      sourceNode
+      sourceNode,
     }).find(g => g.uri.equals(group.uri));
     this.updateFields(updated, store, graphs, sourceNode);
   }
@@ -71,6 +71,6 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     toRemove.forEach(field => {
       const values = store.match(sourceNode, field.rdflibPath, undefined, graphs.sourceGraph);
       store.removeStatements(values);
-    })
+    });
   }
 }
