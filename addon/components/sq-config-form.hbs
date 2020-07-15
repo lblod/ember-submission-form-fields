@@ -2,7 +2,7 @@
   {{#each this.propertyGroups as |group index|}}
     <div class="au-o-grid__item">
       <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{group.name}}</AuHeading>
-      <SubmissionForm::PropertyGroup
+      <PropertyGroup
               @form={{@form}}
               @group={{group}}
               @formStore={{@formStore}}
