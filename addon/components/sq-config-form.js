@@ -1,17 +1,17 @@
 import Component from '@glimmer/component';
-import {fieldsForForm} from '@lblod/submission-form-helpers';
-import {createPropertyTreeFromFields} from '../utils/model-factory';
-import {A} from '@ember/array';
+import { fieldsForForm } from '@lblod/submission-form-helpers';
+import { createPropertyTreeFromFields } from '../utils/model-factory';
+import { A } from '@ember/array';
 
 export default class SqConfigFormComponent extends Component {
-  propertyGroups = A()
+  propertyGroups = A();
 
   constructor() {
     super(...arguments);
     this.propertyGroups = this.getPropertyGroups(
       this.args.formStore,
       this.args.graphs,
-      this.args.sourceNode
+      this.args.sourceNode,
     );
   }
 
@@ -21,8 +21,13 @@ export default class SqConfigFormComponent extends Component {
       formGraph: graphs.formGraph,
       sourceGraph: graphs.sourceGraph,
       metaGraph: graphs.metaGraph,
-      sourceNode
+      sourceNode,
     });
-    return createPropertyTreeFromFields(fieldUris, {store, formGraph: graphs.formGraph, sourceGraph: graphs.sourceGraph, sourceNode});
+    return createPropertyTreeFromFields(fieldUris, {
+      store,
+      formGraph: graphs.formGraph,
+      sourceGraph: graphs.sourceGraph,
+      sourceNode,
+    });
   }
 }
