@@ -12,7 +12,8 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/vLabelOpcentiem': `input-fields/vlabel-opcentiem/show`,
     'http://lblod.data.gift/display-types/switch': `input-fields/switch/show`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelector': `input-fields/concept-scheme-multi-selector/show`,
-    'http://lblod.data.gift/display-types/dateRange': `input-fields/date-range/edit`,
+    'http://lblod.data.gift/display-types/dateRange': `input-fields/date-range/show`,
+    'http://lblod.data.gift/display-types/search': `input-fields/search/show`,
   };
 
   return mapping[displayTypeUri] || '';

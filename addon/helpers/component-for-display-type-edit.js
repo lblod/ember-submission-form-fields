@@ -13,6 +13,7 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/switch': `input-fields/switch/edit`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelector': `input-fields/concept-scheme-multi-selector/edit`,
     'http://lblod.data.gift/display-types/dateRange': `input-fields/date-range/edit`,
+    'http://lblod.data.gift/display-types/search': `input-fields/search/edit`,
   };
 
   return mapping[displayTypeUri] || '';
