@@ -1,6 +1,6 @@
 import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import rdflib from 'browser-rdflib';
 
@@ -43,7 +43,6 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
     }
   }
 
-  @computed('from', 'to')
   get isEnabled() {
     return !!(this.from && this.to);
   }
