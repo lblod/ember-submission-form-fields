@@ -3,7 +3,8 @@ import rdflib from 'browser-rdflib';
 import moment from 'moment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { guidFor } from '@ember/object/internals';K
+import { guidFor } from '@ember/object/internals';
+
 import { SHACL } from '@lblod/submission-form-helpers';
 
 const DATE_RANGE = new rdflib.Namespace('http://data.lblod.info/form-fields/date-range/');
@@ -95,16 +96,18 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
 
   @action
   updateFrom(date) {
-    this.update(date, this.paths.from);
-
+    if (date) {
+      this.update(date, this.paths.from);
+    }
     this.hasBeenFocused = true;
     this.loadProvidedValue();
   }
 
   @action
   updateTo(date) {
-    this.update(date, this.paths.to);
-
+    if (date) {
+      this.update(date, this.paths.to);
+    }
     this.hasBeenFocused = true;
     this.loadProvidedValue();
   }
