@@ -3,7 +3,7 @@ import { fieldsForForm } from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 
-export default class SqConfigFormComponent extends Component {
+export default class RdfForm extends Component {
   propertyGroups = A();
 
   constructor() {
