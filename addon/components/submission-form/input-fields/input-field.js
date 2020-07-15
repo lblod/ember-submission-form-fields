@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
-import Field from '@lblod/ember-submission-form-fields/models/field';
 import { tracked } from '@glimmer/tracking';
 import { validationResultsForField, validationTypesForField } from '@lblod/submission-form-helpers';
-import { guidFor } from '@ember/object/internals';
 
 /**
  * Abstract input-field component providing a base class
