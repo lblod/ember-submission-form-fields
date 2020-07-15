@@ -5,11 +5,13 @@
     <WuButton @label="Alle meldingen"
               @isAlt={{true}}
               @isNarrow={{true}}
-              disabled={{true}}/>
+              disabled={{true}}
+              @onClick={{noop}}/>
     <WuButton @label="Specifieke periode"
               @isAlt={{true}}
               @isNarrow={{true}}
-              disabled={{true}}/>
+              disabled={{true}}
+              @onClick={{noop}}/>
   </WuButtonGroup>
 
   {{#if this.isEnabled}}
