@@ -1,14 +1,13 @@
-import {guidFor} from '@ember/object/internals';
+import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
-import {computed} from '@ember/object';
-import {tracked} from '@glimmer/tracking';
-import rdflib from "browser-rdflib";
+import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import rdflib from 'browser-rdflib';
 
-import {SHACL} from '@lblod/submission-form-helpers';
+import { SHACL } from '@lblod/submission-form-helpers';
 
 const BASE = 'http://data.lblod.info/form-fields/date-range/';
 const PREFIX = new rdflib.Namespace(BASE);
-
 
 export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-' + guidFor(this);
@@ -18,8 +17,8 @@ export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFi
 
   paths = {
     from: null,
-    to: null
-  }
+    to: null,
+  };
 
   constructor() {
     super(...arguments);
@@ -33,7 +32,7 @@ export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFi
     this.paths = {
       from: store.any(store.any(field.uri, PREFIX('from'), undefined, formGraph), SHACL('path'), undefined, formGraph),
       to: store.any(store.any(field.uri, PREFIX('to'), undefined, formGraph), SHACL('path'), undefined, formGraph),
-    }
+    };
 
     const from = store.any(sourceNode, this.paths.from, undefined, sourceGraph);
     const to = store.any(sourceNode, this.paths.to, undefined, sourceGraph);
