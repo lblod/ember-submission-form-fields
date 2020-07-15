@@ -1,8 +1,8 @@
 import InputFieldComponent from '../input-field';
-import {guidFor} from '@ember/object/internals';
-import {tracked} from '@glimmer/tracking';
-import {triplesForPath} from '@lblod/submission-form-helpers';
-import {SKOS} from '@lblod/submission-form-helpers';
+import { guidFor } from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
+import { triplesForPath } from '@lblod/submission-form-helpers';
+import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 function byLabel(a, b) {
@@ -14,8 +14,8 @@ function byLabel(a, b) {
 export default class FormInputFieldsConceptSchemeSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
 
-  @tracked selected = null
-  @tracked options = []
+  @tracked selected = null;
+  @tracked options = [];
 
   get subset() {
     return this.options.slice(0, 50);
@@ -32,12 +32,10 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
 
-    this.options = this.args.formStore
-      .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
-      .map(t => {
-        const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
-        return {subject: t.subject, label: label && label.value};
-      });
+    this.options = this.args.formStore.match(undefined, SKOS('inScheme'), conceptScheme, metaGraph).map(t => {
+      const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
+      return {subject: t.subject, label: label && label.value};
+    });
     this.options.sort(byLabel);
   }
 
