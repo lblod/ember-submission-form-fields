@@ -1,9 +1,9 @@
-import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
+import rdflib from 'browser-rdflib';
+import moment from 'moment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import rdflib from 'browser-rdflib';
-
+import { guidFor } from '@ember/object/internals';K
 import { SHACL } from '@lblod/submission-form-helpers';
 
 const BASE = 'http://data.lblod.info/form-fields/date-range/';
