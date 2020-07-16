@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { fieldsForForm } from '@lblod/submission-form-helpers';
-import { createPropertyTreeFromFields } from '../utils/model-factory';
+import { createPropertyTreeFromFields, getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
@@ -14,7 +14,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     super(...arguments);
     this.args.formStore.registerObserver(() => {
       this.update(
-        this.args.group,
+        this.args.field,
         this.args.formStore,
         this.args.graphs,
         this.args.sourceNode,
@@ -22,7 +22,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     }, this.observerLabel);
 
     this.update(
-      this.args.group,
+      this.args.field,
       this.args.formStore,
       this.args.graphs,
       this.args.sourceNode,
@@ -34,31 +34,32 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   update(group, store, graphs, sourceNode) {
-    let fieldUris = fieldsForForm(this.args.form, {
-      store,
-      formGraph: graphs.formGraph,
-      sourceGraph: graphs.sourceGraph,
-      metaGraph: graphs.metaGraph,
-      sourceNode,
-    });
+   //  let fieldUris = fieldsForForm(this.args.form, {
+   //    store,
+   //    formGraph: graphs.formGraph,
+   //    sourceGraph: graphs.sourceGraph,
+   //    metaGraph: graphs.metaGraph,
+   //    sourceNode,
+   //  });
 
-    const updated = createPropertyTreeFromFields(fieldUris, {
-      store,
-      formGraph: graphs.formGraph,
-      sourceGraph: graphs.sourceGraph,
-      sourceNode,
-    }).find(g => g.uri.equals(group.uri));
+   //  const updated = createPropertyTreeFromFields(fieldUris, {
+   //    store,
+   //    formGraph: graphs.formGraph,
+   //    sourceGraph: graphs.sourceGraph,
+   //    sourceNode,
+   //  }).find(g => g.uri.equals(group.uri));
+    const updated = getChildrenForPropertyGroup(group, {form: this.args.form, store, graphs, node: sourceNode});
     this.updateFields(updated, store, graphs, sourceNode);
   }
 
-  updateFields(group, store, graphs, sourceNode) {
+  updateFields(children, store, graphs, sourceNode) {
 
     // Remove obsolete fields
-    let toRemove = this.fields.filter(field => !group.fields.find(uField => uField.uri.equals(field.uri)));
+    let toRemove = this.fields.filter(field => !children.find(uField => uField.uri.equals(field.uri)));
     this.fields.removeObjects(toRemove);
 
     // Add the new fields, keep the existing ones
-    group.fields.forEach((field, i) => {
+    children.forEach((field, i) => {
       const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
       if (existingField) {
         this.fields.replace(i, 1, [existingField]);
@@ -68,6 +69,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     });
 
     // Delete source-data of removed field.
+    // TODO: make this optional
     toRemove.forEach(field => {
       const values = store.match(sourceNode, field.rdflibPath, undefined, graphs.sourceGraph);
       store.removeStatements(values);

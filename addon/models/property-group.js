@@ -1,45 +1,58 @@
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 
-import {SHACL} from '@lblod/submission-form-helpers';
+import { SHACL, FORM } from '@lblod/submission-form-helpers';
 
 export default class PropertyGroupModel {
 
   @tracked
   uri = '';
   @tracked
-  label = "";
+  label = '';
   @tracked
   fields = [];
 
   constructor(uri, options) {
     this.uri = uri;
     const {store, formGraph} = options;
-    this.rdflibName = store.any(this.uri, SHACL("name"), undefined, formGraph);
-    this.rdflibOrder = store.any(uri, SHACL("order"), undefined, formGraph);
-    this.rdflibDescription = store.any(uri, SHACL("description"), undefined, formGraph);
+    this.rdflibName = store.any(this.uri, SHACL('name'), undefined, formGraph);
+    this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
+    this.rdflibDescription = store.any(uri, SHACL('description'), undefined, formGraph);
+    this.rdflibClass = store.any(uri, FORM('class'), undefined, formGraph);
   }
 
   @tracked
   rdflibName = null;
+
   get name() {
     return this.rdflibName && this.rdflibName.value;
   }
 
   @tracked
   rdflibOrder = null;
+
   get order() {
     return this.rdflibOrder && parseInt(this.rdflibOrder.value);
   }
 
   @tracked
   rdflibDescription = null;
+
   get description() {
     return this.rdflibDescription && this.rdflibDescription.value;
   }
 
+  @tracked
+  rdflibClass = null;
+
+  get class() {
+    return this.rdflibClass && this.rdflibClass.value;
+  }
+
   get sortedFields() {
-    return this
-      .fields
-      .sort((a, b) => a.order > b.order);
+    return this.fields.sort((a, b) => a.order > b.order);
+  }
+
+  get displayType() {
+    return 'http://lblod.data.gift/display-types/property-group';
   }
 }

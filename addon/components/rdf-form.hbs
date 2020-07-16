@@ -1,18 +1,13 @@
-<div class="au-o-grid au-o-grid--flush">
-  {{#each this.propertyGroups as |group index|}}
-    <div class="au-o-grid__item">
-      <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{group.name}}</AuHeading>
-      <PropertyGroup
-              @form={{@form}}
-              @group={{group}}
-              @formStore={{@formStore}}
-              @graphs={{@graphs}}
-              @sourceNode={{@sourceNode}}
-              @forceShowErrors={{@forceShowErrors}}
-              @show={{@show}}/>
-      {{#unless (eq index (sub this.propertyGroups.length 1))}}
-        <hr class="au-c-hr">
-      {{/unless }}
-    </div>
-  {{/each}}
-</div>
+{{#each this.propertyGroups as |group index|}}
+    <PropertyGroup
+            @form={{@form}}
+            @field={{group}}
+            @formStore={{@formStore}}
+            @graphs={{@graphs}}
+            @sourceNode={{@sourceNode}}
+            @forceShowErrors={{@forceShowErrors}}
+            @show={{@show}}/>
+    {{! -- #unless (eq index (sub this.propertyGroups.length 1))
+      <hr class="au-c-hr">
+    unless --}}
+{{/each}}

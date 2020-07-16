@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { fieldsForForm } from '@lblod/submission-form-helpers';
-import { createPropertyTreeFromFields } from '../utils/model-factory';
+import { createPropertyTreeFromFields, getTopLevelPropertyGroups } from '../utils/model-factory';
 import { A } from '@ember/array';
 
 export default class RdfForm extends Component {
@@ -16,18 +16,19 @@ export default class RdfForm extends Component {
   }
 
   getPropertyGroups(store, graphs, sourceNode) {
-    let fieldUris = fieldsForForm(this.args.form, {
-      store,
-      formGraph: graphs.formGraph,
-      sourceGraph: graphs.sourceGraph,
-      metaGraph: graphs.metaGraph,
-      sourceNode,
-    });
-    return createPropertyTreeFromFields(fieldUris, {
-      store,
-      formGraph: graphs.formGraph,
-      sourceGraph: graphs.sourceGraph,
-      sourceNode,
-    });
+    // let fieldUris = fieldsForForm(this.args.form, {
+    //   store,
+    //   formGraph: graphs.formGraph,
+    //   sourceGraph: graphs.sourceGraph,
+    //   metaGraph: graphs.metaGraph,
+    //   sourceNode,
+    // });
+    // return createPropertyTreeFromFields(fieldUris, {
+    //   store,
+    //   formGraph: graphs.formGraph,
+    //   sourceGraph: graphs.sourceGraph,
+    //   sourceNode,
+    // });
+    return getTopLevelPropertyGroups({store, graphs});
   }
 }

@@ -1,21 +1,29 @@
-{{#each this.fields as |field|}}
-  <div class="au-u-margin-bottom-small">
-    {{#if @show}}
-      {{component (component-for-display-type-show field.displayType)
-                  field=field
-                  formStore=@formStore
-                  graphs=@graphs
-                  sourceNode=@sourceNode}}
-    {{else}}
-      {{component
-              (component-for-display-type-edit field.displayType)
-              field=field
-              formStore=@formStore
-              graphs=@graphs
-              sourceNode=@sourceNode
-              forceShowErrors=@forceShowErrors
-      }}
-    {{/if}}
-    <AuHelpText class="au-u-margin-none">{{field.help}}</AuHelpText>
-  </div>
-{{/each}}
+<div class={{@field.class}}>
+  <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{field.name}}</AuHeading>
+  {{#each this.fields as |field|}}
+    <div class="au-u-margin-bottom-small">
+      {{#if @show}}
+        {{component (component-for-display-type-show field.displayType)
+                    field=field
+                    form=@form
+                    formStore=@formStore
+                    graphs=@graphs
+                    sourceNode=@sourceNode
+                    show=@show
+        }}
+      {{else}}
+        {{component
+                (component-for-display-type-edit field.displayType)
+                field=field
+                form=@form
+                formStore=@formStore
+                graphs=@graphs
+                sourceNode=@sourceNode
+                forceShowErrors=@forceShowErrors
+                show=@show
+        }}
+      {{/if}}
+      <AuHelpText class="au-u-margin-none">{{field.help}}</AuHelpText>
+    </div>
+  {{/each}}
+</div>

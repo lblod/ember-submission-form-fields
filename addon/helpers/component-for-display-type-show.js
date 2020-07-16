@@ -2,6 +2,7 @@ import { helper } from '@ember/component/helper';
 
 export default helper(function componentForDisplayTypeShow(displayTypeUri) {
   const mapping = {
+    'http://lblod.data.gift/display-types/property-group' : 'property-group',
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/show`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/show`,
     'http://lblod.data.gift/display-types/date': `rdf-input-fields/date/show`,
