@@ -19,6 +19,9 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
           store: this.args.formStore,
           graphs: this.args.graphs,
           node: this.args.sourceNode,
+        },
+        {
+          cacheConditionals: this.args.cacheConditionals
         }
       );
     }, this.observerLabel);
@@ -30,6 +33,9 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
         store: this.args.formStore,
         graphs: this.args.graphs,
         node: this.args.sourceNode,
+      },
+      {
+        cacheConditionals: this.args.cacheConditionals
       }
     );
   }
@@ -38,15 +44,15 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  update(group, {form, store, graphs, node}) {
+  update(group, {form, store, graphs, node}, options) {
     const children = getChildrenForPropertyGroup(group, {form, store, graphs, node});
-    // this.updateFields(children, store, graphs, sourceNode);
 
     // NOTE: this is made with the assumption that the following logic will NOT try to tamper with property-groups
     const removed = this.removeObsoleteFields(children);
     this.updateFields(children);
-    // TODO: make this optional
-    this.removeObsoleteValues(removed, {store, graphs, node})
+    if(!options.cacheConditionals) {
+      this.removeObsoleteValues(removed, {store, graphs, node})
+    }
   }
 
   removeObsoleteFields(children) {

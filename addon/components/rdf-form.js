@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
-import { fieldsForForm } from '@lblod/submission-form-helpers';
-import { createPropertyTreeFromFields, getTopLevelPropertyGroups } from '../utils/model-factory';
+import {  getTopLevelPropertyGroups } from '../utils/model-factory';
 import { A } from '@ember/array';
 
 export default class RdfForm extends Component {
