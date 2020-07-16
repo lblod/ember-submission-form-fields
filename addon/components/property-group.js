@@ -34,26 +34,12 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   update(group, store, graphs, sourceNode) {
-   //  let fieldUris = fieldsForForm(this.args.form, {
-   //    store,
-   //    formGraph: graphs.formGraph,
-   //    sourceGraph: graphs.sourceGraph,
-   //    metaGraph: graphs.metaGraph,
-   //    sourceNode,
-   //  });
-
-   //  const updated = createPropertyTreeFromFields(fieldUris, {
-   //    store,
-   //    formGraph: graphs.formGraph,
-   //    sourceGraph: graphs.sourceGraph,
-   //    sourceNode,
-   //  }).find(g => g.uri.equals(group.uri));
     const updated = getChildrenForPropertyGroup(group, {form: this.args.form, store, graphs, node: sourceNode});
     this.updateFields(updated, store, graphs, sourceNode);
   }
 
   updateFields(children, store, graphs, sourceNode) {
-
+    // NOTE: this is made with the assumtiomn that the following logic will NOT try to tamper with property-groups
     // Remove obsolete fields
     let toRemove = this.fields.filter(field => !children.find(uField => uField.uri.equals(field.uri)));
     this.fields.removeObjects(toRemove);

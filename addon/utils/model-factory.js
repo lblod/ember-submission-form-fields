@@ -41,6 +41,7 @@ export function getTopLevelPropertyGroups({store, graphs}) {
   return top.map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph})).sort((a, b) => a.order - b.order);
 }
 
+// TODO make more efficient & solid
 export function getChildrenForPropertyGroup(group, {form, store, graphs, node}) {
   const children = store.match(undefined, SHACL('group'), group.uri, graphs.formGraph).map(t => t.subject);
   const fields = fieldsForForm(form, {
