@@ -38,27 +38,37 @@ function createPropertyTreeFromFields(fields, {store, formGraph, sourceGraph, so
 export function getTopLevelPropertyGroups({store, graphs}) {
   const groups = store.match(undefined, RDF('type'), FORM('PropertyGroup'), graphs.formGraph).map(t => t.subject);
   const top = groups.filter(group => !store.any(group, SHACL('group'), undefined, graphs.formGraph));
-  return top.map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph})).sort((a, b) => a.order - b.order);
+  return top.map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph})).
+    sort((a, b) => a.order - b.order);
 }
 
 // TODO make more efficient & solid
 export function getChildrenForPropertyGroup(group, {form, store, graphs, node}) {
+  // NOTE: contains all children for a property-group (this includes other property-groups)
   const children = store.match(undefined, SHACL('group'), group.uri, graphs.formGraph).map(t => t.subject);
-  const fields = fieldsForForm(form, {
+
+  // Process property-groups
+  let groups = children.filter(child => !!store.any(child, RDF('type'), FORM('PropertyGroup'), graphs.formGraph));
+  if (groups) {
+    groups = groups.map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph}));
+  }
+
+  // Process fields
+  const conditionals = fieldsForForm(form, {
     store,
     formGraph: graphs.formGraph,
     sourceGraph: graphs.sourceGraph,
     metaGraph: graphs.metaGraph,
     sourceNode: node,
   });
-  let transformed = children.map((child) => {
-    if (!!store.any(child, RDF('type'), FORM('PropertyGroup'), graphs.formGraph)) {
-      return new PropertyGroup(child, {store, formGraph: graphs.formGraph});
-    } else if (fields.map(t => t.value).includes(child.value)) {
-      return new Field(child, {store, formGraph: graphs.formGraph});
-    }
-  });
-  return transformed.filter(e => e !== undefined).sort((a, b) => a.order - b.order);
+  let fields = children.filter(child => !!store.any(child, RDF('type'), FORM('Field'), graphs.formGraph));
+  if (fields) {
+    fields = fields
+    .filter(field => conditionals.map(t => t.value).includes(field.value))
+    .map(field => new Field(field, {store, formGraph: graphs.formGraph}));
+  }
+
+  return [...groups, ...fields].sort((a, b) => a.order - b.order);
 }
 
 export { createPropertyTreeFromFields };
