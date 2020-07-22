@@ -15,7 +15,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     super(...arguments);
     this.args.formStore.registerObserver(() => {
       this.update(
-        this.args.field,
+        this.args.group,
         {
           form: this.args.form,
           store: this.args.formStore,
@@ -29,7 +29,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     }, this.observerLabel);
 
     this.update(
-      this.args.field,
+      this.args.group,
       {
         form: this.args.form,
         store: this.args.formStore,

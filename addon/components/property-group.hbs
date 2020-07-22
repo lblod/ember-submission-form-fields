@@ -1,6 +1,6 @@
 <div ...attributes>
-  {{#if @field.name}}
-    <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{@field.name}}</AuHeading>
+  {{#if @group.name}}
+    <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{@group.name}}</AuHeading>
   {{/if}}
   {{!-- NOTE: Children can be property-groups as well as fields --}}
   {{#each this.children as |child index|}}
@@ -20,16 +20,20 @@
     {{else}}
       <PropertyGroup
               @form={{@form}}
-              @field={{child}}
+              @group={{child}}
               @formStore={{@formStore}}
               @graphs={{@graphs}}
               @sourceNode={{@sourceNode}}
               @forceShowErrors={{@forceShowErrors}}
               @cacheConditionals={{@cacheConditionals}}
               @show={{@show}}/>
-      {{#unless (eq index (sub this.children.length 1))}}
+      {{#if @last}}
+        {{#unless (eq index (sub this.children.length 1))}}
+          <hr class="au-c-hr">
+        {{/unless }}
+      {{else}}
         <hr class="au-c-hr">
-      {{/unless }}
+      {{/if }}
     {{/unless}}
   {{/each}}
 </div>

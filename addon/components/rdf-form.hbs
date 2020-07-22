@@ -3,12 +3,13 @@
     <PropertyGroup
             class={{@groupClass}}
             @form={{@form}}
-            @field={{group}}
+            @group={{group}}
             @formStore={{@formStore}}
             @graphs={{@graphs}}
             @sourceNode={{@sourceNode}}
             @forceShowErrors={{@forceShowErrors}}
             @cacheConditionals={{@cacheConditionals}}
+            @last={{eq index (sub this.propertyGroups.length 1)}}
             @show={{@show}}/>
   {{/each}}
 </div>
