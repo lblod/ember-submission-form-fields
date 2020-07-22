@@ -17,7 +17,6 @@ export default class PropertyGroupModel {
     this.rdflibName = store.any(this.uri, SHACL('name'), undefined, formGraph);
     this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
     this.rdflibDescription = store.any(uri, SHACL('description'), undefined, formGraph);
-    this.rdflibClass = store.any(uri, FORM('class'), undefined, formGraph);
   }
 
   @tracked
@@ -39,13 +38,6 @@ export default class PropertyGroupModel {
 
   get description() {
     return this.rdflibDescription && this.rdflibDescription.value;
-  }
-
-  @tracked
-  rdflibClass = null;
-
-  get class() {
-    return this.rdflibClass && this.rdflibClass.value;
   }
 
   get sortedFields() {

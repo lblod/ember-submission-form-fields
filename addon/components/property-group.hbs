@@ -1,29 +1,35 @@
-<div class={{@field.class}}>
-  <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{field.name}}</AuHeading>
-  {{#each this.fields as |field|}}
-    <div class="au-u-margin-bottom-small">
-      {{#if @show}}
-        {{component (component-for-display-type-show field.displayType)
-                    field=field
+<div ...attributes>
+  {{#if @field.name}}
+    <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{@field.name}}</AuHeading>
+  {{/if}}
+  {{!-- NOTE: Children can be property-groups as well as fields --}}
+  {{#each this.children as |child index|}}
+    {{#unless (is-property-group child.displayType)}}
+      <div class="au-u-margin-bottom-small">
+        {{component (component-for-display-type child.displayType show=@show)
+                    field=child
                     form=@form
                     formStore=@formStore
                     graphs=@graphs
                     sourceNode=@sourceNode
+                    forceShowErrors=@forceShowErrors
                     show=@show
         }}
-      {{else}}
-        {{component
-                (component-for-display-type-edit field.displayType)
-                field=field
-                form=@form
-                formStore=@formStore
-                graphs=@graphs
-                sourceNode=@sourceNode
-                forceShowErrors=@forceShowErrors
-                show=@show
-        }}
-      {{/if}}
-      <AuHelpText class="au-u-margin-none">{{field.help}}</AuHelpText>
-    </div>
+        <AuHelpText class="au-u-margin-none">{{child.help}}</AuHelpText>
+      </div>
+    {{else}}
+      <PropertyGroup
+              @form={{@form}}
+              @field={{child}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @show={{@show}}/>
+      {{#unless (eq index (sub this.children.length 1))}}
+        <hr class="au-c-hr">
+      {{/unless }}
+    {{/unless}}
   {{/each}}
 </div>

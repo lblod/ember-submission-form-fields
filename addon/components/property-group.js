@@ -3,9 +3,11 @@ import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
+import { isPropertyGroup } from '../helpers/is-property-group';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
-  @tracked fields = A();
+
+  @tracked children = A();
 
   observerLabel = `property-group-${guidFor(this)}`;
 
@@ -21,8 +23,8 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
           node: this.args.sourceNode,
         },
         {
-          cacheConditionals: this.args.cacheConditionals
-        }
+          cacheConditionals: this.args.cacheConditionals,
+        },
       );
     }, this.observerLabel);
 
@@ -35,8 +37,8 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
         node: this.args.sourceNode,
       },
       {
-        cacheConditionals: this.args.cacheConditionals
-      }
+        cacheConditionals: this.args.cacheConditionals,
+      },
     );
   }
 
@@ -48,26 +50,27 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     const children = getChildrenForPropertyGroup(group, {form, store, graphs, node});
 
     // NOTE: this is made with the assumption that the following logic will NOT try to tamper with property-groups
-    const removed = this.removeObsoleteFields(children);
-    this.updateFields(children);
-    if(!options.cacheConditionals) {
-      this.removeObsoleteValues(removed, {store, graphs, node})
+    const fields = children.filter((child) => !isPropertyGroup(child.displayType))
+    const removed = this.removeObsoleteFields(fields);
+    this.updateFields(fields);
+    if (!options.cacheConditionals) {
+      this.removeObsoleteValues(removed, {store, graphs, node});
     }
   }
 
   removeObsoleteFields(children) {
-    let toRemove = this.fields.filter(field => !children.find(uField => uField.uri.equals(field.uri)));
-    this.fields.removeObjects(toRemove);
+    let toRemove = this.children.filter(field => !children.find(uField => uField.uri.equals(field.uri)));
+    this.children.removeObjects(toRemove);
     return toRemove;
   }
 
   updateFields(children) {
     children.forEach((field, i) => {
-      const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
+      const existingField = this.children.find(eField => eField.uri.equals(field.uri));
       if (existingField) {
-        this.fields.replace(i, 1, [existingField]);
+        this.children.replace(i, 1, [existingField]);
       } else {
-        this.fields.replace(i, 1, [field]);
+        this.children.replace(i, 1, [field]);
       }
     });
   }

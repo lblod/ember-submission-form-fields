@@ -1,5 +1,7 @@
-{{#each this.propertyGroups as |group index|}}
+<div class="au-o-grid au-o-grid--flush">
+  {{#each this.propertyGroups as |group index|}}
     <PropertyGroup
+            class={{@groupClass}}
             @form={{@form}}
             @field={{group}}
             @formStore={{@formStore}}
@@ -8,4 +10,5 @@
             @forceShowErrors={{@forceShowErrors}}
             @cacheConditionals={{@cacheConditionals}}
             @show={{@show}}/>
-{{/each}}
+  {{/each}}
+</div>
