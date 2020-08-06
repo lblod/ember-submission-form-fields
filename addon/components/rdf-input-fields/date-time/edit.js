@@ -32,11 +32,14 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
   @action
   updateValue() {
     let updatedValue = null;
-    if (this.value) {
+    // When using setHours, the time is transformed from universal time to local time,
+    // which is causing mismatching dates.
+    // We can comment it out because the user is not able to modfy the time in the frontend's datepicker.
+    /* if (this.value) {
       this.value.setHours(this.hour, this.minutes, null, null);
       updatedValue = this.value.toISOString();
-    }
-    const newValue = this.value ? rdflib.literal(updatedValue, XSD('dateTime')) : null;
+    } */
+    const newValue = this.value ? rdflib.literal(this.value.toISOString(), XSD('dateTime')) : null;
     super.updateValue(newValue);
     this.loadProvidedValue();
   }
