@@ -15,6 +15,7 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelector': `rdf-input-fields/concept-scheme-multi-selector/edit`,
     'http://lblod.data.gift/display-types/dateRange': `rdf-input-fields/date-range/edit`,
     'http://lblod.data.gift/display-types/search': `rdf-input-fields/search/edit`,
+    'http://lblod.data.gift/display-types/customSearch': `search-panel-fields/search/edit`,
   };
 
   return mapping[displayTypeUri] || '';
