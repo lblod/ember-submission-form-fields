@@ -29,10 +29,10 @@
               @show={{@show}}/>
       {{#if @last}}
         {{#unless (eq index (sub this.children.length 1))}}
-          <hr class="au-c-hr">
+          <AuHr @size="large" />
         {{/unless }}
       {{else}}
-        <hr class="au-c-hr">
+        <AuHr @size="large" />
       {{/if }}
     {{/unless}}
   {{/each}}
