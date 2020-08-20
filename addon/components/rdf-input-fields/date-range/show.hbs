@@ -1,18 +1,11 @@
 <div class="js-accordion js-accordion--open">
   <AuLabel>{{@field.label}}</AuLabel>
-
-  <WuButtonGroup @isInline={{true}} @class="button-group__inline--small u-spacer--bottom--tinier">
-    <WuButton @label="Alle meldingen"
-              @isAlt={{true}}
-              @isNarrow={{true}}
-              disabled={{true}}
-              @onClick={{noop}}/>
-    <WuButton @label="Specifieke periode"
-              @isAlt={{true}}
-              @isNarrow={{true}}
-              disabled={{true}}
-              @onClick={{noop}}/>
-  </WuButtonGroup>
+  <AuButtonGroup @inline="true">
+    <AuButton {{ on "click" null }}
+        class="{{if (not this.isEnabled) "is-active" }}" @skin="secondary" @disabled="true">Alle meldingen</AuButton>
+    <AuButton {{ on "click" null }}
+        class="{{if this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Specifieke periode</AuButton>
+  </AuButtonGroup>
 
   {{#if this.isEnabled}}
     <div class="accordion__content">
