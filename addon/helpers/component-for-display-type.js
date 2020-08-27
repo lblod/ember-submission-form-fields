@@ -14,6 +14,7 @@ const mapping = {
     'http://lblod.data.gift/display-types/dateRange': `rdf-input-fields/date-range/edit`,
     'http://lblod.data.gift/display-types/search': `rdf-input-fields/search/edit`,
     'http://lblod.data.gift/display-types/customSearch': `search-panel-fields/search/edit`,
+    'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/edit`,
 
   },
 
@@ -31,6 +32,8 @@ const mapping = {
     'http://lblod.data.gift/display-types/dateRange': `rdf-input-fields/date-range/show`,
     'http://lblod.data.gift/display-types/search': `rdf-input-fields/search/show`,
     'http://lblod.data.gift/display-types/customSearch': `search-panel-fields/search/show`,
+    'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/show`,
+
   }
 }
 
