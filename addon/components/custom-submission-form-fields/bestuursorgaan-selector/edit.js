@@ -121,7 +121,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
 
     const bestuurseenheid = this.args.formStore
       .match(bestuursorgaanUri, BESLUIT('bestuurt'), undefined, graph)[0];
-debugger;
+
     const eenheidClassification = this.args.formStore
       .match(bestuurseenheid.object, BESLUIT('classificatie'), undefined, undefined)[0];
 
