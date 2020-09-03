@@ -107,7 +107,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
     const bestuursorgaan = this.args.formStore
       .match(bestuursorgaanInTimeUri, MANDAAT('isTijdspecialisatieVan'), undefined, graph)[0];
 
-    let orgaanClassification = null;
+    let orgaanClassification = undefined;
     if (bestuursorgaan) {
       orgaanClassification = this.args.formStore
         .match(bestuursorgaan.object, BESLUIT('classificatie'), undefined, graph)[0];
@@ -122,8 +122,11 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
     const bestuurseenheid = this.args.formStore
       .match(bestuursorgaanUri, BESLUIT('bestuurt'), undefined, graph)[0];
 
-    const eenheidClassification = this.args.formStore
-      .match(bestuurseenheid.object, BESLUIT('classificatie'), undefined, undefined)[0];
+    let eenheidClassification = undefined;
+    if (bestuurseenheid) {
+      eenheidClassification = this.args.formStore
+        .match(bestuurseenheid.object, BESLUIT('classificatie'), undefined, undefined)[0];
+    }
 
     return [bestuurseenheid, eenheidClassification];
   }
