@@ -34,6 +34,7 @@ class RemoteUrl {
 
 export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
   inputId = `remote-urls-${guidFor(this)}`;
+
   get inputFor () {
     if(this.remoteUrls.length) {
       return `${this.inputId}-${this.remoteUrls.length - 1}`;
