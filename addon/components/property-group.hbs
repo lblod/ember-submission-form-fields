@@ -1,39 +1,41 @@
-<div ...attributes>
-  {{#if @group.name}}
-    <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{@group.name}}</AuHeading>
-  {{/if}}
-  {{!-- NOTE: Children can be property-groups as well as fields --}}
-  {{#each this.children as |child index|}}
-    {{#unless (is-property-group child.displayType)}}
-      <div class="au-u-margin-bottom-small">
-        {{component (component-for-display-type child.displayType show=@show)
-                    field=child
-                    form=@form
-                    formStore=@formStore
-                    graphs=@graphs
-                    sourceNode=@sourceNode
-                    forceShowErrors=@forceShowErrors
-                    show=@show
-        }}
-        <AuHelpText class="au-u-margin-none">{{child.help}}</AuHelpText>
-      </div>
-    {{else}}
-      <PropertyGroup
-              @form={{@form}}
-              @group={{child}}
-              @formStore={{@formStore}}
-              @graphs={{@graphs}}
-              @sourceNode={{@sourceNode}}
-              @forceShowErrors={{@forceShowErrors}}
-              @cacheConditionals={{@cacheConditionals}}
-              @show={{@show}}/>
-      {{#if @last}}
-        {{#unless (eq index (sub this.children.length 1))}}
-          <AuHr @size="large" />
-        {{/unless }}
+{{#if this.children}}
+  <div ...attributes>
+    {{#if @group.name}}
+      <AuHeading @level="3" @skin="6" class="au-u-margin-bottom-small">{{@group.name}}</AuHeading>
+    {{/if}}
+    {{!-- NOTE: Children can be property-groups as well as fields --}}
+    {{#each this.children as |child index|}}
+      {{#unless (is-property-group child.displayType)}}
+        <div class="au-u-margin-bottom-small">
+          {{component (component-for-display-type child.displayType show=@show)
+                      field=child
+                      form=@form
+                      formStore=@formStore
+                      graphs=@graphs
+                      sourceNode=@sourceNode
+                      forceShowErrors=@forceShowErrors
+                      show=@show
+          }}
+          <AuHelpText class="au-u-margin-none">{{child.help}}</AuHelpText>
+        </div>
       {{else}}
-        <AuHr @size="large" />
-      {{/if }}
-    {{/unless}}
-  {{/each}}
-</div>
+        <PropertyGroup
+                @form={{@form}}
+                @group={{child}}
+                @formStore={{@formStore}}
+                @graphs={{@graphs}}
+                @sourceNode={{@sourceNode}}
+                @forceShowErrors={{@forceShowErrors}}
+                @cacheConditionals={{@cacheConditionals}}
+                @show={{@show}}/>
+        {{#if @last}}
+          {{#unless (eq index (sub this.children.length 1))}}
+            <AuHr @size="large" />
+          {{/unless }}
+        {{else}}
+          <AuHr @size="large" />
+        {{/if }}
+      {{/unless}}
+    {{/each}}
+  </div>
+{{/if}}
