@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import {  getTopLevelPropertyGroups } from '../utils/model-factory';
+import { getTopLevelPropertyGroups } from '../utils/model-factory';
 
 export default class RdfForm extends Component {
 
