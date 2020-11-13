@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { validationResultsForField, validationTypesForField } from '@lblod/submission-form-helpers';
+import { removeTriples, validationResultsForField, validationTypesForField } from '@lblod/submission-form-helpers';
 
 /**
  * Abstract input-field component providing a base class
@@ -45,6 +45,12 @@ export default class InputFieldComponent extends Component {
       store: this.args.formStore,
       path: this.args.field.rdflibPath
     };
+  }
+
+  willDestroy() {
+   if(!this.args.cacheConditionals) {
+     removeTriples(this.storeOptions);
+   }
   }
 
   updateValidations() {
