@@ -52,16 +52,14 @@ export function getTopLevelPropertyGroups({store, graphs}) {
  *
  * @returns list of children for the given property-group, in order.
  */
-export function getChildrenForPropertyGroup(
-  group,
-  {form, store, graphs, node},
-  conditionals = fieldsForForm(form, {
-    store,
-    formGraph: graphs.formGraph,
-    sourceGraph: graphs.sourceGraph,
-    metaGraph: graphs.metaGraph,
-    sourceNode: node,
-  })) {
+export function getChildrenForPropertyGroup(group, {form, store, graphs, node}, conditionals = fieldsForForm(form, {
+  store,
+  formGraph: graphs.formGraph,
+  sourceGraph: graphs.sourceGraph,
+  metaGraph: graphs.metaGraph,
+  sourceNode: node,
+})) {
+
   // NOTE: contains all children for a property-group (this can include other nested property-groups)
   const children = store.match(undefined, SHACL('group'), group.uri, graphs.formGraph).map(t => t.subject);
 
@@ -69,10 +67,12 @@ export function getChildrenForPropertyGroup(
   let groups = children.filter(child => !!store.any(child, RDF('type'), FORM('PropertyGroup'), graphs.formGraph));
   if (groups.length) {
     groups = groups
-      .map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph}))
       // NOTE: filter out property-groups that do not contain any fields (conditional)
-      .filter(group =>
-        getChildrenForPropertyGroup(group, {form, store, graphs, node}).length !== 0, conditionals);
+      .filter( group => conditionals.filter( field => {
+          const fg = store.any(field, SHACL('group'), undefined);
+          return fg.value === group.value;
+      }).length !== 0)
+    .map(group => new PropertyGroup(group, {store, formGraph: graphs.formGraph}));
   }
 
   // NOTE: retrieve fields from the children and process them
