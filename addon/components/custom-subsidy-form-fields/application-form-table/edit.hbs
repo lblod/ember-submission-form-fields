@@ -28,21 +28,27 @@
             </div>
           </td>
           <td>
-            <AuInput @width={{"block"}} @value={{entry.actorName}}
+            <AuInput @width="block" @value={{entry.actorName.value}}
               {{on "blur" (fn this.updateActorNameValue entry)}}
             />
           </td>
           <td>
-            <AuInput @width="block" type="number" value="10"/>
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
+              {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
+            />
           </td>
           <td>
-            <AuInput @width="block" type="number" value="10" />
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
+              {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
+            />
           </td>
           <td>
-            <AuInput @width="block" type="number" value="10" />
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
+              {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
+            />
           </td>
           <td>
-            400 euro
+            {{entry.totalAmount}}
           </td>
           <td>
             <AuButton @hideText="true" @icon="bin" @skin="secondary" @alert="true"
