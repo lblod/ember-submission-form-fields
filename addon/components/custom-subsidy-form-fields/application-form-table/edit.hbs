@@ -5,6 +5,7 @@
   <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
     <thead>
       <tr>
+        <th>&nbsp;</th>
         <th>Naam actor</th>
         <th>Aantal kinderen voor alle volle dagen
           <br>(20 euro per kind)</th>
@@ -19,6 +20,13 @@
     <tbody>
       {{#each this.entries as |entry|}}
         <tr>
+          <td>
+            <div>
+              {{#each entry.errors as |error|}}
+                <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+              {{/each}}
+            </div>
+          </td>
           <td>
             <AuInput @width={{"block"}} @value={{entry.actorName}}
               {{on "blur" (fn this.updateActorNameValue entry)}}

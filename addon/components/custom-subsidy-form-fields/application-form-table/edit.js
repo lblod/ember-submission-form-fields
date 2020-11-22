@@ -35,13 +35,16 @@ class ApplicationFormEntry {
   @tracked numberChildrenPerInfrastructure
   @tracked totalAmount
 
+  @tracked errors
+
   constructor({
     applicationFormEntrySubject,
     actorName,
     numberChildrenForFullDay,
     numberChildrenForHalfDay,
     numberChildrenPerInfrastructure,
-    totalAmount
+    totalAmount,
+    errors
   }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
     this.oldActorName = actorName;
@@ -55,6 +58,8 @@ class ApplicationFormEntry {
     this.numberChildrenForHalfDay = numberChildrenForHalfDay;
     this.numberChildrenPerInfrastructure = numberChildrenPerInfrastructure;
     this.totalAmount = totalAmount;
+
+    this.errors = errors;
   }
 }
 
@@ -112,7 +117,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
             numberChildrenForFullDay: entry.numberChildrenForFullDay ? entry.numberChildrenForFullDay.value : 0,
             numberChildrenForHalfDay: entry.numberChildrenForHalfDay ? entry.numberChildrenForHalfDay.value : 0,
             numberChildrenPerInfrastructure: entry.numberChildrenPerInfrastructure ? entry.numberChildrenPerInfrastructure.value : 0,
-            totalAmount: entry.totalAmount ? entry.totalAmount.value : 0
+            totalAmount: entry.totalAmount ? entry.totalAmount.value : 0,
+            errors: []
           }));
           i++;
         }
@@ -220,7 +226,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
       numberChildrenPerInfrastructure: 0,
-      totalAmount: 0
+      totalAmount: 0,
+      errors: []
     }));
   }
 
