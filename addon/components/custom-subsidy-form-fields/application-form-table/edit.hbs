@@ -1,0 +1,57 @@
+<div class="au-o-grid__item au-u-1-1">
+  <AuLabel>
+    Vul in per actor: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
+  </AuLabel>
+  <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
+    <thead>
+      <tr>
+        <th>Naam actor</th>
+        <th>Aantal kinderen voor alle volle dagen
+          <br>(20 euro per kind)</th>
+        <th>Aantal kinderen voor alle halve dagen
+          <br>(10 euro per kind)</th>
+        <th>Aantal kinderen per infrastructuur
+          <br>(10 euro per kind)</th>
+        <th>Totaal bedrag</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each this.entries as |entry|}}
+        <tr>
+          <td>
+            <AuInput @width={{"block"}} @value={{entry.actorName}}
+              {{on "blur" (fn this.updateActorNameValue entry)}}
+            />
+          </td>
+          <td>
+            <AuInput @width="block" type="number" value="10"/>
+          </td>
+          <td>
+            <AuInput @width="block" type="number" value="10" />
+          </td>
+          <td>
+            <AuInput @width="block" type="number" value="10" />
+          </td>
+          <td>
+            400 euro
+          </td>
+          <td>
+            <AuButton @hideText="true" @icon="bin" @skin="secondary" @alert="true"
+              {{on "click" (fn this.removeEntry entry)}}>
+              <AuIcon @icon="bin" @alignment="left" />
+              Verwijder rij
+            </AuButton>
+          </td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td colspan="6" class="data-table__add-row u-align-center">
+          <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg actor toe</AuButton>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{{yield}}

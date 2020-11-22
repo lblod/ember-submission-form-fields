@@ -18,7 +18,8 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/dateRange': `rdf-input-fields/date-range/edit`,
     'http://lblod.data.gift/display-types/search': `rdf-input-fields/search/edit`,
     'http://lblod.data.gift/display-types/customSearch': `search-panel-fields/search/edit`,
-    'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/edit`
+    'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/edit`,
+    'http://lblod.data.gift/display-types/applicationFormTable': `custom-subsidy-form-fields/application-form-table/edit`
   };
 
   return mapping[displayTypeUri] || '';
