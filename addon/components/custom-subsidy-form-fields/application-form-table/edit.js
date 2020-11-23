@@ -20,6 +20,7 @@ const numberChildrenForFullDayPredicate = new rdflib.NamedNode(`http://mu.semte.
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay`);
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure`);
 const totalAmountPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/totalAmount`);
+const aangevraagdBedragPredicate = new rdflib.NamedNode(`http://data.vlaanderen.be/ns/subsidie#aangevraagdBedrag`);
 
 // TODO
 // Update the triples related to the total amount when a number gets updated
@@ -77,6 +78,14 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   @tracked applicationFormTableSubject = null
   @tracked entries = []
 
+  get aangevraagdBedrag() {
+    let total = 0;
+    this.entries.forEach(entry => {
+      total += entry.totalAmount;
+    });
+    return total;
+  }
+
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
@@ -116,21 +125,46 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       const entriesTriples = entriesMatches.triples;
 
       if (entriesTriples.length > 0) {
-        let i = 0;
-        const entriesValues = entriesMatches.values;
-        for (let entry of entriesValues) {
+        for (let entry of entriesTriples) {
+          const entryProperties = this.storeOptions.store.match(entry.object,
+                                         undefined,
+                                         undefined,
+                                         this.storeOptions.sourceGraph);
+
+          const parsedEntry = this.parseEntryProperties(entryProperties);
+
           this.entries.pushObject(new ApplicationFormEntry({
-            applicationFormEntrySubject: entriesTriples[i].object,
-            actorName: entry.actorName ? entry.actorName.value : "",
-            numberChildrenForFullDay: entry.numberChildrenForFullDay ? entry.numberChildrenForFullDay.value : 0,
-            numberChildrenForHalfDay: entry.numberChildrenForHalfDay ? entry.numberChildrenForHalfDay.value : 0,
-            numberChildrenPerInfrastructure: entry.numberChildrenPerInfrastructure ? entry.numberChildrenPerInfrastructure.value : 0,
+            applicationFormEntrySubject: entry.object,
+            actorName: parsedEntry.actorName ? parsedEntry.actorName : "",
+            numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay ? parsedEntry.numberChildrenForFullDay : 0,
+            numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay ? parsedEntry.numberChildrenForHalfDay : 0,
+            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0,
             errors: []
           }));
-          i++;
         }
       }
     }
+  }
+
+  parseEntryProperties(entryProperties) {
+    let entry = {};
+    if (entryProperties.find(entry => entry.predicate.value == actorNamePredicate.value))
+      entry.actorName = entryProperties.find(
+        entry => entry.predicate.value == actorNamePredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == numberChildrenForFullDayPredicate.value))
+      entry.numberChildrenForFullDay = entryProperties.find(
+        entry => entry.predicate.value == numberChildrenForFullDayPredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == numberChildrenForHalfDayPredicate.value))
+      entry.numberChildrenForHalfDay = entryProperties.find(
+        entry => entry.predicate.value == numberChildrenForHalfDayPredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value))
+      entry.numberChildrenPerInfrastructure = entryProperties.find(
+        entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value
+      ).object.value;
+    return entry;
   }
 
   createApplicationFormTable() {
@@ -225,6 +259,50 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       ]);
   }
 
+  updateTotalAmoutsTriples(entry) {
+    // Update total amount per entry
+    const entryTotalAmountMatches = this.storeOptions.store.match(
+      entry.applicationFormEntrySubject,
+      totalAmountPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const entryTotalAmountTriples = [
+      ...entryTotalAmountMatches
+    ];
+    this.storeOptions.store.removeStatements(entryTotalAmountTriples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: entry.applicationFormEntrySubject,
+        predicate: totalAmountPredicate,
+        object: entry.totalAmount,
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+
+    // Update global total amount
+    const globalTotalAmountMatches = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      aangevraagdBedragPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const globalTotalAmountTriples = [
+      ...globalTotalAmountMatches
+    ];
+    this.storeOptions.store.removeStatements(globalTotalAmountTriples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: aangevraagdBedragPredicate,
+        object: this.aangevraagdBedrag,
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+  }
+
   @action
   addEntry() {
     if (!this.hasApplicationFormTable)
@@ -250,16 +328,19 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   @action
   updateNumberChildrenForFullDayValue(entry) {
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
+    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
+    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
+    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
