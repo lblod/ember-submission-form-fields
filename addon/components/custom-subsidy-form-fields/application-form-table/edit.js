@@ -22,8 +22,12 @@ const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(`http://mu
 const totalAmountPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/totalAmount`);
 const aangevraagdBedragPredicate = new rdflib.NamedNode(`http://data.vlaanderen.be/ns/subsidie#aangevraagdBedrag`);
 
-// TODO
-// Update the triples related to the total amount when a number gets updated
+const inputFieldNames = [
+  'actorName',
+  'numberChildrenForFullDay',
+  'numberChildrenForHalfDay',
+  'numberChildrenPerInfrastructure'
+];
 
 class EntryProperties {
   @tracked value;
@@ -38,7 +42,6 @@ class EntryProperties {
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject
-  @tracked inputFieldNames
   @tracked errors
 
   get totalAmount() {
@@ -55,20 +58,12 @@ class ApplicationFormEntry {
     numberChildrenPerInfrastructure,
     errors
   }) {
-
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
     this.actorName = new EntryProperties(actorName, actorNamePredicate);
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
-
-    this.inputFieldNames = [
-      "actorName",
-      "numberChildrenForFullDay",
-      "numberChildrenForHalfDay",
-      "numberChildrenPerInfrastructure"
-    ];
 
     this.errors = errors;
   }
@@ -78,17 +73,17 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   @tracked applicationFormTableSubject = null
   @tracked entries = []
 
+  constructor() {
+    super(...arguments);
+    this.loadProvidedValue();
+  }
+
   get aangevraagdBedrag() {
     let total = 0;
     this.entries.forEach(entry => {
       total += entry.totalAmount;
     });
     return total;
-  }
-
-  constructor() {
-    super(...arguments);
-    this.loadProvidedValue();
   }
 
   get hasApplicationFormTable() {
@@ -146,6 +141,9 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     }
   }
 
+  /**
+  * Parse entry properties from triples to a simple object with the triple values
+  */
   parseEntryProperties(entryProperties) {
     let entry = {};
     if (entryProperties.find(entry => entry.predicate.value == actorNamePredicate.value))
@@ -217,7 +215,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   removeEntryTriples(entry) {
-    entry.inputFieldNames.forEach(key => {
+    inputFieldNames.forEach(key => {
       const propertiesTriples = [
         {
           subject: entry.applicationFormEntrySubject,
