@@ -13,29 +13,31 @@
         <th>Aantal kinderen per infrastructuur
           <br>(10 euro per kind)</th>
         <th>Totaal bedrag</th>
-        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          <AuInput @width="block" value="De Appel" />
-        </td>
-        <td>
-          <AuInput @width="block" type="number" value="10"/>
-        </td>
-        <td>
-          <AuInput @width="block" type="number" value="10" />
-        </td>
-        <td>
-          <AuInput @width="block" type="number" value="10" />
-        </td>
-        <td>
-          400 euro
-        </td>
-      </tr>
+      {{#each this.entries as |entry|}}
+        <tr>
+          <td>
+            <AuInput @width="block" @value={{entry.actorName.value}} disabled={{true}} />
+          </td>
+          <td>
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}} disabled={{true}} />
+          </td>
+          <td>
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}} disabled={{true}} />
+          </td>
+          <td>
+            <AuInput @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}} disabled={{true}} />
+          </td>
+          <td>
+            {{entry.totalAmount}} €
+          </td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
+  Aangevraagd bedrag: {{this.aangevraagdBedrag}} €
 </div>
 
 {{yield}}
