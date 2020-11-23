@@ -6,6 +6,8 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 
+const MU = new rdflib.Namespace("http://mu.semte.ch/vocabularies/core/");
+
 const applicationFormTableBaseUri = 'http://data.lblod.info/application-form-tables';
 const applicationFormEntryBaseUri = 'http://data.lblod.info/application-form-entries';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
@@ -166,10 +168,16 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   createApplicationFormTable() {
-    this.applicationFormTableSubject = new rdflib.NamedNode(`${ applicationFormTableBaseUri}/${uuidv4()}`);
+    const uuid = uuidv4();
+    this.applicationFormTableSubject = new rdflib.NamedNode(`${ applicationFormTableBaseUri}/${uuid}`);
     const triples = [ { subject: this.applicationFormTableSubject,
                         predicate: RDF('type'),
                         object: ApplicationFormTableType,
+                        graph: this.storeOptions.sourceGraph
+                      },
+                      { subject: this.applicationFormTableSubject,
+                        predicate: MU('uuid'),
+                        object: uuid,
                         graph: this.storeOptions.sourceGraph
                       },
                       { subject: this.storeOptions.sourceNode,
@@ -186,6 +194,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     const triples = [ { subject: applicationFormEntrySubject,
                         predicate: RDF('type'),
                         object: ApplicationFormEntryType,
+                        graph: this.storeOptions.sourceGraph
+                      },
+                      { subject: applicationFormEntrySubject,
+                        predicate: MU('uuid'),
+                        object: uuid,
                         graph: this.storeOptions.sourceGraph
                       },
                       { subject: this.applicationFormTableSubject,
@@ -325,18 +338,21 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
+    entry.numberChildrenForFullDay.value = parseInt(entry.numberChildrenForFullDay.value);
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
+    entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value);
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
+    entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value);
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     this.updateTotalAmoutsTriples(entry);
   }
