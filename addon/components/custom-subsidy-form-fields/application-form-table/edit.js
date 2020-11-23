@@ -6,7 +6,7 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 
-const MU = new rdflib.Namespace("http://mu.semte.ch/vocabularies/core/");
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const applicationFormTableBaseUri = 'http://data.lblod.info/application-form-tables';
 const applicationFormEntryBaseUri = 'http://data.lblod.info/application-form-entries';
@@ -17,12 +17,12 @@ const ApplicationFormTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}Ap
 const ApplicationFormEntryType = new rdflib.NamedNode(`${extBaseUri}ApplicationFormEntry`);
 const applicationFormTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}applicationFormTable`);
 const applicationFormEntryPredicate = new rdflib.NamedNode(`${extBaseUri}applicationFormEntry`);
-const actorNamePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/actorName`);
-const numberChildrenForFullDayPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay`);
-const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay`);
-const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure`);
-const totalAmountPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/totalAmount`);
-const aangevraagdBedragPredicate = new rdflib.NamedNode(`http://data.vlaanderen.be/ns/subsidie#aangevraagdBedrag`);
+const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/actorName');
+const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
+const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
+const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const totalAmountPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/totalAmount');
+const aangevraagdBedragPredicate = new rdflib.NamedNode('http://data.vlaanderen.be/ns/subsidie#aangevraagdBedrag');
 
 const inputFieldNames = [
   'actorName',
@@ -169,7 +169,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   createApplicationFormTable() {
     const uuid = uuidv4();
-    this.applicationFormTableSubject = new rdflib.NamedNode(`${ applicationFormTableBaseUri}/${uuid}`);
+    this.applicationFormTableSubject = new rdflib.NamedNode(`${applicationFormTableBaseUri}/${uuid}`);
     const triples = [ { subject: this.applicationFormTableSubject,
                         predicate: RDF('type'),
                         object: ApplicationFormTableType,
