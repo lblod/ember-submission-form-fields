@@ -21,8 +21,6 @@ const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
-const totalAmountPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/totalAmount');
-const aangevraagdBedragPredicate = new rdflib.NamedNode('http://data.vlaanderen.be/ns/subsidie#aangevraagdBedrag');
 
 const inputFieldNames = [
   'actorName',
@@ -270,50 +268,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       ]);
   }
 
-  updateTotalAmoutsTriples(entry) {
-    // Update total amount per entry
-    const entryTotalAmountMatches = this.storeOptions.store.match(
-      entry.applicationFormEntrySubject,
-      totalAmountPredicate,
-      undefined,
-      this.storeOptions.sourceGraph
-    );
-    const entryTotalAmountTriples = [
-      ...entryTotalAmountMatches
-    ];
-    this.storeOptions.store.removeStatements(entryTotalAmountTriples);
-
-    this.storeOptions.store.addAll([
-      {
-        subject: entry.applicationFormEntrySubject,
-        predicate: totalAmountPredicate,
-        object: entry.totalAmount,
-        graph: this.storeOptions.sourceGraph
-      }
-    ]);
-
-    // Update global total amount
-    const globalTotalAmountMatches = this.storeOptions.store.match(
-      this.storeOptions.sourceNode,
-      aangevraagdBedragPredicate,
-      undefined,
-      this.storeOptions.sourceGraph
-    );
-    const globalTotalAmountTriples = [
-      ...globalTotalAmountMatches
-    ];
-    this.storeOptions.store.removeStatements(globalTotalAmountTriples);
-
-    this.storeOptions.store.addAll([
-      {
-        subject: this.storeOptions.sourceNode,
-        predicate: aangevraagdBedragPredicate,
-        object: this.aangevraagdBedrag,
-        graph: this.storeOptions.sourceGraph
-      }
-    ]);
-  }
-
   @action
   addEntry() {
     if (!this.hasApplicationFormTable)
@@ -340,21 +294,18 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   updateNumberChildrenForFullDayValue(entry) {
     entry.numberChildrenForFullDay.value = parseInt(entry.numberChildrenForFullDay.value);
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
-    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
     entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value);
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
-    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
     entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value);
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
-    this.updateTotalAmoutsTriples(entry);
   }
 
   @action
