@@ -1,72 +1,92 @@
-<div class="au-o-grid__item au-u-1-1">
-  <AuLabel>
-    Vul in per actor: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
-  </AuLabel>
-  <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
-    <thead>
+<AuLabel>
+  Vul in per actor: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
+</AuLabel>
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
+  <thead>
+    <tr>
+      <th>Naam&nbsp;actor</th>
+      <th>
+        Aantal kinderen voor alle volle dagen,
+        <br>
+        met personeel
+      </th>
+      <th>
+        Aantal kinderen voor alle halve dagen,
+        <br>
+        met personeel
+      </th>
+      <th>
+        Aantal kinderen per infrastructuur per dag,
+        <br>
+        met en zonder personeel
+      </th>
+      <th>Totaal
+        <br>
+         €&hairsp;{{this.aangevraagdBedrag}}</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.entries as |entry|}}
       <tr>
-        <th>&nbsp;</th>
-        <th>Naam actor</th>
-        <th>Aantal kinderen voor alle volle dagen
-          <br>(20 euro per kind)</th>
-        <th>Aantal kinderen voor alle halve dagen
-          <br>(10 euro per kind)</th>
-        <th>Aantal kinderen per infrastructuur
-          <br>(10 euro per kind)</th>
-        <th>Totaal bedrag</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each this.entries as |entry|}}
-        <tr>
-          <td>
-            <div>
-              {{#each entry.errors as |error|}}
-                <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
-              {{/each}}
-            </div>
-          </td>
-          <td>
-            <AuInput @width="block" @value={{entry.actorName.value}}
-              {{on "blur" (fn this.updateActorNameValue entry)}}
-            />
-          </td>
-          <td>
-            <AuInput @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
-              {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
-            />
-          </td>
-          <td>
-            <AuInput @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
-              {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
-            />
-          </td>
-          <td>
-            <AuInput @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
-              {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
-            />
-          </td>
-          <td>
-            {{entry.totalAmount}} €
-          </td>
-          <td>
-            <AuButton @hideText="true" @icon="bin" @skin="secondary" @alert="true"
-              {{on "click" (fn this.removeEntry entry)}}>
-              <AuIcon @icon="bin" @alignment="left" />
-              Verwijder rij
-            </AuButton>
-          </td>
-        </tr>
-      {{/each}}
-      <tr>
-        <td colspan="7" class="data-table__add-row u-align-center">
-          <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg actor toe</AuButton>
+        <td>
+          <AuLabel for="actor-name" class="au-u-hidden-visually">Naam actor</AuLabel>
+          <AuInput id="actor-name" @width="block" @value={{entry.actorName.value}}
+            {{on "blur" (fn this.updateActorNameValue entry)}}
+          />
+        </td>
+        <td>
+          <AuLabel for="actor-name" class="au-u-hidden-visually">
+            Kinderen voor <em>alle volle dagen</em>,
+            <br>
+            met personeel
+          </AuLabel>
+          <AuInput @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
+            {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
+          />
+        </td>
+        <td>
+          <AuLabel for="actor-name" class="au-u-hidden-visually">
+            Kinderen voor alle halve dagen,
+            <br>
+            met personeel
+          </AuLabel>
+          <AuInput @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
+            {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
+          />
+        </td>
+        <td>
+          <AuLabel for="actor-name" class="au-u-hidden-visually">
+            Kinderen per infrastructuur per dag,
+            <br>
+            met of zonder personeel
+          </AuLabel>
+          <AuInput @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
+            {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
+          />
+        </td>
+        <td>
+          €&hairsp;{{entry.totalAmount}}
+          <br>
+          {{#each entry.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+          {{/each}}
+        </td>
+        <td>
+          <AuButton @hideText="true" @icon="bin" @skin="tertiary" @alert="true"
+            {{on "click" (fn this.removeEntry entry)}}>
+            <AuIcon @icon="bin" @alignment="left" />
+            Verwijder rij
+          </AuButton>
         </td>
       </tr>
-    </tbody>
-  </table>
-  Aangevraagd bedrag: {{this.aangevraagdBedrag}} €
-</div>
+    {{/each}}
+    <tr>
+      <td colspan="7" class="data-table__add-row u-align-center">
+        <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg actor toe</AuButton>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 {{yield}}
