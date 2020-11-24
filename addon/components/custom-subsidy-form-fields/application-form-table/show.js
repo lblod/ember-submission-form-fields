@@ -1,6 +1,5 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
-import { guidFor } from '@ember/object/internals';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
