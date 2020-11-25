@@ -1,0 +1,17 @@
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<AuInput
+        class="{{if this.errors "au-c-input--error"}}"
+        type="number"
+        id="{{this.inputId}}"
+        @value={{this.value}}
+  {{on "blur" this.updateValue}}
+/>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

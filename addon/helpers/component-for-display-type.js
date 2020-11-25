@@ -2,6 +2,7 @@ import { helper } from '@ember/component/helper';
 const mapping = {
   edit : {
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/edit`,
+    'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/edit`,
     'http://lblod.data.gift/display-types/dateTime': `rdf-input-fields/date-time/edit`,
     'http://lblod.data.gift/display-types/date': `rdf-input-fields/date/edit`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/edit`,
@@ -20,6 +21,7 @@ const mapping = {
 
   show : {
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/show`,
+    'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/show`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/show`,
     'http://lblod.data.gift/display-types/date': `rdf-input-fields/date/show`,
     'http://lblod.data.gift/display-types/dateTime': `rdf-input-fields/date-time/show`,

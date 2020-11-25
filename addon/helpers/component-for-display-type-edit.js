@@ -4,6 +4,7 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
   const mapping = {
     'http://lblod.data.gift/display-types/property-group' : 'property-group',
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/edit`,
+    'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/edit`,
     'http://lblod.data.gift/display-types/dateTime': `rdf-input-fields/date-time/edit`,
     'http://lblod.data.gift/display-types/date': `rdf-input-fields/date/edit`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/edit`,
