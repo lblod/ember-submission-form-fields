@@ -184,6 +184,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
+    super.updateValidations();
   }
 
   createApplicationFormEntry() {
@@ -205,6 +206,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
+    super.updateValidations();
     return applicationFormEntrySubject;
   }
 
@@ -237,6 +239,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       ];
       this.storeOptions.store.removeStatements(propertiesTriples);
     })
+
     const entryTriples = [
       {
         subject: this.applicationFormTableSubject,
@@ -249,15 +252,18 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   updateFieldValueTriple(entry, field) {
-    this.storeOptions.store.removeStatements([
-      {
-        subject: entry.applicationFormEntrySubject,
-        predicate: entry[field].predicate,
-        object: entry[field].oldValue,
-        graph: this.storeOptions.sourceGraph
-      }
-    ]);
-    if (entry[field])
+    const fieldValueTriples = this.storeOptions.store.match(
+      entry.applicationFormEntrySubject,
+      entry[field].predicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...fieldValueTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    if (entry[field].value) {
       this.storeOptions.store.addAll([
         {
           subject: entry.applicationFormEntrySubject,
@@ -266,6 +272,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
           graph: this.storeOptions.sourceGraph
         }
       ]);
+    }
   }
 
   @action
@@ -292,19 +299,20 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    entry.numberChildrenForFullDay.value = parseInt(entry.numberChildrenForFullDay.value);
+    const value = parseInt(entry.numberChildrenForFullDay.value) ? parseInt(entry.numberChildrenForFullDay.value) : entry.numberChildrenForFullDay.value;
+    entry.numberChildrenForFullDay.value = value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
-    entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value);
+    entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value) ? parseInt(entry.numberChildrenForHalfDay.value) : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
-    entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value);
+    entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value) ? parseInt(entry.numberChildrenPerInfrastructure.value) : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
   }
 
