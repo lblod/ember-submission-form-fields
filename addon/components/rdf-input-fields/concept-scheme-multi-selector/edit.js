@@ -19,6 +19,7 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
 
   @tracked selected = null;
   @tracked options = [];
+  @tracked searchEnabled = true;
 
   get subset() {
     return this.options.slice(0, 50);
@@ -34,6 +35,13 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
+
+    /**
+     * NOTE: Most forms are now implemented to have a default "true" behavior
+     */
+    if(fieldOptions.searchEnabled !== undefined) {
+      this.searchEnabled = fieldOptions.searchEnabled;
+    }
 
     this.options = this.args.formStore.match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
     .map(t => {
