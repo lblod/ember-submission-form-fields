@@ -263,7 +263,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     ];
     this.storeOptions.store.removeStatements(triples);
 
-    if (entry[field].value) {
+    if (entry[field].value.toString().length > 0) {
       this.storeOptions.store.addAll([
         {
           subject: entry.applicationFormEntrySubject,
@@ -281,15 +281,18 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       this.createApplicationFormTable();
 
     const applicationFormEntrySubject = this.createApplicationFormEntry();
-
-    this.entries.pushObject(new ApplicationFormEntry({
+    const newEntry = new ApplicationFormEntry({
       applicationFormEntrySubject,
       actorName: "",
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
       numberChildrenPerInfrastructure: 0,
       errors: []
-    }));
+    });
+
+    this.entries.pushObject(newEntry);
+
+    this.updateNumberFieldsOfEntry(newEntry);
   }
 
   @action
@@ -359,5 +362,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   isInteger(value) {
     return value === parseInt(value);
+  }
+
+  updateNumberFieldsOfEntry(entry) {
+    this.updateNumberChildrenForFullDayValue(entry);
+    this.updateNumberChildrenForHalfDayValue(entry);
+    this.updateNumberChildrenPerInfrastructureValue(entry);
   }
 }
