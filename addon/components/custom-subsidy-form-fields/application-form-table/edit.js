@@ -297,47 +297,71 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   @action
   updateActorNameValue(entry) {
-    entry.errors = [];
+    entry.errors = entry.errors.filter(entry => entry.type != 'actorName');
     this.updateFieldValueTriple(entry, 'actorName');
     if (this.isEmpty(entry.actorName.value)) {
       entry.errors.pushObject('Naam actor is verplicht');
+      entry.errors.pushObject({
+        type: 'actorName',
+        message: 'Naam actor is verplicht.'
+      });
     }
   }
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    entry.errors = [];
-    const value = parseInt(entry.numberChildrenForFullDay.value) ? parseInt(entry.numberChildrenForFullDay.value) : entry.numberChildrenForFullDay.value;
-    entry.numberChildrenForFullDay.value = value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForFullDay');
+    const parsedValue = parseInt(entry.numberChildrenForFullDay.value)
+    entry.numberChildrenForFullDay.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject('Aantal kinderen voor alle volle dagen is verplicht');
+      entry.errors.pushObject({
+        type: 'numberChildrenForFullDay',
+        message: 'Aantal kinderen voor alle volle dagen is verplicht.'
+      });
     } else if (!this.isInteger(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject('Aantal kinderen voor alle volle dagen is not een nummer.');
+      entry.errors.pushObject({
+        type: 'numberChildrenForFullDay',
+        message: 'Aantal kinderen voor alle volle dagen is not een nummer.'
+      });
     }
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
-    entry.errors = [];
-    entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value) ? parseInt(entry.numberChildrenForHalfDay.value) : entry.numberChildrenForHalfDay.value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForHalfDay');
+    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value)
+    entry.numberChildrenForHalfDay.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject('Aantal kinderen voor alle halve dagen is verplicht');
+      entry.errors.pushObject({
+        type: 'numberChildrenForHalfDay',
+        message: 'Aantal kinderen voor alle halve dagen is verplicht.'
+      });
     } else if (!this.isInteger(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject('Aantal kinderen voor alle halve dagen is not een nummer.');
+      entry.errors.pushObject({
+        type: 'numberChildrenForHalfDay',
+        message: 'Aantal kinderen voor alle halve dagen is not een nummer.'
+      });
     }
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
-    entry.errors = [];
-    entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value) ? parseInt(entry.numberChildrenPerInfrastructure.value) : entry.numberChildrenPerInfrastructure.value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenPerInfrastructure');
+    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value)
+    entry.numberChildrenPerInfrastructure.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject('Aantal kinderen per infrastructuur per dag is verplicht');
+      entry.errors.pushObject({
+        type: 'numberChildrenPerInfrastructure',
+        message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
+      });
     } else if (!this.isInteger(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject('Aantal kinderen per infrastructuur per dag is not een nummer.');
+      entry.errors.pushObject({
+        type: 'numberChildrenPerInfrastructure',
+        message: 'Aantal kinderen per infrastructuur per dag is not een nummer.'
+      });
     }
   }
 

@@ -75,7 +75,7 @@
           €&hairsp;{{entry.totalAmount}}
           <br>
           {{#each entry.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error}}</AuHelpText>
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
         <td>
