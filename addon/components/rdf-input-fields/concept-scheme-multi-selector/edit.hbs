@@ -10,7 +10,7 @@
           @search={{perform this.search}}
           @searchField={{"label"}}
           @searchPlaceholder={{"Typ hier om te zoeken..."}}
-          @searchEnabled={{true}}
+          @searchEnabled={{this.searchEnabled}}
           @selected={{this.selected}}
           @options={{this.subset}}
           @onClose={{fn (mut this.hasBeenFocused true)}}
