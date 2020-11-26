@@ -47,7 +47,7 @@
             <br>
             met personeel
           </AuLabel>
-          <AuInput id="all-day" @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
+          <AuInput id="all-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForFullDay.value}}
             {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
           />
         </td>
@@ -57,7 +57,7 @@
             <br>
             met personeel
           </AuLabel>
-          <AuInput id="half-day" @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
+          <AuInput id="half-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForHalfDay.value}}
             {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
           />
         </td>
@@ -67,7 +67,7 @@
             <br>
             met of zonder personeel
           </AuLabel>
-          <AuInput id="per-infra" @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
+          <AuInput id="per-infra" @width={{"block"}} type="number" @value={{entry.numberChildrenPerInfrastructure.value}}
             {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
           />
         </td>
