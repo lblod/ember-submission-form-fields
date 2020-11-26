@@ -312,7 +312,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   updateNumberChildrenForFullDayValue(entry) {
     entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForFullDay');
     const parsedValue = parseInt(entry.numberChildrenForFullDay.value)
-    entry.numberChildrenForFullDay.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenForFullDay.value;
+    entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
       entry.errors.pushObject({
@@ -331,7 +331,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   updateNumberChildrenForHalfDayValue(entry) {
     entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForHalfDay');
     const parsedValue = parseInt(entry.numberChildrenForHalfDay.value)
-    entry.numberChildrenForHalfDay.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenForHalfDay.value;
+    entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
       entry.errors.pushObject({
@@ -350,7 +350,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   updateNumberChildrenPerInfrastructureValue(entry) {
     entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenPerInfrastructure');
     const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value)
-    entry.numberChildrenPerInfrastructure.value = (parsedValue != NaN) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
+    entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
       entry.errors.pushObject({
