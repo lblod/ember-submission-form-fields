@@ -1,7 +1,7 @@
 import InputFieldComponent from '../input-field';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { RDF } from '@lblod/submission-form-helpers';
+import { RDF, FORM } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { warn } from '@ember/debug';
 import { triplesForPath } from '@lblod/submission-form-helpers';
@@ -18,6 +18,14 @@ export default class FormInputFieldsFilesShowComponent extends InputFieldCompone
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+  }
+
+  get containsRemoteUrls() {
+    return this.storeOptions.store.match(
+      undefined,
+      FORM('displayType'),
+      new rdflib.NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
+      this.storeOptions.formGraph).length > 0;
   }
 
   async loadProvidedValue() {

@@ -2,7 +2,7 @@ import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { RDF } from '@lblod/submission-form-helpers';
+import { RDF, FORM } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { guidFor } from '@ember/object/internals';
 import { warn } from '@ember/debug';
@@ -40,6 +40,14 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
     super(...arguments);
     this.loadProvidedValue();
     this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.inputId);
+  }
+
+  get containsRemoteUrls() {
+    return this.storeOptions.store.match(
+      undefined,
+      FORM('displayType'),
+      new rdflib.NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
+      this.storeOptions.formGraph).length > 0;
   }
 
   willDestroy(){
