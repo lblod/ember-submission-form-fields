@@ -319,10 +319,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         type: 'numberChildrenForFullDay',
         message: 'Aantal kinderen voor alle volle dagen is verplicht.'
       });
-    } else if (!this.isInteger(entry.numberChildrenForFullDay.value)) {
+    } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
       entry.errors.pushObject({
         type: 'numberChildrenForFullDay',
-        message: 'Aantal kinderen voor alle volle dagen is not een nummer.'
+        message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
       });
     }
   }
@@ -338,10 +338,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         type: 'numberChildrenForHalfDay',
         message: 'Aantal kinderen voor alle halve dagen is verplicht.'
       });
-    } else if (!this.isInteger(entry.numberChildrenForHalfDay.value)) {
+    } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
       entry.errors.pushObject({
         type: 'numberChildrenForHalfDay',
-        message: 'Aantal kinderen voor alle halve dagen is not een nummer.'
+        message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
       });
     }
   }
@@ -357,10 +357,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         type: 'numberChildrenPerInfrastructure',
         message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
       });
-    } else if (!this.isInteger(entry.numberChildrenPerInfrastructure.value)) {
+    } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
       entry.errors.pushObject({
         type: 'numberChildrenPerInfrastructure',
-        message: 'Aantal kinderen per infrastructuur per dag is not een nummer.'
+        message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
       });
     }
   }
@@ -384,8 +384,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     return value.toString().length == 0;
   }
 
-  isInteger(value) {
-    return value === parseInt(value);
+  isPositiveInteger(value) {
+    return (value === parseInt(value)) && (value >= 0);
   }
 
   updateNumberFieldsOfEntry(entry) {
