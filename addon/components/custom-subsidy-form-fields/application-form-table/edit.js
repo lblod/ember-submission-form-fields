@@ -41,8 +41,8 @@ class EntryProperties {
 }
 
 class ApplicationFormEntry {
-  @tracked applicationFormEntrySubject
-  @tracked errors
+  @tracked applicationFormEntrySubject;
+  @tracked errors = [];
 
   get totalAmount() {
     return this.numberChildrenForFullDay.value*20 +
@@ -263,7 +263,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     ];
     this.storeOptions.store.removeStatements(triples);
 
-    if (entry[field].value) {
+    if (entry[field].value.toString().length > 0) {
       this.storeOptions.store.addAll([
         {
           subject: entry.applicationFormEntrySubject,
@@ -281,39 +281,88 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       this.createApplicationFormTable();
 
     const applicationFormEntrySubject = this.createApplicationFormEntry();
-
-    this.entries.pushObject(new ApplicationFormEntry({
+    const newEntry = new ApplicationFormEntry({
       applicationFormEntrySubject,
       actorName: "",
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
       numberChildrenPerInfrastructure: 0,
       errors: []
-    }));
+    });
+
+    this.entries.pushObject(newEntry);
+
+    this.updateNumberFieldsOfEntry(newEntry);
   }
 
   @action
   updateActorNameValue(entry) {
+    entry.errors = entry.errors.filter(entry => entry.type != 'actorName');
     this.updateFieldValueTriple(entry, 'actorName');
+    if (this.isEmpty(entry.actorName.value)) {
+      entry.errors.pushObject('Naam actor is verplicht');
+      entry.errors.pushObject({
+        type: 'actorName',
+        message: 'Naam actor is verplicht.'
+      });
+    }
   }
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    const value = parseInt(entry.numberChildrenForFullDay.value) ? parseInt(entry.numberChildrenForFullDay.value) : entry.numberChildrenForFullDay.value;
-    entry.numberChildrenForFullDay.value = value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForFullDay');
+    const parsedValue = parseInt(entry.numberChildrenForFullDay.value)
+    entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
+    if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenForFullDay',
+        message: 'Aantal kinderen voor alle volle dagen is verplicht.'
+      });
+    } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenForFullDay',
+        message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
+      });
+    }
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
-    entry.numberChildrenForHalfDay.value = parseInt(entry.numberChildrenForHalfDay.value) ? parseInt(entry.numberChildrenForHalfDay.value) : entry.numberChildrenForHalfDay.value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForHalfDay');
+    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value)
+    entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
+    if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenForHalfDay',
+        message: 'Aantal kinderen voor alle halve dagen is verplicht.'
+      });
+    } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenForHalfDay',
+        message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
+      });
+    }
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
-    entry.numberChildrenPerInfrastructure.value = parseInt(entry.numberChildrenPerInfrastructure.value) ? parseInt(entry.numberChildrenPerInfrastructure.value) : entry.numberChildrenPerInfrastructure.value;
+    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenPerInfrastructure');
+    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value)
+    entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
+    if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenPerInfrastructure',
+        message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
+      });
+    } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
+      entry.errors.pushObject({
+        type: 'numberChildrenPerInfrastructure',
+        message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
+      });
+    }
   }
 
   @action
@@ -329,5 +378,19 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
     this.hasBeenFocused = true;
     super.updateValidations(); // update validation of the general field
+  }
+
+  isEmpty(value) {
+    return value.toString().length == 0;
+  }
+
+  isPositiveInteger(value) {
+    return (value === parseInt(value)) && (value >= 0);
+  }
+
+  updateNumberFieldsOfEntry(entry) {
+    this.updateNumberChildrenForFullDayValue(entry);
+    this.updateNumberChildrenForHalfDayValue(entry);
+    this.updateNumberChildrenPerInfrastructureValue(entry);
   }
 }

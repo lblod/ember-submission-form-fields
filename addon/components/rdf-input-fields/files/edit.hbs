@@ -1,7 +1,9 @@
 <AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
   {{@field.label}}
-  {{#if this.isRequired}}
+  {{#if (and this.isRequired this.containsRemoteUrls)}}
     <AuPill>Enkel indien geen links</AuPill>
+  {{else if this.isRequired }}
+    <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
 {{#each this.files as |fileField|}}

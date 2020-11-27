@@ -1,7 +1,13 @@
 <AuLabel>
   Vul in per actor: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
 </AuLabel>
-<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
   <thead>
     <tr>
       <th>Naam&nbsp;actor</th>
@@ -36,32 +42,32 @@
           />
         </td>
         <td>
-          <AuLabel for="actor-name" class="au-u-hidden-visually">
+          <AuLabel for="all-day" class="au-u-hidden-visually">
             Kinderen voor <em>alle volle dagen</em>,
             <br>
             met personeel
           </AuLabel>
-          <AuInput @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
+          <AuInput id="all-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForFullDay.value}}
             {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
           />
         </td>
         <td>
-          <AuLabel for="actor-name" class="au-u-hidden-visually">
+          <AuLabel for="half-day" class="au-u-hidden-visually">
             Kinderen voor alle halve dagen,
             <br>
             met personeel
           </AuLabel>
-          <AuInput @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
+          <AuInput id="half-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForHalfDay.value}}
             {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
           />
         </td>
         <td>
-          <AuLabel for="actor-name" class="au-u-hidden-visually">
+          <AuLabel for="per-infra" class="au-u-hidden-visually">
             Kinderen per infrastructuur per dag,
             <br>
             met of zonder personeel
           </AuLabel>
-          <AuInput @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
+          <AuInput id="per-infra" @width={{"block"}} type="number" @value={{entry.numberChildrenPerInfrastructure.value}}
             {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
           />
         </td>
@@ -69,7 +75,7 @@
           €&hairsp;{{entry.totalAmount}}
           <br>
           {{#each entry.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
         <td>
