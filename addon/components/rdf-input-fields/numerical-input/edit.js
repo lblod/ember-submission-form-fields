@@ -10,19 +10,17 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
   @action
   updateValue(e) {
     e.preventDefault();
-    const number = rdflib.literal(this.value, this.datatype);
+    const number = rdflib.literal(Number(this.value), this.datatype);
     super.updateValue(number);
   }
 
   get datatype() {
-    const number = parseFloat(this.value);
-    if(!isNaN(number)) {
-      if (Number.isInteger(number)) {
-        return XSD('integer');
-      }
-      return XSD('decimal');
+    // TODO for now decimals are not supported
+    const number = Number(this.value);
+    if (Number.isInteger(number) && number <= Number.MAX_SAFE_INTEGER) {
+      return XSD('integer');
     }
-    // NOTE shouldn't be able to reach this point
+    // NOTE: to not make queries fail, everything that is not a integer is seen as string.
     return XSD('string');
   }
 }
