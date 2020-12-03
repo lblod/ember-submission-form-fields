@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 
-import { SHACL } from '@lblod/submission-form-helpers';
+import { FORM, SHACL } from '@lblod/submission-form-helpers';
 
 export default class PropertyGroupModel {
 
@@ -17,6 +17,7 @@ export default class PropertyGroupModel {
     this.rdflibName = store.any(this.uri, SHACL('name'), undefined, formGraph);
     this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
     this.rdflibDescription = store.any(uri, SHACL('description'), undefined, formGraph);
+    this.rdflibHelp = store.any( uri, FORM("help"), undefined, formGraph );
   }
 
   @tracked
@@ -35,6 +36,12 @@ export default class PropertyGroupModel {
 
   @tracked
   rdflibDescription = null;
+
+  @tracked
+  rdflibHelp = null;
+  get help() {
+    return this.rdflibHelp && this.rdflibHelp.value;
+  }
 
   get description() {
     return this.rdflibDescription && this.rdflibDescription.value;

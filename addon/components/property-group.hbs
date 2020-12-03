@@ -1,7 +1,12 @@
 {{#if this.children}}
   <div ...attributes>
     {{#if @group.name}}
-      <AuHeading @level="2" @skin="3" class="au-u-margin-bottom-small">{{@group.name}}</AuHeading>
+      <div class="au-u-margin-bottom-small">
+        <AuHeading @level="2" @skin="3">{{@group.name}}</AuHeading>
+        {{#if @group.help}}
+          <p class="au-u-light au-u-margin-top-xsmall">{{@group.help}}</p>
+        {{/if}}
+      </div>
     {{/if}}
     {{!-- NOTE: Children can be property-groups as well as fields --}}
     {{#each this.children as |child index|}}
@@ -30,10 +35,10 @@
                 @show={{@show}}/>
         {{#if @last}}
           {{#unless (eq index (sub this.children.length 1))}}
-            <AuHr @size="large" />
+            <AuHr @size="large"/>
           {{/unless }}
         {{else}}
-          <AuHr @size="large" />
+          <AuHr @size="large"/>
         {{/if }}
       {{/unless}}
     {{/each}}
