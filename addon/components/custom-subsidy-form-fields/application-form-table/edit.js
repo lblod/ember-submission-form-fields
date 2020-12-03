@@ -298,10 +298,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       entry.actorName.errors.pushObject({
         message: 'Naam actor is verplicht.'
       });
-    } else if (!this.isSmallerThanMaxLength(entry.actorName.value, 20)) {
-      entry.actorName.errors.pushObject({
-        message: 'Naam actor is langer dan 20 karakters.'
-      });
     }
     super.updateValidations();
   }
@@ -319,10 +315,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
-      });
-    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenForFullDay.value, 20)) {
-      entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is langer dan 20 karakters.'
       });
     }
     super.updateValidations();
@@ -342,10 +334,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
       });
-    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenForHalfDay.value, 20)) {
-      entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is langer dan 20 karakters.'
-      });
     }
     super.updateValidations();
   }
@@ -363,10 +351,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
-      });
-    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenPerInfrastructure.value, 20)) {
-      entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is langer dan 20 karakters.'
       });
     }
     super.updateValidations();
@@ -393,10 +377,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   isPositiveInteger(value) {
     return (value === parseInt(value)) && (value >= 0);
-  }
-
-  isSmallerThanMaxLength(value, max) {
-    return value.toString().length <= max;
   }
 
   updateNumberFieldsOfEntry(entry) {
