@@ -32,17 +32,18 @@ const inputFieldNames = [
 class EntryProperties {
   @tracked value;
   @tracked oldValue;
+  @tracked errors = [];
 
   constructor(value, predicate) {
     this.value = value;
     this.oldValue = value;
     this.predicate = predicate;
+    this.errors = [];
   }
 }
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject;
-  @tracked errors = [];
 
   get totalAmount() {
     return this.numberChildrenForFullDay.value*20 +
@@ -56,7 +57,6 @@ class ApplicationFormEntry {
     numberChildrenForFullDay,
     numberChildrenForHalfDay,
     numberChildrenPerInfrastructure,
-    errors
   }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
@@ -64,8 +64,6 @@ class ApplicationFormEntry {
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
-
-    this.errors = errors;
   }
 }
 
@@ -133,8 +131,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
             actorName: parsedEntry.actorName ? parsedEntry.actorName : "",
             numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay ? parsedEntry.numberChildrenForFullDay : 0,
             numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay ? parsedEntry.numberChildrenForHalfDay : 0,
-            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0,
-            errors: []
+            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0
           }));
         }
       }
@@ -184,7 +181,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
-    super.updateValidations();
   }
 
   createApplicationFormEntry() {
@@ -206,7 +202,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
-    super.updateValidations();
     return applicationFormEntrySubject;
   }
 
@@ -286,83 +281,95 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       actorName: "",
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
-      numberChildrenPerInfrastructure: 0,
-      errors: []
+      numberChildrenPerInfrastructure: 0
     });
 
     this.entries.pushObject(newEntry);
 
     this.updateNumberFieldsOfEntry(newEntry);
+    super.updateValidations();
   }
 
   @action
   updateActorNameValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'actorName');
+    entry.actorName.errors = [];
     this.updateFieldValueTriple(entry, 'actorName');
     if (this.isEmpty(entry.actorName.value)) {
-      entry.errors.pushObject('Naam actor is verplicht');
-      entry.errors.pushObject({
-        type: 'actorName',
+      entry.actorName.errors.pushObject({
         message: 'Naam actor is verplicht.'
       });
+    } else if (!this.isSmallerThanMaxLength(entry.actorName.value, 20)) {
+      entry.actorName.errors.pushObject({
+        message: 'Naam actor is langer dan 20 karakters.'
+      });
     }
+    super.updateValidations();
   }
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForFullDay');
-    const parsedValue = parseInt(entry.numberChildrenForFullDay.value)
+    entry.numberChildrenForFullDay.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenForFullDay.value);
     entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForFullDay',
+      entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForFullDay',
+      entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
       });
+    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenForFullDay.value, 20)) {
+      entry.numberChildrenForFullDay.errors.pushObject({
+        message: 'Aantal kinderen voor alle volle dagen is langer dan 20 karakters.'
+      });
     }
+    super.updateValidations();
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForHalfDay');
-    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value)
+    entry.numberChildrenForHalfDay.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value);
     entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForHalfDay',
+      entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForHalfDay',
+      entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
       });
+    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenForHalfDay.value, 20)) {
+      entry.numberChildrenForFullDay.errors.pushObject({
+        message: 'Aantal kinderen voor alle halve dagen is langer dan 20 karakters.'
+      });
     }
+    super.updateValidations();
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenPerInfrastructure');
-    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value)
+    entry.numberChildrenPerInfrastructure.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
     entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenPerInfrastructure',
+      entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenPerInfrastructure',
+      entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
       });
+    } else if (!this.isSmallerThanMaxLength(entry.numberChildrenPerInfrastructure.value, 20)) {
+      entry.numberChildrenForFullDay.errors.pushObject({
+        message: 'Aantal kinderen per infrastructuur per dag is langer dan 20 karakters.'
+      });
     }
+    super.updateValidations();
   }
 
   @action
@@ -386,6 +393,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   isPositiveInteger(value) {
     return (value === parseInt(value)) && (value >= 0);
+  }
+
+  isSmallerThanMaxLength(value, max) {
+    return value.toString().length <= max;
   }
 
   updateNumberFieldsOfEntry(entry) {
