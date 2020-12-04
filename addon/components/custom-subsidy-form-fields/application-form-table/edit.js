@@ -314,7 +314,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
+        message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.'
       });
     }
     super.updateValidations();
@@ -332,7 +332,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
       entry.numberChildrenForHalfDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
+        message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.'
       });
     }
     super.updateValidations();
@@ -350,7 +350,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
+        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
       });
     }
     super.updateValidations();
