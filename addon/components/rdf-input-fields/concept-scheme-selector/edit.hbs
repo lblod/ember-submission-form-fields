@@ -6,6 +6,9 @@
 </AuLabel>
 <div class="{{if this.errors "ember-power-select--error"}}">
   <PowerSelect
+          data-test-field-uri={{@field.uri}}
+          @tagName="div"
+          @renderInPlace="true"
           @triggerId={{this.inputId}}
           @searchField={{"label"}}
           @searchEnabled={{this.searchEnabled}}
