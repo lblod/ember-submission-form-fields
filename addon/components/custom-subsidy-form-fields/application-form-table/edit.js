@@ -5,6 +5,7 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
+import { next } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -74,10 +75,12 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
-    // Then error :
-    if (this.entries.length == 0) {
-      this.addEntry();
-    }
+
+    next(this, () => {
+      if (this.entries.length == 0) {
+        this.addEntry();
+      }
+    });
   }
 
   get aangevraagdBedrag() {
