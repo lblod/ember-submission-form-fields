@@ -20,7 +20,7 @@
           @loadingMessage="Aan het laden..."
           @noMatchesMessage="Geen resultaten gevonden"
           as |concept|>
-    {{concept.label}}
+          <span data-test-field-uri={{concept.subject.value}}> {{concept.label}} </span>
   </PowerSelect>
 </div>
 
