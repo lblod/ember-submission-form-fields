@@ -74,6 +74,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+    // Then error :
+    if (this.entries.length == 0) {
+      this.addEntry();
+    }
   }
 
   get aangevraagdBedrag() {
