@@ -5,6 +5,7 @@
   {{/if}}
 </AuLabel>
 <AuInput
+   data-test-field-uri={{@field.uri.value}}
   id="{{this.inputId}}"
   disabled={{true}}
   @value={{moment-format this.value "DD.MM.YYYY"}}
