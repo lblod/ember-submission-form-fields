@@ -9,7 +9,7 @@
     <div class="au-c-date-picker-container {{if this.errors "au-c-date-picker-container--error"}}">
       <div class="datepicker">
       <WuDatepickerInput 
-              data-test-field-uri={{@field.uri}}
+              data-test-field-uri={{@field.uri.value}}
               id="{{this.inputId}}"
               class="au-c-input au-c-input--block"
               @dateFormat="DD.MM.YYYY"

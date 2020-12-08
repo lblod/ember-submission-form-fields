@@ -9,7 +9,7 @@
 {{#each this.files as |fileField|}}
   <VoMuFileCard @file={{fileField.record}} @onDelete={{this.removeFile}}/>
 {{/each}}
-<VoMuFileDropzone data-test-field-uri={{@field.uri}} id="{{this.inputId}}" role="button" @onFinishUpload={{this.addFile}} @maxFileSizeMB="1024" class="{{if this.errors "upload--error"}}"/>
+<VoMuFileDropzone data-test-field-uri={{@field.uri.value}} id="{{this.inputId}}" role="button" @onFinishUpload={{this.addFile}} @maxFileSizeMB="1024" class="{{if this.errors "upload--error"}}"/>
 
 
 {{#each this.errors as |error|}}

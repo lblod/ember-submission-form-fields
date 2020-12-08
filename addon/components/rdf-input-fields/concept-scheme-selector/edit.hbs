@@ -6,7 +6,7 @@
 </AuLabel>
 <div class="{{if this.errors "ember-power-select--error"}}">
   <PowerSelect
-          data-test-field-uri={{@field.uri}}
+          data-test-field-uri={{@field.uri.value}}
           @tagName="div"
           @renderInPlace="true"
           @triggerId={{this.inputId}}
@@ -22,7 +22,7 @@
           as |concept|>
           <span data-test-field-uri={{concept.subject.value}}> {{concept.label}} </span>
   </PowerSelect>
-</div>
+</div> 
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
