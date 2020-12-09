@@ -5,6 +5,7 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
+import { next } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -21,6 +22,7 @@ const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
 const inputFieldNames = [
   'actorName',
@@ -57,6 +59,7 @@ class ApplicationFormEntry {
     numberChildrenForFullDay,
     numberChildrenForHalfDay,
     numberChildrenPerInfrastructure,
+    created
   }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
@@ -64,6 +67,7 @@ class ApplicationFormEntry {
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
+    this.created = new EntryProperties(created, createdPredicate);
   }
 }
 
@@ -74,6 +78,12 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+
+    next(this, () => {
+      if (this.entries.length == 0) {
+        this.addEntry();
+      }
+    });
   }
 
   get aangevraagdBedrag() {
@@ -99,6 +109,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                                          applicationFormEntryPredicate,
                                          undefined,
                                          this.storeOptions.sourceGraph).length > 0;
+  }
+
+  get sortedEntries() {
+    return this.entries.sort((a,b) => a.created.value.localeCompare(b.created.value));
   }
 
   loadProvidedValue() {
@@ -131,7 +145,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
             actorName: parsedEntry.actorName ? parsedEntry.actorName : "",
             numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay ? parsedEntry.numberChildrenForFullDay : 0,
             numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay ? parsedEntry.numberChildrenForHalfDay : 0,
-            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0
+            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0,
+            created: parsedEntry.created
           }));
         }
       }
@@ -158,6 +173,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     if (entryProperties.find(entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value))
       entry.numberChildrenPerInfrastructure = entryProperties.find(
         entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == createdPredicate.value))
+      entry.created = entryProperties.find(
+        entry => entry.predicate.value == createdPredicate.value
       ).object.value;
     return entry;
   }
@@ -227,7 +246,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       const propertiesTriples = [
         {
           subject: entry.applicationFormEntrySubject,
-          predicate: actorNamePredicate,
+          predicate: entry[key].predicate,
           object: entry[key].oldValue,
           graph: this.storeOptions.sourceGraph
         }
@@ -281,12 +300,13 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       actorName: "",
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
-      numberChildrenPerInfrastructure: 0
+      numberChildrenPerInfrastructure: 0,
+      created: new Date().toISOString()
     });
 
     this.entries.pushObject(newEntry);
 
-    this.updateNumberFieldsOfEntry(newEntry);
+    this.updateDefaultEntryFields(newEntry);
     super.updateValidations();
   }
 
@@ -357,6 +377,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   @action
+  updateCreatedValue(entry) {
+    this.updateFieldValueTriple(entry, 'created');
+  }
+
+  @action
   removeEntry(entry) {
     if (this.applicationFormTableSubject) {
       this.removeEntryTriples(entry);
@@ -379,9 +404,15 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     return (value === parseInt(value)) && (value >= 0);
   }
 
-  updateNumberFieldsOfEntry(entry) {
+  /**
+  * Update entry default fields.
+  * We update numbers to default them to 0 as well as the creation time of the entry.
+  * The actor name doesn't have a default value, it'll be entered by the user.
+  */
+  updateDefaultEntryFields(entry) {
     this.updateNumberChildrenForFullDayValue(entry);
     this.updateNumberChildrenForHalfDayValue(entry);
     this.updateNumberChildrenPerInfrastructureValue(entry);
+    this.updateCreatedValue(entry);
   }
 }

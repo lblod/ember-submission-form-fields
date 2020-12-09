@@ -10,6 +10,7 @@ const actorNamePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay`);
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay`);
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure`);
+const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
 class EntryProperties {
   @tracked value;
@@ -24,7 +25,6 @@ class EntryProperties {
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject
-  @tracked errors
 
   get totalAmount() {
     return this.numberChildrenForFullDay.value*20 +
@@ -38,7 +38,7 @@ class ApplicationFormEntry {
     numberChildrenForFullDay,
     numberChildrenForHalfDay,
     numberChildrenPerInfrastructure,
-    errors
+    created
   }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
@@ -46,8 +46,7 @@ class ApplicationFormEntry {
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
-
-    this.errors = errors;
+    this.created = new EntryProperties(created, createdPredicate);
   }
 }
 
@@ -66,6 +65,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
       total += entry.totalAmount;
     });
     return total;
+  }
+
+  get sortedEntries() {
+    return this.entries.sort((a,b) => a.created.value.localeCompare(b.created.value));
   }
 
   loadProvidedValue() {
@@ -99,7 +102,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
             numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay,
             numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay,
             numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure,
-            errors: []
+            created: parsedEntry.created
           }));
         }
       }
@@ -126,6 +129,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
     if (entryProperties.find(entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value))
       entry.numberChildrenPerInfrastructure = entryProperties.find(
         entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == createdPredicate.value))
+      entry.created = entryProperties.find(
+        entry => entry.predicate.value == createdPredicate.value
       ).object.value;
     return entry;
   }
