@@ -79,9 +79,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     super(...arguments);
     this.loadProvidedValue();
 
+    // Add an entry by default as an example
     next(this, () => {
       if (this.entries.length == 0) {
         this.addEntry();
+        this.hasBeenFocused = false;
       }
     });
   }
@@ -307,7 +309,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     this.entries.pushObject(newEntry);
 
     this.updateDefaultEntryFields(newEntry);
-    super.updateValidations();
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
@@ -319,7 +321,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         message: 'Naam actor is verplicht.'
       });
     }
-    super.updateValidations();
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
@@ -337,7 +340,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.'
       });
     }
-    super.updateValidations();
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
@@ -355,7 +359,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.'
       });
     }
-    super.updateValidations();
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
@@ -373,7 +378,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
       });
     }
-    super.updateValidations();
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
@@ -392,8 +398,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
     this.entries.removeObject(entry);
 
-    this.hasBeenFocused = true;
-    super.updateValidations(); // update validation of the general field
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   isEmpty(value) {
