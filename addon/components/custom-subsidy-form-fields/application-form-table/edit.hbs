@@ -36,11 +36,11 @@
     </tr>
   </thead>
   <tbody>
-    {{#each this.sortedEntries as |entry|}}
+    {{#each this.sortedEntries as |entry index|}}
       <tr>
         <td>
-          <AuLabel for="actor-name" class="au-u-hidden-visually">Naam actor</AuLabel>
-          <AuInput id="actor-name" @width="block" @value={{entry.actorName.value}}
+          <AuLabel for="actor-name-{{index}}" class="au-u-hidden-visually">Naam actor</AuLabel>
+          <AuInput id="actor-name-{{index}}" @width="block" @value={{entry.actorName.value}}
             class={{if entry.actorName.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateActorNameValue entry)}}
           />
@@ -49,12 +49,12 @@
           {{/each}}
         </td>
         <td>
-          <AuLabel for="all-day" class="au-u-hidden-visually">
+          <AuLabel for="all-day-{{index}}" class="au-u-hidden-visually">
             Kinderen voor <em>alle volle dagen</em>,
             <br>
             met personeel
           </AuLabel>
-          <AuInput id="all-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForFullDay.value}}
+          <AuInput id="all-day-{{index}}" @width={{"block"}} type="number" @value={{entry.numberChildrenForFullDay.value}}
             class={{if entry.numberChildrenForFullDay.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
           />
@@ -63,12 +63,12 @@
           {{/each}}
         </td>
         <td>
-          <AuLabel for="half-day" class="au-u-hidden-visually">
+          <AuLabel for="half-day-{{index}}" class="au-u-hidden-visually">
             Kinderen voor alle halve dagen,
             <br>
             met personeel
           </AuLabel>
-          <AuInput id="half-day" @width={{"block"}} type="number" @value={{entry.numberChildrenForHalfDay.value}}
+          <AuInput id="half-day-{{index}}" @width={{"block"}} type="number" @value={{entry.numberChildrenForHalfDay.value}}
             class={{if entry.numberChildrenForHalfDay.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
           />
@@ -77,12 +77,12 @@
           {{/each}}
         </td>
         <td>
-          <AuLabel for="per-infra" class="au-u-hidden-visually">
+          <AuLabel for="per-infra-{{index}}" class="au-u-hidden-visually">
             Kinderen per infrastructuur per dag,
             <br>
             met of zonder personeel
           </AuLabel>
-          <AuInput id="per-infra" @width={{"block"}} type="number" @value={{entry.numberChildrenPerInfrastructure.value}}
+          <AuInput id="per-infra-{{index}}" @width={{"block"}} type="number" @value={{entry.numberChildrenPerInfrastructure.value}}
             class={{if entry.numberChildrenPerInfrastructure.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
           />
