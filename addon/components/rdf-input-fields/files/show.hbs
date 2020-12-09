@@ -7,7 +7,7 @@
   {{/if}}
 </AuLabel>
 {{#each this.files as |file|}}
-  <VoMuFileCard id="{{this.inputId}}" @file={{file}} @active={{false}}/>
+  <VoMuFileCard data-test-field-uri={{@field.uri.value}} id="{{this.inputId}}" @file={{file}} @active={{false}}/>
 {{/each}}
 
 {{#unless this.files}}
