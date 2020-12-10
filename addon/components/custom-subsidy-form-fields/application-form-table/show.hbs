@@ -1,5 +1,5 @@
 <AuLabel>
-  Vul in per actor: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
+  Vul in per organisator: het aantal opgevangen kinderen voor alle volle dagen, voor alle halve dagen en voor infrastructuur.
 </AuLabel>
 <AuHelpText class="au-u-margin-bottom-small">
   Niet zeker wat u moet invullen? Ga naar de <a href="https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur-module-subsidies" target="_blank" rel="noopener">informatiepagina over subsidies</a> die u kan indienen via het loket.
@@ -7,7 +7,7 @@
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small ">
   <thead>
     <tr>
-      <th>Naam&nbsp;actor</th>
+      <th>Naam&nbsp;organisator</th>
       <th>
         Aantal kinderen voor alle volle dagen,
         <br>
@@ -33,7 +33,7 @@
     {{#each this.sortedEntries as |entry index|}}
       <tr>
         <td>
-          <AuLabel for="actor-name-{{index}}" class="au-u-hidden-visually">Naam actor</AuLabel>
+          <AuLabel for="actor-name-{{index}}" class="au-u-hidden-visually">Naam organisator</AuLabel>
           <AuInput id="actor-name-{{index}}" @width="block" @value={{entry.actorName.value}} disabled={{true}}/>
         </td>
         <td>

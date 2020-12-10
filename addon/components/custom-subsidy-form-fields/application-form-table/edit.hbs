@@ -36,7 +36,7 @@
     {{#each this.sortedEntries as |entry index|}}
       <tr>
         <td>
-          <AuLabel for="actor-name-{{index}}" class="au-u-hidden-visually">Naam actor</AuLabel>
+          <AuLabel for="actor-name-{{index}}" class="au-u-hidden-visually">Naam organisator</AuLabel>
           <AuInput id="actor-name-{{index}}" @width="block" @value={{entry.actorName.value}}
             class={{if entry.actorName.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateActorNameValue entry)}}
@@ -101,7 +101,7 @@
     {{/each}}
     <tr>
       <td colspan="7" class="data-table__add-row u-align-center">
-        <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg actor toe</AuButton>
+        <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg organisator toe</AuButton>
       </td>
     </tr>
   </tbody>
