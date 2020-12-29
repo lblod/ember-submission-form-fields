@@ -9,7 +9,7 @@ import { warn } from '@ember/debug';
 import {
   triplesForPath,
   addSimpleFormValue,
-  removeSimpleFormValue
+  removeDatasetForSimpleFormValue
 } from '@lblod/submission-form-helpers';
 
 class FileField {
@@ -115,7 +115,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
                     graph: this.storeOptions.sourceGraph
                   };
     this.storeOptions.store.removeStatements([ typeT ]);
-    removeSimpleFormValue(new rdflib.NamedNode(fileUri), this.storeOptions);
+    removeDatasetForSimpleFormValue(new rdflib.NamedNode(fileUri), this.storeOptions);
   }
 
   @action

@@ -5,6 +5,7 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
+import { next } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -21,6 +22,7 @@ const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
 const inputFieldNames = [
   'actorName',
@@ -32,17 +34,18 @@ const inputFieldNames = [
 class EntryProperties {
   @tracked value;
   @tracked oldValue;
+  @tracked errors = [];
 
   constructor(value, predicate) {
     this.value = value;
     this.oldValue = value;
     this.predicate = predicate;
+    this.errors = [];
   }
 }
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject;
-  @tracked errors = [];
 
   get totalAmount() {
     return this.numberChildrenForFullDay.value*20 +
@@ -56,7 +59,7 @@ class ApplicationFormEntry {
     numberChildrenForFullDay,
     numberChildrenForHalfDay,
     numberChildrenPerInfrastructure,
-    errors
+    created
   }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
@@ -64,8 +67,7 @@ class ApplicationFormEntry {
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
-
-    this.errors = errors;
+    this.created = new EntryProperties(created, createdPredicate);
   }
 }
 
@@ -76,6 +78,14 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+
+    // Add an entry by default as an example
+    next(this, () => {
+      if (this.entries.length == 0) {
+        this.addEntry();
+        this.hasBeenFocused = false;
+      }
+    });
   }
 
   get aangevraagdBedrag() {
@@ -101,6 +111,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                                          applicationFormEntryPredicate,
                                          undefined,
                                          this.storeOptions.sourceGraph).length > 0;
+  }
+
+  get sortedEntries() {
+    return this.entries.sort((a,b) => a.created.value.localeCompare(b.created.value));
   }
 
   loadProvidedValue() {
@@ -134,7 +148,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
             numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay ? parsedEntry.numberChildrenForFullDay : 0,
             numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay ? parsedEntry.numberChildrenForHalfDay : 0,
             numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0,
-            errors: []
+            created: parsedEntry.created
           }));
         }
       }
@@ -162,6 +176,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       entry.numberChildrenPerInfrastructure = entryProperties.find(
         entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value
       ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == createdPredicate.value))
+      entry.created = entryProperties.find(
+        entry => entry.predicate.value == createdPredicate.value
+      ).object.value;
     return entry;
   }
 
@@ -184,7 +202,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
-    super.updateValidations();
   }
 
   createApplicationFormEntry() {
@@ -206,7 +223,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
                         graph: this.storeOptions.sourceGraph }
                     ];
     this.storeOptions.store.addAll(triples);
-    super.updateValidations();
     return applicationFormEntrySubject;
   }
 
@@ -232,7 +248,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       const propertiesTriples = [
         {
           subject: entry.applicationFormEntrySubject,
-          predicate: actorNamePredicate,
+          predicate: entry[key].predicate,
           object: entry[key].oldValue,
           graph: this.storeOptions.sourceGraph
         }
@@ -287,82 +303,88 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
       numberChildrenPerInfrastructure: 0,
-      errors: []
+      created: new Date().toISOString()
     });
 
     this.entries.pushObject(newEntry);
 
-    this.updateNumberFieldsOfEntry(newEntry);
+    this.updateDefaultEntryFields(newEntry);
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
   updateActorNameValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'actorName');
+    entry.actorName.errors = [];
     this.updateFieldValueTriple(entry, 'actorName');
     if (this.isEmpty(entry.actorName.value)) {
-      entry.errors.pushObject('Naam actor is verplicht');
-      entry.errors.pushObject({
-        type: 'actorName',
+      entry.actorName.errors.pushObject({
         message: 'Naam actor is verplicht.'
       });
     }
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForFullDay');
-    const parsedValue = parseInt(entry.numberChildrenForFullDay.value)
+    entry.numberChildrenForFullDay.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenForFullDay.value);
     entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForFullDay',
+      entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForFullDay',
-        message: 'Aantal kinderen voor alle volle dagen is not een positief nummer.'
+      entry.numberChildrenForFullDay.errors.pushObject({
+        message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.'
       });
     }
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
   updateNumberChildrenForHalfDayValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenForHalfDay');
-    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value)
+    entry.numberChildrenForHalfDay.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenForHalfDay.value);
     entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForHalfDay',
+      entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenForHalfDay',
-        message: 'Aantal kinderen voor alle halve dagen is not een positief nummer.'
+      entry.numberChildrenForHalfDay.errors.pushObject({
+        message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.'
       });
     }
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   @action
   updateNumberChildrenPerInfrastructureValue(entry) {
-    entry.errors = entry.errors.filter(entry => entry.type != 'numberChildrenPerInfrastructure');
-    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value)
+    entry.numberChildrenPerInfrastructure.errors = [];
+    const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
     entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenPerInfrastructure',
+      entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
-      entry.errors.pushObject({
-        type: 'numberChildrenPerInfrastructure',
-        message: 'Aantal kinderen per infrastructuur per dag is not een positief nummer.'
+      entry.numberChildrenPerInfrastructure.errors.pushObject({
+        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
       });
     }
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
+  }
+
+  @action
+  updateCreatedValue(entry) {
+    this.updateFieldValueTriple(entry, 'created');
   }
 
   @action
@@ -376,8 +398,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
     this.entries.removeObject(entry);
 
-    this.hasBeenFocused = true;
-    super.updateValidations(); // update validation of the general field
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 
   isEmpty(value) {
@@ -388,9 +410,15 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     return (value === parseInt(value)) && (value >= 0);
   }
 
-  updateNumberFieldsOfEntry(entry) {
+  /**
+  * Update entry default fields.
+  * We update numbers to default them to 0 as well as the creation time of the entry.
+  * The actor name doesn't have a default value, it'll be entered by the user.
+  */
+  updateDefaultEntryFields(entry) {
     this.updateNumberChildrenForFullDayValue(entry);
     this.updateNumberChildrenForHalfDayValue(entry);
     this.updateNumberChildrenPerInfrastructureValue(entry);
+    this.updateCreatedValue(entry);
   }
 }

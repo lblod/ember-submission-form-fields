@@ -1,0 +1,11 @@
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<WuCheckbox @label={{@field.label}}
+            @checked={{this.value}}
+            @onClick={{this.updateValue}} />
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
