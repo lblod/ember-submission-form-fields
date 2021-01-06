@@ -48,7 +48,6 @@ module.exports = {
         node: true
       },
       plugins: ['node'],
-      extends: ['plugin:node/recommended']
     }
   ]
 };
