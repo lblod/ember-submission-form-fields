@@ -22,6 +22,7 @@ const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
 const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
 const inputFieldNames = [
@@ -291,6 +292,28 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     }
   }
 
+  updateAangevraagdBedrag() {
+    const aangevraagdBedragTriples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      totalAmountPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...aangevraagdBedragTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: totalAmountPredicate,
+        object: this.aangevraagdBedrag,
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+  }
+
   @action
   addEntry() {
     if (!this.hasApplicationFormTable)
@@ -327,10 +350,13 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
+    console.log('updateNumberChildrenForFullDayValue')
     entry.numberChildrenForFullDay.errors = [];
     const parsedValue = parseInt(entry.numberChildrenForFullDay.value);
     entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is verplicht.'
@@ -350,6 +376,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     const parsedValue = parseInt(entry.numberChildrenForHalfDay.value);
     entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
       entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is verplicht.'
@@ -369,6 +397,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
     entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
@@ -395,8 +425,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       if (!this.hasEntries)
         this.removeApplicationFormTable();
     }
-
     this.entries.removeObject(entry);
+    this.updateAangevraagdBedrag();
 
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
