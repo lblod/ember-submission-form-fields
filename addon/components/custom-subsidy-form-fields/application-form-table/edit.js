@@ -1,7 +1,7 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath } from '@lblod/submission-form-helpers';
+import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
@@ -47,11 +47,12 @@ class EntryProperties {
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject;
+  @tracked totalAmount = 0
 
-  get totalAmount() {
-    return this.numberChildrenForFullDay.value*20 +
-           this.numberChildrenForHalfDay.value*10 +
-           this.numberChildrenPerInfrastructure.value*10;
+  calculateEntryTotal() {
+    this.totalAmount = this.numberChildrenForFullDay.value*20 +
+       this.numberChildrenForHalfDay.value*10 +
+       this.numberChildrenPerInfrastructure.value*10;
   }
 
   constructor({
@@ -69,16 +70,19 @@ class ApplicationFormEntry {
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
     this.created = new EntryProperties(created, createdPredicate);
+    this.calculateEntryTotal();
   }
 }
 
 export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent extends InputFieldComponent {
   @tracked applicationFormTableSubject = null
-  @tracked entries = []
+  @tracked entries = [];
+  @tracked totalAmount = 0
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+    this.calculateTotal(this.entries);
 
     // Add an entry by default as an example
     next(this, () => {
@@ -87,14 +91,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         this.hasBeenFocused = false;
       }
     });
-  }
-
-  get aangevraagdBedrag() {
-    let total = 0;
-    this.entries.forEach(entry => {
-      total += entry.totalAmount;
-    });
-    return total;
   }
 
   get hasApplicationFormTable() {
@@ -293,6 +289,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   updateAangevraagdBedrag() {
+    this.totalAmount = this.calculateTotal(this.entries);
     const aangevraagdBedragTriples = this.storeOptions.store.match(
       this.storeOptions.sourceNode,
       totalAmountPredicate,
@@ -308,10 +305,20 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       {
         subject: this.storeOptions.sourceNode,
         predicate: totalAmountPredicate,
-        object: this.aangevraagdBedrag,
+        object: rdflib.literal(Number.parseFloat(this.totalAmount).toFixed(2), XSD('float')),
         graph: this.storeOptions.sourceGraph
       }
     ]);
+  }
+
+  calculateTotal(entries) {
+    let total = 0;
+    entries.forEach(entry => {
+      total += entry.totalAmount;
+    });
+    if (total != this.totalAmount)
+      this.totalAmount = total;
+    return total;
   }
 
   @action
@@ -350,10 +357,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   @action
   updateNumberChildrenForFullDayValue(entry) {
-    console.log('updateNumberChildrenForFullDayValue')
     entry.numberChildrenForFullDay.errors = [];
     const parsedValue = parseInt(entry.numberChildrenForFullDay.value);
     entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
     this.updateAangevraagdBedrag();
 
@@ -375,6 +382,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entry.numberChildrenForHalfDay.errors = [];
     const parsedValue = parseInt(entry.numberChildrenForHalfDay.value);
     entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
     this.updateAangevraagdBedrag();
 
@@ -396,6 +404,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entry.numberChildrenPerInfrastructure.errors = [];
     const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
     entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     this.updateAangevraagdBedrag();
 
