@@ -65,10 +65,4 @@ export default class FieldModel {
   get options(){
     return this.rdflibOptions && this.rdflibOptions.value;
   }
-
-  // @tracked
-  // rdflibValue = null;
-  // get value(){
-  //   return this.rdflibValue && this.rdflibValue.value;
-  // }
 }

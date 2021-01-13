@@ -62,15 +62,20 @@ export default class FormInputFieldsConceptSchemeSelectorEditComponent extends I
   updateSelection(options) {
     this.selected = options;
 
-    // Cleanup old value(s) in the store
+    // Retrieve options in store
     const matches = triplesForPath(this.storeOptions, true).values;
-    const matchingOptions = matches.filter(m => this.options.find(opt => m.equals(opt.subject)));
-    matchingOptions.forEach(m => updateSimpleFormValue(this.storeOptions, undefined, m));
+    const matchingOptions = matches
+    .filter(m => this.options.find(opt => m.equals(opt.subject)));
+
+    // Cleanup old value(s) in the store
+   matchingOptions
+    .filter(m => !options.find(opt => m.equals(opt.subject)))
+    .forEach(m => updateSimpleFormValue(this.storeOptions, undefined, m));
 
     // Insert new value in the store
-    if (options) {
-      options.forEach(option => updateSimpleFormValue(this.storeOptions, option.subject));
-    }
+    options
+    .filter(opt => !matchingOptions.find(m => opt.subject.equals(m)))
+    .forEach(option => updateSimpleFormValue(this.storeOptions, option.subject));
 
     this.hasBeenFocused = true;
     super.updateValidations();

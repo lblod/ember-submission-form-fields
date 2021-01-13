@@ -1,19 +1,15 @@
 import Component from '@glimmer/component';
-import {  getTopLevelPropertyGroups } from '../utils/model-factory';
-import { A } from '@ember/array';
+import { getTopLevelPropertyGroups } from '../utils/model-factory';
 
 export default class RdfForm extends Component {
-  propertyGroups = A();
+
+  propertyGroups = []; // NOTE don't think this needs to be an ember array as it will never change
 
   constructor() {
     super(...arguments);
-    this.propertyGroups = this.getPropertyGroups(
-      this.args.formStore,
-      this.args.graphs,
-    );
-  }
-
-  getPropertyGroups(store, graphs) {
-    return getTopLevelPropertyGroups({store, graphs});
+    this.propertyGroups = getTopLevelPropertyGroups({
+      store: this.args.formStore,
+      graphs: this.args.graphs,
+    });
   }
 }

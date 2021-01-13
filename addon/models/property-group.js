@@ -2,6 +2,8 @@ import { tracked } from '@glimmer/tracking';
 
 import { FORM, SHACL } from '@lblod/submission-form-helpers';
 
+export const PROPERTY_GROUP_DISPLAY_TYPE = 'http://lblod.data.gift/display-types/property-group';
+
 export default class PropertyGroupModel {
 
   @tracked
@@ -52,6 +54,6 @@ export default class PropertyGroupModel {
   }
 
   get displayType() {
-    return 'http://lblod.data.gift/display-types/property-group';
+    return PROPERTY_GROUP_DISPLAY_TYPE;
   }
 }

@@ -1,7 +1,7 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath } from '@lblod/submission-form-helpers';
+import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
@@ -22,6 +22,7 @@ const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies
 const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
 const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
 const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
 const inputFieldNames = [
@@ -46,11 +47,12 @@ class EntryProperties {
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject;
+  @tracked totalAmount = 0
 
-  get totalAmount() {
-    return this.numberChildrenForFullDay.value*20 +
-           this.numberChildrenForHalfDay.value*10 +
-           this.numberChildrenPerInfrastructure.value*10;
+  calculateEntryTotal() {
+    this.totalAmount = this.numberChildrenForFullDay.value*20 +
+       this.numberChildrenForHalfDay.value*10 +
+       this.numberChildrenPerInfrastructure.value*10;
   }
 
   constructor({
@@ -68,16 +70,19 @@ class ApplicationFormEntry {
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
     this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
     this.created = new EntryProperties(created, createdPredicate);
+    this.calculateEntryTotal();
   }
 }
 
 export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent extends InputFieldComponent {
   @tracked applicationFormTableSubject = null
-  @tracked entries = []
+  @tracked entries = [];
+  @tracked totalAmount = 0
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+    this.calculateTotal(this.entries);
 
     // Add an entry by default as an example
     next(this, () => {
@@ -86,14 +91,6 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         this.hasBeenFocused = false;
       }
     });
-  }
-
-  get aangevraagdBedrag() {
-    let total = 0;
-    this.entries.forEach(entry => {
-      total += entry.totalAmount;
-    });
-    return total;
   }
 
   get hasApplicationFormTable() {
@@ -291,6 +288,39 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     }
   }
 
+  updateAangevraagdBedrag() {
+    this.totalAmount = this.calculateTotal(this.entries);
+    const aangevraagdBedragTriples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      totalAmountPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...aangevraagdBedragTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: totalAmountPredicate,
+        object: rdflib.literal(Number.parseFloat(this.totalAmount).toFixed(2), XSD('float')),
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+  }
+
+  calculateTotal(entries) {
+    let total = 0;
+    entries.forEach(entry => {
+      total += entry.totalAmount;
+    });
+    if (total != this.totalAmount)
+      this.totalAmount = total;
+    return total;
+  }
+
   @action
   addEntry() {
     if (!this.hasApplicationFormTable)
@@ -330,7 +360,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entry.numberChildrenForFullDay.errors = [];
     const parsedValue = parseInt(entry.numberChildrenForFullDay.value);
     entry.numberChildrenForFullDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForFullDay.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenForFullDay');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
         message: 'Aantal kinderen voor alle volle dagen is verplicht.'
@@ -349,7 +382,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entry.numberChildrenForHalfDay.errors = [];
     const parsedValue = parseInt(entry.numberChildrenForHalfDay.value);
     entry.numberChildrenForHalfDay.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenForHalfDay.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenForHalfDay');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
       entry.numberChildrenForHalfDay.errors.pushObject({
         message: 'Aantal kinderen voor alle halve dagen is verplicht.'
@@ -368,7 +404,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entry.numberChildrenPerInfrastructure.errors = [];
     const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
     entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
+    entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
+    this.updateAangevraagdBedrag();
+
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
         message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
@@ -395,8 +434,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       if (!this.hasEntries)
         this.removeApplicationFormTable();
     }
-
     this.entries.removeObject(entry);
+    this.updateAangevraagdBedrag();
 
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
