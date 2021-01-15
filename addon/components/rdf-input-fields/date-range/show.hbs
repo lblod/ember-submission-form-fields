@@ -1,9 +1,9 @@
 <div class="js-accordion js-accordion--open">
   <AuLabel>{{@field.label}}</AuLabel>
   <AuButtonGroup @inline="true">
-    <AuButton {{ on "click" null }}
+    <AuButton
         class="{{if (not this.isEnabled) "is-active" }}" @skin="secondary" @disabled="true">Alle meldingen</AuButton>
-    <AuButton {{ on "click" null }}
+    <AuButton
         class="{{if this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Specifieke periode</AuButton>
   </AuButtonGroup>
 
