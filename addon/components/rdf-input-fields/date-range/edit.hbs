@@ -1,6 +1,6 @@
 <div class="js-accordion js-accordion--open">
   <AuLabel>{{@field.label}}</AuLabel>
-  <AuButtonGroup @inline="true">
+  <AuButtonGroup @inline={{true}}>
     <AuButton {{ on "click" this.reset }}
         class="{{if (not this.isEnabled) "is-active" }}" @skin="secondary">Alle meldingen</AuButton>
     <AuButton {{ on "click" this.enable }}
