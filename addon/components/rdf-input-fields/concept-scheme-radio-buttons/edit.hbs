@@ -1,0 +1,19 @@
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+
+{{#each this.options as |option|}}
+  <label class="radio">
+    <input type="radio" class="radio__toggle" name={{@field.uri}} value={{option}} {{on 'click' (fn this.updateSelection option)}}>
+    <span></span>
+    {{option.label}}
+  </label>
+{{/each}}
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
