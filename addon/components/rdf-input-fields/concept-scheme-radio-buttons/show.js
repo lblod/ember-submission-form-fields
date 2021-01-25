@@ -40,7 +40,6 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsShowComponent extend
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
-      console.log(this.options)
     }
 
 
