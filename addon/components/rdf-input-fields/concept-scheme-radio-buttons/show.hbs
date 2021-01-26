@@ -4,13 +4,14 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-
+<div class="au-o-flow--tiny au-u-margin-bottom">
 {{#each this.options as |option|}}
-  <label class="radio">
+  <label class="radio au-c-input--block">
     <input type="radio" class="radio__toggle" disabled={{true}} checked={{if (eq this.selected.subject option.subject) true false}} name={{@field.uri}} value={{option}} >
     <span></span>
     {{option.label}}
   </label>
 {{/each}}
+</div>
 
 
