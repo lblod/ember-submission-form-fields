@@ -266,11 +266,6 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.target.errors = [];
     this.updateFieldValueTriple(entry, 'target');
 
-/*     if (this.isEmpty(entry.target.value)) {
-      entry.target.errors.pushObject({
-        message: 'Naam actor is verplicht.'
-      });
-    } */
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
   }
@@ -282,15 +277,15 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.existingStaff.value = !isNaN(parsedValue) ? parsedValue : entry.existingStaff.value;
     this.updateFieldValueTriple(entry, 'existingStaff');
 
-/*     if (this.isEmpty(entry.existingStaff.value)) {
+    if (this.isEmpty(entry.existingStaff.value)) {
       entry.existingStaff.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is verplicht.'
+        message: 'Bestaand personeelskader is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.existingStaff.value)) {
       entry.existingStaff.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.'
+        message: 'Bestaand personeelskader is niet een positief nummer.'
       });
-    } */
+    }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
   }
@@ -302,15 +297,15 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.additionalStaff.value = !isNaN(parsedValue) ? parsedValue : entry.additionalStaff.value;
     this.updateFieldValueTriple(entry, 'additionalStaff');
 
-/*     if (this.isEmpty(entry.additionalStaff.value)) {
+    if (this.isEmpty(entry.additionalStaff.value)) {
       entry.additionalStaff.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is verplicht.'
+        message: 'Extra aangetrokken betaald personeel is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.additionalStaff.value)) {
       entry.additionalStaff.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.'
+        message: 'Extra aangetrokken betaald personeel is niet een positief nummer.'
       });
-    } */
+    }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
   }
@@ -322,15 +317,15 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.volunteers.value = !isNaN(parsedValue) ? parsedValue : entry.volunteers.value;
     this.updateFieldValueTriple(entry, 'volunteers');
 
-/*     if (this.isEmpty(entry.volunteers.value)) {
+    if (this.isEmpty(entry.volunteers.value)) {
       entry.volunteers.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
+        message: 'Ingezette vrijwilligers is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.volunteers.value)) {
       entry.volunteers.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
+        message: 'Ingezette vrijwilligers is niet een positief nummer.'
       });
-    } */
+    }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
   }
@@ -342,15 +337,19 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.estimatedCost.value = !isNaN(parsedValue) ? parsedValue : entry.estimatedCost.value;
     this.updateFieldValueTriple(entry, 'estimatedCost');
 
-/*     if (this.isEmpty(entry.estimatedCost.value)) {
-      entry.volunteers.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
+    if (this.isEmpty(entry.estimatedCost.value)) {
+      entry.estimatedCost.errors.pushObject({
+        message: 'Raming inzet werkingsmiddelen is verplicht.'
       });
     } else if (!this.isPositiveInteger(entry.estimatedCost.value)) {
       entry.estimatedCost.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
+        message: 'Raming inzet werkingsmiddelen is niet een positief nummer.'
       });
-    } */
+    } else if (!this.hasMaxLength(entry.estimatedCost.value, 6)) {
+      entry.estimatedCost.errors.pushObject({
+        message: 'Raming inzet werkingsmiddelen is is langer dan 6 cijfers.'
+      });
+    }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table  }
   }
@@ -364,13 +363,17 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
 // FIELDS VALIDATIONS
 
-/*   isEmpty(value) {
+  isEmpty(value) {
     return value.toString().length == 0;
-  } */
+  }
 
-/*   isPositiveInteger(value) {
+  isPositiveInteger(value) {
     return (value === parseInt(value)) && (value >= 0);
-  } */
+  }
+
+  hasMaxLength(value, maxLengh) {
+    return value.toString().length <= maxLengh;
+  }
 
   /**
   * Update entry fields in the store.
