@@ -5,6 +5,12 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
+function byLabel(a, b) {
+  const textA = a.label.toUpperCase();
+  const textB = b.label.toUpperCase();
+  return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+}
+
 export default class RdfInputFieldsConceptSchemeRadioButtonsShowComponent extends InputFieldComponent {
   inputId = 'conceptSchemeRadioButtons-' + guidFor(this);
 
@@ -28,8 +34,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsShowComponent extend
         const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
         return { subject: t.subject, label: label && label.value };
       });
- 
-
+      this.options.sort(byLabel);
   }
 
   loadProvidedValue() {
@@ -40,8 +45,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsShowComponent extend
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
+
     }
-
-
   }
 }
