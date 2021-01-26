@@ -29,14 +29,6 @@ export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extend
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
-
-    /**
-     * NOTE: Most forms are now implemented to have a default "true" behavior
-     */
-    if(fieldOptions.searchEnabled !== undefined) {
-        this.searchEnabled = fieldOptions.searchEnabled;
-    }
-
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
       .map(t => {
