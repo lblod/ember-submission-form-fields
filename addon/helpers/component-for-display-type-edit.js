@@ -16,6 +16,7 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/vLabelOpcentiem': `rdf-input-fields/vlabel-opcentiem/edit`,
     'http://lblod.data.gift/display-types/switch': `rdf-input-fields/switch/edit`,
     'http://lblod.data.gift/display-types/checkbox': `rdf-input-fields/checkbox/edit`,
+    'http://lblod.data.gift/display-types/conceptSchemeRadioButtons': `rdf-input-fields/concept-scheme-radio-buttons/edit`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelector': `rdf-input-fields/concept-scheme-multi-selector/edit`,
     'http://lblod.data.gift/display-types/dateRange': `rdf-input-fields/date-range/edit`,
     'http://lblod.data.gift/display-types/search': `rdf-input-fields/search/edit`,
