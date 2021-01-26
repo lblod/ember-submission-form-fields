@@ -7,7 +7,11 @@
 <div class="au-o-flow--tiny au-u-margin-bottom">
   {{#each this.options as |option|}}
     <label class="radio au-c-input--block">
-      <input type="radio" class="radio__toggle" name={{@field.uri}} value={{option}} {{on 'click' (fn this.updateSelection option)}}>
+      <input type="radio"
+             class="radio__toggle"
+             name={{@field.uri}}
+             checked={{if (eq this.value option.value) true false}}
+        {{on 'click' (fn this.updateValue option)}}>
       <span></span>
       {{option.label}}
     </label>
