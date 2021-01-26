@@ -17,6 +17,7 @@ export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extend
   inputId = 'conceptSchemeRadioButtons-' + guidFor(this);
 
   @tracked options = []
+
   constructor() {
     super(...arguments);
     this.loadOptions();
