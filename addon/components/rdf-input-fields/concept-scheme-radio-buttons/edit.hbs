@@ -4,14 +4,15 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-
-{{#each this.options as |option|}}
-  <label class="radio">
-    <input type="radio" class="radio__toggle" name={{@field.uri}} value={{option}} {{on 'click' (fn this.updateSelection option)}}>
-    <span></span>
-    {{option.label}}
-  </label>
-{{/each}}
+<div class="au-o-flow--tiny au-u-margin-bottom">
+  {{#each this.options as |option|}}
+    <label class="radio au-c-input--block">
+      <input type="radio" class="radio__toggle" name={{@field.uri}} value={{option}} {{on 'click' (fn this.updateSelection option)}}>
+      <span></span>
+      {{option.label}}
+    </label>
+  {{/each}}
+</div>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
