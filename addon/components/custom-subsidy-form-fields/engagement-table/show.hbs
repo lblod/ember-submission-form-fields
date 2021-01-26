@@ -1,0 +1,77 @@
+<AuLabel>
+  Geef per doelstelling een inschatting van de inzet van personeel en werkingsmiddelen
+</AuLabel>
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <thead>
+    <tr>
+      <th>
+        Doelstelling
+      </th>
+      <th>
+        Inzet personeel (aantal VTE) Bestaand personeelskader
+      </th>
+      <th>
+        Inzet personeel (aantal VTE) Extra aangetrokken betaald personeel
+      </th>
+      <th>
+        Inzet personeel (aantal VTE) Ingezette vrijwilligers
+      </th>
+      <th>
+        Raming inzet werkingsmiddelen (euro)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.sortedEntries as |entry index|}}
+      <tr>
+        <td>
+          {{entry.target.value}}
+        </td>
+        <td>
+          <AuLabel for="existing-staff-{{index}}" class="au-u-hidden-visually">
+            Inzet personeel (aantal VTE) Bestaand personeelskader
+          </AuLabel>
+          <AuInput id="existing-staff-{{index}}" @width={{"block"}} @value={{entry.existingStaff.value}} disabled={{true}}/>
+          {{#each entry.existingStaff.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        <td>
+          <AuLabel for="additional-staff-{{index}}" class="au-u-hidden-visually">
+            Inzet personeel (aantal VTE) Extra aangetrokken betaald personeel
+          </AuLabel>
+          <AuInput id="additional-staff-{{index}}" @width={{"block"}} @value={{entry.additionalStaff.value}} disabled={{true}}/>
+          {{#each entry.additionalStaff.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        <td>
+          <AuLabel for="volunteers-{{index}}" class="au-u-hidden-visually">
+            Inzet personeel (aantal VTE) Ingezette vrijwilligers
+          </AuLabel>
+          <AuInput id="volunteers-{{index}}" @width={{"block"}} @value={{entry.volunteers.value}} disabled={{true}}/>
+          {{#each entry.volunteers.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        <td>
+          <AuLabel for="estimated-cost-{{index}}" class="au-u-hidden-visually">
+            Raming inzet werkingsmiddelen (euro)
+          </AuLabel>
+          <AuInput id="estimated-cost-{{index}}" @width={{"block"}} @value={{entry.estimatedCost.value}} disabled={{true}} />
+          {{#each entry.estimatedCost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{yield}}
