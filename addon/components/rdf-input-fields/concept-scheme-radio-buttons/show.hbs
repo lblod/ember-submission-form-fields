@@ -7,7 +7,7 @@
 
 {{#each this.options as |option|}}
   <label class="radio">
-    <input type="radio" class="radio__toggle" disabled={{true}} checked={{if (eq option.label option.selected.label) "true" "false"}} name={{@field.uri}} value={{option}}>
+    <input type="radio" class="radio__toggle" disabled={{true}} checked={{if (eq this.selected.subject option.subject) true false}} name={{@field.uri}} value={{option}} >
     <span></span>
     {{option.label}}
   </label>
