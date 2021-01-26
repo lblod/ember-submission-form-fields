@@ -39,11 +39,8 @@ export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extend
   }
 
   loadProvidedValue() {
-    const matches = triplesForPath(this.storeOptions);
-    if (matches.values.length > 0) {
-      this.nodeValue = matches.values[0];
-      this.value = matches.values[0].value === "1";
-    } 
+    const matches = triplesForPath(this.storeOptions, true).values;
+    this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
   }
 
   @action
