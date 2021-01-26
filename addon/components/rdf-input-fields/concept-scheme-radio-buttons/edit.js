@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
 import SimpleInputFieldComponent from '../simple-value-input-field';
+import { tracked } from '@glimmer/tracking';
 import { triplesForPath, updateSimpleFormValue} from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
@@ -16,6 +17,8 @@ function byLabel(a, b) {
 export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extends SimpleInputFieldComponent {
   inputId = 'conceptSchemeRadioButtons-' + guidFor(this);
 
+  @tracked selected = null
+  @tracked options = []
   constructor() {
     super(...arguments);
     this.loadOptions();
