@@ -14,7 +14,7 @@ function byLabel(a, b) {
 }
 
 export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extends SimpleInputFieldComponent {
-  inputId = 'conceptSchemeRadioButtons-' + guidFor(this);
+  inputId = 'concept-scheme-radio-buttons-' + guidFor(this);
 
   @tracked options = []
 

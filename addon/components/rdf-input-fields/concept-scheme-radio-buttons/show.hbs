@@ -7,7 +7,8 @@
 <div class="au-o-flow--tiny au-u-margin-bottom">
 {{#each this.options as |option|}}
   <label class="radio au-c-input--block">
-    <input type="radio"
+    <input id="{{this.inputId}}"
+           type="radio"
            class="radio__toggle"
            name={{@field.uri}}
            disabled={{true}}
