@@ -95,7 +95,12 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   // The validation of this fields depends on the value of other fields,
   // hence we recalculate the validation on notification of a change in the store
   onStoreUpdate() {
-    this.showContactopsporingRow = this.hasCorrectOption;
+    const previousShowValue = this.showContactopsporingRow;
+    const newShowValue = this.hasCorrectOption;
+    this.showContactopsporingRow = newShowValue;
+    if (!newShowValue && (previousShowValue != newShowValue)) {
+      this.resetContactopsporingEntry();
+    }
   }
 
   get hasEngagementTable() {
@@ -198,6 +203,15 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
         entry => entry.predicate.value == indexPredicate.value
       ).object.value;
     return entry;
+  }
+
+  resetContactopsporingEntry() {
+    const entry = this.entries.find(entry => (entry.index.value == 5));
+    entry.existingStaff.value = 0;
+    entry.additionalStaff.value = 0;
+    entry.volunteers.value = 0;
+    entry.estimatedCost.value = 0;
+    this.updateEntryFields(entry);
   }
 
   initializeTable() {
