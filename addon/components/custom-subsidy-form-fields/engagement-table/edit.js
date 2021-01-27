@@ -161,7 +161,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
             additionalStaff: parsedEntry.additionalStaff,
             volunteers: parsedEntry.volunteers,
             estimatedCost: parsedEntry.estimatedCost,
-            index: parsedEntry.index
+            index: parseInt(parsedEntry.index)
           }));
         }
       }
