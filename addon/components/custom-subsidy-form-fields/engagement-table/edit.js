@@ -6,6 +6,7 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
+import { guidFor } from '@ember/object/internals';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -24,6 +25,7 @@ const additionalStaffPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabu
 const volunteersPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/volunteers');
 const estimatedCostPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/estimatedCost');
 const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
+const correctOption = new rdflib.NamedNode('http://lblod.data.gift/concepts/2e0b5013-8c7e-4d3d-9f2b-2460c0095e38'); // Sensibilisering, preventie, bronopsporing, quarantaine coaching en contactonderzoek
 
 const targets = [
   { label: 'Sensibilisering en preventie', index: 1 },
@@ -70,15 +72,30 @@ class EngagementEntry {
 export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends InputFieldComponent {
   @tracked engagementTableSubject = null
   @tracked entries = [];
+  @tracked showContactopsporingRow;
+
+  observerLabel = `concept-scheme-radio-buttons-${guidFor(this)}`;
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+    this.showContactopsporingRow = this.hasCorrectOption;
+    this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.observerLabel);
 
     // Create table and entries in the store if not already existing
     next(this, () => {
       this.initializeTable();
     });
+  }
+
+  willDestroy(){
+    this.storeOptions.store.deregisterObserver(this.observerLabel);
+  }
+
+  // The validation of this fields depends on the value of other fields,
+  // hence we recalculate the validation on notification of a change in the store
+  onStoreUpdate() {
+    this.showContactopsporingRow = this.hasCorrectOption;
   }
 
   get hasEngagementTable() {
@@ -92,7 +109,24 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   }
 
   get sortedEntries() {
-    return this.entries.sort((a,b) => (a.index.value < b.index.value));
+    return this.entries.sort((a,b) => (a.index.value > b.index.value));
+  }
+
+  get hasCorrectOption() {
+    const correctOptionTriples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      undefined,
+      correctOption,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...correctOptionTriples
+    ];
+
+    if (triples.length > 0)
+      return true;
+
+    return false;
   }
 
   loadProvidedValue() {
@@ -345,13 +379,13 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       entry.estimatedCost.errors.pushObject({
         message: 'Raming inzet werkingsmiddelen is niet een positief nummer.'
       });
-    } else if (!this.hasMaxLength(entry.estimatedCost.value, 6)) {
+    } else if (!this.isSmallerThan(entry.estimatedCost.value, 1000000)) {
       entry.estimatedCost.errors.pushObject({
         message: 'Raming inzet werkingsmiddelen is is langer dan 6 cijfers.'
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-    super.updateValidations(); // Updates validation of the table  }
+    super.updateValidations(); // Updates validation of the table
   }
 
   updateIndexValue(entry) {
@@ -361,19 +395,6 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     super.updateValidations(); // Updates validation of the table
   }
 
-// FIELDS VALIDATIONS
-
-  isEmpty(value) {
-    return value.toString().length == 0;
-  }
-
-  isPositiveInteger(value) {
-    return (value === parseInt(value)) && (value >= 0);
-  }
-
-  hasMaxLength(value, maxLengh) {
-    return value.toString().length <= maxLengh;
-  }
 
   /**
   * Update entry fields in the store.
@@ -385,5 +406,20 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     this.updateVolunteersValue(entry);
     this.updateEstimatedCostValue(entry);
     this.updateIndexValue(entry);
+  }
+
+  // ------------------
+  // FIELDS VALIDATIONS
+
+  isEmpty(value) {
+    return value.toString().length == 0;
+  }
+
+  isPositiveInteger(value) {
+    return (value === parseInt(value)) && (value >= 0);
+  }
+
+  isSmallerThan(value, max) {
+    return value <= max;
   }
 }
