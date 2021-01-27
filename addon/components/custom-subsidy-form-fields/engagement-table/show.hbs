@@ -29,7 +29,7 @@
   </thead>
   <tbody>
     {{#each this.sortedEntries as |entry index|}}
-      {{#if (or (not-eq entry.index.value "5") this.showContactopsporingRow)}}
+      {{#if (or (not-eq entry.index.value 5) this.showContactopsporingRow)}}
         <tr>
           <td>
             {{entry.target.value}}
