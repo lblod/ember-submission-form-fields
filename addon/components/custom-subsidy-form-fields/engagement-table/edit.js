@@ -88,7 +88,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     });
   }
 
-  willDestroy(){
+  willDestroy() {
     this.storeOptions.store.deregisterObserver(this.observerLabel);
   }
 
@@ -245,45 +245,55 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   createEntries() {
     let entries = [];
-    targets.forEach(target => {
-      const engagementEntrySubject = this.createEngagementEntry();
+    const engagementEntriesDetails = this.createEngagementEntries();
+
+    engagementEntriesDetails.forEach(detail => {
       const newEntry = new EngagementEntry({
-        engagementEntrySubject,
-        target: target.label,
+        engagementEntrySubject: detail.subject,
+        target: detail.label,
         existingStaff: 0,
         additionalStaff: 0,
         volunteers: 0,
         estimatedCost: 0,
-        index: target.index
+        index: detail.index
       });
-
       entries.pushObject(newEntry);
-
-      this.updateEntryFields(newEntry);
     });
+
+    this.initializeEntriesFields(entries);
     return entries;
   }
 
-  createEngagementEntry() {
-    const uuid = uuidv4();
-    const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
-    const triples = [ { subject: engagementEntrySubject,
-                        predicate: RDF('type'),
-                        object: EngagementEntryType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: engagementEntrySubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.engagementTableSubject,
-                        predicate: engagementEntryPredicate,
-                        object: engagementEntrySubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+  createEngagementEntries() {
+    let triples = [];
+    let engagementEntriesDetails = [];
+    targets.forEach(target => {
+      const uuid = uuidv4();
+      const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
+      engagementEntriesDetails.push({
+        subject: engagementEntrySubject,
+        label: target.label,
+        index: target.index
+      });
+      triples.push({ subject: engagementEntrySubject,
+                    predicate: RDF('type'),
+                    object: EngagementEntryType,
+                    graph: this.storeOptions.sourceGraph
+                  },
+                  { subject: engagementEntrySubject,
+                    predicate: MU('uuid'),
+                    object: uuid,
+                    graph: this.storeOptions.sourceGraph
+                  },
+                  { subject: this.engagementTableSubject,
+                    predicate: engagementEntryPredicate,
+                    object: engagementEntrySubject,
+                    graph: this.storeOptions.sourceGraph }
+        );
+    });
+
     this.storeOptions.store.addAll(triples);
-    return engagementEntrySubject;
+    return engagementEntriesDetails;
   }
 
   updateFieldValueTriple(entry, field) {
@@ -409,6 +419,50 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     super.updateValidations(); // Updates validation of the table
   }
 
+  initializeEntriesFields(entries) {
+    let triples = [];
+    entries.forEach(entry => {
+      triples.push(
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['target'].predicate,
+          object: entry['target'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['existingStaff'].predicate,
+          object: entry['existingStaff'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['additionalStaff'].predicate,
+          object: entry['additionalStaff'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['volunteers'].predicate,
+          object: entry['volunteers'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['estimatedCost'].predicate,
+          object: entry['estimatedCost'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['index'].predicate,
+          object: entry['index'].value,
+          graph: this.storeOptions.sourceGraph
+        }
+      );
+    });
+    this.storeOptions.store.addAll(triples);
+  }
 
   /**
   * Update entry fields in the store.
