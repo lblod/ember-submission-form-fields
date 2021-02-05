@@ -1,7 +1,7 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath } from '@lblod/submission-form-helpers';
+import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
@@ -26,6 +26,7 @@ const volunteersPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularie
 const estimatedCostPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/estimatedCost');
 const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
 const correctOption = new rdflib.NamedNode('http://lblod.data.gift/concepts/2e0b5013-8c7e-4d3d-9f2b-2460c0095e38'); // Sensibilisering, preventie, bronopsporing, quarantaine coaching en contactonderzoek
+const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
 
 const targets = [
   { label: 'Sensibilisering en preventie', index: 1 },
@@ -212,12 +213,14 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.volunteers.value = 0;
     entry.estimatedCost.value = 0;
     this.updateEntryFields(entry);
+    this.updateTotalAmount();
   }
 
   initializeTable() {
     if (!this.hasEngagementTable) {
       this.createEngagementTable();
       this.entries = this.createEntries();
+      this.updateTotalAmount();
       super.updateValidations(); // Updates validation of the table
     }
   }
@@ -394,6 +397,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     const parsedValue = parseInt(entry.estimatedCost.value);
     entry.estimatedCost.value = !isNaN(parsedValue) ? parsedValue : entry.estimatedCost.value;
     this.updateFieldValueTriple(entry, 'estimatedCost');
+    this.updateTotalAmount();
 
     if (this.isEmpty(entry.estimatedCost.value)) {
       entry.estimatedCost.errors.pushObject({
@@ -474,6 +478,38 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     this.updateVolunteersValue(entry);
     this.updateEstimatedCostValue(entry);
     this.updateIndexValue(entry);
+  }
+
+  updateTotalAmount() {
+    const total = this.calculateTotal(this.entries);
+    const aangevraagdBedragTriples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      totalAmountPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...aangevraagdBedragTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: totalAmountPredicate,
+        object: rdflib.literal(Number.parseFloat(total).toFixed(2), XSD('float')),
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+  }
+
+  calculateTotal(entries) {
+    let total = 0;
+    entries.forEach(entry => {
+      const parsedValue = parseInt(entry.estimatedCost.value);
+      total += !isNaN(parsedValue) ? parsedValue : 0;
+    });
+    return total;
   }
 
   // ------------------
