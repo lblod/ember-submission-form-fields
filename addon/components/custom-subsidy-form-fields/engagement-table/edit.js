@@ -1,7 +1,7 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath } from '@lblod/submission-form-helpers';
+import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
@@ -26,6 +26,7 @@ const volunteersPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularie
 const estimatedCostPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/estimatedCost');
 const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
 const correctOption = new rdflib.NamedNode('http://lblod.data.gift/concepts/2e0b5013-8c7e-4d3d-9f2b-2460c0095e38'); // Sensibilisering, preventie, bronopsporing, quarantaine coaching en contactonderzoek
+const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
 
 const targets = [
   { label: 'Sensibilisering en preventie', index: 1 },
@@ -88,7 +89,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     });
   }
 
-  willDestroy(){
+  willDestroy() {
     this.storeOptions.store.deregisterObserver(this.observerLabel);
   }
 
@@ -212,12 +213,14 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     entry.volunteers.value = 0;
     entry.estimatedCost.value = 0;
     this.updateEntryFields(entry);
+    this.updateTotalAmount();
   }
 
   initializeTable() {
     if (!this.hasEngagementTable) {
       this.createEngagementTable();
       this.entries = this.createEntries();
+      this.updateTotalAmount();
       super.updateValidations(); // Updates validation of the table
     }
   }
@@ -245,45 +248,55 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   createEntries() {
     let entries = [];
-    targets.forEach(target => {
-      const engagementEntrySubject = this.createEngagementEntry();
+    const engagementEntriesDetails = this.createEngagementEntries();
+
+    engagementEntriesDetails.forEach(detail => {
       const newEntry = new EngagementEntry({
-        engagementEntrySubject,
-        target: target.label,
+        engagementEntrySubject: detail.subject,
+        target: detail.label,
         existingStaff: 0,
         additionalStaff: 0,
         volunteers: 0,
         estimatedCost: 0,
-        index: target.index
+        index: detail.index
       });
-
       entries.pushObject(newEntry);
-
-      this.updateEntryFields(newEntry);
     });
+
+    this.initializeEntriesFields(entries);
     return entries;
   }
 
-  createEngagementEntry() {
-    const uuid = uuidv4();
-    const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
-    const triples = [ { subject: engagementEntrySubject,
-                        predicate: RDF('type'),
-                        object: EngagementEntryType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: engagementEntrySubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.engagementTableSubject,
-                        predicate: engagementEntryPredicate,
-                        object: engagementEntrySubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+  createEngagementEntries() {
+    let triples = [];
+    let engagementEntriesDetails = [];
+    targets.forEach(target => {
+      const uuid = uuidv4();
+      const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
+      engagementEntriesDetails.push({
+        subject: engagementEntrySubject,
+        label: target.label,
+        index: target.index
+      });
+      triples.push({ subject: engagementEntrySubject,
+                    predicate: RDF('type'),
+                    object: EngagementEntryType,
+                    graph: this.storeOptions.sourceGraph
+                  },
+                  { subject: engagementEntrySubject,
+                    predicate: MU('uuid'),
+                    object: uuid,
+                    graph: this.storeOptions.sourceGraph
+                  },
+                  { subject: this.engagementTableSubject,
+                    predicate: engagementEntryPredicate,
+                    object: engagementEntrySubject,
+                    graph: this.storeOptions.sourceGraph }
+        );
+    });
+
     this.storeOptions.store.addAll(triples);
-    return engagementEntrySubject;
+    return engagementEntriesDetails;
   }
 
   updateFieldValueTriple(entry, field) {
@@ -384,6 +397,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     const parsedValue = parseInt(entry.estimatedCost.value);
     entry.estimatedCost.value = !isNaN(parsedValue) ? parsedValue : entry.estimatedCost.value;
     this.updateFieldValueTriple(entry, 'estimatedCost');
+    this.updateTotalAmount();
 
     if (this.isEmpty(entry.estimatedCost.value)) {
       entry.estimatedCost.errors.pushObject({
@@ -409,6 +423,50 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     super.updateValidations(); // Updates validation of the table
   }
 
+  initializeEntriesFields(entries) {
+    let triples = [];
+    entries.forEach(entry => {
+      triples.push(
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['target'].predicate,
+          object: entry['target'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['existingStaff'].predicate,
+          object: entry['existingStaff'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['additionalStaff'].predicate,
+          object: entry['additionalStaff'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['volunteers'].predicate,
+          object: entry['volunteers'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['estimatedCost'].predicate,
+          object: entry['estimatedCost'].value,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: entry.engagementEntrySubject,
+          predicate: entry['index'].predicate,
+          object: entry['index'].value,
+          graph: this.storeOptions.sourceGraph
+        }
+      );
+    });
+    this.storeOptions.store.addAll(triples);
+  }
 
   /**
   * Update entry fields in the store.
@@ -420,6 +478,38 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     this.updateVolunteersValue(entry);
     this.updateEstimatedCostValue(entry);
     this.updateIndexValue(entry);
+  }
+
+  updateTotalAmount() {
+    const total = this.calculateTotal(this.entries);
+    const aangevraagdBedragTriples = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      totalAmountPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...aangevraagdBedragTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: totalAmountPredicate,
+        object: rdflib.literal(Number.parseFloat(total).toFixed(2), XSD('float')),
+        graph: this.storeOptions.sourceGraph
+      }
+    ]);
+  }
+
+  calculateTotal(entries) {
+    let total = 0;
+    entries.forEach(entry => {
+      const parsedValue = parseInt(entry.estimatedCost.value);
+      total += !isNaN(parsedValue) ? parsedValue : 0;
+    });
+    return total;
   }
 
   // ------------------
