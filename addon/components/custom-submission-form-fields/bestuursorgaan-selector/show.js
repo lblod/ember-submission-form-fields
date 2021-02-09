@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
+import { next } from '@ember/runloop';
 
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
@@ -15,6 +16,10 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
     super(...arguments);
     this.loadOptions();
     this.loadProvidedValue();
+
+    next(this, () => {
+      this.loadClassificationsInStore();
+    });
   }
 
   loadOptions(){
@@ -39,5 +44,65 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
     }
+  }
+
+  loadClassificationsInStore() {
+    const metaGraph = this.args.graphs.metaGraph;
+    const [bestuursorgaan, orgaanClassification] = this.getPathToOrgaanClassification(this.selected.subject, metaGraph);
+    const [bestuurseenheid, eenheidClassification] = this.getPathToEenheidClassification(bestuursorgaan.object, metaGraph);
+
+    const bestuursorgaanInSourceGraph = { subject: bestuursorgaan.subject,
+                                  predicate: bestuursorgaan.predicate,
+                                  object: bestuursorgaan.object,
+                                  graph: this.storeOptions.sourceGraph
+                                };
+    const orgaanClassificationInSourceGraph = { subject: orgaanClassification.subject,
+                                  predicate: orgaanClassification.predicate,
+                                  object: orgaanClassification.object,
+                                  graph: this.storeOptions.sourceGraph
+                                };
+    const bestuurseenheidInSourceGraph = { subject: bestuurseenheid.subject,
+                                  predicate: bestuurseenheid.predicate,
+                                  object: bestuurseenheid.object,
+                                  graph: this.storeOptions.sourceGraph
+                                };
+    const eenheidClassificationInSourceGraph = { subject: eenheidClassification.subject,
+                                  predicate: eenheidClassification.predicate,
+                                  object: eenheidClassification.object,
+                                  graph: this.storeOptions.sourceGraph
+                                };
+
+    this.storeOptions.store.addAll([bestuursorgaanInSourceGraph, orgaanClassificationInSourceGraph, bestuurseenheidInSourceGraph, eenheidClassificationInSourceGraph]);
+  }
+
+  getPathToOrgaanClassification(bestuursorgaanInTimeUri, graph) {
+    const MANDAAT = new rdflib.Namespace("http://data.vlaanderen.be/ns/mandaat#");
+    const BESLUIT = new rdflib.Namespace("http://data.vlaanderen.be/ns/besluit#");
+
+    const bestuursorgaan = this.args.formStore
+      .match(bestuursorgaanInTimeUri, MANDAAT('isTijdspecialisatieVan'), undefined, graph)[0];
+
+    let orgaanClassification = undefined;
+    if (bestuursorgaan) {
+      orgaanClassification = this.args.formStore
+        .match(bestuursorgaan.object, BESLUIT('classificatie'), undefined, graph)[0];
+    }
+
+    return [bestuursorgaan, orgaanClassification];
+  }
+
+  getPathToEenheidClassification(bestuursorgaanUri, graph) {
+    const BESLUIT = new rdflib.Namespace("http://data.vlaanderen.be/ns/besluit#");
+
+    const bestuurseenheid = this.args.formStore
+      .match(bestuursorgaanUri, BESLUIT('bestuurt'), undefined, graph)[0];
+
+    let eenheidClassification = undefined;
+    if (bestuurseenheid) {
+      eenheidClassification = this.args.formStore
+        .match(bestuurseenheid.object, BESLUIT('classificatie'), undefined, undefined)[0];
+    }
+
+    return [bestuurseenheid, eenheidClassification];
   }
 }
