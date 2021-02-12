@@ -7,11 +7,11 @@
 <ul>
   {{#each this.options as |option|}}
     <li>
-      <label class="au-c-control au-c-control--radio">
-        <input id="{{option.value}}"
-               type="radio"
+      <label for="{{@field.uri}}{{option.value}}" class="au-c-control au-c-control--radio">
+        <input type="radio"
                class="au-c-control__input"
-               name={{@field.uri}}
+               id="{{@field.uri}}{{option.value}}"
+               name="{{@field.uri}}"
                checked={{if (eq this.value option.value) true false}}
                onclick={{fn this.updateValue option}}>
         <span class="au-c-control__indicator"></span>
