@@ -7,9 +7,10 @@
 <ul>
   {{#each this.options as |option|}}
     <li>
-      <AuControlRadio @label={{option.label}}
+      <AuControlRadio @identifier="{{this.inputId}}"
                       @name={{@field.uri}}
-                      @identifier={{this.inputId}}
+                      @label={{option.label}}
+                      @value={{option.label}}
                       @checked={{if (eq this.value option.value) true false}}
                       disabled={{true}}/>
     </li>
