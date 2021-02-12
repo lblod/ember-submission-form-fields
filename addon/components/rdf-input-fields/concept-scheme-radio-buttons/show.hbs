@@ -4,19 +4,16 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-<div class="au-o-flow--tiny au-u-margin-bottom">
-{{#each this.options as |option|}}
-  <label class="radio au-c-input--block">
-    <input id="{{this.inputId}}"
-           type="radio"
-           class="radio__toggle"
-           name={{@field.uri}}
-           disabled={{true}}
-           checked={{if (eq this.value option.value) true false}}>
-    <span></span>
-    {{option.label}}
-  </label>
-{{/each}}
-</div>
+<ul>
+  {{#each this.options as |option|}}
+    <li>
+      <AuControlRadio @label={{option.label}}
+                      @name={{@field.uri}}
+                      @identifier={{this.inputId}}
+                      @checked={{if (eq this.value option.value) true false}}
+                      disabled={{true}}/>
+    </li>
+  {{/each}}
+</ul>
 
 
