@@ -11,8 +11,8 @@
                       @name={{@field.uri.value}}
                       @label={{option.label}}
                       @value={{option.label}}
-                      @checked={{if (eq this.value option.value) true false}}
-                      disabled={{true}}/>
+                      @disabled={{true}}
+                      checked={{if (eq this.value option.value) true false}}/>
     </li>
   {{/each}}
 </ul>

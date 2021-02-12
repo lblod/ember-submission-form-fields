@@ -1,5 +1,4 @@
-<div class="checkbox">
-  <WuCheckbox @label={{@field.label}}
-              @checked={{this.value}}
-              @disabled='true' />
-</div>
+<AuControlCheckbox @identifier={{this.inputId}}
+                   @label={{@field.label}}
+                   @disabled={{true}}
+                   checked={{this.value}}/>

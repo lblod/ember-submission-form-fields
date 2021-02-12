@@ -3,9 +3,10 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-<WuCheckbox @label={{@field.label}}
-            @checked={{this.value}}
-            @onClick={{this.updateValue}} />
+<AuControlCheckbox @identifier={{this.inputId}}
+                   @label={{@field.label}}
+                   checked={{this.value}}
+                   onclick={{this.updateValue}}/>
 {{#each this.errors as |error|}}
   <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}
