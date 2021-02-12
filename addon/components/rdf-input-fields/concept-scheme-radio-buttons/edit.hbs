@@ -12,6 +12,7 @@
                class="au-c-control__input"
                id="{{@field.uri}}/<{{option.value}}>"
                name="{{@field.uri}}"
+               value="{{option.label}}"
                checked={{if (eq this.value option.value) true false}}
                onclick={{fn this.updateValue option}}>
         <span class="au-c-control__indicator"></span>

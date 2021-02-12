@@ -4,11 +4,11 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-<ul>
+<ul id={{this.inputId}}>
   {{#each this.options as |option|}}
     <li>
-      <AuControlRadio @identifier="{{option.value}}"
-                      @name={{@field.uri}}
+      <AuControlRadio @identifier="{{@field.uri}}/<{{option.value}}"
+                      @name={{@field.uri.value}}
                       @label={{option.label}}
                       @value={{option.label}}
                       @checked={{if (eq this.value option.value) true false}}
