@@ -7,12 +7,16 @@
 <ul>
   {{#each this.options as |option|}}
     <li>
-      <AuControlRadio @identifier="{{option.value}}"
-                      @name={{@field.uri}}
-                      @label={{option.label}}
-                      @value={{option.label}}
-                      @checked={{if (eq this.value option.value) true false}}
-        {{on 'click' (fn this.updateValue option)}}/>
+      <label class="au-c-control au-c-control--radio">
+        <input id="{{option.value}}"
+               type="radio"
+               class="au-c-control__input"
+               name={{@field.uri}}
+               checked={{if (eq this.value option.value) true false}}
+               onclick={{fn this.updateValue option}}>
+        <span class="au-c-control__indicator"></span>
+        {{option.label}}
+      </label>
     </li>
   {{/each}}
 </ul>
