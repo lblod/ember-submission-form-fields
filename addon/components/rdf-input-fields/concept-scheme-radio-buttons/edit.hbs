@@ -7,7 +7,7 @@
 <ul>
   {{#each this.options as |option|}}
     <li>
-      <AuControlRadio @identifier="{{this.inputId}}"
+      <AuControlRadio @identifier="{{option.value}}"
                       @name={{@field.uri}}
                       @label={{option.label}}
                       @value={{option.label}}

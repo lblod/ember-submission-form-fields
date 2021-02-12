@@ -15,22 +15,20 @@ function byLabel(a, b) {
 export default class RdfInputFieldsConceptSchemeRadioButtonsShowComponent extends SimpleInputFieldComponent {
   inputId = 'concept-scheme-radio-buttons-' + guidFor(this);
 
-  @tracked options = []
+  @tracked options = [];
 
   constructor() {
     super(...arguments);
     this.loadOptions();
   }
 
-  loadOptions(){
+  loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
-    this.options = this.args.formStore
-    .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
-    .map(t => {
-      const label = this.args.formStore.any( t.subject, SKOS('prefLabel'), undefined, metaGraph);
-      return { value: t.subject.value, nodeValue: t.subject, label: label && label.value };
+    this.options = this.args.formStore.match(undefined, SKOS('inScheme'), conceptScheme, metaGraph).map(t => {
+      const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
+      return {value: t.subject.value, nodeValue: t.subject, label: label && label.value};
     });
     this.options.sort(byLabel);
   }
