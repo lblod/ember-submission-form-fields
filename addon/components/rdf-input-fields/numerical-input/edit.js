@@ -15,12 +15,15 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
   }
 
   get datatype() {
-    // TODO for now decimals are not supported
     const number = Number(this.value);
-    if (Number.isInteger(number) && number <= Number.MAX_SAFE_INTEGER) {
-      return XSD('integer');
+    if (!Number.isNaN(number) && Number.isFinite(number)) {
+      let datatype = XSD('decimal');
+      if (Number.isInteger(number) && Number.isSafeInteger(number)) {
+        datatype = XSD('integer');
+      }
+      return datatype;
     }
-    // NOTE: to not make queries fail, everything that is not a integer is seen as string.
+    // NOTE: everything that is not a number is a string.
     return XSD('string');
   }
 }

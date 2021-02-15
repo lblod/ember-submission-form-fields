@@ -4,12 +4,12 @@
     <AuPill>Verplicht</AuPill>
   {{/if}}
 </AuLabel>
-<AuInput
-        class="{{if this.errors "au-c-input--error"}}"
-        type="number"
-        id="{{this.inputId}}"
-        @value={{this.value}}
-  {{on "blur" this.updateValue}}
+<AuInput class="{{if this.errors "au-c-input--error"}}"
+         type="number"
+         id="{{this.inputId}}"
+         lang="nl-BE"
+         @value={{this.value}}
+  {{on "change" this.updateValue}}
 />
 
 {{#each this.errors as |error|}}
