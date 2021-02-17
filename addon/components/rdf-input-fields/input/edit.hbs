@@ -3,6 +3,9 @@
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
   {{/if}}
+  {{#if this.maxLength}}
+    <AuPill @skin={{unless this.hasRemainingCharacters "error"}} >Resterende karakters: {{this.remainingCharacters}}</AuPill>
+  {{/if}}
 </AuLabel>
 <AuInput
         class="{{if this.errors "au-c-input--error"}}"
