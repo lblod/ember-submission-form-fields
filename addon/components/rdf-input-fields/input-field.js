@@ -48,11 +48,7 @@ export default class InputFieldComponent extends Component {
     const {store, formGraph} = this.storeOptions;
     const constraint = this.validationConstraints.find(
       constraint => store.any(constraint, RDF('type'), new rdflib.NamedNode(MAX_LENGTH_URI), formGraph));
-    return Number(store.any(constraint, FORM('max'), undefined).value) || Number.MAX_SAFE_INTEGER
-  }
-
-  get hasMaxLength() {
-    return this.maxLength !== Number.MAX_SAFE_INTEGER;
+    return Number(store.any(constraint, FORM('max'), undefined).value);
   }
 
   get remainingCharacters() {
