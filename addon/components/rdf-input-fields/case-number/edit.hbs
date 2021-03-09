@@ -1,0 +1,23 @@
+<AuLabel>{{@field.label}}</AuLabel>
+{{#if this.error}}
+  <AuAlert @alertIcon="alert-triangle"
+           @alertTitle="Oeps, dit is een beetje gênant!"
+           @alertskin={{"warning"}}
+           @alertsize={{"small"}}
+           @closable={{true}}>
+    <AuHelpText class="au-u-margin-none">
+      Onderstaande veld zou automatisch ingevuld moeten worden door één van onze processen,
+      <br>maar het lijkt dat deze onze vraag niet heeft beantwoord.
+      <br><strong>Probeer de pagina eens te herladen of probeer het later nog eens opnieuw!</strong>
+    </AuHelpText>
+  </AuAlert>
+{{/if}}
+<AuButtonGroup @inline={{true}}>
+  <AuInput id="{{this.id}}"
+           @value={{this.value}}
+           disabled="disabled"/>
+  <AuButton @skin="secondary"
+            @icon="document"
+            @hideText={{true}}
+            onclick={{this.copy}}>Kopieren</AuButton>
+</AuButtonGroup>
