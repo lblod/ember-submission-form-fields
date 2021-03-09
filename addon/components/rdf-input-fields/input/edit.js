@@ -1,7 +1,6 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
-import { FORM, SHACL } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
 export default class FormInputFieldsInputEditComponent extends SimpleInputFieldComponent {
@@ -10,12 +9,10 @@ export default class FormInputFieldsInputEditComponent extends SimpleInputFieldC
   constructor() {
     super(...arguments);
 
-    if (!this.value) {
-      this.setDefaultValue();
+    if (!this.value && this.defaultValue) {
+      this.value = this.defaultValue;
       next(this, () => {
-        if (this.value) {
-          this.updateFieldValue();
-        }
+        this.updateFieldValue();
       });
     }
   }
@@ -28,25 +25,5 @@ export default class FormInputFieldsInputEditComponent extends SimpleInputFieldC
 
   updateFieldValue() {
     super.updateValue(this.value && this.value.trim());
-  }
-
-  /**
-   * Sets a default value on the field if the property `form:defaultValue` is defined in the
-   * field's configuration
-   */
-  setDefaultValue() {
-    const field = this.storeOptions.store.match(
-      undefined,
-      SHACL('path'),
-      this.storeOptions.path,
-      this.storeOptions.formGraph)[0].subject;
-
-    const defaultValueTriple = this.storeOptions.store.match(
-      field,
-      FORM('defaultValue'),
-      undefined,
-      this.storeOptions.formGraph)[0];
-
-    if (defaultValueTriple) this.value = defaultValueTriple.object.value;
   }
 }

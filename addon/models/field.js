@@ -19,6 +19,7 @@ export default class FieldModel {
     this.rdflibDisplayType = store.any( uri, FORM("displayType"), undefined, formGraph );
     this.rdflibPath = store.any( uri, SHACL("path"), undefined, formGraph );
     this.rdflibOptions = store.any( uri, FORM("options"), undefined, formGraph );
+    this.rdflibDefaultValue = store.any( uri, FORM('defaultValue'), undefined, formGraph );
     if(this.rdflibPath) {
       // this.rdflibValue = store.any(sourceNode, this.rdflibPath, undefined, sourceGraph);
     }
@@ -64,5 +65,11 @@ export default class FieldModel {
   rdflibOptions = null;
   get options(){
     return this.rdflibOptions && this.rdflibOptions.value;
+  }
+
+  @tracked
+  rdflibOptions = null;
+  get defaultValue() {
+    return this.rdflibDefaultValue && this.rdflibDefaultValue.value;
   }
 }

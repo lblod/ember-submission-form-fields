@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 import rdflib from 'browser-rdflib';
-import { XSD, FORM, SHACL } from '@lblod/submission-form-helpers';
+import { XSD } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
 export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInputFieldComponent {
@@ -11,12 +11,10 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
   constructor() {
     super(...arguments);
 
-    if (!this.value) {
-      this.setDefaultValue();
+    if (!this.value && this.defaultValue) {
+      this.value = this.defaultValue;
       next(this, () => {
-        if (this.value) {
-          this.updateFieldValue();
-        }
+        this.updateFieldValue();
       });
     }
   }
@@ -43,25 +41,5 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
     }
     // NOTE: everything that is not a number is a string.
     return XSD('string');
-  }
-
-  /**
-   * Sets a default value on the field if the property `form:defaultValue` is defined in the
-   * field's configuration
-   */
-  setDefaultValue() {
-    const field = this.storeOptions.store.match(
-      undefined,
-      SHACL('path'),
-      this.storeOptions.path,
-      this.storeOptions.formGraph)[0].subject;
-
-    const defaultValueTriple = this.storeOptions.store.match(
-      field,
-      FORM('defaultValue'),
-      undefined,
-      this.storeOptions.formGraph)[0];
-
-    if (defaultValueTriple) this.value = defaultValueTriple.object.value;
   }
 }
