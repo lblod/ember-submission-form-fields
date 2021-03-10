@@ -4,6 +4,8 @@ import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '../simple-value-input-field';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 
+// Note : default values are not working yet with this component, loadProvidedValue is overriden
+
 export default class FormInputFieldsSwitchEditComponent extends SimpleInputFieldComponent {
   inputId = 'switch-' + guidFor(this);
 
