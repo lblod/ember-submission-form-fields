@@ -48,21 +48,14 @@ export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputF
     }
   }
 
-  willDestroyElement() {
-    /**
-     *  TODO: the case-number-service should provide an endpoint to un-lock the retrieved case-number
-     *        to prevent the accumulation of unnecessary locked case-numbers.
-     */
-  }
-
   setRandomCaseNumber() {
     const options = JSON.parse(this.args.field.options);
-    let url = '/case-number-generator/generate';
+    let url = `/case-number-generator/generate?node=${this.storeOptions.sourceNode.value}`;
     if (options.prefix) {
-      url = url + `?prefix=${options.prefix}`;
+      url = url + `&prefix=${options.prefix}`;
     }
-    fetch(url).then(async response => {
-      if(response.ok) {
+    fetch(url, {method: 'POST'}).then(async response => {
+      if (response.ok) {
         this.value = (await response.json())[0];
         this.updateValue(this.value);
       } else {
@@ -72,10 +65,6 @@ export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputF
         this.error = response;
       }
     }).catch(error => this.error = error);
-    /**
-     *  TODO: the case-number-service should provide an endpoint to lock the retrieved case-number
-     *        to minimise the potential overlap.
-     */
   }
 
   @action
