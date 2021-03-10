@@ -41,6 +41,10 @@ export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputF
 
   @tracked error;
 
+  get showAlert(){
+    return this.error && !this.value
+  }
+
   loadProvidedValue() {
     super.loadProvidedValue();
     if (!this.value) {

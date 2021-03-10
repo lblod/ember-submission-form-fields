@@ -1,5 +1,5 @@
 <AuLabel>{{@field.label}}</AuLabel>
-{{#if this.error}}
+{{#if this.showAlert}}
   <AuAlert @alertIcon="alert-triangle"
            @alertTitle="Oeps, dit is een beetje gênant!"
            @alertskin={{"warning"}}
@@ -7,8 +7,8 @@
            @closable={{true}}>
     <AuHelpText class="au-u-margin-none">
       Onderstaande veld zou automatisch ingevuld moeten worden door één van onze processen,
-      <br>maar het lijkt dat deze onze vraag niet heeft beantwoord.
-      <br><strong>Probeer de pagina eens te herladen of probeer het later nog eens opnieuw!</strong>
+      <br>maar het lijkt dat deze onze vraag niet heeft kunnen beantwoorden.
+      <br><strong>Probeer de pagina eens te herladen.</strong>
     </AuHelpText>
   </AuAlert>
 {{/if}}
