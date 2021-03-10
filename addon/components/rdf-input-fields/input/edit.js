@@ -7,7 +7,8 @@ export default class FormInputFieldsInputEditComponent extends SimpleInputFieldC
 
   @action
   updateValue(e) {
-    e.preventDefault();
+    if (e && typeof e.preventDefault === "function")
+      e.preventDefault();
     super.updateValue(this.value && this.value.trim());
   }
 }
