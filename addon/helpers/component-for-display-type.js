@@ -43,7 +43,7 @@ const mapping = {
     'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/show`,
     'http://lblod.data.gift/display-types/applicationFormTable': `custom-subsidy-form-fields/application-form-table/show`,
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
-    'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/edit` // THIS IS CORRECT
+    'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/show`
   }
 }
 
