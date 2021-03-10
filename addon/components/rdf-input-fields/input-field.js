@@ -65,6 +65,10 @@ export default class InputFieldComponent extends Component {
     return this.remainingCharacters >= 0;
   }
 
+  get defaultValue() {
+    return this.args.field.defaultValue;
+  }
+
   get storeOptions() {
     return {
       formGraph: this.args.graphs.formGraph,

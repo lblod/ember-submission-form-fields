@@ -9,7 +9,8 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
 
   @action
   updateValue(e) {
-    e.preventDefault();
+    if (e && typeof e.preventDefault === "function")
+      e.preventDefault();
     const number = rdflib.literal(Number(this.value), this.datatype);
     super.updateValue(number);
   }
