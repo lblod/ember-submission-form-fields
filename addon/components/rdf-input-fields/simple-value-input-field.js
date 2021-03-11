@@ -21,14 +21,14 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
     } else if (this.defaultValue && this.value == null) {
       this.value = this.defaultValue;
       next(this, () => {
-        this.updateValue();
+        this.updateValue(null, false);
       });
     }
   }
 
-  updateValue(value) {
+  updateValue(value, hasBeenFocused=true) {
     updateSimpleFormValue(this.storeOptions, value, this.nodeValue);
-    this.hasBeenFocused = true;
+    this.hasBeenFocused = hasBeenFocused;
     this.loadProvidedValue();
     super.updateValidations();
   }
