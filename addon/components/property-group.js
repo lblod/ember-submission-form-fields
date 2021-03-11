@@ -3,10 +3,12 @@ import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
+import { validationResultsForField } from '@lblod/submission-form-helpers';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
 
   @tracked children = A();
+  @tracked validations = [];
 
   observerLabel = `property-group-${guidFor(this)}`;
 
@@ -25,6 +27,21 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
 
   willDestroy() {
     this.deregister();
+  }
+
+  get errors() {
+    return this.validations.filter(r => !r.valid);
+  }
+
+  get storeOptions() {
+    return {
+      formGraph: this.args.graphs.formGraph,
+      sourceGraph: this.args.graphs.sourceGraph,
+      metaGraph: this.args.graphs.metaGraph,
+      sourceNode: this.args.sourceNode,
+      store: this.args.formStore,
+      path: this.args.group.rdflibPath,
+    };
   }
 
   register() {
@@ -68,6 +85,9 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
         this.children.replace(i, 1, [field]);
       }
     });
+
+    // 6) update the validation
+    this.validations = validationResultsForField(group.uri, this.storeOptions);
 
     this.register(); // NOTE: to make sure we get notified on user input
   }

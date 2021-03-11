@@ -2,7 +2,7 @@
   <div ...attributes>
     {{#if @group.name}}
       <div class="au-u-margin-bottom-small">
-        <AuHeading @level="2" @skin="3">{{@group.name}}</AuHeading>
+        <AuHeading @level="2" @skin="3" class="{{if this.errors "au-c-label--error"}}">{{@group.name}}</AuHeading>
         {{#if @group.help}}
           <p class="au-u-light au-u-margin-top-xsmall">{{@group.help}}</p>
         {{/if}}
@@ -42,6 +42,9 @@
           <AuHr @size="large"/>
         {{/if }}
       {{/unless}}
+    {{/each}}
+    {{#each this.errors as |error|}}
+      <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
     {{/each}}
   </div>
 {{/if}}
