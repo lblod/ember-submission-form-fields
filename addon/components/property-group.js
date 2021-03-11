@@ -30,10 +30,18 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   get errors() {
-    if (this.canShowErrors)
-      return this.validations.filter(r => !r.valid);
-    else
-      return [];
+    return this.validations.filter(r => !r.valid);
+  }
+
+  get storeOptions() {
+    return {
+      formGraph: this.args.graphs.formGraph,
+      sourceGraph: this.args.graphs.sourceGraph,
+      metaGraph: this.args.graphs.metaGraph,
+      sourceNode: this.args.sourceNode,
+      store: this.args.formStore,
+      path: this.args.group.rdflibPath,
+    };
   }
 
   register() {
@@ -79,7 +87,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     });
 
     // 6) update the validation
-    this.validations = validationResultsForField(group.uri, {form, store, graphs, node});
+    this.validations = validationResultsForField(group.uri, this.storeOptions);
 
     this.register(); // NOTE: to make sure we get notified on user input
   }
