@@ -6,9 +6,9 @@ export default class FormInputFieldsInputEditComponent extends SimpleInputFieldC
   inputId = 'input-' + guidFor(this);
 
   @action
-  updateValue(e, hasBeenFocused=true) {
+  updateValue(e) {
     if (e && typeof e.preventDefault === "function")
       e.preventDefault();
-    super.updateValue(this.value && this.value.trim(), hasBeenFocused);
+    super.updateValue(this.value && this.value.trim());
   }
 }

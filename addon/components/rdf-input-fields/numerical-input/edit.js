@@ -8,11 +8,11 @@ export default class RdfInputFieldsNumericalInputEditComponent extends SimpleInp
   inputId = 'input-' + guidFor(this);
 
   @action
-  updateValue(e, hasBeenFocused=true) {
+  updateValue(e) {
     if (e && typeof e.preventDefault === "function")
       e.preventDefault();
     const number = rdflib.literal(Number(this.value), this.datatype);
-    super.updateValue(number, hasBeenFocused);
+    super.updateValue(number);
   }
 
   get datatype() {
