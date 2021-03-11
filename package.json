@@ -1,6 +1,6 @@
 {
   "name": "@lblod/ember-submission-form-fields",
-  "version": "0.9.8",
+  "version": "0.10.0-beta",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -25,6 +25,7 @@
   "dependencies": {
     "@lblod/submission-form-helpers": "^1.2.3",
     "browser-rdflib": "^1.1.0",
+    "clipboardy": "^2.3.0",
     "ember-auto-import": "^1.6.0",
     "ember-cli-babel": "^7.21.0",
     "ember-cli-htmlbars": "^5.2.0",
