@@ -29,6 +29,10 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     this.deregister();
   }
 
+  get level() {
+    return this.args.level || 1;
+  }
+
   get errors() {
     return this.validations.filter(r => !r.valid);
   }

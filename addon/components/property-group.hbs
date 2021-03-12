@@ -2,10 +2,20 @@
   <div ...attributes>
     {{#if @group.name}}
       <div class="au-u-margin-bottom-small">
-        <AuHeading @level="2" @skin="3" class="{{if this.errors "au-c-label--error"}}">{{@group.name}}</AuHeading>
+        <AuHeading @level={{this.level}} @skin={{add this.level 1}}>
+          {{@group.name}}
+        </AuHeading>
         {{#if @group.help}}
           <p class="au-u-light au-u-margin-top-xsmall">{{@group.help}}</p>
         {{/if}}
+        {{#each this.errors as |error|}}
+          <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"
+                   @alertIcon="alert-triangle"
+                   @alertTitle={{error.resultMessage}}
+                   @alertskin={{"error"}}
+                   @alertsize={{"small"}}>
+          </AuAlert>
+        {{/each}}
       </div>
     {{/if}}
     {{!-- NOTE: Children can be property-groups as well as fields --}}
@@ -26,6 +36,7 @@
         </div>
       {{else}}
         <PropertyGroup
+                @level={{add this.level 1}}
                 @form={{@form}}
                 @group={{child}}
                 @formStore={{@formStore}}
@@ -42,9 +53,6 @@
           <AuHr @size="large"/>
         {{/if }}
       {{/unless}}
-    {{/each}}
-    {{#each this.errors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
     {{/each}}
   </div>
 {{/if}}
