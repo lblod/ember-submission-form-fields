@@ -1,1 +1,50 @@
+<AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+  <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <thead>
+    <tr>
+      <th>
+        Omschrijving actie
+      </th>
+      <th>
+        Kost van één eenheid
+      </th>
+      <th>
+        Ingezet bedrag per actie (in euro)
+      </th>
+      <th>
+        Terruggave via trekkingsrecht (50%)
+      </th>
+      <th>
+        Te realiseren eenheden
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Algemene beleidsdoelstellingen: <br>
+        Ondersteuning Burgemeestersconvenant2030
+      </td>
+      <td>
+        15ct per inwoner met een maximum plafond van 20.000 €
+      </td>
+      <td>
+        <input type="text" name="" id="">
+      </td>
+      <td>
+        € 10.000,00
+      </td>
+      <td>
+        1 goedgekeurd SECAP2030﻿
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
 {{yield}}
