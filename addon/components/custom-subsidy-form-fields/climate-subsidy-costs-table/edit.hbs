@@ -25,25 +25,27 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>
-        Algemene beleidsdoelstellingen: <br>
-        Ondersteuning Burgemeestersconvenant2030
-      </td>
-      <td>
-        15ct per inwoner met een maximum plafond van 20.000 €
-      </td>
-      <td>
-        <input type="text" name="" id="">
-      </td>
-      <td>
-        € 10.000,00
-      </td>
-      <td>
-        1 goedgekeurd SECAP2030﻿
-      </td>
-    </tr>
+    {{#each this.entries as |row|}}
 
+        <tr>
+          <td>
+            <strong>{{row.description.type}}</strong><br>
+            {{row.description.label}}
+          </td>
+          <td>
+            {{row.cost}}
+          </td>
+          <td>
+            {{row.index}}
+          </td>
+          <td>
+            {{row.index}}
+          </td>
+          <td>
+            {{row.index}}
+          </td>
+        </tr>
+    {{/each}}
   </tbody>
 </table>
 
