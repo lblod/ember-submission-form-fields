@@ -25,24 +25,24 @@
     </tr>
   </thead>
   <tbody>
-    {{#each this.entries as |row|}}
-
+    {{#each this.entries as |entry index|}}
         <tr>
           <td>
-            <strong>{{row.description.type}}</strong><br>
-            {{row.description.label}}
+            {{entry.actionDescription.value}}
           </td>
           <td>
-            {{row.cost}}
+            {{entry.costPerUnit.value}}
           </td>
           <td>
-            {{row.index}}
+            <AuInput id="existing-staff-{{this.index}}" @width={{"block"}} @value={{null}}
+              class=""
+            />
           </td>
           <td>
-            {{row.index}}
+            {{entry.restitution.value}}
           </td>
           <td>
-            {{row.index}}
+            {{entry.toRealiseUnits.value}}
           </td>
         </tr>
     {{/each}}
