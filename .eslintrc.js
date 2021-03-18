@@ -20,7 +20,9 @@ module.exports = {
   env: {
     browser: true
   },
-  rules: {},
+  rules: {
+    semi: [2, "always"]
+  },
   overrides: [
     // node files
     {
