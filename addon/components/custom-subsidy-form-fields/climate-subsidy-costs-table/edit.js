@@ -1,5 +1,6 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import rdflib from 'browser-rdflib';
@@ -20,110 +21,144 @@ const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}clima
 const climateEntryPredicate = new rdflib.NamedNode(`${extBaseUri}climateEntry`);
 const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDescription`);
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
-const inputAmountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}inputAmountPerAction`);
+const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
 const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
 
-const staticRows = [
+const citizenCount = 86921;
+
+function citizenBasedCost(count) {
+  if (count < 25000) return "15.000 €";
+  if (count > 25000 && count < 100000) return "40.000 €";
+  if (count > 100000) return "60.000 €";
+}
+
+function inputCost(count) {
+  const calculated = Math.round(0.15 * count);
+  if(calculated > 20000) return 20000;
+  return calculated;
+}
+
+const tableRows = [
   {
     description: 'Algemene beleidsdoelstellingen: Ondersteuning Burgemeestersconvenant2030' ,
     cost: '15ct per inwoner met een maximum plafond van 20.000 €',
+    amountPerAction: inputCost(citizenCount),
     index: 1
   },
   {
     description: 'Algemene beleidsdoelstellingen: Ondersteuning Strategisch Vastgoedplan' ,
-    cost: 'Gemeente < 25.000 | inwoners: 15.000 € | Gemeente 25.000-100.000 | inwoners: 40.000 € | Gemeente >100.000 | inwoners: 60.000 €',
+    cost: citizenBasedCost(citizenCount),
+    amountPerAction: 0,
     index: 2
   },
   {
     description: 'Algemene beleidsdoelstellingen: Technische assistentie aanbestedingen publiek patrimonium of klimaatwijken met hefboom 1:10' ,
     cost: 'nvt',
+    amountPerAction: 0,
     index: 3
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op publiek domein' ,
-    cost: '€ 150,00',
+    cost: 150.00,
+    amountPerAction: 0,
     index: 4
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO"s)' ,
-    cost: '€ 50,00',
+    cost: 50.00,
+    amountPerAction: 0,
     index: 5
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op publiek domein' ,
-    cost: '€ 13,50',
+    cost: 13.50,
+    amountPerAction: 0,
     index: 6
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO"s)' ,
-    cost: '€ 5,00',
+    cost: 5.00,
+    amountPerAction: 0,
     index: 7
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun geveltuinbeplanting (type geveltuin, per meter) door particulieren' ,
-    cost: '€ 38,50',
+    cost: 38.50,
+    amountPerAction: 0,
     index: 8
   },
   {
     description: 'Werf 1 - Vergroening: Investeringssteun aanleg natuurgroenperk van minimaal 10m2 op openbaar toegankelijk domein' ,
-    cost: '€ 540,00',
+    cost: 540.00,
+    amountPerAction: 0,
     index: 9
   },
   {
     description: 'Werf 2 - Verrijk je wijk: Ondersteuning traject collectieve renovaties (per wooneenheid)' ,
-    cost: '€ 75,00',
+    cost: 75.00,
+    amountPerAction: 0,
     index: 10
   },
   {
     description: 'Werf 2 - Verrijk je wijk: Aanbesteding participatieve hernieuwbare energie (per 18kWp)' ,
-    cost: '€ 990,00',
+    cost: 990.00,
+    amountPerAction: 0,
     index: 11
   },
   {
     description: 'Werf 2 - Verrijk je wijk: Opstarttraject lokale energiegemeenschap' ,
-    cost: '€ 20.000,00',
+    cost: 20000.00,
+    amountPerAction: 0,
     index: 12
   },
   {
     description: 'Werf 3 - Iedere buurt deelt: Jaar 1 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
-    cost: '€ 12.000,00',
+    cost: 12000.00,
+    amountPerAction: 0,
     index: 13
   },
   {
     description: 'Werf 3 - Iedere buurt deelt: Jaar 2 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
-    cost: '€ 8.400,00',
+    cost: 8400.00,
+    amountPerAction: 0,
     index: 14
   },
   {
     description: 'Werf 3 - Iedere buurt deelt: Jaar 3 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
-    cost: '€ 4.800,00',
+    cost: 4800.00,
+    amountPerAction: 0,
     index: 15
   },
   {
     description: 'Werf 3 - Iedere buurt deelt: Promotiecampagne per 2 nieuwe toegangspunten' ,
-    cost: '€ 7.500,00',
+    cost: 7500.00,
+    amountPerAction: 0,
     index: 16
   },
   {
     description: 'Werf 4 - Water het nieuwe goud: Investeringssteun per 1 m² ontharding publiek domein' ,
-    cost: '€ 50,00',
+    cost: 50.00,
+    amountPerAction: 0,
     index: 17
   },
   {
     description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m² ontharding privaat domein' ,
-    cost: '€ 35,00',
+    cost: 35.00,
+    amountPerAction: 0,
     index: 18
   },
   {
     description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterput + infiltratievoorziening in de bebouwde omgeving' ,
-    cost: '€ 500,00',
+    cost: 500.00,
+    amountPerAction: 0,
     index: 19
   },
   {
     description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterbuffer op openbaar toegankelijk domein' ,
-    cost: '€ 1.000,00',
+    cost: 1000.00,
+    amountPerAction: 0,
     index: 20
   },
 
@@ -148,7 +183,7 @@ class ClimateEntry {
     climateEntrySubject,
     actionDescription,
     costPerUnit,
-    inputAmountPerAction,
+    amountPerAction,
     restitution,
     toRealiseUnits,
     index
@@ -157,7 +192,7 @@ class ClimateEntry {
 
     this.actionDescription = new EntryProperties(actionDescription, actionDescriptionPredicate);
     this.costPerUnit = new EntryProperties(costPerUnit, costPerUnitPredicate);
-    this.inputAmountPerAction = new EntryProperties(inputAmountPerAction, inputAmountPerActionPredicate);
+    this.amountPerAction = new EntryProperties(amountPerAction, amountPerActionPredicate);
     this.restitution = new EntryProperties(restitution, restitutionPredicate);
     this.toRealiseUnits = new EntryProperties(toRealiseUnits, toRealiseUnitsPredicate);
     this.index = new EntryProperties(index, indexPredicate);
@@ -216,11 +251,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
           const parsedEntry = this.parseEntryProperties(entryProperties);
 
           this.entries.pushObject(new ClimateEntry({
-            engagementEntrySubject: entry.object,
+            climateEntrySubject: entry.object,
             actionDescription: parsedEntry.actionDescription,
             costPerUnit: parsedEntry.costPerUnit,
             climateTable: parsedEntry.climateTable,
-            inputAmountPerAction: parsedEntry.inputAmountPerAction,
+            amountPerAction: parsedEntry.amountPerAction,
             restitution: parsedEntry.restitution,
             toRealiseUnits: parsedEntry.toRealiseUnits,
             index: parseInt(parsedEntry.index)
@@ -231,7 +266,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
   }
 
-   /**
+  /**
   * Parse entry properties from triples to a simple object with the triple values
   */
     parseEntryProperties(entryProperties) {
@@ -244,9 +279,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       entry.costPerUnit = entryProperties.find(
         entry => entry.predicate.value == costPerUnitPredicate.value
       ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == inputAmountPerActionPredicate.value))
-        entry.inputAmountPerAction = entryProperties.find(
-          entry => entry.predicate.value == inputAmountPerActionPredicate.value
+      if (entryProperties.find(entry => entry.predicate.value == amountPerActionPredicate.value))
+        entry.amountPerAction = entryProperties.find(
+          entry => entry.predicate.value == amountPerActionPredicate.value
         ).object.value;
       if (entryProperties.find(entry => entry.predicate.value == restitutionPredicate.value))
         entry.restitution = entryProperties.find(
@@ -296,14 +331,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     let entries = [];
     const climateEntriesDetails = this.createClimateEntries();
     climateEntriesDetails.forEach(detail => {
-
       const newEntry = new ClimateEntry({
         climateEntrySubject: detail.subject,
         actionDescription: detail.description,
         costPerUnit: detail.cost,
-        inputAmountPerAction: 0,
-        restitution: 0,
-        toRealiseUnits: 0,
+        amountPerAction: (detail.amountPerAction),
+        restitution: (detail.amountPerAction / 2).toFixed(2),
+        toRealiseUnits: isNaN(detail.cost) ? '/' : 0,
         index: detail.index
       });
       entries.pushObject(newEntry);
@@ -316,12 +350,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   createClimateEntries() {
     let triples = [];
     let climateEntriesDetails = [];
-    staticRows.forEach(target => {
+    tableRows.forEach(target => {
       const uuid = uuidv4();
       const climateEntrySubject = new rdflib.NamedNode(`${climateEntryBaseUri}/${uuid}`);
       climateEntriesDetails.push({
         subject: climateEntrySubject,
         description: target.description,
+        amountPerAction: target.amountPerAction,
         cost: target.cost,
         index: target.index
       });
@@ -344,9 +379,32 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     return climateEntriesDetails;
   }
 
+  updateFieldValueTriple(entry, field) {
+    const fieldValueTriples = this.storeOptions.store.match(
+      entry.climateEntrySubject,
+      entry[field].predicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+    const triples = [
+      ...fieldValueTriples
+    ];
+    this.storeOptions.store.removeStatements(triples);
+
+    if (entry[field].value.toString().length > 0) {
+      this.storeOptions.store.addAll([
+        {
+          subject: entry.climateEntrySubject,
+          predicate: entry[field].predicate,
+          object: entry[field].value,
+          graph: this.storeOptions.sourceGraph
+        }
+      ]);
+    }
+  }
+
   initializeEntriesFields(entries) {
     let triples = [];
-    console.log(entries)
     entries.forEach(entry => {
       triples.push(
         {
@@ -363,8 +421,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         },
         {
           subject: entry.climateEntrySubject,
-          predicate: entry['inputAmountPerAction'].predicate,
-          object: entry['inputAmountPerAction'].value,
+          predicate: entry['amountPerAction'].predicate,
+          object: entry['amountPerAction'].value,
           graph: this.storeOptions.sourceGraph
         },
         {
@@ -388,5 +446,27 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       );
     });
     this.storeOptions.store.addAll(triples);
+  }
+
+  @action
+  updateAmountPerActionValue(entry) {
+    const parsedValue = parseInt(entry.amountPerAction.value);
+
+    entry.amountPerAction.errors = [];
+    entry.amountPerAction.value = !isNaN(parsedValue) ? parsedValue : entry.amountPerAction.value;
+    entry.restitution.value = entry.amountPerAction.value / 2;
+
+    if(entry.costPerUnit.value == "nvt") {
+      entry.toRealiseUnits.value = '/';
+    } else {
+      entry.toRealiseUnits.value = (entry.amountPerAction.value / parseInt(entry.costPerUnit.value)).toFixed(2);
+    }
+
+    this.updateFieldValueTriple(entry, 'amountPerAction');
+    this.updateFieldValueTriple(entry, 'restitution');
+    this.updateFieldValueTriple(entry, 'toRealiseUnits');
+
+    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
+    super.updateValidations(); // Updates validation of the table
   }
 }
