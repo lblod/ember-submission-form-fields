@@ -31,15 +31,22 @@
             {{entry.actionDescription.value}}
           </td>
           <td>
-            {{entry.costPerUnit.value}}
+            {{convert-to-currency entry.costPerUnit.value}}
           </td>
           <td>
-            <AuInput id="existing-staff-{{this.index}}" @width={{"block"}} @value={{null}}
-              class=""
+            <AuLabel for="input-amount-per-action-{{index}}" class="au-u-hidden-visually">
+              Ingezet bedrag per actie (in euro)
+            </AuLabel>
+            <AuInput type="number" lang="nl-BE" id="input-amount-per-action-{{index}}" @width={{"block"}} @value={{entry.amountPerAction.value}}
+              class={{if entry.amountPerAction.errors "au-c-input--error"}}
+              {{on "blur" (fn this.updateAmountPerActionValue entry)}}
             />
+            {{#each entry.amountPerAction.errors as |error|}}
+              <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            {{/each}}
           </td>
           <td>
-            {{entry.restitution.value}}
+            {{convert-to-currency entry.restitution.value}}
           </td>
           <td>
             {{entry.toRealiseUnits.value}}
