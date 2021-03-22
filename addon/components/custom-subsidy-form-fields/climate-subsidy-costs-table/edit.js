@@ -13,14 +13,13 @@ const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 const climateEntryBaseUri = 'http://data.lblod.info/climate-entries';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
-const skos = 'http://www.w3.org/2004/02/skos/core#';
 
 
 const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTable`);
 const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
 const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
 const climateEntryPredicate = new rdflib.NamedNode(`${extBaseUri}climateEntry`);
-const actionDescriptionPredicate = new rdflib.NamedNode(`${skos}prefLabel`);
+const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDescription`);
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
