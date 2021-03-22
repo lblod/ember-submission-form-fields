@@ -10,9 +10,9 @@ import { RDF } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
-const climateEntryBaseUri = 'http://data.lblod.info/climate-entries';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
+const subsidyRulesUri = 'http://data.lblod.info/id/subsidies/rules/';
 
 
 const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTable`);
@@ -71,7 +71,7 @@ const tableRows = [
   },
   {
     uuid: "e6339d50-0969-4911-924c-bb0c629c7b00",
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO"s)',
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO\"s)',
     cost: 50.00,
     amountPerAction: 0,
     index: 5
@@ -85,7 +85,7 @@ const tableRows = [
   },
   {
     uuid: "75ad483c-b7cb-411c-b9b1-07af31bfc0e6",
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO"s)',
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO\"s)',
     cost: 5.00,
     amountPerAction: 0,
     index: 7
@@ -254,13 +254,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
       const entriesMatches = triplesForPath({
         store: this.storeOptions.store,
-        path: climateTablePredicate,
+        path: climateEntryPredicate,
         formGraph: this.storeOptions.formGraph,
         sourceNode: this.climateTableSubject,
         sourceGraph: this.storeOptions.sourceGraph
       });
-      const entriesTriples = entriesMatches.triples;
 
+      const entriesTriples = entriesMatches.triples;
 
       if (entriesTriples.length > 0) {
         for (let entry of entriesTriples) {
@@ -270,6 +270,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
             this.storeOptions.sourceGraph);
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
+
           this.entries.pushObject(new ClimateEntry({
             climateEntrySubject: entry.object,
             actionDescription: parsedEntry.actionDescription,
@@ -279,6 +280,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
             toRealiseUnits: parsedEntry.toRealiseUnits,
             index: parseInt(parsedEntry.index)
           }));
+
+          // sort the entries by their index. Otherwhise chaos
+          this.entries.sort((a, b) => a.index.value - b.index.value);
         }
       }
     }
@@ -388,31 +392,34 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     let triples = [];
     let climateEntriesDetails = [];
     tableRows.forEach(target => {
-      const uuid = uuidv4();
-      const climateEntrySubject = new rdflib.NamedNode(`${climateEntryBaseUri}/${uuid}`);
+
+      const climateEntrySubject = () => {
+        return new rdflib.NamedNode(`${subsidyRulesUri}/${target.uuid}`);
+      };
+
       climateEntriesDetails.push({
-        subject: climateEntrySubject,
+        subject: climateEntrySubject(),
         description: target.description,
         amountPerAction: target.amountPerAction,
         cost: target.cost,
         index: target.index
       });
       triples.push({
-        subject: climateEntrySubject,
+        subject: climateEntrySubject(),
         predicate: RDF('type'),
         object: ClimateEntryType,
         graph: this.storeOptions.sourceGraph
       },
         {
-          subject: climateEntrySubject,
+          subject: climateEntrySubject(),
           predicate: MU('uuid'),
-          object: uuid,
+          object: target.uuid,
           graph: this.storeOptions.sourceGraph
         },
         {
           subject: this.climateTableSubject,
           predicate: climateEntryPredicate,
-          object: climateEntrySubject,
+          object: climateEntrySubject(),
           graph: this.storeOptions.sourceGraph
         }
       );
