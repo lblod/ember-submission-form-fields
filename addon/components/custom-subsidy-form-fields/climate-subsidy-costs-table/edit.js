@@ -25,139 +25,139 @@ const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
-const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
+const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
 
 const citizenCount = 86921;
 
 function citizenBasedCost(count) {
-  if (count < 25000) return "15.000 €";
-  if (count > 25000 && count < 100000) return "40.000 €";
-  if (count > 100000) return "60.000 €";
+  if (count < 25000) return 15000;
+  if (count > 25000 && count < 100000) return 40000;
+  if (count > 100000) return 60000;
 }
 
 function inputCost(count) {
   const calculated = Math.round(0.15 * count);
-  if(calculated > 20000) return 20000;
+  if (calculated > 20000) return 20000;
   return calculated;
 }
 
 const tableRows = [
   {
-    description: 'Algemene beleidsdoelstellingen: Ondersteuning Burgemeestersconvenant2030' ,
+    description: 'Algemene beleidsdoelstellingen: Ondersteuning Burgemeestersconvenant2030',
     cost: '15ct per inwoner met een maximum plafond van 20.000 €',
     amountPerAction: inputCost(citizenCount),
     index: 1
   },
   {
-    description: 'Algemene beleidsdoelstellingen: Ondersteuning Strategisch Vastgoedplan' ,
+    description: 'Algemene beleidsdoelstellingen: Ondersteuning Strategisch Vastgoedplan',
     cost: citizenBasedCost(citizenCount),
     amountPerAction: 0,
     index: 2
   },
   {
-    description: 'Algemene beleidsdoelstellingen: Technische assistentie aanbestedingen publiek patrimonium of klimaatwijken met hefboom 1:10' ,
+    description: 'Algemene beleidsdoelstellingen: Technische assistentie aanbestedingen publiek patrimonium of klimaatwijken met hefboom 1:10',
     cost: 'nvt',
     amountPerAction: 0,
     index: 3
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op publiek domein' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op publiek domein',
     cost: 150.00,
     amountPerAction: 0,
     index: 4
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO"s)' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO"s)',
     cost: 50.00,
     amountPerAction: 0,
     index: 5
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op publiek domein' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op publiek domein',
     cost: 13.50,
     amountPerAction: 0,
     index: 6
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO"s)' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO"s)',
     cost: 5.00,
     amountPerAction: 0,
     index: 7
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun geveltuinbeplanting (type geveltuin, per meter) door particulieren' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun geveltuinbeplanting (type geveltuin, per meter) door particulieren',
     cost: 38.50,
     amountPerAction: 0,
     index: 8
   },
   {
-    description: 'Werf 1 - Vergroening: Investeringssteun aanleg natuurgroenperk van minimaal 10m2 op openbaar toegankelijk domein' ,
+    description: 'Werf 1 - Vergroening: Investeringssteun aanleg natuurgroenperk van minimaal 10m2 op openbaar toegankelijk domein',
     cost: 540.00,
     amountPerAction: 0,
     index: 9
   },
   {
-    description: 'Werf 2 - Verrijk je wijk: Ondersteuning traject collectieve renovaties (per wooneenheid)' ,
+    description: 'Werf 2 - Verrijk je wijk: Ondersteuning traject collectieve renovaties (per wooneenheid)',
     cost: 75.00,
     amountPerAction: 0,
     index: 10
   },
   {
-    description: 'Werf 2 - Verrijk je wijk: Aanbesteding participatieve hernieuwbare energie (per 18kWp)' ,
+    description: 'Werf 2 - Verrijk je wijk: Aanbesteding participatieve hernieuwbare energie (per 18kWp)',
     cost: 990.00,
     amountPerAction: 0,
     index: 11
   },
   {
-    description: 'Werf 2 - Verrijk je wijk: Opstarttraject lokale energiegemeenschap' ,
+    description: 'Werf 2 - Verrijk je wijk: Opstarttraject lokale energiegemeenschap',
     cost: 20000.00,
     amountPerAction: 0,
     index: 12
   },
   {
-    description: 'Werf 3 - Iedere buurt deelt: Jaar 1 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
+    description: 'Werf 3 - Iedere buurt deelt: Jaar 1 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)',
     cost: 12000.00,
     amountPerAction: 0,
     index: 13
   },
   {
-    description: 'Werf 3 - Iedere buurt deelt: Jaar 2 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
+    description: 'Werf 3 - Iedere buurt deelt: Jaar 2 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)',
     cost: 8400.00,
     amountPerAction: 0,
     index: 14
   },
   {
-    description: 'Werf 3 - Iedere buurt deelt: Jaar 3 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)' ,
+    description: 'Werf 3 - Iedere buurt deelt: Jaar 3 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)',
     cost: 4800.00,
     amountPerAction: 0,
     index: 15
   },
   {
-    description: 'Werf 3 - Iedere buurt deelt: Promotiecampagne per 2 nieuwe toegangspunten' ,
+    description: 'Werf 3 - Iedere buurt deelt: Promotiecampagne per 2 nieuwe toegangspunten',
     cost: 7500.00,
     amountPerAction: 0,
     index: 16
   },
   {
-    description: 'Werf 4 - Water het nieuwe goud: Investeringssteun per 1 m² ontharding publiek domein' ,
+    description: 'Werf 4 - Water het nieuwe goud: Investeringssteun per 1 m² ontharding publiek domein',
     cost: 50.00,
     amountPerAction: 0,
     index: 17
   },
   {
-    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m² ontharding privaat domein' ,
+    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m² ontharding privaat domein',
     cost: 35.00,
     amountPerAction: 0,
     index: 18
   },
   {
-    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterput + infiltratievoorziening in de bebouwde omgeving' ,
+    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterput + infiltratievoorziening in de bebouwde omgeving',
     cost: 500.00,
     amountPerAction: 0,
     index: 19
   },
   {
-    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterbuffer op openbaar toegankelijk domein' ,
+    description: 'Werf 4 - Water het nieuwe goud: investeringssteun per 1 m³ hemelwaterbuffer op openbaar toegankelijk domein',
     cost: 1000.00,
     amountPerAction: 0,
     index: 20
@@ -196,6 +196,7 @@ class ClimateEntry {
     this.amountPerAction = new EntryProperties(amountPerAction, amountPerActionPredicate);
     this.restitution = new EntryProperties(restitution, restitutionPredicate);
     this.toRealiseUnits = new EntryProperties(toRealiseUnits, toRealiseUnitsPredicate);
+    // this.requiresValidation = new EntryProperties(toRealiseUnits, toRealiseUnitsPredicate);
     this.index = new EntryProperties(index, indexPredicate);
   }
 }
@@ -210,9 +211,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       return false;
     else
       return this.storeOptions.store.match(this.sourceNode,
-                                          climateTablePredicate,
-                                          this.climateTableSubject,
-                                          this.storeOptions.sourceGraph).length > 0;
+        climateTablePredicate,
+        this.climateTableSubject,
+        this.storeOptions.sourceGraph).length > 0;
   }
 
   constructor() {
@@ -227,7 +228,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const triples =  matches.triples;
+    const triples = matches.triples;
 
     if (triples.length) {
       this.climateTableSubject = triples[0].object; // assuming only one per form
@@ -245,9 +246,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       if (entriesTriples.length > 0) {
         for (let entry of entriesTriples) {
           const entryProperties = this.storeOptions.store.match(entry.object,
-                                        undefined,
-                                        undefined,
-                                        this.storeOptions.sourceGraph);
+            undefined,
+            undefined,
+            this.storeOptions.sourceGraph);
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
           this.entries.pushObject(new ClimateEntry({
@@ -267,34 +268,34 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   /**
   * Parse entry properties from triples to a simple object with the triple values
   */
-    parseEntryProperties(entryProperties) {
-      let entry = {};
-      if (entryProperties.find(entry => entry.predicate.value == actionDescriptionPredicate.value))
+  parseEntryProperties(entryProperties) {
+    let entry = {};
+    if (entryProperties.find(entry => entry.predicate.value == actionDescriptionPredicate.value))
       entry.actionDescription = entryProperties.find(
         entry => entry.predicate.value == actionDescriptionPredicate.value
       ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == costPerUnitPredicate.value))
+    if (entryProperties.find(entry => entry.predicate.value == costPerUnitPredicate.value))
       entry.costPerUnit = entryProperties.find(
         entry => entry.predicate.value == costPerUnitPredicate.value
       ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == amountPerActionPredicate.value))
-        entry.amountPerAction = entryProperties.find(
-          entry => entry.predicate.value == amountPerActionPredicate.value
-        ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == restitutionPredicate.value))
-        entry.restitution = entryProperties.find(
-          entry => entry.predicate.value == restitutionPredicate.value
-        ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == toRealiseUnitsPredicate.value))
-        entry.toRealiseUnits = entryProperties.find(
-          entry => entry.predicate.value == toRealiseUnitsPredicate.value
-        ).object.value;
-      if (entryProperties.find(entry => entry.predicate.value == indexPredicate.value))
-        entry.index = entryProperties.find(
-          entry => entry.predicate.value == indexPredicate.value
-        ).object.value;
-      return entry;
-    }
+    if (entryProperties.find(entry => entry.predicate.value == amountPerActionPredicate.value))
+      entry.amountPerAction = entryProperties.find(
+        entry => entry.predicate.value == amountPerActionPredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == restitutionPredicate.value))
+      entry.restitution = entryProperties.find(
+        entry => entry.predicate.value == restitutionPredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == toRealiseUnitsPredicate.value))
+      entry.toRealiseUnits = entryProperties.find(
+        entry => entry.predicate.value == toRealiseUnitsPredicate.value
+      ).object.value;
+    if (entryProperties.find(entry => entry.predicate.value == indexPredicate.value))
+      entry.index = entryProperties.find(
+        entry => entry.predicate.value == indexPredicate.value
+      ).object.value;
+    return entry;
+  }
 
   initializeTable() {
     if (!this.hasClimateTable) {
@@ -307,22 +308,41 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   createClimateTable() {
     const uuid = uuidv4();
     this.climateTableSubject = new rdflib.NamedNode(`${climateTableBaseUri}/${uuid}`);
-    const triples = [ { subject: this.climateTableSubject,
-                        predicate: RDF('type'),
-                        object: climateTableType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.climateTableSubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.storeOptions.sourceNode,
-                        predicate: climateTablePredicate,
-                        object: this.climateTableSubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+    const triples = [{
+      subject: this.climateTableSubject,
+      predicate: RDF('type'),
+      object: climateTableType,
+      graph: this.storeOptions.sourceGraph
+    },
+    {
+      subject: this.climateTableSubject,
+      predicate: MU('uuid'),
+      object: uuid,
+      graph: this.storeOptions.sourceGraph
+    },
+    {
+      subject: this.storeOptions.sourceNode,
+      predicate: climateTablePredicate,
+      object: this.climateTableSubject,
+      graph: this.storeOptions.sourceGraph
+    }
+    ];
     this.storeOptions.store.addAll(triples);
+  }
+
+  // Check if 'Te realiseren eenheden' is conditional (applies for row 1 & 2)
+  checkEenhedenConditions(index, amountPerAction, costPerUnit) {
+    if (index == 1 && amountPerAction > 0) {
+      return "1 goedgekeurd SECAP2030";
+    } else if (index == 2 && amountPerAction > 0) {
+      return "1 strategisch vastgoedplan publiek patrimonium";
+    } else if (index == 3) {
+      return "/";
+    } else if (amountPerAction <= 0) {
+      return 0;
+    } else {
+      return (amountPerAction / parseInt(costPerUnit).toFixed(2));
+    }
   }
 
   createEntries() {
@@ -335,7 +355,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         costPerUnit: detail.cost,
         amountPerAction: (detail.amountPerAction),
         restitution: (detail.amountPerAction / 2).toFixed(2),
-        toRealiseUnits: isNaN(detail.cost) ? '/' : 0,
+        toRealiseUnits: this.checkEenhedenConditions(detail.index, detail.amountPerAction, detail.cost),
         index: detail.index
       });
       entries.pushObject(newEntry);
@@ -358,21 +378,25 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         cost: target.cost,
         index: target.index
       });
-      triples.push({ subject: climateEntrySubject,
-                    predicate: RDF('type'),
-                    object: ClimateEntryType,
-                    graph: this.storeOptions.sourceGraph
-                  },
-                  { subject: climateEntrySubject,
-                    predicate: MU('uuid'),
-                    object: uuid,
-                    graph: this.storeOptions.sourceGraph
-                  },
-                  { subject: climateEntrySubject,
-                    predicate: climateEntryPredicate,
-                    object: climateEntrySubject,
-                    graph: this.storeOptions.sourceGraph }
-        );
+      triples.push({
+        subject: climateEntrySubject,
+        predicate: RDF('type'),
+        object: ClimateEntryType,
+        graph: this.storeOptions.sourceGraph
+      },
+        {
+          subject: climateEntrySubject,
+          predicate: MU('uuid'),
+          object: uuid,
+          graph: this.storeOptions.sourceGraph
+        },
+        {
+          subject: this.climateTableSubject,
+          predicate: climateEntryPredicate,
+          object: climateEntrySubject,
+          graph: this.storeOptions.sourceGraph
+        }
+      );
     });
     this.storeOptions.store.addAll(triples);
     return climateEntriesDetails;
@@ -455,12 +479,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     entry.amountPerAction.errors = [];
     entry.amountPerAction.value = !isNaN(parsedValue) ? parsedValue : entry.amountPerAction.value;
     entry.restitution.value = entry.amountPerAction.value / 2;
-
-    if(entry.costPerUnit.value == "nvt") {
-      entry.toRealiseUnits.value = '/';
-    } else {
-      entry.toRealiseUnits.value = (entry.amountPerAction.value / parseInt(entry.costPerUnit.value)).toFixed(2);
-    }
+    entry.toRealiseUnits.value = this.checkEenhedenConditions(entry.index.value, entry.amountPerAction.value, entry.costPerUnit.value);
 
     this.updateFieldValueTriple(entry, 'amountPerAction');
     this.updateFieldValueTriple(entry, 'restitution');
