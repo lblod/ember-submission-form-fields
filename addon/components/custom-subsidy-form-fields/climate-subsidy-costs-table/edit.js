@@ -373,7 +373,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
   }
 
-
   // Check if 'Te realiseren eenheden' is conditional (applies for row 1 & 2)
   checkEenhedenConditions(index, amountPerAction, costPerUnit) {
     if (index == 1 && amountPerAction > 0) {
@@ -523,8 +522,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @action
   updateAmountPerActionValue(entry) {
     const parsedValue = parseInt(entry.amountPerAction.value);
-
     entry.amountPerAction.errors = [];
+
+    if (!this.isPositiveInteger(parsedValue)){
+      entry.amountPerAction.errors.pushObject({
+        message: 'Ingezet bedrag per actie is geen positief getal'
+      });
+    }
+
     entry.amountPerAction.value = !isNaN(parsedValue) ? parsedValue : entry.amountPerAction.value;
     entry.restitution.value = entry.amountPerAction.value / 2;
     entry.toRealiseUnits.value = this.checkEenhedenConditions(entry.index.value, entry.amountPerAction.value, entry.costPerUnit.value);
@@ -535,5 +540,16 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
     super.updateValidations(); // Updates validation of the table
+  }
+
+  // ------------------
+  // FIELDS VALIDATIONS
+
+  isPositiveInteger(value) {
+    return (value === parseInt(value)) && (value >= 0);
+  }
+
+  isSmallerThan(value, max) {
+    return value <= max;
   }
 }
