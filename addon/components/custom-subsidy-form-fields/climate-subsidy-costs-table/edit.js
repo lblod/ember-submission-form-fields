@@ -26,32 +26,18 @@ const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
 const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
 
-const citizenCount = 86921;
-
-function citizenBasedCost(count) {
-  if (count < 25000) return 15000;
-  if (count > 25000 && count < 100000) return 40000;
-  if (count > 100000) return 60000;
-}
-
-function inputCost(count) {
-  const calculated = Math.round(0.15 * count);
-  if (calculated > 20000) return 20000;
-  return calculated;
-}
-
 const tableRows = [
   {
     uuid: "0f4e3cff-4fb8-4892-9dca-1d582a433c77",
     description: 'Algemene beleidsdoelstellingen: Ondersteuning Burgemeestersconvenant2030',
     cost: '15ct per inwoner met een maximum plafond van 20.000 €',
-    amountPerAction: inputCost(citizenCount),
+    amountPerAction: 0,
     index: 1
   },
   {
     uuid: "6469df9c-b933-45c3-9457-4958c33935ca",
     description: 'Algemene beleidsdoelstellingen: Ondersteuning Strategisch Vastgoedplan',
-    cost: citizenBasedCost(citizenCount),
+    cost: 0,
     amountPerAction: 0,
     index: 2
   },
@@ -71,7 +57,7 @@ const tableRows = [
   },
   {
     uuid: "e6339d50-0969-4911-924c-bb0c629c7b00",
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO\"s)',
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO\'s)',
     cost: 50.00,
     amountPerAction: 0,
     index: 5
@@ -85,7 +71,7 @@ const tableRows = [
   },
   {
     uuid: "75ad483c-b7cb-411c-b9b1-07af31bfc0e6",
-    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO\"s)',
+    description: 'Werf 1 - Vergroening: Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO\'s)',
     cost: 5.00,
     amountPerAction: 0,
     index: 7
@@ -235,6 +221,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         this.storeOptions.sourceGraph).length > 0;
   }
 
+  get populationCount() {
+    // return { this.storeOptions.store.match(
+    //   this.storeOptions.sourceNode,
+    //   populationCountPredicate,
+    //   undefined,
+    //   this.storeOptions.sourceGraph
+    // }
+
+    // TODO: Set `Aantal inwoners` input to correct value from DB, then return that value for this getter
+    return 90000;
+  }
+
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
@@ -353,6 +351,29 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     this.storeOptions.store.addAll(triples);
   }
 
+  // set right amount based on conditions (row 2)
+  checkCostForPopulation(index, cost, population) {
+    if (index == 2) {
+      if (population < 25000) return 15000;
+      if (population > 25000 && population < 100000) return 40000;
+      if (population > 100000) return 60000;
+    } else {
+      return cost;
+    }
+  }
+
+  // set right amount based on calculation (row 1)
+  checkActionForPopulation(index, count, population) {
+    if (index == 1){
+      const calculated = Math.round(0.15 * population);
+      if (calculated > 20000) return 20000;
+      return calculated;
+    } else {
+      return count;
+    }
+  }
+
+
   // Check if 'Te realiseren eenheden' is conditional (applies for row 1 & 2)
   checkEenhedenConditions(index, amountPerAction, costPerUnit) {
     if (index == 1 && amountPerAction > 0) {
@@ -364,10 +385,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     } else if (amountPerAction <= 0) {
       return 0;
     } else {
-      return (amountPerAction / parseInt(costPerUnit).toFixed(2));
+      return (amountPerAction / parseInt(costPerUnit)).toFixed(2);
     }
   }
 
+  // Create entries to be used in HBS and saved in DB. Apply logic
   createEntries() {
     let entries = [];
     const climateEntriesDetails = this.createClimateEntries();
@@ -375,8 +397,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       const newEntry = new ClimateEntry({
         climateEntrySubject: detail.subject,
         actionDescription: detail.description,
-        costPerUnit: detail.cost,
-        amountPerAction: (detail.amountPerAction),
+        costPerUnit: this.checkCostForPopulation(detail.index, detail.cost, this.populationCount),
+        amountPerAction: this.checkActionForPopulation(detail.index, detail.amountPerAction, this.populationCount) ,
         restitution: (detail.amountPerAction / 2).toFixed(2),
         toRealiseUnits: this.checkEenhedenConditions(detail.index, detail.amountPerAction, detail.cost),
         index: detail.index
