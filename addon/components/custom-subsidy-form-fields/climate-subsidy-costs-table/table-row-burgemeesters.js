@@ -16,13 +16,12 @@ const climateEntryPredicate = new rdflib.NamedNode(`${extBaseUri}climateEntry`);
 const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDescription`);
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
-const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurgemeestersComponent extends Component {
   @tracked tableEntryUri = null;
   @tracked amount = null;
   @tracked restitution = null;
-  @tracked toRealiseUnits = null;
+  @tracked toRealiseUnits = this.amount > 0 ? "1 goedgekeurd SECAP2030" : "nvt";
   @tracked errors = [];
 
   get storeOptions(){
@@ -36,15 +35,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   get getBusinessRuleUri(){
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
-
-  get getToRealiseUnits() {
-    if (this.amount > 0) {
-      return "1 goedgekeurd SECAP2030";
-    } else {
-      return "nvt";
-    }
-  }
-
 
   constructor() {
     super(...arguments);
@@ -123,15 +113,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       }
     );
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: toRealiseUnitsPredicate,
-        object: "nvt",
-        graph: this.storeOptions.sourceGraph
-      }
-    );
-
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
   }
@@ -140,7 +121,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     this.tableEntryUri = subject;
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object;
+
   }
 
   updateTripleObject(subject, predicate, newObject = null) {
@@ -187,10 +168,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
     const parsedAmount = Number(this.amount);
 
+    this.toRealiseUnits = this.amount > 0 ? "1 goedgekeurd SECAP2030" : "nvt" ;
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.getToRealiseUnits));
-
     this.setComponentValues(this.tableEntryUri);
   }
 
