@@ -26,6 +26,22 @@
   </thead>
   <tbody>
     {{#if this.climateTableSubject}}
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
+        @climateTableSubject={{this.climateTableSubject}}
+        @populationCount={{this.populationCount}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label">Algemene beleidsdoelstellingen:</label>
+          Ondersteuning Burgemeestersconvenant2030
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          15ct per inwoner met een maximum plafond van 20.000 €
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>
 
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
         @storeOptions={{this.storeOptions}}
@@ -315,7 +331,6 @@
         </row.costPerUnitDescription>
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
-
 
     {{/if}}
   </tbody>
