@@ -18,13 +18,12 @@ const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDesc
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
-const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVastgoedplanComponent extends Component {
   @tracked tableEntryUri = null;
   @tracked amount = null;
   @tracked restitution = null;
-  @tracked toRealiseUnits = null;
+  @tracked toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
   @tracked costPerUnitDescription = null;
   @tracked errors = [];
 
@@ -87,7 +86,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.costPerUnitDescription = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object;
   }
 
   initializeDefault() {
@@ -146,14 +144,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       }
     );
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: toRealiseUnitsPredicate,
-        object: "/",
-        graph: this.storeOptions.sourceGraph
-      }
-    );
 
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
@@ -187,17 +177,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
     this.errors = [];
 
-    if(this.amount > 0){
-      this.toRealiseUnits = "1 strategisch vastgoedplan publiek patrimonium";
-    } else {
-      this.toRealiseUnits = "/";
+    if (!this.isPositiveInteger(this.amount)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
+      });
+      return;
     }
 
     const parsedAmount = Number(this.amount);
 
+    this.toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.toRealiseUnits, XSD('string')));
 
     this.setComponentValues(this.tableEntryUri);
   }
