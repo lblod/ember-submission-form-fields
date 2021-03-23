@@ -130,7 +130,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
       {
         subject: tableEntryUri,
         predicate: toRealiseUnitsPredicate,
-        object: 0,
+        object: isNaN(this.costPerUnit) ? "/" : 0,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -177,7 +177,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal((parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
+
+    if(!isNaN(this.costPerUnit)){
+      this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal("/", XSD('string')));
+    } else {
+      this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal((parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
+    }
+
 
     this.setComponentValues(this.tableEntryUri);
   }

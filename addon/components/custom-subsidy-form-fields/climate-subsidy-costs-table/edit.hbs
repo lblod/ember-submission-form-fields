@@ -26,7 +26,7 @@
   </thead>
   <tbody>
     {{#if this.climateTableSubject}}
-      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
         @climateTableSubject={{this.climateTableSubject}}
@@ -40,10 +40,13 @@
         <row.costPerUnitDescription>
           15ct per inwoner met een maximum plafond van 20.000 €
         </row.costPerUnitDescription>
+        <row.toRealiseUnitsDescription>
+          1 goedgekeurd SECAP2030
+        </row.toRealiseUnitsDescription>
 
-      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen>
 
-      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/6469df9c-b933-45c3-9457-4958c33935ca"
         @climateTableSubject={{this.climateTableSubject}}
@@ -54,8 +57,35 @@
           <label class="au-c-label">Algemene beleidsdoelstellingen:</label>
           Ondersteuning Strategisch Vastgoedplan
         </row.actionDescription>
+        <row.costPerUnitDescription>
+        Gemeente &lt; 25.000 inwoners: 15.000 € <br> Gemeente 25.000-100.000 inwoners: 40.000 € <br> Gemeente &gt; 100.000 inwoners: 60.000 €
+        </row.costPerUnitDescription>
+        <row.toRealiseUnitsDescription>
+          1 strategisch vastgoedplan publiek patrimonium
+        </row.toRealiseUnitsDescription>
 
-      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan>
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/286c35b3-4817-4b33-9ad5-828747610b2a"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit="/"
+        as |row|>
+
+
+        <row.actionDescription>
+          <label class="au-c-label ">Algemene beleidsdoelstellingen:</label>
+          Technische assistentie aanbestedingen publiek patrimonium of klimaatwijken met hefboom 1:10
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          nvt
+        </row.costPerUnitDescription>
+        <row.toRealiseUnitsDescription>
+          /
+        </row.toRealiseUnitsDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAlgemeneDoelstellingen>
 
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
         @storeOptions={{this.storeOptions}}

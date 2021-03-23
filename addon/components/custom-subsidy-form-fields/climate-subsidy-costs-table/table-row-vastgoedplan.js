@@ -189,6 +189,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
     if(this.amount > 0){
       this.toRealiseUnits = "1 strategisch vastgoedplan publiek patrimonium";
+    } else {
+      this.toRealiseUnits = "/";
     }
 
     const parsedAmount = Number(this.amount);
