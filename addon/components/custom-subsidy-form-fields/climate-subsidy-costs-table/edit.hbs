@@ -43,6 +43,20 @@
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>
 
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/6469df9c-b933-45c3-9457-4958c33935ca"
+        @climateTableSubject={{this.climateTableSubject}}
+        @populationCount={{this.populationCount}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label">Algemene beleidsdoelstellingen:</label>
+          Ondersteuning Strategisch Vastgoedplan
+        </row.actionDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan>
+
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666"
