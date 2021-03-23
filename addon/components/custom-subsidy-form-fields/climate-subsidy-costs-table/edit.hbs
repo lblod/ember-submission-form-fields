@@ -25,7 +25,41 @@
     </tr>
   </thead>
   <tbody>
-    {{#if climateTableSubject}}
+    {{#if this.climateTableSubject}}
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{150.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun voor het planten van bomen op publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 150,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e6339d50-0969-4911-924c-bb0c629c7b00"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{50.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun voor het planten van bomen op privaat domein (door particulieren, verenigingen, KMO\'s)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 50,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
 
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
         @storeOptions={{this.storeOptions}}
@@ -39,7 +73,7 @@
           Investeringssteun voor het planten van hagen (per meter) op publiek domein
         </row.actionDescription>
         <row.costPerUnitDescription>
-          13,50 €
+          € 13,50
         </row.costPerUnitDescription>
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
@@ -48,7 +82,7 @@
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6"
         @climateTableSubject={{this.climateTableSubject}}
-        @costPerUnit={{5.0}}
+        @costPerUnit={{50.00}}
         as |row|>
 
         <row.actionDescription>
@@ -56,7 +90,7 @@
           Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO's)
         </row.actionDescription>
         <row.costPerUnitDescription>
-          € 5,0
+          € 50,00
         </row.costPerUnitDescription>
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
@@ -107,10 +141,198 @@
           Ondersteuning traject collectieve renovaties (per wooneenheid)
         </row.actionDescription>
         <row.costPerUnitDescription>
-          € 75.00
+          € 75,00
         </row.costPerUnitDescription>
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/23e94ba7-57cf-4ad4-8f5e-b4a8dcc6f816"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{990.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 2 - Verrijk je wijk</label>
+          Aanbesteding participatieve hernieuwbare energie (per 18kWp)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 990,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{20000.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 2 - Verrijk je wijk</label>
+          Opstarttraject lokale energiegemeenschap
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 20.000,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/3b939085-ea60-468e-9fb8-ee0b54f1d73c"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{12000.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 3 - Iedere buurt deelt</label>
+          Iedere buurt deelt: Jaar 1 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 12.000,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e460d281-8b5b-445e-a34d-2a6cb9c10675"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{8400.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 3 - Iedere buurt deelt</label>
+          Jaar 2 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 8.400,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{4800.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 3 - Iedere buurt deelt</label>
+          Jaar 3 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 4.800,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{4800.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 3 - Iedere buurt deelt</label>
+          Jaar 3 afname garantie per jaar per toegangspunt voor koolstofvrije deelsystemen (1 toegangspunt leidt tot 2 deelwagens)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 4.800,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/d66a5dbc-8913-4ccf-92bf-a4b62f3d5c58"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{7500.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 3 - Iedere buurt deelt</label>
+          Promotiecampagne per 2 nieuwe toegangspunten
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 7.500,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/f4956772-fd3e-48f5-b546-e5298fff78ad"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{50.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 4 - Water het nieuwe goud</label>
+          Investeringssteun per 1 m² ontharding publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 50,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0efb6b57-2ab4-4526-b71e-ec3568f01d1b"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{35.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 4 - Water het nieuwe goud</label>
+          Investeringssteun per 1 m² ontharding privaat domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 35,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/1c4fbee8-1b18-4c1a-9a05-a3b20a5eae94"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{500.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 4 - Water het nieuwe goud</label>
+          Investeringssteun per 1 m³ hemelwaterput + infiltratievoorziening in de bebouwde omgeving
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 500,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/5d485edc-3352-4bbe-a74c-e50cc0e22dec"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{1000.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Werf 4 - Water het nieuwe goud</label>
+          Investeringssteun per 1 m³ hemelwaterbuffer op openbaar toegankelijk domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 1000,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
 
     {{/if}}
   </tbody>
