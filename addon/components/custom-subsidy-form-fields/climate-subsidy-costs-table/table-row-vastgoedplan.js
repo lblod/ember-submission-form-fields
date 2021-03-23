@@ -10,6 +10,7 @@ import { RDF, XSD } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
+// const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
 const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
@@ -18,6 +19,7 @@ const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDesc
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
+// const populationCountPredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}populationCount`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVastgoedplanComponent extends Component {
   @tracked tableEntryUri = null;
@@ -26,6 +28,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   @tracked toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
   @tracked costPerUnitDescription = null;
   @tracked errors = [];
+  // TODO retrieve nr from DB and use that
+  @tracked populationCount = "100343"
 
   get storeOptions(){
     return this.args.storeOptions;
@@ -40,12 +44,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   }
 
   get getCostPerUnit() {
-    const population = this.args.populationCount;
-    if (population < 25000) {
+    if (this.populationCount < 25000) {
       return 15000;
-    } else if (population > 25000 && population < 100000) {
+    } else if (this.populationCount > 25000 && this.populationCount < 100000) {
       return 40000;
-    } else if (population > 100000){
+    } else if (this.populationCount > 100000){
       return 60000;
     } else {
       return "Gemeente < 25.000 inwoners: 15.000 € | Gemeente 25.000-100.000 inwoners: 40.000 € | Gemeente >100.000 inwoners: 60.000 €";
