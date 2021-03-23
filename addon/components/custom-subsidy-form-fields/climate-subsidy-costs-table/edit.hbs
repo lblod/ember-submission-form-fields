@@ -25,34 +25,94 @@
     </tr>
   </thead>
   <tbody>
-    {{#each this.entries as |entry index|}}
-        <tr>
-          <td>
-            {{entry.actionDescription.value}}
-          </td>
-          <td>
-            {{convert-to-currency entry.costPerUnit.value}}
-          </td>
-          <td>
-            <AuLabel for="input-amount-per-action-{{index}}" class="au-u-hidden-visually">
-              Ingezet bedrag per actie (in euro)
-            </AuLabel>
-            <AuInput type="number" lang="nl-BE" id="input-amount-per-action-{{index}}" @width={{"block"}} @value={{entry.amountPerAction.value}}
-              class={{if entry.amountPerAction.errors "au-c-input--error"}}
-              {{on "blur" (fn this.updateAmountPerActionValue entry)}}
-            />
-            {{#each entry.amountPerAction.errors as |error|}}
-              <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
-            {{/each}}
-          </td>
-          <td>
-            {{convert-to-currency entry.restitution.value}}
-          </td>
-          <td>
-            {{entry.toRealiseUnits.value}}
-          </td>
-        </tr>
-    {{/each}}
+    {{#if climateTableSubject}}
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/396fe1bd-0a13-4823-8824-05ea3a527337"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{13.50}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun voor het planten van hagen (per meter) op publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          13,50 €
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{5.0}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun voor het planten van hagen (per meter) op privaat domein (door particulieren, verenigingen, KMO's)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 5,0
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75b3a2d2-bf33-49e7-9ced-c166213970bb"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{38.50}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun geveltuinbeplanting (type geveltuin, per meter) door particulieren
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 38,50
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/567c8492-c587-4876-b910-f6bbcd25c971"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{540.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun aanleg natuurgroenperk van minimaal 10m2 op openbaar toegankelijk domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 540,00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0eb27f0d-bbe3-41c1-8793-b1b13b1b8715"
+        @climateTableSubject={{this.climateTableSubject}}
+        @costPerUnit={{75.00}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 2 - Verrijk je wijk</label>
+          Ondersteuning traject collectieve renovaties (per wooneenheid)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          € 75.00
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+    {{/if}}
   </tbody>
 </table>
 
