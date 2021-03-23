@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import rdflib from 'browser-rdflib';
 import { next } from '@ember/runloop';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,36 +33,23 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     return this.args.climateTableSubject;
   }
 
-  get businessRuleUri(){
+  get getBusinessRuleUri(){
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
-  get getAmount() {
-    const calculated = Math.round(0.15 * this.args.populationCount);
-    if (calculated > 20000) {
-      return 20000;
-    } else {
-      return calculated;
-    }
-  }
-
-  get getRestitution() {
-    return this.getAmount * .5;
-  }
-
   get getToRealiseUnits() {
-    if (this.getAmount > 0) {
+    if (this.amount > 0) {
       return "1 goedgekeurd SECAP2030";
     } else {
-      return "/";
+      return "nvt";
     }
   }
+
 
   constructor() {
     super(...arguments);
     if(this.hasValues()){
       this.loadProvidedValue();
-
     }
     else {
       //next for technical reasons
@@ -121,7 +109,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       {
         subject: tableEntryUri,
         predicate: amountPerActionPredicate,
-        object: this.getAmount,
+        object: 0,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -130,7 +118,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       {
         subject: tableEntryUri,
         predicate: restitutionPredicate,
-        object: this.getRestitution,
+        object: 0,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -139,7 +127,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       {
         subject: tableEntryUri,
         predicate: toRealiseUnitsPredicate,
-        object: this.getToRealiseUnits,
+        object: "nvt",
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -153,6 +141,65 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object;
+  }
+
+  updateTripleObject(subject, predicate, newObject = null) {
+    const triples = this.storeOptions.store.match(
+      subject,
+      predicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+
+    this.storeOptions.store.removeStatements([...triples]);
+
+    if (newObject) {
+      this.storeOptions.store.addAll([
+        {
+          subject: subject,
+          predicate: predicate,
+          object: newObject,
+          graph: this.storeOptions.sourceGraph
+        }
+      ]);
+    }
+  }
+
+  @action
+  update(e){
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
+
+    this.errors = [];
+
+    if (!this.isPositiveInteger(this.amount)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
+      });
+      return;
+    }
+
+    if(!this.isSmallerThan(this.amount, 20000)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie mag niet hoger liggen dan € 20.000'
+      });
+      return;
+    }
+
+    const parsedAmount = Number(this.amount);
+
+    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.getToRealiseUnits));
+
+    this.setComponentValues(this.tableEntryUri);
+  }
+
+  isPositiveInteger(value) {
+    return parseInt(value) >= 0;
+  }
+
+  isSmallerThan(value, max) {
+    return value <= max;
   }
 
 }
