@@ -9,7 +9,7 @@
       </li>
       <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
         <label class="au-c-label ">Terugtrekkingsrecht te verdelen </label>
-        <p>{{convert-to-currency this.restitutionToDestribute}}</p>
+        <p style="{{if this.errors 'color:#D92626'}}">{{convert-to-currency this.restitutionToDestribute}}</p>
       </li>
 </ul>
 <br>
