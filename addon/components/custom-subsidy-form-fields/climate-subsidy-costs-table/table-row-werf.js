@@ -25,6 +25,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
   @tracked errors = [];
+  @tracked isValidRow = true;
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -161,6 +162,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     }
   }
 
+  // Compare 'validity' with current state 'isValidRow' if they are not the same call edit.js updateValidRows
+  updateRowValidity(validity){
+    if (this.isValidRow == validity) return;
+
+    this.isValidRow = validity;
+    this.args.updateValidRows(validity);
+  }
+
   @action
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
@@ -170,14 +179,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie is moet groter of gelijk aan 0 zijn'
       });
-      return;
+      return this.updateRowValidity(false);
     }
 
     if (!this.isValidInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
-      return;
+      return this.updateRowValidity(false);
     }
 
     const parsedAmount = Number(this.amount);
@@ -191,6 +200,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     const newResititution = Number(this.restitution.value);
     // Updates the "Terugtrekkingsrecht te verdelen" value
     this.args.updateTotaleRestitution(newResititution - currentResititution);
+    this.updateRowValidity(true);
   }
 
   isPositiveInteger(value) {

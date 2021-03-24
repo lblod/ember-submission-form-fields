@@ -28,7 +28,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   @tracked toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
   @tracked costPerUnitDescription = null;
   @tracked errors = [];
-  // TODO retrieve nr from DB and use that
+  @tracked isValidRow = true;
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -177,6 +177,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     }
   }
 
+  // Compare 'validity' with current state 'isValidRow' if they are not the same call edit.js updateValidRows
+  updateRowValidity(validity){
+    if (this.isValidRow == validity) return;
+
+    this.isValidRow = validity;
+    this.args.updateValidRows(validity);
+  }
+
   @action
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
@@ -187,14 +195,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
       });
-      return;
+      return this.updateRowValidity(false);
     }
 
     if (!this.isValidInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
-      return;
+      return this.updateRowValidity(false);
     }
 
     const parsedAmount = Number(this.amount);
@@ -209,6 +217,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     const newResititution = Number(this.restitution.value);
     // Updates the "Terugtrekkingsrecht te verdelen" value
     this.args.updateTotaleRestitution(newResititution - currentResititution);
+    this.updateRowValidity(true);
   }
 
   isPositiveInteger(value) {
