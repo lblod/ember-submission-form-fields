@@ -169,11 +169,15 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     }
 
     const parsedAmount = Number(this.amount);
+    const currentResititution = Number(this.restitution.value);
 
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
-
     this.setComponentValues(this.tableEntryUri);
+
+    const newResititution = Number(this.restitution.value);
+    // Updates the "Terugtrekkingsrecht te verdelen" value
+    this.args.updateTotaleRestitution(newResititution - currentResititution);
   }
 
   isValidInteger(value) {

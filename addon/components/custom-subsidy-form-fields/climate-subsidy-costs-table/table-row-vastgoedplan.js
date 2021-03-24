@@ -200,12 +200,17 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     console.log(this.isValidInteger(this.amount));
 
     const parsedAmount = Number(this.amount);
+    const currentResititution = Number(this.restitution.value);
 
     this.toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
 
     this.setComponentValues(this.tableEntryUri);
+
+    const newResititution = Number(this.restitution.value);
+    // Updates the "Terugtrekkingsrecht te verdelen" value
+    this.args.updateTotaleRestitution(newResititution - currentResititution);
   }
 
   isPositiveInteger(value) {
