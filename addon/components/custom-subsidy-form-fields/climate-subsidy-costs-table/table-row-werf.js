@@ -173,6 +173,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
       return;
     }
 
+    if (!this.isValidInteger(this.amount)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
+      });
+      return;
+    }
+
     const parsedAmount = Number(this.amount);
 
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
@@ -184,5 +191,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   isPositiveInteger(value) {
     return parseInt(value) >= 0;
+  }
+
+  isValidInteger(value) {
+    return parseFloat(value) % 1 === 0;
   }
 }

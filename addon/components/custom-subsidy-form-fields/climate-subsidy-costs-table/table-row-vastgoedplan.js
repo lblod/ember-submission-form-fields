@@ -190,6 +190,15 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       return;
     }
 
+    if (!this.isValidInteger(this.amount)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
+      });
+      return;
+    }
+
+    console.log(this.isValidInteger(this.amount));
+
     const parsedAmount = Number(this.amount);
 
     this.toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
@@ -201,5 +210,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
   isPositiveInteger(value) {
     return parseInt(value) >= 0;
+  }
+
+  isValidInteger(value) {
+    return parseFloat(value) % 1 === 0;
   }
 }

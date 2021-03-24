@@ -159,6 +159,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       return;
     }
 
+    if (!this.isValidInteger(this.amount)){
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
+      });
+      return;
+    }
+
     if(!this.isSmallerThan(this.amount, 20000)){
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie mag niet hoger liggen dan € 20.000'
@@ -176,6 +183,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   isPositiveInteger(value) {
     return parseInt(value) >= 0;
+  }
+
+  isValidInteger(value) {
+    return parseFloat(value) % 1 === 0;
   }
 
   isSmallerThan(value, max) {
