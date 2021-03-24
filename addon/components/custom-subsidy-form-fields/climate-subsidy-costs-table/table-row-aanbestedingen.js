@@ -24,25 +24,25 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
   @tracked restitution = null;
   @tracked errors = [];
 
-  get storeOptions(){
+  get storeOptions() {
     return this.args.storeOptions;
   }
 
-  get businessRuleUri(){
+  get businessRuleUri() {
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
-  get climateTableSubject(){
+  get climateTableSubject() {
     return this.args.climateTableSubject;
   }
 
-  get costPerUnit(){
+  get costPerUnit() {
     return this.args.costPerUnit;
   }
 
   constructor() {
     super(...arguments);
-    if(this.hasValues()){
+    if (this.hasValues()) {
       this.loadProvidedValue();
     }
     else {
@@ -53,14 +53,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     }
   }
 
-  hasValues(){
+  hasValues() {
     const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
     return values.length;
   }
 
-  loadProvidedValue(){
+  loadProvidedValue() {
     const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
-    if(values.length > 1 ){
+    if (values.length > 1) {
       throw `Expected single value for ${this.businessRuleUri}`;
     }
     else {
@@ -68,7 +68,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     }
   }
 
-  setComponentValues(subject){
+  setComponentValues(subject) {
     this.tableEntryUri = subject;
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
@@ -150,18 +150,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
   }
 
   @action
-  update(e){
+  update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
     this.errors = [];
-    if (!this.isPositiveInteger(this.amount)){
+    if (!this.isPositiveInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie is moet groter of gelijk aan 0 zijn'
       });
       return;
     }
 
-    if (!this.isValidInteger(this.amount)){
+    if (!this.isValidInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
@@ -171,7 +171,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     const parsedAmount = Number(this.amount);
 
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
 
     this.setComponentValues(this.tableEntryUri);
   }

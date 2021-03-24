@@ -30,19 +30,19 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   @tracked errors = [];
   // TODO retrieve nr from DB and use that
 
-  get storeOptions(){
+  get storeOptions() {
     return this.args.storeOptions;
   }
 
-  get populationCount (){
+  get populationCount() {
     return this.args.populationCount;
   }
 
-  get businessRuleUri(){
+  get businessRuleUri() {
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
-  get climateTableSubject(){
+  get climateTableSubject() {
     return this.args.climateTableSubject;
   }
 
@@ -51,7 +51,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       return 15000;
     } else if (this.populationCount > 25000 && this.populationCount < 100000) {
       return 40000;
-    } else if (this.populationCount > 100000){
+    } else if (this.populationCount > 100000) {
       return 60000;
     } else {
       return "Gemeente < 25.000 inwoners: 15.000 € | Gemeente 25.000-100.000 inwoners: 40.000 € | Gemeente >100.000 inwoners: 60.000 €";
@@ -61,7 +61,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
   constructor() {
     super(...arguments);
-    if(this.hasValues()){
+    if (this.hasValues()) {
       this.loadProvidedValue();
     }
     else {
@@ -72,14 +72,14 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     }
   }
 
-  hasValues(){
+  hasValues() {
     const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
     return values.length;
   }
 
-  loadProvidedValue(){
+  loadProvidedValue() {
     const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
-    if(values.length > 1 ){
+    if (values.length > 1) {
       throw `Expected single value for ${this.businessRuleUri}`;
     }
     else {
@@ -87,7 +87,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     }
   }
 
-  setComponentValues(subject){
+  setComponentValues(subject) {
     this.tableEntryUri = subject;
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.costPerUnitDescription = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object;
@@ -178,19 +178,19 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   }
 
   @action
-  update(e){
+  update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
     this.errors = [];
 
-    if (!this.isPositiveInteger(this.amount)){
+    if (!this.isPositiveInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
       });
       return;
     }
 
-    if (!this.isValidInteger(this.amount)){
+    if (!this.isValidInteger(this.amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
@@ -203,7 +203,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
     this.toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
 
     this.setComponentValues(this.tableEntryUri);
   }
