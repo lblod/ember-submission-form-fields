@@ -90,7 +90,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       {
         subject: tableEntryUri,
         predicate: actionDescriptionPredicate,
-        object: this.getBusinessRuleUri,
+        object: this.businessRuleUri,
         graph: this.storeOptions.sourceGraph
       }
     ];
