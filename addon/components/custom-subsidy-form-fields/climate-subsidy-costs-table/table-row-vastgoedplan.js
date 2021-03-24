@@ -197,8 +197,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       return;
     }
 
-    console.log(this.isValidInteger(this.amount));
-
     const parsedAmount = Number(this.amount);
     const currentResititution = Number(this.restitution.value);
 
