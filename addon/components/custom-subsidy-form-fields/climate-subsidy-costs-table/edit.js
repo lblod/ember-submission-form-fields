@@ -17,6 +17,7 @@ const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}clima
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
   @tracked climateTableSubject = null
   @tracked entries = [];
+  @tracked populationCount = "100343"
 
   get hasClimateTable() {
     if (!this.climateTableSubject)

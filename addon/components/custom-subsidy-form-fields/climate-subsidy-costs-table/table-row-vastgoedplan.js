@@ -29,10 +29,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   @tracked costPerUnitDescription = null;
   @tracked errors = [];
   // TODO retrieve nr from DB and use that
-  @tracked populationCount = "100343"
 
   get storeOptions(){
     return this.args.storeOptions;
+  }
+
+  get populationCount (){
+    return this.args.populationCount;
   }
 
   get businessRuleUri(){
