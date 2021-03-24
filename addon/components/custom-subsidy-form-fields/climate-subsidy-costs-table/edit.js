@@ -21,6 +21,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked populationCount = "100343"
   @tracked restitutionToDestribute = 10000;
   @tracked totalRestitution = 10000;
+  @tracked errors = [];
 
   get hasClimateTable() {
     if (!this.climateTableSubject)
@@ -91,6 +92,16 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @action
   updateTotaleRestitution(value){
     this.restitutionToDestribute = this.restitutionToDestribute - value;
+    this.errors = [];
 
+    if (!this.isPositiveInteger(this.restitutionToDestribute)) {
+      this.errors.pushObject({
+        message: 'Terugtrekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
+      });
+    }
+  }
+
+  isPositiveInteger(value) {
+    return parseInt(value) >= 0;
   }
 }
