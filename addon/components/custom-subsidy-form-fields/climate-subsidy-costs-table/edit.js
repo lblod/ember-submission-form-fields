@@ -22,6 +22,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked restitutionToDestribute = 10000;
   @tracked totalRestitution = 10000;
   @tracked errors = [];
+  @tracked validRows = 21;
 
   get hasClimateTable() {
     if (!this.climateTableSubject)
@@ -32,7 +33,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         this.climateTableSubject,
         this.storeOptions.sourceGraph).length > 0;
   }
-
 
   constructor() {
     super(...arguments);
@@ -99,6 +99,12 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
         message: 'Terugtrekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
       });
     }
+  }
+
+  @action
+  updateValidRows(validState){
+    if(validState == true) return this.validRows++;
+    if(validState == false) return this.validRows--;
   }
 
   isPositiveInteger(value) {
