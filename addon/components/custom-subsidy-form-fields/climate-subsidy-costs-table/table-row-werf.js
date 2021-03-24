@@ -184,7 +184,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount/2, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal((parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.amount == 0 ? 0 : (parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
 
     this.setComponentValues(this.tableEntryUri);
   }
