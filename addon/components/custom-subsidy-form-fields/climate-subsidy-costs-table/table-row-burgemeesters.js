@@ -32,7 +32,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     return this.args.climateTableSubject;
   }
 
-  get getBusinessRuleUri(){
+  get businessRuleUri(){
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
