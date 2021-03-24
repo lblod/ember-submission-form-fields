@@ -5,11 +5,11 @@
   </li>
   <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
         <label class="au-c-label "> Totaal terugtrekkingsrecht</label>
-        <p>{{convert-to-currency 363902.12}}</p>
+        <p>{{convert-to-currency this.totalRestitution}}</p>
       </li>
       <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
         <label class="au-c-label ">Terugtrekkingsrecht te verdelen </label>
-        <p>{{convert-to-currency 363902.12}}</p>
+        <p>{{convert-to-currency this.restitutionToDestribute}}</p>
       </li>
 </ul>
 <br>
@@ -43,6 +43,7 @@
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
         @climateTableSubject={{this.climateTableSubject}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -60,6 +61,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/6469df9c-b933-45c3-9457-4958c33935ca"
         @climateTableSubject={{this.climateTableSubject}}
         @populationCount={{this.populationCount}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -77,6 +79,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/286c35b3-4817-4b33-9ad5-828747610b2a"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit="/"
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -97,6 +100,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{150.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -114,6 +118,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e6339d50-0969-4911-924c-bb0c629c7b00"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{50.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -131,6 +136,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/396fe1bd-0a13-4823-8824-05ea3a527337"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{13.50}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -148,6 +154,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{50.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -165,6 +172,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75b3a2d2-bf33-49e7-9ced-c166213970bb"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{38.50}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -182,6 +190,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/567c8492-c587-4876-b910-f6bbcd25c971"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{540.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -199,6 +208,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0eb27f0d-bbe3-41c1-8793-b1b13b1b8715"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{75.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -216,6 +226,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/23e94ba7-57cf-4ad4-8f5e-b4a8dcc6f816"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{990.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -233,6 +244,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{20000.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -250,6 +262,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/3b939085-ea60-468e-9fb8-ee0b54f1d73c"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{12000.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -267,6 +280,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e460d281-8b5b-445e-a34d-2a6cb9c10675"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{8400.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -284,6 +298,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{4800.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -301,6 +316,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/d66a5dbc-8913-4ccf-92bf-a4b62f3d5c58"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{7500.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -318,6 +334,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/f4956772-fd3e-48f5-b546-e5298fff78ad"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{50.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -335,6 +352,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0efb6b57-2ab4-4526-b71e-ec3568f01d1b"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{35.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -352,6 +370,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/1c4fbee8-1b18-4c1a-9a05-a3b20a5eae94"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{500.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
@@ -369,6 +388,7 @@
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/5d485edc-3352-4bbe-a74c-e50cc0e22dec"
         @climateTableSubject={{this.climateTableSubject}}
         @costPerUnit={{1000.00}}
+        @updateTotaleRestitution={{this.updateTotaleRestitution}}
         as |row|>
 
         <row.actionDescription>
