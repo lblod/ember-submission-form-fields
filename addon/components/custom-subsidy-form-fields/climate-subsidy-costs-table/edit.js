@@ -1,5 +1,6 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import rdflib from 'browser-rdflib';
@@ -18,6 +19,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked climateTableSubject = null
   @tracked entries = [];
   @tracked populationCount = "100343"
+  @tracked restitutionToDestribute = 10000;
+  @tracked totalRestitution = 10000;
 
   get hasClimateTable() {
     if (!this.climateTableSubject)
@@ -83,5 +86,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
   isSmallerThan(value, max) {
     return value <= max;
+  }
+
+  @action
+  updateTotaleRestitution(value){
+    this.restitutionToDestribute = this.restitutionToDestribute - value;
+
   }
 }
