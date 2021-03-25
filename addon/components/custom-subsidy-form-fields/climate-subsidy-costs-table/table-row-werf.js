@@ -50,15 +50,16 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   constructor() {
     super(...arguments);
-    if (this.hasValues()) {
-      this.loadProvidedValue();
-    }
-    else {
-      //next for technical reasons
-      next(this, () => {
+   //next for technical reasons
+    next(this, () => {
+      if (this.hasValues()) {
+        this.loadProvidedValue();
+        this.args.updateTotaleRestitution(this.restitution);
+      }
+      else {
         this.initializeDefault();
-      });
-    }
+      }
+    });
   }
 
   hasValues() {
