@@ -10,7 +10,7 @@ import { RDF, XSD } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
-// const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
+const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
 const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
@@ -19,16 +19,19 @@ const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDesc
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
-// const populationCountPredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}populationCount`);
+const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVastgoedplanComponent extends Component {
   @tracked tableEntryUri = null;
   @tracked amount = null;
   @tracked restitution = null;
-  @tracked toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
   @tracked costPerUnitDescription = null;
   @tracked errors = [];
   @tracked isValidRow = true;
+
+  get toRealiseUnits(){
+    return this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
+  }
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -46,18 +49,19 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     return this.args.climateTableSubject;
   }
 
-  get getCostPerUnit() {
+  get costPerUnit() {
     if (this.populationCount < 25000) {
       return 15000;
     } else if (this.populationCount > 25000 && this.populationCount < 100000) {
       return 40000;
-    } else if (this.populationCount > 100000) {
+    } else  {
       return 60000;
-    } else {
-      return "Gemeente < 25.000 inwoners: 15.000 € | Gemeente 25.000-100.000 inwoners: 40.000 € | Gemeente >100.000 inwoners: 60.000 €";
     }
   }
 
+  get onUpdateRow(){
+    return this.args.onUpdateRow;
+  }
 
   constructor() {
     super(...arguments);
@@ -124,11 +128,12 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
         graph: this.storeOptions.sourceGraph
       }
     ];
+    //TODO: do we need this?
     triples.push(
       {
         subject: tableEntryUri,
         predicate: costPerUnitPredicate,
-        object: this.getCostPerUnit,
+        object: this.costPerUnit,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -149,7 +154,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
         graph: this.storeOptions.sourceGraph
       }
     );
-
 
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
@@ -177,47 +181,37 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     }
   }
 
-  // Compare 'validity' with current state 'isValidRow' if they are not the same call edit.js updateValidRows
-  updateRowValidity(validity){
-    if (this.isValidRow == validity) return;
-
-    this.isValidRow = validity;
-    this.args.updateValidRows(validity);
-  }
-
-  @action
-  update(e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
-
+  isValid(amount){
     this.errors = [];
 
-    if (!this.isPositiveInteger(this.amount)) {
+    if (!this.isPositiveInteger(amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
       });
-      return this.updateRowValidity(false);
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
 
-    if (!this.isValidInteger(this.amount)) {
+    else if (!this.isValidInteger(amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
-      return this.updateRowValidity(false);
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
 
-    const parsedAmount = Number(this.amount);
-    const currentResititution = Number(this.restitution.value);
+    else if(amount > this.costPerUnit ){
+      this.errors.pushObject({
+        message: `Ingezet bedrag mag hoogstens € ${this.costPerUnit} zijn`
+      });
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
+    }
 
-    this.toRealiseUnits = this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
-    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
-
-    this.setComponentValues(this.tableEntryUri);
-
-    const newResititution = Number(this.restitution.value);
-    // Updates the "Terugtrekkingsrecht te verdelen" value
-    this.args.updateTotaleRestitution(newResititution - currentResititution);
-    this.updateRowValidity(true);
+    else {
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
+      return true;
+    }
   }
 
   isPositiveInteger(value) {
@@ -226,5 +220,26 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
   isValidInteger(value) {
     return parseFloat(value) % 1 === 0;
+  }
+
+  @action
+  update(e) {
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
+
+    if(!this.isValid(this.amount)){
+      return this.onUpdateRow();
+    }
+    const parsedAmount = Number(this.amount);
+    const currentResititution = Number(this.restitution.value);
+
+    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
+
+    this.setComponentValues(this.tableEntryUri);
+
+    const newResititution = Number(this.restitution.value);
+    // Updates the "Terugtrekkingsrecht te verdelen" value
+    this.args.updateTotaleRestitution(newResititution - currentResititution);
+    return this.onUpdateRow();
   }
 }

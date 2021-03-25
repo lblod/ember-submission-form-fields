@@ -79,8 +79,4 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableShowComponen
     ];
     this.storeOptions.store.addAll(triples);
   }
-
-  isSmallerThan(value, max) {
-    return value <= max;
-  }
 }

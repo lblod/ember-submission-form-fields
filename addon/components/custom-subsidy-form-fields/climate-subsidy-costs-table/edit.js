@@ -13,12 +13,12 @@ const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTable`);
 const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
-
+const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
-  @tracked climateTableSubject = null
+  @tracked climateTableSubject = null;
   @tracked entries = [];
-  @tracked populationCount = "100343"
+  @tracked populationCount = "100343";
   @tracked restitutionToDestribute = 10000;
   @tracked totalRestitution = 10000;
   @tracked errors = [];
@@ -85,10 +85,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     this.storeOptions.store.addAll(triples);
   }
 
-  isSmallerThan(value, max) {
-    return value <= max;
-  }
-
   @action
   updateTotaleRestitution(value){
     this.restitutionToDestribute = this.restitutionToDestribute - value;
@@ -105,6 +101,12 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   updateValidRows(validState){
     if(validState == true) return this.validRows++;
     if(validState == false) return this.validRows--;
+  }
+
+  @action
+  validate(){
+    const invalidRow = this.storeOptions.store.any(this.climateTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
+    //TODO: further validation
   }
 
   isPositiveInteger(value) {

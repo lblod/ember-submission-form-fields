@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
-
 import { RDF, XSD } from '@lblod/submission-form-helpers';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
+const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
 const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
@@ -17,6 +17,7 @@ const climateEntryPredicate = new rdflib.NamedNode(`${extBaseUri}climateEntry`);
 const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDescription`);
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
+const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanbestedingenComponent extends Component {
   @tracked tableEntryUri = null;
@@ -39,6 +40,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
 
   get costPerUnit() {
     return this.args.costPerUnit;
+  }
+
+  get onUpdateRow(){
+    return this.args.onUpdateRow;
   }
 
   constructor() {
@@ -150,35 +155,44 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     }
   }
 
-  // Compare 'validity' with current state 'isValidRow' if they are not the same call edit.js updateValidRows
-  updateRowValidity(validity){
-    if (this.isValidRow == validity) return;
+  isValid(amount){
+    this.errors = [];
 
-    this.isValidRow = validity;
-    this.args.updateValidRows(validity);
+    if (!this.isPositiveInteger(amount)) {
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie is moet groter of gelijk aan 0 zijn'
+      });
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
+    }
+    else if (!this.isValidInteger(amount)) {
+      this.errors.pushObject({
+        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
+      });
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
+    }
+    else {
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
+      return true;
+    }
+  }
+
+  isPositiveInteger(value) {
+    return parseInt(value) >= 0;
+  }
+
+  isValidInteger(value) {
+    return parseFloat(value) % 1 === 0;
   }
 
   @action
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
-    this.errors = [];
-    if (!this.isPositiveInteger(this.amount)) {
-      this.errors.pushObject({
-        message: 'Ingezet bedrag per actie is moet groter of gelijk aan 0 zijn'
-      });
-      return this.updateRowValidity(false);
-
+    if(!this.isValid(this.amount)){
+      return this.onUpdateRow();
     }
-
-    if (!this.isValidInteger(this.amount)) {
-      this.errors.pushObject({
-        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
-      });
-      return this.updateRowValidity(false);
-    }
-
-
 
     const parsedAmount = Number(this.amount);
     const currentResititution = Number(this.restitution.value);
@@ -191,14 +205,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
     // Updates the "Terugtrekkingsrecht te verdelen" value
     this.args.updateTotaleRestitution(newResititution - currentResititution);
 
-    this.updateRowValidity(true);
-  }
-
-  isValidInteger(value) {
-    return parseFloat(value) % 1 === 0;
-  }
-
-  isPositiveInteger(value) {
-    return parseInt(value) >= 0;
+    return this.onUpdateRow();
   }
 }

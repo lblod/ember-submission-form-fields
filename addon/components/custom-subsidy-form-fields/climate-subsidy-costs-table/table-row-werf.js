@@ -10,6 +10,7 @@ import { RDF, XSD } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
+const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
 const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
@@ -18,6 +19,7 @@ const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDesc
 const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
+const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerfComponent extends Component {
   @tracked tableEntryUri = null;
@@ -25,7 +27,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
   @tracked errors = [];
-  @tracked isValidRow = true;
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -41,6 +42,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   get costPerUnit() {
     return this.args.costPerUnit;
+  }
+
+  get onUpdateRow(){
+    return this.args.onUpdateRow;
   }
 
   constructor() {
@@ -162,45 +167,27 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     }
   }
 
-  // Compare 'validity' with current state 'isValidRow' if they are not the same call edit.js updateValidRows
-  updateRowValidity(validity){
-    if (this.isValidRow == validity) return;
-
-    this.isValidRow = validity;
-    this.args.updateValidRows(validity);
-  }
-
-  @action
-  update(e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
-
+  isValid(amount){
     this.errors = [];
-    if (!this.isPositiveInteger(this.amount)) {
+
+    if (!this.isPositiveInteger(amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie is moet groter of gelijk aan 0 zijn'
       });
-      return this.updateRowValidity(false);
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
-
-    if (!this.isValidInteger(this.amount)) {
+    else if (!this.isValidInteger(amount)) {
       this.errors.pushObject({
         message: 'Ingezet bedrag per actie moet een geheel getal zijn'
       });
-      return this.updateRowValidity(false);
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
-
-    const parsedAmount = Number(this.amount);
-    const currentResititution = Number(this.restitution.value);
-
-    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.amount == 0 ? 0 : (parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
-    this.setComponentValues(this.tableEntryUri);
-
-    const newResititution = Number(this.restitution.value);
-    // Updates the "Terugtrekkingsrecht te verdelen" value
-    this.args.updateTotaleRestitution(newResititution - currentResititution);
-    this.updateRowValidity(true);
+    else {
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
+      return true;
+    }
   }
 
   isPositiveInteger(value) {
@@ -209,5 +196,32 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   isValidInteger(value) {
     return parseFloat(value) % 1 === 0;
+  }
+
+  @action
+  update(e) {
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
+
+    if(!this.isValid(this.amount)){
+      return this.onUpdateRow();
+    }
+
+    const parsedAmount = Number(this.amount);
+    const currentResititution = Number(this.restitution.value);
+
+    this.updateTripleObject(this.tableEntryUri,
+                            amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri,
+                            restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri,
+                            toRealiseUnitsPredicate,
+                            rdflib.literal(this.amount == 0 ? 0 : (parsedAmount / this.costPerUnit).toFixed(2), XSD('float')));
+
+    this.setComponentValues(this.tableEntryUri);
+
+    const newResititution = Number(this.restitution.value);
+    // Updates the "Terugtrekkingsrecht te verdelen" value
+    this.args.updateTotaleRestitution(newResititution - currentResititution);
+    return this.onUpdateRow();
   }
 }
