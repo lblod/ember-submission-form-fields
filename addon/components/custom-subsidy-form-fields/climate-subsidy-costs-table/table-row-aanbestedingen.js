@@ -53,6 +53,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowAanb
       if (this.hasValues()) {
         this.loadProvidedValue();
         this.args.updateTotaleRestitution(this.restitution);
+        this.onUpdateRow();
       }
       else {
         this.initializeDefault();

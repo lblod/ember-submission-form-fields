@@ -17,6 +17,9 @@
 <AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
   {{@field.label}}
 </AuLabel>
+{{#each this.errors as |error|}}
+    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+{{/each}}
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
   <thead>
     <tr>

@@ -50,6 +50,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       if (this.hasValues()) {
         this.loadProvidedValue();
         this.args.updateTotaleRestitution(this.restitution);
+        this.onUpdateRow();
       }
       else {
         this.initializeDefault();

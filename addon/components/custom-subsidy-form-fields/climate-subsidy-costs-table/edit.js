@@ -14,6 +14,7 @@ const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTable`);
 const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
+const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClimateTable`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
   @tracked climateTableSubject = null;
@@ -84,22 +85,53 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     this.storeOptions.store.addAll(triples);
   }
 
-  @action
-  updateTotaleRestitution(value){
-    this.restitutionToDestribute = this.restitutionToDestribute - value;
-    this.errors = [];
+  //TODO: move to some common code
+  updateTripleObject(subject, predicate, newObject = null) {
+    const triples = this.storeOptions.store.match(
+      subject,
+      predicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
 
-    if (!this.isPositiveInteger(this.restitutionToDestribute)) {
-      this.errors.pushObject({
-        message: 'Terugtrekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
-      });
+    this.storeOptions.store.removeStatements([...triples]);
+
+    if (newObject) {
+      this.storeOptions.store.addAll([
+        {
+          subject: subject,
+          predicate: predicate,
+          object: newObject,
+          graph: this.storeOptions.sourceGraph
+        }
+      ]);
     }
   }
 
   @action
+  updateTotaleRestitution(value){
+    this.restitutionToDestribute = this.restitutionToDestribute - value;
+  }
+
+  @action
   validate(){
+    this.errors = [];
     const invalidRow = this.storeOptions.store.any(this.climateTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
-    //TODO: further validation
+    if(invalidRow){
+      this.errors.pushObject({
+        message: 'Een van de rijen is niet correct ingevuld'
+      });
+      this.updateTripleObject(this.climateTableSubject, validClimateTable, null);
+    }
+    else if (!this.isPositiveInteger(this.restitutionToDestribute)) {
+      this.errors.pushObject({
+        message: 'Terugtrekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
+      });
+      this.updateTripleObject(this.climateTableSubject, validClimateTable, null);
+    }
+    else {
+      this.updateTripleObject(this.climateTableSubject, validClimateTable, true);
+    }
   }
 
   isPositiveInteger(value) {
