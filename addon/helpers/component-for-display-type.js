@@ -20,7 +20,8 @@ const mapping = {
     'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/edit`,
     'http://lblod.data.gift/display-types/applicationFormTable': `custom-subsidy-form-fields/application-form-table/edit`,
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/edit`,
-    'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/edit`
+    'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/edit`,
+    'http://lblod.data.gift/display-types/conceptSchemeMulitSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`,
   },
 
   show : {
