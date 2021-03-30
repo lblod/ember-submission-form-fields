@@ -14,6 +14,14 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowCompone
     this.loadOptions();
   }
 
+  get isColumnLayout(){
+    /**
+     * NOTE:  current implementation requires that if a checkbox label goes over or equals the length of 50,
+     *        the column layout is abandoned.
+     */
+    return !this.options.find(option => option.label.length >= 50 );
+  }
+
   loadOptions() {
     const store = this.args.formStore;
     const {sourceGraph, metaGraph} = this.args.graphs;
