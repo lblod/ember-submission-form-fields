@@ -14,7 +14,8 @@
                            @label={{option.label}}
                            @value={{option.label}}
                            checked={{option.provided}}
-                           onclick={{fn this.updateValue option}}/>
+                           onclick={{fn this.updateValue option}}
+                           @disabled={{true}}/>
       </li>
     {{/each}}
   </ul>
