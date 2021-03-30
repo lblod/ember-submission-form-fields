@@ -32,7 +32,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowCompone
 
       let order = 0;
       if (orderBy)
-        order = store.any(subject, orderBy, undefined, metaGraph);
+        order = parseInt(store.any(subject, orderBy, undefined, metaGraph).value);
 
       return {
         subject,
@@ -41,7 +41,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowCompone
         order,
       };
     });
-    this.options.sort((a, b) => a.index - b.index);
+    this.options.sort((a, b) => a.order - b.order);
   }
 }
 
