@@ -1,13 +1,8 @@
 import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
-import { tracked } from '@glimmer/tracking';
 import { triplesForPath, addSimpleFormValue, removeDatasetForSimpleFormValue } from '@lblod/submission-form-helpers';
 import RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowComponent from './show';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesEditComponent extends RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowComponent {
-  id = 'multi-select-checkboxes-' + guidFor(this);
-
-  @tracked options = [];
 
   constructor() {
     super(...arguments);
