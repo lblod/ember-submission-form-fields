@@ -85,7 +85,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   id = `application-form-table-${guidFor(this)}`;
 
-  @tracked usedParentContribution;
+  @tracked usedParentalContribution;
   @tracked applicationFormTableSubject = null;
   @tracked entries = [];
   @tracked totalAmount = 0;
@@ -94,13 +94,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     super(...arguments);
     this.loadProvidedValue();
 
-    const observe = () => {
-      const {store, sourceNode, sourceGraph} = this.storeOptions;
-      const predicate = LBLOD_SUBSIDIE('usedParentalContribution');
-      this.usedParentContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
-      this.calculateTotal(this.entries);
-    };
-    observe();
+    this.calculateTotal(this.entries);
 
     // Add an entry by default as an example
     next(this, () => {
@@ -113,8 +107,21 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     /**
      * NOTE: registering hook to keep parent contribution in sync.
      */
-    this.args.formStore.registerObserver(() => {
-      observe();
+    const observe = ({inserts = [], deletes = []} = {}) => {
+      const predicate = LBLOD_SUBSIDIE('usedParentalContribution');
+      const changes = [...inserts, ...deletes];
+      /**
+       * NOTE: we only want to trigger the observer when changes happened
+       *       to the predicate lblodSubsidie:usedParentalContribution
+       */
+      if (changes.map(t => t.predicate).find(p => p.equals(predicate))) {
+        const {store, sourceNode, sourceGraph} = this.storeOptions;
+        this.usedParentalContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
+        this.updateAangevraagdBedrag();
+      }
+    };
+    this.args.formStore.registerObserver((delta) => {
+      observe(delta);
     }, this.id);
 
   }
@@ -145,6 +152,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     const triples = matches.triples;
 
     if (triples.length) {
+      this.usedParentalContribution = !!this.storeOptions.store.any(
+        this.storeOptions.sourceNode,
+        LBLOD_SUBSIDIE('usedParentalContribution'),
+        undefined,
+        this.storeOptions.sourceGraph);
       this.applicationFormTableSubject = triples[0].object; // assuming only one per form
 
       const entriesMatches = triplesForPath({
@@ -360,7 +372,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entries.forEach(entry => {
       total += entry.totalAmount;
     });
-    if (this.usedParentContribution) {
+    if (this.usedParentalContribution) {
       total = total / 2;
     }
     if (total !== this.totalAmount)

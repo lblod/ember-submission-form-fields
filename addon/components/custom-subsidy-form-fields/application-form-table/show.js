@@ -66,7 +66,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
     this.entries.forEach(entry => {
       total += entry.totalAmount;
     });
-    if (this.usedParentContribution) {
+    if (this.usedParentalContribution) {
       total = total / 2;
     }
     return total;
@@ -114,7 +114,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
 
       const {store, sourceNode, sourceGraph} = this.storeOptions;
       const predicate = LBLOD_SUBSIDIE('usedParentalContribution');
-      this.usedParentContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
+      this.usedParentalContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
     }
   }
 
