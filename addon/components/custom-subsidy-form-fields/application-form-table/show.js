@@ -66,6 +66,9 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
     this.entries.forEach(entry => {
       total += entry.totalAmount;
     });
+    if (this.usedParentContribution) {
+      total = total / 2;
+    }
     return total;
   }
 
