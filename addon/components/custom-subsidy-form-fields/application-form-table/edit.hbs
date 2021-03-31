@@ -29,9 +29,7 @@
     <th>
       Aantal kinderen in aanmerking voor infrastructuursubsidies
     </th>
-    <th>Totaal
-      <br>
-      €&hairsp;{{this.totalAmount}}</th>
+    <th></th>
     <th>&nbsp;</th>
   </tr>
   </thead>
@@ -102,17 +100,26 @@
       </td>
     </tr>
   {{/each}}
+  <tr>
+    <td colspan="6" class="data-table__add-row u-align-center">
+      <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg organisator toe</AuButton>
+    </td>
+  </tr>
   {{#if this.usedParentContribution}}
     <tr>
-      <td colspan="7" class="data-table__add-row u-align-center">
-        Ouderbijdrage word op het einde van de berekening afgerekend.
-      </td>
+      <th colspan="3" class="data-table__add-row u-align-center"></th>
+      <th class="data-table__add-row u-align-right">
+        Ouderbijdrage:
+      </th>
+      <th>-50%</th>
+      <th>&nbsp;</th>
     </tr>
   {{/if}}
   <tr>
-    <td colspan="7" class="data-table__add-row u-align-center">
-      <AuButton @iconAlignment="left" @icon="add" {{on "click" this.addEntry}}>Voeg organisator toe</AuButton>
-    </td>
+    <th colspan="3" class="data-table__add-row u-align-center"></th>
+    <th class="data-table__add-row u-align-right">Totaal:</th>
+    <th class="data-table__add-row u-align-center">€&hairsp;{{this.totalAmount}}</th>
+    <th>&nbsp;</th>
   </tr>
   </tbody>
 </table>

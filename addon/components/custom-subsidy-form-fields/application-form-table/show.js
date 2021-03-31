@@ -12,6 +12,8 @@ const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(`http://mu.semte.
 const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(`http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure`);
 const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
 
+const LBLOD_SUBSIDIE = new rdflib.Namespace('http://lblod.data.gift/vocabularies/subsidie/');
+
 class EntryProperties {
   @tracked value;
   @tracked oldValue;
@@ -106,6 +108,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableShowComponent ex
           }));
         }
       }
+
+      const {store, sourceNode, sourceGraph} = this.storeOptions;
+      const predicate = LBLOD_SUBSIDIE('usedParentalContribution');
+      this.usedParentContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
     }
   }
 
