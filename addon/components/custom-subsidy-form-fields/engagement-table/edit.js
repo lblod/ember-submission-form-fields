@@ -1,12 +1,11 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
+import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
-import { guidFor } from '@ember/object/internals';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -19,22 +18,9 @@ const EngagementTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}Engagem
 const EngagementEntryType = new rdflib.NamedNode(`${extBaseUri}EngagementEntry`);
 const engagementTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}engagementTable`);
 const engagementEntryPredicate = new rdflib.NamedNode(`${extBaseUri}engagementEntry`);
-const targetPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/target');
 const existingStaffPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/existingStaff');
 const additionalStaffPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/additionalStaff');
 const volunteersPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/volunteers');
-const estimatedCostPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/estimatedCost');
-const indexPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/index');
-const correctOption = new rdflib.NamedNode('http://lblod.data.gift/concepts/2e0b5013-8c7e-4d3d-9f2b-2460c0095e38'); // Sensibilisering, preventie, bronopsporing, quarantaine coaching en contactonderzoek
-const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
-
-const targets = [
-  { label: 'Sensibilisering en preventie', index: 1 },
-  { label: 'Bronopsporing',                index: 2 },
-  { label: 'Quarantaine coaching',         index: 3 },
-  { label: 'Hulp aan kwetsbare personen',  index: 4 },
-  { label: 'Contactopsporing',             index: 5 }
-];
 
 class EntryProperties {
   @tracked value;
@@ -52,56 +38,29 @@ class EngagementEntry {
 
   constructor({
     engagementEntrySubject,
-    target,
     existingStaff,
     additionalStaff,
-    volunteers,
-    estimatedCost,
-    index
+    volunteers
   }) {
     this.engagementEntrySubject = engagementEntrySubject;
-
-    this.target = new EntryProperties(target, targetPredicate);
     this.existingStaff = new EntryProperties(existingStaff, existingStaffPredicate);
     this.additionalStaff = new EntryProperties(additionalStaff, additionalStaffPredicate);
     this.volunteers = new EntryProperties(volunteers, volunteersPredicate);
-    this.estimatedCost = new EntryProperties(estimatedCost, estimatedCostPredicate);
-    this.index = new EntryProperties(index, indexPredicate);
   }
 }
 
 export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends InputFieldComponent {
-  @tracked engagementTableSubject = null
+  @tracked engagementTableSubject = null;
   @tracked entries = [];
-  @tracked showContactopsporingRow;
-
-  observerLabel = `concept-scheme-radio-buttons-${guidFor(this)}`;
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
-    this.showContactopsporingRow = this.hasCorrectOption;
-    this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.observerLabel);
 
     // Create table and entries in the store if not already existing
     next(this, () => {
       this.initializeTable();
     });
-  }
-
-  willDestroy() {
-    this.storeOptions.store.deregisterObserver(this.observerLabel);
-  }
-
-  // The validation of this fields depends on the value of other fields,
-  // hence we recalculate the validation on notification of a change in the store
-  onStoreUpdate() {
-    const previousShowValue = this.showContactopsporingRow;
-    const newShowValue = this.hasCorrectOption;
-    this.showContactopsporingRow = newShowValue;
-    if (!newShowValue && (previousShowValue != newShowValue)) {
-      this.resetContactopsporingEntry();
-    }
   }
 
   get hasEngagementTable() {
@@ -112,27 +71,6 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
                                            engagementTablePredicate,
                                            this.engagementTableSubject,
                                            this.storeOptions.sourceGraph).length > 0;
-  }
-
-  get sortedEntries() {
-    return this.entries.sort((a,b) => (a.index.value > b.index.value));
-  }
-
-  get hasCorrectOption() {
-    const correctOptionTriples = this.storeOptions.store.match(
-      this.storeOptions.sourceNode,
-      undefined,
-      correctOption,
-      this.storeOptions.sourceGraph
-    );
-    const triples = [
-      ...correctOptionTriples
-    ];
-
-    if (triples.length > 0)
-      return true;
-
-    return false;
   }
 
   loadProvidedValue() {
@@ -162,12 +100,9 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
           this.entries.pushObject(new EngagementEntry({
             engagementEntrySubject: entry.object,
-            target: parsedEntry.target,
             existingStaff: parsedEntry.existingStaff,
             additionalStaff: parsedEntry.additionalStaff,
-            volunteers: parsedEntry.volunteers,
-            estimatedCost: parsedEntry.estimatedCost,
-            index: parseInt(parsedEntry.index)
+            volunteers: parsedEntry.volunteers
           }));
         }
       }
@@ -179,10 +114,6 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   */
   parseEntryProperties(entryProperties) {
     let entry = {};
-    if (entryProperties.find(entry => entry.predicate.value == targetPredicate.value))
-      entry.target = entryProperties.find(
-        entry => entry.predicate.value == targetPredicate.value
-      ).object.value;
     if (entryProperties.find(entry => entry.predicate.value == existingStaffPredicate.value))
       entry.existingStaff = entryProperties.find(
         entry => entry.predicate.value == existingStaffPredicate.value
@@ -195,32 +126,13 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       entry.volunteers = entryProperties.find(
         entry => entry.predicate.value == volunteersPredicate.value
       ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == estimatedCostPredicate.value))
-      entry.estimatedCost = entryProperties.find(
-        entry => entry.predicate.value == estimatedCostPredicate.value
-      ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == indexPredicate.value))
-      entry.index = entryProperties.find(
-        entry => entry.predicate.value == indexPredicate.value
-      ).object.value;
     return entry;
-  }
-
-  resetContactopsporingEntry() {
-    const entry = this.entries.find(entry => (entry.index.value == 5));
-    entry.existingStaff.value = 0;
-    entry.additionalStaff.value = 0;
-    entry.volunteers.value = 0;
-    entry.estimatedCost.value = 0;
-    this.updateEntryFields(entry);
-    this.updateTotalAmount();
   }
 
   initializeTable() {
     if (!this.hasEngagementTable) {
       this.createEngagementTable();
       this.entries = this.createEntries();
-      this.updateTotalAmount();
       super.updateValidations(); // Updates validation of the table
     }
   }
@@ -248,55 +160,44 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   createEntries() {
     let entries = [];
-    const engagementEntriesDetails = this.createEngagementEntries();
+    const engagementEntrySubject = this.createEngagementEntry();
 
-    engagementEntriesDetails.forEach(detail => {
-      const newEntry = new EngagementEntry({
-        engagementEntrySubject: detail.subject,
-        target: detail.label,
-        existingStaff: 0,
-        additionalStaff: 0,
-        volunteers: 0,
-        estimatedCost: 0,
-        index: detail.index
-      });
-      entries.pushObject(newEntry);
+    const newEntry = new EngagementEntry({
+      engagementEntrySubject: engagementEntrySubject,
+      existingStaff: 0,
+      additionalStaff: 0,
+      volunteers: 0
     });
+    entries.pushObject(newEntry);
 
     this.initializeEntriesFields(entries);
     return entries;
   }
 
-  createEngagementEntries() {
+  createEngagementEntry() {
     let triples = [];
-    let engagementEntriesDetails = [];
-    targets.forEach(target => {
-      const uuid = uuidv4();
-      const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
-      engagementEntriesDetails.push({
-        subject: engagementEntrySubject,
-        label: target.label,
-        index: target.index
-      });
-      triples.push({ subject: engagementEntrySubject,
-                    predicate: RDF('type'),
-                    object: EngagementEntryType,
-                    graph: this.storeOptions.sourceGraph
-                  },
-                  { subject: engagementEntrySubject,
-                    predicate: MU('uuid'),
-                    object: uuid,
-                    graph: this.storeOptions.sourceGraph
-                  },
-                  { subject: this.engagementTableSubject,
-                    predicate: engagementEntryPredicate,
-                    object: engagementEntrySubject,
-                    graph: this.storeOptions.sourceGraph }
-        );
-    });
+
+    const uuid = uuidv4();
+    const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
+
+    triples.push({ subject: engagementEntrySubject,
+                  predicate: RDF('type'),
+                  object: EngagementEntryType,
+                  graph: this.storeOptions.sourceGraph
+                },
+                { subject: engagementEntrySubject,
+                  predicate: MU('uuid'),
+                  object: uuid,
+                  graph: this.storeOptions.sourceGraph
+                },
+                { subject: this.engagementTableSubject,
+                  predicate: engagementEntryPredicate,
+                  object: engagementEntrySubject,
+                  graph: this.storeOptions.sourceGraph }
+      );
 
     this.storeOptions.store.addAll(triples);
-    return engagementEntriesDetails;
+    return engagementEntrySubject;
   }
 
   updateFieldValueTriple(entry, field) {
@@ -323,18 +224,10 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     }
   }
 
-  updateTargetValue(entry) {
-    entry.target.errors = [];
-    this.updateFieldValueTriple(entry, 'target');
-
-    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-    super.updateValidations(); // Updates validation of the table
-  }
-
   @action
   updateExistingStaffValue(entry) {
     entry.existingStaff.errors = [];
-    const parsedValue = parseInt(entry.existingStaff.value);
+    const parsedValue = Number(entry.existingStaff.value);
     entry.existingStaff.value = !isNaN(parsedValue) ? parsedValue : entry.existingStaff.value;
     this.updateFieldValueTriple(entry, 'existingStaff');
 
@@ -342,7 +235,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       entry.existingStaff.errors.pushObject({
         message: 'Bestaand personeelskader is verplicht.'
       });
-    } else if (!this.isPositiveInteger(entry.existingStaff.value)) {
+    } else if (!this.isPositiveNumber(entry.existingStaff.value)) {
       entry.existingStaff.errors.pushObject({
         message: 'Bestaand personeelskader is niet een positief nummer.'
       });
@@ -354,7 +247,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   @action
   updateAdditionalStaffValue(entry) {
     entry.additionalStaff.errors = [];
-    const parsedValue = parseInt(entry.additionalStaff.value);
+    const parsedValue = Number(entry.additionalStaff.value);
     entry.additionalStaff.value = !isNaN(parsedValue) ? parsedValue : entry.additionalStaff.value;
     this.updateFieldValueTriple(entry, 'additionalStaff');
 
@@ -362,7 +255,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       entry.additionalStaff.errors.pushObject({
         message: 'Extra aangetrokken betaald personeel is verplicht.'
       });
-    } else if (!this.isPositiveInteger(entry.additionalStaff.value)) {
+    } else if (!this.isPositiveNumber(entry.additionalStaff.value)) {
       entry.additionalStaff.errors.pushObject({
         message: 'Extra aangetrokken betaald personeel is niet een positief nummer.'
       });
@@ -374,7 +267,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   @action
   updateVolunteersValue(entry) {
     entry.volunteers.errors = [];
-    const parsedValue = parseInt(entry.volunteers.value);
+    const parsedValue = Number(entry.volunteers.value);
     entry.volunteers.value = !isNaN(parsedValue) ? parsedValue : entry.volunteers.value;
     this.updateFieldValueTriple(entry, 'volunteers');
 
@@ -382,7 +275,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       entry.volunteers.errors.pushObject({
         message: 'Ingezette vrijwilligers is verplicht.'
       });
-    } else if (!this.isPositiveInteger(entry.volunteers.value)) {
+    } else if (!this.isPositiveNumber(entry.volunteers.value)) {
       entry.volunteers.errors.pushObject({
         message: 'Ingezette vrijwilligers is niet een positief nummer.'
       });
@@ -391,48 +284,10 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     super.updateValidations(); // Updates validation of the table
   }
 
-  @action
-  updateEstimatedCostValue(entry) {
-    entry.estimatedCost.errors = [];
-    const parsedValue = parseInt(entry.estimatedCost.value);
-    entry.estimatedCost.value = !isNaN(parsedValue) ? parsedValue : entry.estimatedCost.value;
-    this.updateFieldValueTriple(entry, 'estimatedCost');
-    this.updateTotalAmount();
-
-    if (this.isEmpty(entry.estimatedCost.value)) {
-      entry.estimatedCost.errors.pushObject({
-        message: 'Raming inzet werkingsmiddelen is verplicht.'
-      });
-    } else if (!this.isPositiveInteger(entry.estimatedCost.value)) {
-      entry.estimatedCost.errors.pushObject({
-        message: 'Raming inzet werkingsmiddelen is niet een positief nummer.'
-      });
-    } else if (!this.isSmallerThan(entry.estimatedCost.value, 1000000)) {
-      entry.estimatedCost.errors.pushObject({
-        message: 'Raming inzet werkingsmiddelen is is langer dan 6 cijfers.'
-      });
-    }
-    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-    super.updateValidations(); // Updates validation of the table
-  }
-
-  updateIndexValue(entry) {
-    this.updateFieldValueTriple(entry, 'index');
-
-    this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-    super.updateValidations(); // Updates validation of the table
-  }
-
   initializeEntriesFields(entries) {
     let triples = [];
     entries.forEach(entry => {
       triples.push(
-        {
-          subject: entry.engagementEntrySubject,
-          predicate: entry['target'].predicate,
-          object: entry['target'].value,
-          graph: this.storeOptions.sourceGraph
-        },
         {
           subject: entry.engagementEntrySubject,
           predicate: entry['existingStaff'].predicate,
@@ -450,18 +305,6 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
           predicate: entry['volunteers'].predicate,
           object: entry['volunteers'].value,
           graph: this.storeOptions.sourceGraph
-        },
-        {
-          subject: entry.engagementEntrySubject,
-          predicate: entry['estimatedCost'].predicate,
-          object: entry['estimatedCost'].value,
-          graph: this.storeOptions.sourceGraph
-        },
-        {
-          subject: entry.engagementEntrySubject,
-          predicate: entry['index'].predicate,
-          object: entry['index'].value,
-          graph: this.storeOptions.sourceGraph
         }
       );
     });
@@ -472,44 +315,10 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   * Update entry fields in the store.
   */
   updateEntryFields(entry) {
-    this.updateTargetValue(entry);
     this.updateExistingStaffValue(entry);
     this.updateAdditionalStaffValue(entry);
     this.updateVolunteersValue(entry);
     this.updateEstimatedCostValue(entry);
-    this.updateIndexValue(entry);
-  }
-
-  updateTotalAmount() {
-    const total = this.calculateTotal(this.entries);
-    const aangevraagdBedragTriples = this.storeOptions.store.match(
-      this.storeOptions.sourceNode,
-      totalAmountPredicate,
-      undefined,
-      this.storeOptions.sourceGraph
-    );
-    const triples = [
-      ...aangevraagdBedragTriples
-    ];
-    this.storeOptions.store.removeStatements(triples);
-
-    this.storeOptions.store.addAll([
-      {
-        subject: this.storeOptions.sourceNode,
-        predicate: totalAmountPredicate,
-        object: rdflib.literal(Number.parseFloat(total).toFixed(2), XSD('float')),
-        graph: this.storeOptions.sourceGraph
-      }
-    ]);
-  }
-
-  calculateTotal(entries) {
-    let total = 0;
-    entries.forEach(entry => {
-      const parsedValue = parseInt(entry.estimatedCost.value);
-      total += !isNaN(parsedValue) ? parsedValue : 0;
-    });
-    return total;
   }
 
   // ------------------
@@ -519,11 +328,9 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     return value.toString().length == 0;
   }
 
-  isPositiveInteger(value) {
-    return (value === parseInt(value)) && (value >= 0);
-  }
-
-  isSmallerThan(value, max) {
-    return value <= max;
+  isPositiveNumber(value) {
+    const number =  Number(value);
+    if (isNaN(number)) return false;
+    return number >= 0;
   }
 }
