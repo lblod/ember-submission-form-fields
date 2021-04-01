@@ -6,6 +6,7 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
+import { guidFor } from '@ember/object/internals';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -19,17 +20,22 @@ const ApplicationFormEntryType = new rdflib.NamedNode(`${extBaseUri}ApplicationF
 const applicationFormTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}applicationFormTable`);
 const applicationFormEntryPredicate = new rdflib.NamedNode(`${extBaseUri}applicationFormEntry`);
 const actorNamePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/actorName');
-const numberChildrenForFullDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
-const numberChildrenForHalfDayPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
-const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
+const numberChildrenForFullDayPredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay');
+const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay');
+const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure');
 const totalAmountPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/subsidie/totalAmount');
 const createdPredicate = new rdflib.NamedNode('http://purl.org/dc/terms/created');
+
+const LBLOD_SUBSIDIE = new rdflib.Namespace('http://lblod.data.gift/vocabularies/subsidie/');
 
 const inputFieldNames = [
   'actorName',
   'numberChildrenForFullDay',
   'numberChildrenForHalfDay',
-  'numberChildrenPerInfrastructure'
+  'numberChildrenPerInfrastructure',
 ];
 
 class EntryProperties {
@@ -47,41 +53,47 @@ class EntryProperties {
 
 class ApplicationFormEntry {
   @tracked applicationFormEntrySubject;
-  @tracked totalAmount = 0
+  @tracked totalAmount = 0;
 
   calculateEntryTotal() {
-    this.totalAmount = this.numberChildrenForFullDay.value*20 +
-       this.numberChildrenForHalfDay.value*10 +
-       this.numberChildrenPerInfrastructure.value*10;
+    this.totalAmount = this.numberChildrenForFullDay.value * 20 +
+      this.numberChildrenForHalfDay.value * 10 +
+      this.numberChildrenPerInfrastructure.value * 10;
   }
 
   constructor({
-    applicationFormEntrySubject,
-    actorName,
-    numberChildrenForFullDay,
-    numberChildrenForHalfDay,
-    numberChildrenPerInfrastructure,
-    created
-  }) {
+                applicationFormEntrySubject,
+                actorName,
+                numberChildrenForFullDay,
+                numberChildrenForHalfDay,
+                numberChildrenPerInfrastructure,
+                created,
+              }) {
     this.applicationFormEntrySubject = applicationFormEntrySubject;
 
     this.actorName = new EntryProperties(actorName, actorNamePredicate);
     this.numberChildrenForFullDay = new EntryProperties(numberChildrenForFullDay, numberChildrenForFullDayPredicate);
     this.numberChildrenForHalfDay = new EntryProperties(numberChildrenForHalfDay, numberChildrenForHalfDayPredicate);
-    this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure, numberChildrenPerInfrastructurePredicate);
+    this.numberChildrenPerInfrastructure = new EntryProperties(numberChildrenPerInfrastructure,
+      numberChildrenPerInfrastructurePredicate);
     this.created = new EntryProperties(created, createdPredicate);
     this.calculateEntryTotal();
   }
 }
 
 export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent extends InputFieldComponent {
-  @tracked applicationFormTableSubject = null
+
+  id = `application-form-table-${guidFor(this)}`;
+
+  @tracked usedParentalContribution;
+  @tracked applicationFormTableSubject = null;
   @tracked entries = [];
-  @tracked totalAmount = 0
+  @tracked totalAmount = 0;
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+
     this.calculateTotal(this.entries);
 
     // Add an entry by default as an example
@@ -91,6 +103,27 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         this.hasBeenFocused = false;
       }
     });
+
+    /**
+     * NOTE: registering hook to keep parent contribution in sync.
+     */
+    const observe = ({inserts = [], deletes = []} = {}) => {
+      const predicate = LBLOD_SUBSIDIE('usedParentalContribution');
+      const changes = [...inserts, ...deletes];
+      /**
+       * NOTE: we only want to trigger the observer when changes happened
+       *       to the predicate lblodSubsidie:usedParentalContribution
+       */
+      if (changes.map(t => t.predicate).find(p => p.equals(predicate))) {
+        const {store, sourceNode, sourceGraph} = this.storeOptions;
+        this.usedParentalContribution = !!store.any(sourceNode, predicate, undefined, sourceGraph);
+        this.updateAangevraagdBedrag();
+      }
+    };
+    this.args.formStore.registerObserver((delta) => {
+      observe(delta);
+    }, this.id);
+
   }
 
   get hasApplicationFormTable() {
@@ -98,27 +131,32 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       return false;
     else
       return this.storeOptions.store.match(this.sourceNode,
-                                           applicationFormTablePredicate,
-                                           this.applicationFormTableSubject,
-                                           this.storeOptions.sourceGraph).length > 0;
+        applicationFormTablePredicate,
+        this.applicationFormTableSubject,
+        this.storeOptions.sourceGraph).length > 0;
   }
 
   get hasEntries() {
     return this.storeOptions.store.match(this.applicationFormTableSubject,
-                                         applicationFormEntryPredicate,
-                                         undefined,
-                                         this.storeOptions.sourceGraph).length > 0;
+      applicationFormEntryPredicate,
+      undefined,
+      this.storeOptions.sourceGraph).length > 0;
   }
 
   get sortedEntries() {
-    return this.entries.sort((a,b) => a.created.value.localeCompare(b.created.value));
+    return this.entries.sort((a, b) => a.created.value.localeCompare(b.created.value));
   }
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const triples =  matches.triples;
+    const triples = matches.triples;
 
     if (triples.length) {
+      this.usedParentalContribution = !!this.storeOptions.store.any(
+        this.storeOptions.sourceNode,
+        LBLOD_SUBSIDIE('usedParentalContribution'),
+        undefined,
+        this.storeOptions.sourceGraph);
       this.applicationFormTableSubject = triples[0].object; // assuming only one per form
 
       const entriesMatches = triplesForPath({
@@ -126,56 +164,62 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         path: applicationFormEntryPredicate,
         formGraph: this.storeOptions.formGraph,
         sourceNode: this.applicationFormTableSubject,
-        sourceGraph: this.storeOptions.sourceGraph
+        sourceGraph: this.storeOptions.sourceGraph,
       });
       const entriesTriples = entriesMatches.triples;
 
       if (entriesTriples.length > 0) {
         for (let entry of entriesTriples) {
           const entryProperties = this.storeOptions.store.match(entry.object,
-                                         undefined,
-                                         undefined,
-                                         this.storeOptions.sourceGraph);
+            undefined,
+            undefined,
+            this.storeOptions.sourceGraph);
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
 
           this.entries.pushObject(new ApplicationFormEntry({
             applicationFormEntrySubject: entry.object,
-            actorName: parsedEntry.actorName ? parsedEntry.actorName : "",
+            actorName: parsedEntry.actorName ? parsedEntry.actorName : '',
             numberChildrenForFullDay: parsedEntry.numberChildrenForFullDay ? parsedEntry.numberChildrenForFullDay : 0,
             numberChildrenForHalfDay: parsedEntry.numberChildrenForHalfDay ? parsedEntry.numberChildrenForHalfDay : 0,
-            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ? parsedEntry.numberChildrenPerInfrastructure : 0,
-            created: parsedEntry.created
+            numberChildrenPerInfrastructure: parsedEntry.numberChildrenPerInfrastructure ?
+              parsedEntry.numberChildrenPerInfrastructure :
+              0,
+            created: parsedEntry.created,
           }));
         }
       }
     }
   }
 
+  willDestroy() {
+    this.args.formStore.deregisterObserver(this.id);
+  }
+
   /**
-  * Parse entry properties from triples to a simple object with the triple values
-  */
+   * Parse entry properties from triples to a simple object with the triple values
+   */
   parseEntryProperties(entryProperties) {
     let entry = {};
     if (entryProperties.find(entry => entry.predicate.value == actorNamePredicate.value))
       entry.actorName = entryProperties.find(
-        entry => entry.predicate.value == actorNamePredicate.value
+        entry => entry.predicate.value == actorNamePredicate.value,
       ).object.value;
     if (entryProperties.find(entry => entry.predicate.value == numberChildrenForFullDayPredicate.value))
       entry.numberChildrenForFullDay = entryProperties.find(
-        entry => entry.predicate.value == numberChildrenForFullDayPredicate.value
+        entry => entry.predicate.value == numberChildrenForFullDayPredicate.value,
       ).object.value;
     if (entryProperties.find(entry => entry.predicate.value == numberChildrenForHalfDayPredicate.value))
       entry.numberChildrenForHalfDay = entryProperties.find(
-        entry => entry.predicate.value == numberChildrenForHalfDayPredicate.value
+        entry => entry.predicate.value == numberChildrenForHalfDayPredicate.value,
       ).object.value;
     if (entryProperties.find(entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value))
       entry.numberChildrenPerInfrastructure = entryProperties.find(
-        entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value
+        entry => entry.predicate.value == numberChildrenPerInfrastructurePredicate.value,
       ).object.value;
     if (entryProperties.find(entry => entry.predicate.value == createdPredicate.value))
       entry.created = entryProperties.find(
-        entry => entry.predicate.value == createdPredicate.value
+        entry => entry.predicate.value == createdPredicate.value,
       ).object.value;
     return entry;
   }
@@ -183,42 +227,52 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   createApplicationFormTable() {
     const uuid = uuidv4();
     this.applicationFormTableSubject = new rdflib.NamedNode(`${applicationFormTableBaseUri}/${uuid}`);
-    const triples = [ { subject: this.applicationFormTableSubject,
-                        predicate: RDF('type'),
-                        object: ApplicationFormTableType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.applicationFormTableSubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.storeOptions.sourceNode,
-                        predicate: applicationFormTablePredicate,
-                        object: this.applicationFormTableSubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+    const triples = [
+      {
+        subject: this.applicationFormTableSubject,
+        predicate: RDF('type'),
+        object: ApplicationFormTableType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.applicationFormTableSubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: applicationFormTablePredicate,
+        object: this.applicationFormTableSubject,
+        graph: this.storeOptions.sourceGraph,
+      },
+    ];
     this.storeOptions.store.addAll(triples);
   }
 
   createApplicationFormEntry() {
     const uuid = uuidv4();
     const applicationFormEntrySubject = new rdflib.NamedNode(`${applicationFormEntryBaseUri}/${uuid}`);
-    const triples = [ { subject: applicationFormEntrySubject,
-                        predicate: RDF('type'),
-                        object: ApplicationFormEntryType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: applicationFormEntrySubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.applicationFormTableSubject,
-                        predicate: applicationFormEntryPredicate,
-                        object: applicationFormEntrySubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+    const triples = [
+      {
+        subject: applicationFormEntrySubject,
+        predicate: RDF('type'),
+        object: ApplicationFormEntryType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: applicationFormEntrySubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.applicationFormTableSubject,
+        predicate: applicationFormEntryPredicate,
+        object: applicationFormEntrySubject,
+        graph: this.storeOptions.sourceGraph,
+      },
+    ];
     this.storeOptions.store.addAll(triples);
     return applicationFormEntrySubject;
   }
@@ -228,14 +282,16 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       this.applicationFormTableSubject,
       undefined,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     const triples = [
       ...applicationFormTableTriples,
-      { subject: this.storeOptions.sourceNode,
+      {
+        subject: this.storeOptions.sourceNode,
         predicate: applicationFormTablePredicate,
         object: this.applicationFormTableSubject,
-        graph: this.storeOptions.sourceGraph }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.removeStatements(triples);
   }
@@ -247,19 +303,19 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
           subject: entry.applicationFormEntrySubject,
           predicate: entry[key].predicate,
           object: entry[key].oldValue,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ];
       this.storeOptions.store.removeStatements(propertiesTriples);
-    })
+    });
 
     const entryTriples = [
       {
         subject: this.applicationFormTableSubject,
         predicate: applicationFormEntryPredicate,
         object: entry.applicationFormEntrySubject,
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.removeStatements(entryTriples);
   }
@@ -269,10 +325,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       entry.applicationFormEntrySubject,
       entry[field].predicate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     const triples = [
-      ...fieldValueTriples
+      ...fieldValueTriples,
     ];
     this.storeOptions.store.removeStatements(triples);
 
@@ -282,8 +338,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
           subject: entry.applicationFormEntrySubject,
           predicate: entry[field].predicate,
           object: entry[field].value,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
@@ -294,10 +350,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       this.storeOptions.sourceNode,
       totalAmountPredicate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     const triples = [
-      ...aangevraagdBedragTriples
+      ...aangevraagdBedragTriples,
     ];
     this.storeOptions.store.removeStatements(triples);
 
@@ -306,8 +362,8 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
         subject: this.storeOptions.sourceNode,
         predicate: totalAmountPredicate,
         object: rdflib.literal(Number.parseFloat(this.totalAmount).toFixed(2), XSD('float')),
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ]);
   }
 
@@ -316,7 +372,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     entries.forEach(entry => {
       total += entry.totalAmount;
     });
-    if (total != this.totalAmount)
+    if (this.usedParentalContribution) {
+      total = total / 2;
+    }
+    if (total !== this.totalAmount)
       this.totalAmount = total;
     return total;
   }
@@ -329,11 +388,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     const applicationFormEntrySubject = this.createApplicationFormEntry();
     const newEntry = new ApplicationFormEntry({
       applicationFormEntrySubject,
-      actorName: "",
+      actorName: '',
       numberChildrenForFullDay: 0,
       numberChildrenForHalfDay: 0,
       numberChildrenPerInfrastructure: 0,
-      created: new Date().toISOString()
+      created: new Date().toISOString(),
     });
 
     this.entries.pushObject(newEntry);
@@ -348,7 +407,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
     this.updateFieldValueTriple(entry, 'actorName');
     if (this.isEmpty(entry.actorName.value)) {
       entry.actorName.errors.pushObject({
-        message: 'Naam actor is verplicht.'
+        message: 'Naam actor is verplicht.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -366,11 +425,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
     if (this.isEmpty(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is verplicht.'
+        message: 'Aantal kinderen voor alle volle dagen is verplicht.',
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForFullDay.value)) {
       entry.numberChildrenForFullDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.'
+        message: 'Aantal kinderen voor alle volle dagen is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -388,11 +447,11 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
     if (this.isEmpty(entry.numberChildrenForHalfDay.value)) {
       entry.numberChildrenForHalfDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is verplicht.'
+        message: 'Aantal kinderen voor alle halve dagen is verplicht.',
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenForHalfDay.value)) {
       entry.numberChildrenForHalfDay.errors.pushObject({
-        message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.'
+        message: 'Aantal kinderen voor alle halve dagen is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -403,18 +462,20 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   updateNumberChildrenPerInfrastructureValue(entry) {
     entry.numberChildrenPerInfrastructure.errors = [];
     const parsedValue = parseInt(entry.numberChildrenPerInfrastructure.value);
-    entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ? parsedValue : entry.numberChildrenPerInfrastructure.value;
+    entry.numberChildrenPerInfrastructure.value = !isNaN(parsedValue) ?
+      parsedValue :
+      entry.numberChildrenPerInfrastructure.value;
     entry.calculateEntryTotal();
     this.updateFieldValueTriple(entry, 'numberChildrenPerInfrastructure');
     this.updateAangevraagdBedrag();
 
     if (this.isEmpty(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is verplicht.'
+        message: 'Aantal kinderen per infrastructuur per dag is verplicht.',
       });
     } else if (!this.isPositiveInteger(entry.numberChildrenPerInfrastructure.value)) {
       entry.numberChildrenPerInfrastructure.errors.pushObject({
-        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.'
+        message: 'Aantal kinderen per infrastructuur per dag is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -450,10 +511,10 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
   }
 
   /**
-  * Update entry default fields.
-  * We update numbers to default them to 0 as well as the creation time of the entry.
-  * The actor name doesn't have a default value, it'll be entered by the user.
-  */
+   * Update entry default fields.
+   * We update numbers to default them to 0 as well as the creation time of the entry.
+   * The actor name doesn't have a default value, it'll be entered by the user.
+   */
   updateDefaultEntryFields(entry) {
     this.updateNumberChildrenForFullDayValue(entry);
     this.updateNumberChildrenForHalfDayValue(entry);
