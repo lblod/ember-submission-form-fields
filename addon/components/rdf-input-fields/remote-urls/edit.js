@@ -13,6 +13,9 @@ import {v4 as uuidv4} from 'uuid';
 import { guidFor } from '@ember/object/internals';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
+const REQUEST_HEADER = new rdflib.namedNode('http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e');
+
+const RPIO_HTTP = new rdflib.Namespace('http://redpencil.data.gift/vocabularies/http/');
 
 class RemoteUrl {
   @tracked errors = [];
@@ -120,6 +123,13 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
         subject: uri,
         predicate: NIE('url'),
         object: address,
+        graph: this.storeOptions.sourceGraph
+      },
+      // Add request-header(s)
+      {
+        subject: uri,
+        predicate: RPIO_HTTP('requestHeader'),
+        object: REQUEST_HEADER,
         graph: this.storeOptions.sourceGraph
       }
     ];
