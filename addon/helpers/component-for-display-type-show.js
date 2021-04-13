@@ -26,6 +26,7 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
     'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/show`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
+    'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/show`,
   };
 
   return mapping[displayTypeUri] || '';
