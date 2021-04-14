@@ -1,1 +1,49 @@
+<AuLabel for={{this.inputFor}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <thead>
+    <tr>
+      <th>
+      </th>
+      <th>
+        Kosten (Excl. BTW)
+      </th>
+      <th>
+        Het gemeentelijk aandeel (%) in kosten﻿
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.entries as |entry index|}}
+      <tr>
+        <td>
+          <AuLabel>
+            {{entry.description.value}}
+          </AuLabel>
+        </td>
+        <td>
+          <AuLabel for="costs-{{index}}" class="au-u-hidden-visually">
+            Kosten (Excl. BTW)
+          </AuLabel>
+          <AuInput id="costs-{{index}}" @width={{"block"}} @value={{entry.cost.value}} disabled={{true}}
+            type="number"
+          />
+        </td>
+        <td>
+          <AuLabel for="share-{{index}}" class="au-u-hidden-visually">
+            Het gemeentelijk aandeel (%) in kosten﻿
+          </AuLabel>
+          <AuInput id="share-{{index}}" @width={{"block"}} @value={{entry.share.value}} disabled={{true}}
+            type="number"
+          />
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
 {{yield}}
