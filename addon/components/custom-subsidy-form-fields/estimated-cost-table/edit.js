@@ -3,25 +3,26 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
-import { parse, v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const estimatedCostTableBaseUri = 'http://data.lblod.info/estimated-cost-tables';
-const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
+const estimatedCostTableBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#EstimatedCostTable';
+const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 const subsidyRulesUri = 'http://data.lblod.info/id/subsidies/rules/';
+const csvw = 'http://www.w3.org/ns/csvw#';
 
-const EstimatedCostTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}EstimatedCostTable`);
-const EstimatedCostEntryType = new rdflib.NamedNode(`${extBaseUri}EstimatedCostEntry`);
-const estimatedCostTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}estimatedCostTable`);
-const estimatedCostEntryPredicate = new rdflib.NamedNode(`${extBaseUri}estimatedCostEntry`);
+const EstimatedCostTableType = new rdflib.NamedNode(`${csvw}Table`);
+const EstimatedCostEntryType = new rdflib.NamedNode(`${csvw}Row`);
+const estimatedCostTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostTable`);
+const estimatedCostEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostEntry`);
 
-const descriptionPredicate = new rdflib.NamedNode(`${extBaseUri}description`);
-const costPredicate = new rdflib.NamedNode(`${extBaseUri}cost`);
-const sharePredicate = new rdflib.NamedNode(`${extBaseUri}share`);
+const descriptionPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}costEstimationType`);
+const costPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}cost`);
+const sharePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}share`);
 const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
 
 class EntryProperties {
