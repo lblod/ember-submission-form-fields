@@ -69,15 +69,17 @@ const tableRows = [
     share: 100,
     index: 1
   }
-]
+];
 
 export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent extends InputFieldComponent {
   @tracked estimatedCostTableSubject = null;
   @tracked entries = [];
+  @tracked costHasValue = null;
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
+    this.checkCostValues();
 
     // Create table and entries in the store if not already existing
     next(this, () => {
@@ -119,6 +121,8 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
 
+          // Check if one of the cost fields has a positive value && !=0
+
           this.entries.pushObject(new EstimatedCostEntry({
             estimatedCostEntrySubject: entry.object,
             description: parsedEntry.description,
@@ -132,6 +136,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       }
     }
   }
+
 
   parseEntryProperties(entryProperties) {
     let entry = {};
@@ -158,6 +163,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     if (!this.hasEstimatedCostTable) {
       this.createEstimatedCostTable();
       this.entries = this.createEntries();
+      this.hasCostValue = false;
       super.updateValidations(); // Updates validation of the table
     }
   }
@@ -305,12 +311,25 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     }
   }
 
+  checkCostValues(){
+    const entries = this.storeOptions.store.match(
+      undefined,
+      costPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+
+    const validCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
+
+    if(validCosts.length > 0) this.costHasValue = true;
+    if(validCosts.length <= 0) this.costHasValue = false;
+  }
+
   @action
     updateCost(entry){
       entry.cost.errors = [];
 
-
-      if (this.isEmpty(entry.share.value)) {
+      if (this.isEmpty(entry.cost.value)) {
         entry.cost.errors.pushObject({
           message: 'Gemeentelijk aandeel in kosten is verplicht.'
         });
@@ -323,6 +342,8 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       }
 
       this.updateFieldValueTriple(entry, 'cost');
+
+      this.checkCostValues();
 
       this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
       super.updateValidations(); // Updates validation of the table
