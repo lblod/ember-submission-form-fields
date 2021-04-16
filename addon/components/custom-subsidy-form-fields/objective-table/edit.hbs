@@ -1,1 +1,185 @@
-{{yield}}
+<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+  {{#if this.isRequired}}
+    <AuPill>Verplicht</AuPill>
+  {{/if}}
+</AuLabel>
+
+<table class="au-c-table au-c-table--zebra">
+  <thead>
+    <tr>
+      <th rowspan="2"></th>
+      <th colspan="2">
+        Aan- en vrijliggend fietspad langs 1 kant van de weg
+      </th>
+      <th colspan="2">
+        Aan- en vrijliggend fietspad langs beide kanten van de weg
+      </th>
+      <th colspan="2">
+        Fietsweg
+      </th>
+      <th colspan="2">
+        Fietssugestiestroken
+      </th>
+      <th>Fietszone</th>
+    </tr>
+    <tr class="au-c-table__row-indent">
+      <th>Enkelrichting</th>
+      <th>Dubbelrichting</th>
+      <th>Enkelrichting</th>
+      <th>Dubbelrichting</th>
+      <th>Enkelrichting</th>
+      <th>Dubbelrichting</th>
+      <th>Enkelrichting</th>
+      <th>Dubbelrichting</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.entries as |entry index|}}
+      <tr>
+        <td>
+          <AuLabel>
+            {{entry.description.value}}
+          </AuLabel>
+        </td>
+
+        {{!-- Aan- en vrijliggend fietspad langs 1 kant van de weg --}}
+        {{!-- single --}}
+        <td>
+          <AuLabel for="one-side-single-{{index}}" class="au-u-hidden-visually">
+            Aan- en vrijliggend fietspad langs 1 kant van de weg - Enkelrichting
+          </AuLabel>
+          <AuInput id="one-side-single-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        {{!-- double --}}
+        <td>
+          <AuLabel for="one-side-double-{{index}}" class="au-u-hidden-visually">
+            Aan- en vrijliggend fietspad langs 1 kant van de weg - DubbelRichting
+          </AuLabel>
+          <AuInput id="one-side-double-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+
+        {{!-- Aan- en vrijliggend fietspad langs beide kanten van de weg --}}
+        {{!-- single --}}
+        <td>
+          <AuLabel for="both-sides-single-{{index}}" class="au-u-hidden-visually">
+            Aan- en vrijliggend fietspad langs beide kanten van de weg - Enkelrichting
+          </AuLabel>
+          <AuInput id="both-sides-single-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        {{!-- double --}}
+        <td>
+          <AuLabel for="both-sides-double-{{index}}" class="au-u-hidden-visually">
+            Aan- en vrijliggend fietspad langs beide kanten van de weg - Dubbelrichting
+          </AuLabel>
+          <AuInput id="both-sides-double-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+
+        {{!-- Fietsweg --}}
+        {{!-- single --}}
+        <td>
+          <AuLabel for="bike-lane-single-{{index}}" class="au-u-hidden-visually">
+             Fietsweg - Enkelrichting
+          </AuLabel>
+          <AuInput id="bike-lane-single-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+        {{!-- double --}}
+        <td>
+          <AuLabel for="bike-lane-double-{{index}}" class="au-u-hidden-visually">
+            Fietsweg - Dubbelrichting
+          </AuLabel>
+          <AuInput id="bike-lane-double-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+
+        {{!-- Fietssugestiestroken --}}
+        {{!-- single --}}
+        <td>
+          <AuLabel for="bike-suggestion-lane-single-{{index}}" class="au-u-hidden-visually">
+            Fietssugestiestroken - Enkelrichting
+          </AuLabel>
+          <AuInput id="bike-suggestion-lane-single-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+
+        {{!-- double --}}
+        <td>
+          <AuLabel for="suggestion-lane-double-{{index}}" class="au-u-hidden-visually">
+            Fietssugestiestroken - Dubbelrichting
+          </AuLabel>
+          <AuInput id="suggestion-lane-double-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+
+        {{!-- Fietszone --}}
+        <td>
+          <AuLabel for="bike-zone-{{index}}" class="au-u-hidden-visually">
+            Fietszone
+          </AuLabel>
+          <AuInput id="bike-zone-{{index}}" @width={{"block"}} @value={{entry.cost.value}}
+            type="number"
+            class={{if entry.cost.errors "au-c-input--error"}}
+            {{on "blur" (fn this.updateCost entry)}}
+          />
+          {{#each entry.cost.errors as |error|}}
+            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          {{/each}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
