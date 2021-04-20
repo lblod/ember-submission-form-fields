@@ -20,18 +20,16 @@ const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAct
 const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
+const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVastgoedplanComponent extends Component {
   @tracked tableEntryUri = null;
   @tracked amount = null;
   @tracked restitution = null;
-  @tracked costPerUnitDescription = null;
   @tracked errors = [];
   @tracked isValidRow = true;
-
-  get toRealiseUnits(){
-    return this.amount > 0 ? "1 strategisch vastgoedplan publiek patrimonium" : "nvt";
-  }
+  @tracked costPerUnit = null;
+  @tracked toRealiseUnits = null;
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -49,13 +47,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     return this.args.climateTableSubject;
   }
 
-  get costPerUnit() {
+  get defaultCostPerUnit() {
     if (this.populationCount < 25000) {
       return 15000;
-    } else if (this.populationCount > 25000 && this.populationCount < 100000) {
-      return 40000;
+    } else if (this.populationCount >= 25000 && this.populationCount < 100000) {
+      return 35000;
     } else  {
-      return 60000;
+      return 55000;
     }
   }
 
@@ -69,7 +67,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     next(this, () => {
       if (this.hasValues()) {
         this.loadProvidedValue();
-        this.args.updateTotaleRestitution(this.restitution);
+        this.args.updateTotalRestitution(this.restitution);
         this.onUpdateRow();
       }
       else {
@@ -95,9 +93,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
-    this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.costPerUnitDescription = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
+    this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.costPerUnit = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
   }
 
   initializeDefault() {
@@ -130,12 +129,12 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
         graph: this.storeOptions.sourceGraph
       }
     ];
-    //TODO: do we need this?
+
     triples.push(
       {
         subject: tableEntryUri,
         predicate: costPerUnitPredicate,
-        object: this.costPerUnit,
+        object: this.defaultCostPerUnit,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -152,6 +151,15 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
       {
         subject: tableEntryUri,
         predicate: restitutionPredicate,
+        object: 0,
+        graph: this.storeOptions.sourceGraph
+      }
+    );
+
+    triples.push(
+      {
+        subject: tableEntryUri,
+        predicate: toRealiseUnitsPredicate,
         object: 0,
         graph: this.storeOptions.sourceGraph
       }
@@ -183,33 +191,32 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     }
   }
 
-  isValid(amount){
+  isValid(toRealiseUnits){
     this.errors = [];
 
-    if (!this.isPositiveInteger(amount)) {
+    if (!this.isPositiveInteger(toRealiseUnits)) {
       this.errors.pushObject({
-        message: 'Ingezet bedrag per actie moet groter of gelijk aan 0 zijn'
+        message: 'Aantal items moeten groter of gelijk aan 0 zijn.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
     }
 
-    else if (!this.isValidInteger(amount)) {
+    else if (!this.isValidInteger(toRealiseUnits)) {
       this.errors.pushObject({
-        message: 'Ingezet bedrag per actie moet een geheel getal zijn'
+        message: 'Aantal items moeten een geheel getal vormen.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
     }
 
-    else if(amount > this.costPerUnit ){
+    else if (toRealiseUnits > 1) {
       this.errors.pushObject({
-        message: `Ingezet bedrag mag hoogstens € ${this.costPerUnit} zijn`
+        message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
     }
-
     else {
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
       return true;
@@ -228,20 +235,22 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
-    if(!this.isValid(this.amount)){
+    if(!this.isValid(this.toRealiseUnits)){
       return this.onUpdateRow();
     }
-    const parsedAmount = Number(this.amount);
-    const currentResititution = Number(this.restitution.value);
 
-    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(parsedAmount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(parsedAmount / 2, XSD('float')));
+    const parsedToRealiseUnits = Number(this.toRealiseUnits);
+    const amount = this.costPerUnit * parsedToRealiseUnits;
+    const currentRestitution = this.restitution;
+    const newRestitution  = amount / 2;
 
+    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(parsedToRealiseUnits, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(amount, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(newRestitution, XSD('float')));
     this.setComponentValues(this.tableEntryUri);
 
-    const newResititution = Number(this.restitution.value);
     // Updates the "Terugtrekkingsrecht te verdelen" value
-    this.args.updateTotaleRestitution(newResititution - currentResititution);
+    this.args.updateTotalRestitution(newRestitution - currentRestitution);
     return this.onUpdateRow();
   }
 }
