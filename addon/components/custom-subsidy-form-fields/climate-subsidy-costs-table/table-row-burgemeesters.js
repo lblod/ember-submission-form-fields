@@ -45,7 +45,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   }
 
   get population(){
-    return this.args.population;
+    return this.args.populationCount;
   }
 
   get costPerUnit(){

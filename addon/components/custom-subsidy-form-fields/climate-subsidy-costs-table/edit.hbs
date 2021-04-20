@@ -42,12 +42,12 @@
   </thead>
   <tbody>
     {{#if this.climateTableSubject}}
-      <!--- TODO: fix population -->
+      <!--- TODO: fix population count-->
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
         @climateTableSubject={{this.climateTableSubject}}
-        @population={{30000}}
+        @populationCount={{this.populationCount}}
         @updateTotalRestitution={{this.updateTotaleRestitution}}
         @onUpdateRow={{this.validate}}
         as |row|>
@@ -56,6 +56,7 @@
           <label class="au-c-label ">Algemene beleidsdoelstellingen:</label>
           Opmaak, uitvoering en opvolging Burgemeestersconvenant actieplan 2030
         </row.actionDescription>
+
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>
     {{/if}}
   </tbody>
