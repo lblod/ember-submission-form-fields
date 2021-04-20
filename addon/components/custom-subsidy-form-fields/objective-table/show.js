@@ -1,4 +1,4 @@
-import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import CustomSubsidyFormFieldsObjectiveTableEditComponent from './edit';
 
-export default class CustomSubsidyFormFieldsObjectiveTableShowComponent extends InputFieldComponent {
+export default class CustomSubsidyFormFieldsObjectiveTableShowComponent extends CustomSubsidyFormFieldsObjectiveTableEditComponent {
 }
