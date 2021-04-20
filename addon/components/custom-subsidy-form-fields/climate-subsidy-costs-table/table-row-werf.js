@@ -45,7 +45,23 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   get defaultCostPerUnit() {
     const businessRuleMapping  = {
-      'http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666': { cost: 150 }
+      'http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666' : { cost: 150 },
+      'http://data.lblod.info/id/subsidies/rules/e6339d50-0969-4911-924c-bb0c629c7b00' : { cost: 50 },
+      'http://data.lblod.info/id/subsidies/rules/396fe1bd-0a13-4823-8824-05ea3a527337' : { cost: 13.5 },
+      'http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6' : { cost: 5 },
+      'http://data.lblod.info/id/subsidies/rules/75b3a2d2-bf33-49e7-9ced-c166213970bb' : { cost: 38.50 },
+      'http://data.lblod.info/id/subsidies/rules/567c8492-c587-4876-b910-f6bbcd25c971' : { cost: 540 },
+      'http://data.lblod.info/id/subsidies/rules/0eb27f0d-bbe3-41c1-8793-b1b13b1b8715' : { cost: 75 },
+      'http://data.lblod.info/id/subsidies/rules/23e94ba7-57cf-4ad4-8f5e-b4a8dcc6f816' : { cost: 990 },
+      'http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f' : { cost: 20000 },
+      'http://data.lblod.info/id/subsidies/rules/3b939085-ea60-468e-9fb8-ee0b54f1d73c' : { cost: 12000 },
+      'http://data.lblod.info/id/subsidies/rules/e460d281-8b5b-445e-a34d-2a6cb9c10675' : { cost: 8400 },
+      'http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99' : { cost: 4800 },
+      'http://data.lblod.info/id/subsidies/rules/d66a5dbc-8913-4ccf-92bf-a4b62f3d5c58' : { cost: 3750 },
+      'http://data.lblod.info/id/subsidies/rules/f4956772-fd3e-48f5-b546-e5298fff78ad' : { cost: 50 },
+      'http://data.lblod.info/id/subsidies/rules/0efb6b57-2ab4-4526-b71e-ec3568f01d1b' : { cost: 35 },
+      'http://data.lblod.info/id/subsidies/rules/1c4fbee8-1b18-4c1a-9a05-a3b20a5eae94' : { cost: 500 },
+      'http://data.lblod.info/id/subsidies/rules/5d485edc-3352-4bbe-a74c-e50cc0e22dec' : { cost: 1000 }
     };
 
     return businessRuleMapping[this.businessRuleUri.value].cost;
