@@ -155,10 +155,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
-    this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object;
-    this.costPerUnit = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object;
+    this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.costPerUnit = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
   }
 
   updateTripleObject(subject, predicate, newObject = null) {
@@ -202,7 +202,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       return false;
     }
 
-    else if (!this.isSmallerThan(toRealiseUnits, 1)) {
+    else if (!toRealiseUnits > 1) {
       this.errors.pushObject({
         message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
       });
@@ -223,10 +223,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     return parseFloat(value) % 1 === 0;
   }
 
-  isSmallerThan(value, max) {
-    return value <= max;
-  }
-
   @action
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
@@ -237,7 +233,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
     const parsedToRealiseUnits = Number(this.toRealiseUnits);
     const amount = this.costPerUnit * parsedToRealiseUnits;
-    const currentRestitution = this.restitution.value;
+    const currentRestitution = this.restitution;
     const newRestitution  = amount / 2;
 
     this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(parsedToRealiseUnits, XSD('integer')));
