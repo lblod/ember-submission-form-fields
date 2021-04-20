@@ -16,6 +16,20 @@ const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}clima
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClimateTable`);
 
+/*
+ * Component wrapping the big subsidy table for climate action.
+ * Some notes
+ *  ---------
+ * - The business rule URI are in the database. So if the rules change, you will have to maintain these too.
+ *   In that case, you will have to create a new instance of a business rule.
+ *   -  Please note, they mainly are stored as documentation, so we know what numbers mean when making reports.
+ *   - Your main question is, why don't use this information to render data in the components?
+ *     Well, NOW, this could be considered, but when we started, the rules were more complicated and given
+ *     the huge time constraints, the unknow randomness of the upcoming changes in rules,
+ *     we didn't want to lock ourselves to engineering a solution that wouldn't work for an custom rule.
+ *     So yes, this implies double bookkeeping. And hopefuly we can refactor this a bit.
+ *    - The same argumentation is valid for the custom rows here. Yes, these could be abstracted NOW, but that wasn't the case a the start.
+ */
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
   @tracked climateTableSubject = null;
   @tracked entries = [];
