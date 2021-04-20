@@ -74,6 +74,22 @@
         </row.actionDescription>
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAanbestedingen
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/286c35b3-4817-4b33-9ad5-828747610b2a"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Algemene beleidsdoelstellingen:</label>
+          Aanbestedingskosten publiek patrimonium of klimaatwijken
+        </row.actionDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAanbestedingen>
+
     {{/if}}
   </tbody>
 </table>
