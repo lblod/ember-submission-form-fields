@@ -19,12 +19,14 @@ const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAct
 const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
+const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurgemeestersComponent extends Component {
   @tracked tableEntryUri = null;
   @tracked amount = null;
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
+  @tracked costPerUnit = null;
   @tracked errors = [];
   @tracked isValidRow = true;
 
@@ -46,11 +48,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   get population(){
     return this.args.populationCount;
-  }
-
-  get costPerUnit(){
-    const costPerUnit = 0.15 * this.population;
-    return costPerUnit > 20000 ? 20000 : costPerUnit;
   }
 
   constructor() {
@@ -141,6 +138,17 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       }
     );
 
+    //Default. If businessRules evolve, this will change
+    const costPerUnit = 0.15 * this.population;
+    triples.push(
+      {
+        subject: tableEntryUri,
+        predicate: costPerUnitPredicate,
+        object: costPerUnit > 20000 ? 20000 : costPerUnit,
+        graph: this.storeOptions.sourceGraph
+      }
+    );
+
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
   }
@@ -150,6 +158,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object;
     this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object;
+    this.costPerUnit = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object;
   }
 
   updateTripleObject(subject, predicate, newObject = null) {
