@@ -90,6 +90,24 @@
 
       </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAanbestedingen>
 
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Investeringssteun voor het planten van bomen op publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per boom
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
     {{/if}}
   </tbody>
 </table>
