@@ -17,8 +17,8 @@ const csvw = 'http://www.w3.org/ns/csvw#';
 
 const EstimatedCostTableType = new rdflib.NamedNode(`${csvw}Table`);
 const EstimatedCostEntryType = new rdflib.NamedNode(`${csvw}Row`);
-const estimatedCostTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostTable`);
-const estimatedCostEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostEntry`);
+const estimatedCostTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostTable`);
+const estimatedCostEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostEntry`);
 
 const descriptionPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}costEstimationType`);
 const costPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}cost`);
@@ -291,6 +291,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       undefined,
       this.storeOptions.sourceGraph
     );
+    console.log(triples)
 
     this.storeOptions.store.removeStatements([...triples]);
 
