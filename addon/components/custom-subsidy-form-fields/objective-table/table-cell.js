@@ -9,15 +9,18 @@ import { RDF } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
-const objectiveEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveEntry`);
+const objectiveEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveEntry`);
 const objectiveEntryBaseUri = `${bicycleInfrastructureUri}ObjectiveEntry`;
 const ObjectiveEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveEntry`);
 
-const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveTable`);
+const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveTable`);
 const approachTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}approachType`);
 const directionTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}directionType`);
 const bikeLaneTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}bikeLaneType`);
 const kilometersPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}kilometers`);
+
+const hasInvalidCellPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`);
+const validObjectiveTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validObjectiveTable`);
 
 
 export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent extends Component {
@@ -61,6 +64,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
       else {
         this.initializeDefault();
       }
+      this.onUpdateCell();
     });
   }
 
@@ -209,12 +213,15 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
       this.errors.pushObject({
         message: 'Het aantal kilometers mag niet onder 0 liggen'
       });
-      return;
+      this.updateTripleObject(this.objectiveTableSubject, hasInvalidCellPredicate, true);
+    } else {
+      this.updateTripleObject(this.objectiveTableSubject, hasInvalidCellPredicate, null);
     }
 
     const parsedAmount = Number(this.kilometers);
 
     this.updateTripleObject(this.tableEntryUri, kilometersPredicate, rdflib.literal(parsedAmount));
+    return this.onUpdateCell();
   }
 
   isPositiveInteger(value) {
