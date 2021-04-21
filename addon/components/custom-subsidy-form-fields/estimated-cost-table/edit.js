@@ -24,6 +24,7 @@ const descriptionPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}co
 const costPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}cost`);
 const sharePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}share`);
 const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
+const validEstimatedCostTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validEstimatedCostTable`);
 
 class EntryProperties {
   @tracked value;
@@ -74,16 +75,16 @@ const tableRows = [
 export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent extends InputFieldComponent {
   @tracked estimatedCostTableSubject = null;
   @tracked entries = [];
-  @tracked costHasValue = null;
+  @tracked errors = [];
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
-    this.checkCostValues();
 
     // Create table and entries in the store if not already existing
     next(this, () => {
       this.initializeTable();
+      this.validate();
     });
   }
 
@@ -120,8 +121,6 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
                                         this.storeOptions.sourceGraph);
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
-
-          // Check if one of the cost fields has a positive value && !=0
 
           this.entries.pushObject(new EstimatedCostEntry({
             estimatedCostEntrySubject: entry.object,
@@ -163,8 +162,6 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     if (!this.hasEstimatedCostTable) {
       this.createEstimatedCostTable();
       this.entries = this.createEntries();
-      this.hasCostValue = false;
-      super.updateValidations(); // Updates validation of the table
     }
   }
 
@@ -287,31 +284,30 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     this.storeOptions.store.addAll(triples);
   }
 
-  updateFieldValueTriple(entry, field) {
-    const fieldValueTriples = this.storeOptions.store.match(
-      entry.estimatedCostEntrySubject,
-      entry[field].predicate,
+  updateTripleObject(subject, predicate, newObject = null) {
+    const triples = this.storeOptions.store.match(
+      subject,
+      predicate,
       undefined,
       this.storeOptions.sourceGraph
     );
-    const triples = [
-      ...fieldValueTriples
-    ];
-    this.storeOptions.store.removeStatements(triples);
 
-    if (entry[field].value.toString().length > 0) {
+    this.storeOptions.store.removeStatements([...triples]);
+
+    if (newObject) {
       this.storeOptions.store.addAll([
         {
-          subject: entry.estimatedCostEntrySubject,
-          predicate: entry[field].predicate,
-          object: entry[field].value,
+          subject: subject,
+          predicate: predicate,
+          object: newObject,
           graph: this.storeOptions.sourceGraph
         }
       ]);
     }
   }
 
-  checkCostValues(){
+  validate(){
+    this.errors = [];
     const entries = this.storeOptions.store.match(
       undefined,
       costPredicate,
@@ -320,65 +316,61 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     );
 
     const validCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
-
-    if(validCosts.length > 0) this.costHasValue = true;
-    if(validCosts.length <= 0) this.costHasValue = false;
+    if(!validCosts.length){
+      this.errors.pushObject({
+        message: 'Mintens één kosten veld moet een waarde groter dan 0 bevatten.'
+      });
+      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+    } else {
+      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
+    }
   }
 
   @action
     updateCost(entry){
       entry.cost.errors = [];
 
-      if (this.isEmpty(entry.cost.value)) {
-        entry.cost.errors.pushObject({
-          message: 'Gemeentelijk aandeel in kosten is verplicht.'
-        });
-      }
-
       if (!this.isPositiveInteger(Number(entry.cost.value))) {
         entry.cost.errors.pushObject({
           message: 'Kosten moeten groter of gelijk aan 0 zijn'
         });
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+      } else {
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
       }
 
-      this.updateFieldValueTriple(entry, 'cost');
-
-      this.checkCostValues();
-
-      this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-      super.updateValidations(); // Updates validation of the table
+      this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, entry['cost'].value);
+      this.validate();
     }
 
   @action
     updateShare(entry){
       entry.share.errors = [];
 
-
       if (this.isEmpty(entry.share.value)) {
         entry.share.errors.pushObject({
           message: 'Gemeentelijk aandeel in kosten is verplicht.'
         });
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
       }
-
-      if (!this.isPositiveInteger(Number(entry.share.value))) {
+      else if (!this.isPositiveInteger(Number(entry.share.value))) {
         entry.share.errors.pushObject({
           message: 'Het gemeentelijke aandeel in kosten moet groter of gelijk aan 0 zijn'
         });
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
       }
-
-      if (!this.isSmallerThan(Number(entry.share.value), 100)) {
+      else if (!this.isSmallerThan(Number(entry.share.value), 100)) {
         entry.share.errors.pushObject({
           message: 'Het gemeentelijke aandeel in kosten mag niet hoger liggen dan 100%'
         });
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+      }
+      else {
+        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
       }
 
-      this.updateFieldValueTriple(entry, 'share');
-
-      this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
-      super.updateValidations(); // Updates validation of the table
+      this.updateTripleObject(entry.estimatedCostEntrySubject, entry['share'].predicate, entry['share'].value);
   }
-
-
 
   isPositiveInteger(value) {
     return parseInt(value) >= 0;

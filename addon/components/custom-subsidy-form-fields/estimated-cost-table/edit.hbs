@@ -5,11 +5,9 @@
   {{/if}}
 </AuLabel>
 
-{{#unless this.costHasValue}}
-  <AuAlert @alertIcon="alert-triangle" @alertTitle="Ten minste één kosten veld moet een positieve hoeveelheid bevatten" @alertskin={{"error"}} @alertsize={{"small"}}>
-  </AuAlert>
-  <input type="text" class="hidden" required>
-{{/unless}}
+{{#each this.errors as |error|}}
+    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+{{/each}}
 
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
   <thead>
