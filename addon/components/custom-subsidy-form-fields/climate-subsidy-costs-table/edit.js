@@ -35,8 +35,7 @@ const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClim
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
   @tracked climateTableSubject = null;
   @tracked entries = [];
-  @tracked populationCount = "100343";
-  @tracked restitutionToDestribute = 10000;
+  @tracked restitutionToDestribute;
   @tracked errors = [];
 
   get hasClimateTable() {
@@ -69,7 +68,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
     const metaGraph = this.args.graphs.metaGraph;
     this.population = this.args.formStore.match(undefined, DBPEDIA('populationTotal'), undefined, metaGraph)[0].object.value;
-    this.drawingRight = this.args.formStore.match(undefined, LBLOD_SUBSIDIE('drawingRight'), undefined, metaGraph)[0].object.value;
+    const drawingRight = this.args.formStore.match(undefined, LBLOD_SUBSIDIE('drawingRight'), undefined, metaGraph)[0].object.value;
+    this.drawingRight = drawingRight;
+    this.restitutionToDestribute = drawingRight;
   }
 
   initializeTable() {
