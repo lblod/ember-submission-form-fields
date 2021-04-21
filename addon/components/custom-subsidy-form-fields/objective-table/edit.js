@@ -135,6 +135,5 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
         this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, true);
       }
 
-      super.updateValidations(); // Updates validation of the table
     }
 }
