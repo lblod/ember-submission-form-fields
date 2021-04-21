@@ -39,6 +39,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
     // Create table and entries in the store if not already existing
     next(this, () => {
       this.initializeTable();
+      this.validate();
     });
   }
 
@@ -54,7 +55,6 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
   initializeTable() {
     if (!this.hasObjectiveTable) {
       this.createObjectiveTable();
-      super.updateValidations(); // Updates validation of the table
     }
   }
 
@@ -134,5 +134,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
       } else {
         this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, true);
       }
+
+      super.updateValidations(); // Updates validation of the table
     }
 }
