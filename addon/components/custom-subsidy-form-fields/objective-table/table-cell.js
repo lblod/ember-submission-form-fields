@@ -20,7 +20,6 @@ const bikeLaneTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}b
 const kilometersPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}kilometers`);
 
 const hasInvalidCellPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`);
-const validObjectiveTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validObjectiveTable`);
 
 
 export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent extends Component {
