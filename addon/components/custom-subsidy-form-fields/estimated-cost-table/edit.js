@@ -13,10 +13,9 @@ const estimatedCostTableBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 const subsidyRulesUri = 'http://data.lblod.info/id/subsidies/rules/';
-const csvw = 'http://www.w3.org/ns/csvw#';
 
-const EstimatedCostTableType = new rdflib.NamedNode(`${csvw}Table`);
-const EstimatedCostEntryType = new rdflib.NamedNode(`${csvw}Row`);
+const EstimatedCostTableType = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostTable`);
+const EstimatedCostEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostEntry`);
 const estimatedCostTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostTable`);
 const estimatedCostEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostEntry`);
 
@@ -291,7 +290,6 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       undefined,
       this.storeOptions.sourceGraph
     );
-    console.log(triples)
 
     this.storeOptions.store.removeStatements([...triples]);
 
@@ -333,7 +331,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
 
       if (!this.isPositiveInteger(Number(entry.cost.value))) {
         entry.cost.errors.pushObject({
-          message: 'Kosten moeten groter of gelijk aan 0 zijn'
+          message: 'Kosten moet groter of gelijk aan 0 zijn'
         });
         this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
       } else {
