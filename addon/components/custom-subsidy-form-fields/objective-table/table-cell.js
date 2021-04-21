@@ -63,7 +63,11 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
       else {
         this.initializeDefault();
       }
-      this.onUpdateCell();
+
+      if(!this.args.disabled){
+        this.onUpdateCell();
+      }
+
     });
   }
 
