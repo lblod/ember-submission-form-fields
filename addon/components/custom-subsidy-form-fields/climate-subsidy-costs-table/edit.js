@@ -7,6 +7,8 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 
+const LBLOD_SUBSIDIE = new rdflib.Namespace('http://lblod.data.gift/vocabularies/subsidie/');
+const DBPEDIA = new rdflib.Namespace('http://dbpedia.org/ontology/');
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
@@ -35,7 +37,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked entries = [];
   @tracked populationCount = "100343";
   @tracked restitutionToDestribute = 10000;
-  @tracked totalRestitution = 10000;
   @tracked errors = [];
 
   get hasClimateTable() {
@@ -65,6 +66,10 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     if (triples.length) {
       this.climateTableSubject = triples[0].object; // assuming only one per form
     }
+
+    const metaGraph = this.args.graphs.metaGraph;
+    this.population = this.args.formStore.match(undefined, DBPEDIA('populationTotal'), undefined, metaGraph)[0].object.value;
+    this.drawingRight = this.args.formStore.match(undefined, LBLOD_SUBSIDIE('drawingRight'), undefined, metaGraph)[0].object.value;
   }
 
   initializeTable() {
