@@ -26,7 +26,9 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/edit`,
     'http://lblod.data.gift/display-types/climateSubsidyCostTable': `custom-subsidy-form-fields/climate-subsidy-costs-table/edit`,
     'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/edit`,
-    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`
+    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`,
+    'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/edit`,
+    'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/edit`
   };
 
   return mapping[displayTypeUri] || '';

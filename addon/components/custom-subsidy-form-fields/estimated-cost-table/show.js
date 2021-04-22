@@ -1,0 +1,5 @@
+import CustomSubsidyFormFieldsEstimatedCostTableEditComponent from './edit';
+
+export default class CustomSubsidyFormFieldsEstimatedCostTableShowComponent extends CustomSubsidyFormFieldsEstimatedCostTableEditComponent {
+
+}
