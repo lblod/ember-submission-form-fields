@@ -17,6 +17,7 @@ const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTab
 const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClimateTable`);
+const subsidyAmount = new rdflib.NamedNode(`${lblodSubsidieBaseUri}subsidyAmount`);
 
 /*
  * Component wrapping the big subsidy table for climate action.
@@ -67,7 +68,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
 
     const metaGraph = this.args.graphs.metaGraph;
-    this.population = this.args.formStore.match(undefined, DBPEDIA('populationTotal'), undefined, metaGraph)[0].object.value;
+    this.populationCount = this.args.formStore.match(undefined, DBPEDIA('populationTotal'), undefined, metaGraph)[0].object.value;
     const drawingRight = this.args.formStore.match(undefined, LBLOD_SUBSIDIE('drawingRight'), undefined, metaGraph)[0].object.value;
     this.drawingRight = drawingRight;
     this.restitutionToDestribute = drawingRight;
@@ -131,6 +132,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @action
   updateTotaleRestitution(value){
     this.restitutionToDestribute = this.restitutionToDestribute - value;
+    const subsidyAmountValue = (this.drawingRight - this.restitutionToDestribute).toFixed(2);
+    this.updateTripleObject(this.climateTableSubject, subsidyAmount, subsidyAmountValue);
   }
 
   @action
