@@ -34,12 +34,15 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
 
   constructor() {
     super(...arguments);
-    this.loadProvidedValue();
-
     // Create table and entries in the store if not already existing
     next(this, () => {
-      this.initializeTable();
-      this.validate();
+      if(this.hasObjectiveTable){
+        this.loadProvidedValue();
+        this.validate();
+      }
+      else {
+        this.createObjectiveTable();
+      }
     });
   }
 
@@ -51,13 +54,6 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
       this.objectiveTableSubject = triples[0].object; // assuming only one per form
     }
   }
-
-  initializeTable() {
-    if (!this.hasObjectiveTable) {
-      this.createObjectiveTable();
-    }
-  }
-
 
   createObjectiveTable() {
     const uuid = uuidv4();
@@ -113,27 +109,25 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
     return cellsWithValue.length > 0;
   }
 
-
   @action
-    validate(){
-      this.errors = [];
+  validate(){
+    this.errors = [];
 
-      const invalidRow = this.storeOptions.store.any(this.objectiveTableSubject, hasInvalidCellPredicate, null, this.storeOptions.sourceGraph);
+    const invalidRow = this.storeOptions.store.any(this.objectiveTableSubject, hasInvalidCellPredicate, null, this.storeOptions.sourceGraph);
 
-      if(!this.cellHasValue()) {
-        this.errors.pushObject({
-          message: 'Mintens één veld moet een waarde groter dan 0 bevatten.'
-        });
-        this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
-      }
-      else if (invalidRow){
-        this.errors.pushObject({
-          message: 'Een van de rijen is niet correct ingevuld'
-        });
-        this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
-      } else {
-        this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, true);
-      }
-
+    if(!this.cellHasValue()) {
+      this.errors.pushObject({
+        message: 'Mintens één veld moet een waarde groter dan 0 bevatten.'
+      });
+      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
     }
+    else if (invalidRow){
+      this.errors.pushObject({
+        message: 'Een van de rijen is niet correct ingevuld'
+      });
+      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
+    } else {
+      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, true);
+    }
+  }
 }
