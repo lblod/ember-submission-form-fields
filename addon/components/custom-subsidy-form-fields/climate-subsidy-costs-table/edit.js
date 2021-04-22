@@ -17,7 +17,7 @@ const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTab
 const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
 const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClimateTable`);
-const subsidyAmount = new rdflib.NamedNode(`${lblodSubsidieBaseUri}subsidyAmount`);
+const totalBudgettedAmount = new rdflib.NamedNode(`${lblodSubsidieBaseUri}totalBudgettedAmount`);
 
 /*
  * Component wrapping the big subsidy table for climate action.
@@ -132,8 +132,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @action
   updateTotaleRestitution(value){
     this.restitutionToDestribute = this.restitutionToDestribute - value;
-    const subsidyAmountValue = (this.drawingRight - this.restitutionToDestribute).toFixed(2);
-    this.updateTripleObject(this.climateTableSubject, subsidyAmount, subsidyAmountValue);
+    const totalBudgettedAmountValue = (this.drawingRight - this.restitutionToDestribute).toFixed(2);
+    this.updateTripleObject(this.climateTableSubject, totalBudgettedAmount, totalBudgettedAmountValue);
   }
 
   @action
