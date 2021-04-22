@@ -24,8 +24,9 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/bestuursorgaanSelector': `custom-submission-form-fields/bestuursorgaan-selector/show`,
     'http://lblod.data.gift/display-types/applicationFormTable': `custom-subsidy-form-fields/application-form-table/show`,
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
+    'http://lblod.data.gift/display-types/climateSubsidyCostTable': `custom-subsidy-form-fields/climate-subsidy-costs-table/show`,
     'http://lblod.data.gift/display-types/caseNumber': `rdf-input-fields/case-number/show`,
-    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
+    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`
   };
 
   return mapping[displayTypeUri] || '';
