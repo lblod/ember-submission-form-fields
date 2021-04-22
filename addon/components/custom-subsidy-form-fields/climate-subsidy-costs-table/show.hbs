@@ -1,0 +1,421 @@
+<ul class="au-o-grid">
+  <li class="au-o-grid__item au-u-1-2 au-u-1-6@medium">
+    <label class="au-c-label ">Aantal inwoners</label>
+    <p>{{this.populationCount}}</p>
+  </li>
+  <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
+        <label class="au-c-label ">Totaal terugtrekkingsrecht</label>
+        <p>{{convert-to-currency this.drawingRight}}</p>
+      </li>
+      <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
+        <label class="au-c-label ">Terugtrekkingsrecht te verdelen</label>
+        <p style="{{if this.errors 'color:#D92626'}}">{{convert-to-currency this.restitutionToDestribute}}</p>
+      </li>
+</ul>
+<br>
+<br>
+<AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+</AuLabel>
+{{#each this.errors as |error|}}
+    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+{{/each}}
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <thead>
+    <tr>
+      <th>
+        Omschrijving actie
+      </th>
+      <th>
+        Forfaitaire waarde per items
+      </th>
+      <th>
+        Te realiseren items
+      </th>
+      <th>
+        Ingeschatte waarde
+      </th>
+      <th>
+        Te verkrijgen subsidie (50%)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if this.climateTableSubject}}
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
+        @climateTableSubject={{this.climateTableSubject}}
+        @populationCount={{this.populationCount}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Algemene beleidsdoelstellingen:</label>
+          Opmaak, uitvoering en opvolging Burgemeestersconvenant actieplan 2030
+        </row.actionDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/6469df9c-b933-45c3-9457-4958c33935ca"
+        @climateTableSubject={{this.climateTableSubject}}
+        @populationCount={{this.populationCount}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label">Algemene beleidsdoelstellingen:</label>
+          Ondersteuning Strategisch Vastgoedplan
+        </row.actionDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAanbestedingen
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/286c35b3-4817-4b33-9ad5-828747610b2a"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label ">Algemene beleidsdoelstellingen:</label>
+          Aanbestedingskosten publiek patrimonium of klimaatwijken
+        </row.actionDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowAanbestedingen>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun voor het planten van bomen op publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per boom
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e6339d50-0969-4911-924c-bb0c629c7b00"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun voor het planten van bomen op privaat domein door particulieren, verenigingen of ondernemingen
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per boom
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/396fe1bd-0a13-4823-8824-05ea3a527337"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun voor het planten van hagen op publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per meter haag
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun voor het planten van hagen op privaat domein door particulieren, verenigingen of ondernemingen
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per meter haag
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/75b3a2d2-bf33-49e7-9ced-c166213970bb"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun voor een geveltuin door particulieren
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per geveltuin
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/567c8492-c587-4876-b910-f6bbcd25c971"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 1 - Vergroening:</label>
+          Steun aanleg natuurgroenperken van minimaal 10m² op openbaar toegankelijk domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per groenperk van 10m²
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0eb27f0d-bbe3-41c1-8793-b1b13b1b8715"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 2 - Verrijk je wijk</label>
+          Ondersteuning traject collectieve renovaties
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per wooneenheid
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/23e94ba7-57cf-4ad4-8f5e-b4a8dcc6f816"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 2 - Verrijk je wijk</label>
+          Aanbestedingskosten voor participatieve hernieuwbare energie (per realisatie 18kWp)
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+           per cluster van 18kWp﻿
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 2 - Verrijk je wijk</label>
+          Opstarttraject lokale energiegemeenschap
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per lokale energiegemeenschap
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/3b939085-ea60-468e-9fb8-ee0b54f1d73c"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 3 - Iedere buurt deelt</label>
+          Afnamegarantie voor het 1e jaar voor koolstofvrije deelsystemen
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per toegangspunt dat tot 2 deelwagens leidt
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/e460d281-8b5b-445e-a34d-2a6cb9c10675"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 3 - Iedere buurt deelt</label>
+          Afnamegarantie voor het 2e jaar voor koolstofvrije deelsystemen
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per toegangspunt dat tot 2 deelwagens leidt
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 3 - Iedere buurt deelt</label>
+          Afnamegarantie voor het 3e jaar voor koolstofvrije deelsystemen
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per toegangspunt dat tot 2 deelwagens leidt
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/d66a5dbc-8913-4ccf-92bf-a4b62f3d5c58"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 3 - Iedere buurt deelt</label>
+          Promotiecampagne
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per toegangspunt dat tot 2 deelwagens leidt
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/f4956772-fd3e-48f5-b546-e5298fff78ad"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 4 - Water het nieuwe goud</label>
+          Steun ontharding publiek domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per 1m²
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0efb6b57-2ab4-4526-b71e-ec3568f01d1b"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 4 - Water het nieuwe goud</label>
+          Steun voor onthardingen op privaat domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per 1m²
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/1c4fbee8-1b18-4c1a-9a05-a3b20a5eae94"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 4 - Water het nieuwe goud</label>
+          Steun voor hemelwaterputten, incl. infiltratievoorzieningen, in de bebouwde omgeving
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per 1m³
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+      <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf
+        @disabled={{true}}
+        @storeOptions={{this.storeOptions}}
+        @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/5d485edc-3352-4bbe-a74c-e50cc0e22dec"
+        @climateTableSubject={{this.climateTableSubject}}
+        @updateTotalRestitution={{this.updateTotaleRestitution}}
+        @onUpdateRow={{this.validate}}
+        as |row|>
+
+        <row.actionDescription>
+          <label class="au-c-label "> Werf 4 - Water het nieuwe goud</label>
+          Steun voor hemelwaterbuffers op openbaar toegankelijk domein
+        </row.actionDescription>
+        <row.costPerUnitDescription>
+          per 1m³
+        </row.costPerUnitDescription>
+
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowWerf>
+
+    {{/if}}
+  </tbody>
+</table>
+{{yield}}
