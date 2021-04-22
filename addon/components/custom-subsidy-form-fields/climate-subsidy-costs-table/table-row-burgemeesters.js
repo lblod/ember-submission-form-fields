@@ -202,7 +202,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       return false;
     }
 
-    else if (!toRealiseUnits > 1) {
+    else if (toRealiseUnits > 1) {
       this.errors.pushObject({
         message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
       });
