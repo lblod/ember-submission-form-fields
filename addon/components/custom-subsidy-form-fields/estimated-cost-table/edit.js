@@ -9,7 +9,7 @@ import { next } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const estimatedCostTableBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#EstimatedCostTable';
+const estimatedCostTableBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure/table';
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 const subsidyRulesUri = 'http://data.lblod.info/id/subsidies/rules/';
@@ -126,7 +126,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
             description: parsedEntry.description,
             cost: parsedEntry.cost,
             share: parsedEntry.share,
-            index: parsedEntry.index,
+            index: parsedEntry.index
           }));
 
           this.entries.sort((a, b) => a.index.value - b.index.value);
@@ -213,12 +213,11 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     let estimatedCostEntriesDetails = [];
     tableRows.forEach(target => {
 
-      const estimatedCostEntrySubject = () => {
-        return new rdflib.NamedNode(`${subsidyRulesUri}/${target.uuid}`);
-      };
+      const uuid = uuidv4();
+      const estimatedCostEntrySubject = new rdflib.NamedNode(`${subsidyRulesUri}/${uuid}`);
 
       estimatedCostEntriesDetails.push({
-        subject: estimatedCostEntrySubject(),
+        subject: estimatedCostEntrySubject,
         description: target.description,
         cost: target.cost,
         share: target.share,
@@ -226,13 +225,13 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       });
 
       triples.push({
-        subject: estimatedCostEntrySubject(),
+        subject: estimatedCostEntrySubject,
         predicate: RDF('type'),
         object: EstimatedCostEntryType,
         graph: this.storeOptions.sourceGraph
       },
         {
-          subject: estimatedCostEntrySubject(),
+          subject: estimatedCostEntrySubject,
           predicate: MU('uuid'),
           object: target.uuid,
           graph: this.storeOptions.sourceGraph
@@ -240,7 +239,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
         {
           subject: this.estimatedCostTableSubject,
           predicate: estimatedCostEntryPredicate,
-          object: estimatedCostEntrySubject(),
+          object: estimatedCostEntrySubject,
           graph: this.storeOptions.sourceGraph
         }
       );
