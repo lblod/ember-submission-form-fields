@@ -103,6 +103,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
       throw 'A table-cell should only have one matching triple';
     }
 
+    //TODO: refactor later -> but in general we don't exepect side effects in checking functions
     if(results.length == 1){
       this.tableEntryUri = results[0][0].subject;
     }
