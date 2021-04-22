@@ -9,6 +9,7 @@ import { RDF } from '@lblod/submission-form-helpers';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
+const resourceInstanceBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
 const objectiveEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveEntry`);
 const objectiveEntryBaseUri = `${bicycleInfrastructureUri}ObjectiveEntry`;
 const ObjectiveEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveEntry`);
@@ -118,7 +119,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
 
   initializeDefault() {
     const uuid = uuidv4();
-    const tableEntryUri = new rdflib.NamedNode(`${objectiveEntryBaseUri}/${uuid}`);
+    const tableEntryUri = new rdflib.NamedNode(`${resourceInstanceBaseUri}/${uuid}`);
 
     let triples = [
       {

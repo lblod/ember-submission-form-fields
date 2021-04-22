@@ -10,7 +10,7 @@ import { next } from '@ember/runloop';
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
-const objectiveTableBaseUri = `${bicycleInfrastructureUri}ObjectiveTable`;
+const resourceInstanceBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
 const ObjectiveTableType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveTable`);
 const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveTable`);
 const kilometersPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}kilometers`);
@@ -57,7 +57,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
 
   createObjectiveTable() {
     const uuid = uuidv4();
-    this.objectiveTableSubject = new rdflib.NamedNode(`${objectiveTableBaseUri}/${uuid}`);
+    this.objectiveTableSubject = new rdflib.NamedNode(`${resourceInstanceBaseUri}/${uuid}`);
     const triples = [
       {
         subject: this.objectiveTableSubject,
