@@ -9,43 +9,43 @@
 {{/each}}
 
 <table class="au-c-table au-c-table--zebra">
+  <caption>Vul de doestelling in kilometer in</caption>
   <thead>
     <tr>
-      <th rowspan="2"></th>
-      <th colspan="2">
+      <td rowspan="2" style="border-right:0.2rem solid #CCD1D9;" id="th-name"></td>
+      <th colspan="2" id="een-kant">
         Aan- en vrijliggend fietspad langs 1 kant van de weg
       </th>
-      <th colspan="2">
+      <th colspan="2" id="beide-kanten">
         Aan- en vrijliggend fietspad langs beide kanten van de weg
       </th>
-      <th colspan="2">
+      <th colspan="2" id="fietsweg">
         Fietsweg
       </th>
-      <th colspan="2">
+      <th colspan="2" id="sugestiestroken">
         Fietssugestiestroken
       </th>
-      <th>Fietszone</th>
+      <th id="fietszone">Fietszone</th>
     </tr>
     <tr class="au-c-table__row-indent">
-      <th>Enkelrichting</th>
-      <th>Dubbelrichting</th>
-      <th>Enkelrichting</th>
-      <th>Dubbelrichting</th>
-      <th>Enkelrichting</th>
-      <th>Dubbelrichting</th>
-      <th>Enkelrichting</th>
-      <th>Dubbelrichting</th>
-      <th></th>
+      <th id="een-enkel">Enkelrichting</th>
+      <th id="een-dubbel">Dubbelrichting</th>
+      <th id="twee-enkel">Enkelrichting</th>
+      <th id="twee-dubbel">Dubbelrichting</th>
+      <th id="fietsweg-enkel">Enkelrichting</th>
+      <th id="fietsweg-dubbel">Dubbelrichting</th>
+      <th id="sugestiestroken-enkel">Enkelrichting</th>
+      <th id="sugestiestroken-dubbel">Dubbelrichting</th>
+      <td></td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>
-        <AuLabel>
-          Verbeteren
-        </AuLabel>
-      </td>
+      <th scope="row" id="verbeteren">
+        Verbeteren
+      </th>
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="een-kant een-enkel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="vrijliggendAanEenKantVanDeWeg"
         @directionType="enkelrichting"
@@ -53,6 +53,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="een-kant een-dubbel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="vrijliggendAanEenKantVanDeWeg"
         @directionType="dubbelrichting"
@@ -60,6 +61,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="beide-kanten twee-enkel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="vrijliggendBeideKantenVanDeWeg"
         @directionType="enkelrichting"
@@ -67,6 +69,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="beide-kanten twee-dubbel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="vrijliggendBeideKantenVanDeWeg"
         @directionType="dubbelrichting"
@@ -74,6 +77,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietsweg fietsweg-enkel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="fietsweg"
         @directionType="enkelrichting"
@@ -81,6 +85,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietsweg fietsweg-dubbel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="fietsweg"
         @directionType="dubbelrichting"
@@ -88,6 +93,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="sugestiestroken sugestiestroken-enkel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="fietssugestiestroken"
         @directionType="enkelrichting"
@@ -95,6 +101,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="sugestiestroken sugestiestroken-dubbel verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="fietssugestiestroken"
         @directionType="dubbelrichting"
@@ -102,6 +109,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietszone verbeteren"
         @approachType="verbeteren"
         @bikeLaneType="fietszone"
         @storeOptions={{this.storeOptions}}
@@ -109,12 +117,11 @@
       />
     </tr>
     <tr>
-      <td>
-        <AuLabel>
+      <th scope="row" id="vernieuwen">
           Vernieuwen
-        </AuLabel>
-      </td>
+      </th>
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="een-kant een-enkel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="vrijliggendAanEenKantVanDeWeg"
         @directionType="enkelrichting"
@@ -122,6 +129,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="een-kant een-dubbel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="vrijliggendAanEenKantVanDeWeg"
         @directionType="dubbelrichting"
@@ -129,6 +137,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="beide-kanten twee-enkel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="vrijliggendBeideKantenVanDeWeg"
         @directionType="enkelrichting"
@@ -136,6 +145,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="beide-kanten twee-dubbel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="vrijliggendBeideKantenVanDeWeg"
         @directionType="dubbelrichting"
@@ -143,6 +153,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietsweg fietsweg-enkel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="fietsweg"
         @directionType="enkelrichting"
@@ -150,6 +161,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietsweg fietsweg-dubbel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="fietsweg"
         @directionType="dubbelrichting"
@@ -157,6 +169,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="sugestiestroken sugestiestroken-enkel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="fietssugestiestroken"
         @directionType="enkelrichting"
@@ -164,6 +177,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="sugestiestroken sugestiestroken-dubbel vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="fietssugestiestroken"
         @directionType="dubbelrichting"
@@ -171,6 +185,7 @@
         @onUpdateCell={{this.validate}}
       />
       <CustomSubsidyFormFields::ObjectiveTable::TableCell
+        @tableHeaders="fietszone vernieuwen"
         @approachType="vernieuwing"
         @bikeLaneType="fietszone"
         @storeOptions={{this.storeOptions}}
