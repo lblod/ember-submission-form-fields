@@ -10,14 +10,15 @@
 {{/each}}
 
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <caption class="au-u-hidden-visually">Vul de raming van de totale kostprijs voor de fietsinfrastructuur in</caption>
   <thead>
     <tr>
-      <th>
-      </th>
-      <th>
+      <td>
+      </td>
+      <th scope="col">
         Kosten (Excl. BTW)
       </th>
-      <th>
+      <th scope="col">
         Het gemeentelijk aandeel (%) in kosten﻿
       </th>
     </tr>
@@ -25,11 +26,9 @@
   <tbody>
     {{#each this.entries as |entry index|}}
       <tr>
-        <td>
-          <AuLabel>
-            {{entry.description.value}}
-          </AuLabel>
-        </td>
+        <th scope="row">
+          {{entry.description.value}}
+        </th>
         <td>
           <AuLabel for="costs-{{index}}" class="au-u-hidden-visually">
             Kosten (Excl. BTW)
