@@ -203,7 +203,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     else if (toRealiseUnits > 1 &&
              'http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f' == this.businessRuleUri.value) {
       this.toRealiseUnitsErrors.pushObject({
-        message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
+        message: 'Er is maximaal 1 te realiseren item mogelijk voor deze actie.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;

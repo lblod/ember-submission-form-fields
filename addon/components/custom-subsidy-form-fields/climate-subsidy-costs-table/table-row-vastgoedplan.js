@@ -213,7 +213,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
 
     else if (toRealiseUnits > 1) {
       this.toRealiseUnitsErrors.pushObject({
-        message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
+        message: 'Er is maximaal 1 te realiseren item mogelijk voor deze actie.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
