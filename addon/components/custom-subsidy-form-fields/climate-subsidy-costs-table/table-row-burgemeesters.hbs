@@ -13,11 +13,11 @@
       {{on "blur" this.update}}
     />
     per actieplan
+    <br>
+    <span class="au-c-info-text">Indicatie: {{convert-to-currency this.indication}}</span>
     {{#each this.costPerUnitErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
-    <br>
-    <span class="au-c-info-text">Indicatie: {{convert-to-currency this.indication}}</span>
   </td>
   <td>
     <AuInput
