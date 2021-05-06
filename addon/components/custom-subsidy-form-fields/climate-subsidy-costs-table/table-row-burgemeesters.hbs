@@ -9,7 +9,7 @@
       lang="nl-BE"
       @width="block"
       @value={{this.costPerUnit}}
-      class={{if this.costPerUnitErrors "au-c-input--error"}}
+      @error={{if this.costPerUnitErrors true false}}
       {{on "blur" this.update}}
     />
     per actieplan
@@ -26,7 +26,7 @@
       lang="nl-BE"
       @width="block"
       @value={{this.toRealiseUnits}}
-      class={{if this.toRealiseUnitsErrors "au-c-input--error"}}
+      @error={{if this.toRealiseUnitsErrors true false}}
       {{on "blur" this.update}}
     />
     {{#each this.toRealiseUnitsErrors as |error|}}
