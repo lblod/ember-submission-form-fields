@@ -6,7 +6,7 @@
     @width="block"
     @value={{this.kilometers}}
     class={{if this.errors "au-c-input--error"}}
-    {{on "blur" (fn this.update)}}
+    {{on "blur" this.update}}
   />
   {{#each this.errors as |error|}}
     <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>

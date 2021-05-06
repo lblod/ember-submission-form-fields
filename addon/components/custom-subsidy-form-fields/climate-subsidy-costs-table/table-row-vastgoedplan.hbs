@@ -10,7 +10,7 @@
       @width="block"
       @value={{this.costPerUnit}}
       class={{if this.costPerUnitErrors "au-c-input--error"}}
-      {{on "blur" (fn this.update)}}
+      {{on "blur" this.update}}
     />
     per Strategisch Vastgoedplan
     {{#each this.costPerUnitErrors as |error|}}
@@ -27,7 +27,7 @@
       @width="block"
       @value={{this.toRealiseUnits}}
       class={{if this.toRealiseUnitsErrors "au-c-input--error"}}
-      {{on "blur" (fn this.update)}}
+      {{on "blur" this.update}}
     />
     {{#each this.toRealiseUnitsErrors as |error|}}
       <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
