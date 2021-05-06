@@ -52,7 +52,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   }
 
   get indication(){
-    const cost = 0.15 * this.population;
+    const populationBasedCostMultiplier = 0.15;
+    const cost = populationBasedCostMultiplier * this.population;
+
     if(cost > 20000) {
       return 20000;
     } else {
