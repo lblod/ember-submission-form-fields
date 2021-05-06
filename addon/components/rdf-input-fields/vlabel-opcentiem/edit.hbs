@@ -34,7 +34,7 @@
         <td>
           <AuInput
                   class="{{if field.errors "au-c-input--error"}}"
-                  @width={{"block"}}
+                  @width="block"
                   @value={{field.value}}
             {{on "blur" (fn this.updatePrice field)}}
           />

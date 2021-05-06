@@ -7,7 +7,7 @@
       disabled={{@disabled}}
       type="number"
       lang="nl-BE"
-      @width={{"block"}}
+      @width="block"
       @value={{this.costPerUnit}}
       class={{if this.costPerUnitErrors "au-c-input--error"}}
       {{on "blur" (fn this.update)}}
@@ -22,7 +22,7 @@
       disabled={{@disabled}}
       type="number"
       lang="nl-BE"
-      @width={{"block"}}
+      @width="block"
       @value={{this.toRealiseUnits}}
       class={{if this.toRealiseUnitsErrors "au-c-input--error"}}
       {{on "blur" (fn this.update)}}
