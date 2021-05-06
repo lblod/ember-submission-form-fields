@@ -14,24 +14,25 @@
   {{/if}}
 </AuLabel>
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <caption class="au-u-hidden-visually">Vul het aantal opgevangen kinderen voor alle volle en halve dagen en het aantal kinderen dat in aanmerking komt voor infrastructuursubsidies per organisator in</caption>
   <thead>
-  <tr>
-    <th>
-      Naam&nbsp;organisator
-      <AuHelpText>bv. school, jeugdvereniging</AuHelpText>
-    </th>
-    <th>
-      Aantal kinderen voor alle volle dagen
-    </th>
-    <th>
-      Aantal kinderen voor alle halve dagen
-    </th>
-    <th>
-      Aantal kinderen in aanmerking voor infrastructuursubsidies
-    </th>
-    <th></th>
-    <th>&nbsp;</th>
-  </tr>
+    <tr>
+      <th scope="col">
+        Naam&nbsp;organisator
+        <AuHelpText>bv. school, jeugdvereniging</AuHelpText>
+      </th>
+      <th scope="col">
+        Aantal kinderen voor alle volle dagen
+      </th>
+      <th scope="col">
+        Aantal kinderen voor alle halve dagen
+      </th>
+      <th scope="col">
+        Aantal kinderen in aanmerking voor infrastructuursubsidies
+      </th>
+      <td></td>
+      <td>&nbsp;</td>
+    </tr>
   </thead>
   <tbody>
   {{#each this.sortedEntries as |entry index|}}
