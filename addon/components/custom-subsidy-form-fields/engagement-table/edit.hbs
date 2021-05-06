@@ -34,7 +34,7 @@
             {{on "change" (fn this.updateExistingStaffValue entry)}}
           />
           {{#each entry.existingStaff.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
         <td>
@@ -47,7 +47,7 @@
             {{on "change" (fn this.updateAdditionalStaffValue entry)}}
           />
           {{#each entry.additionalStaff.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
         <td>
@@ -60,7 +60,7 @@
             {{on "change" (fn this.updateVolunteersValue entry)}}
           />
           {{#each entry.volunteers.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
       </tr>

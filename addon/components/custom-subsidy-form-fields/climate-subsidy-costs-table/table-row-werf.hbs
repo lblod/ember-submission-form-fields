@@ -13,7 +13,7 @@
       {{on "blur" this.update}}
     />
     {{#each this.costPerUnitErrors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
     {{yield (hash costPerUnitDescription = (component 'custom-subsidy-form-fields/climate-subsidy-costs-table/table-cell-data')) }}
   </td>
@@ -28,7 +28,7 @@
       {{on "blur" this.update}}
     />
     {{#each this.toRealiseUnitsErrors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
   </td>
   <td>

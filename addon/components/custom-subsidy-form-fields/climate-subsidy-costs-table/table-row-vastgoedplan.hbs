@@ -14,7 +14,7 @@
     />
     per Strategisch Vastgoedplan
     {{#each this.costPerUnitErrors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
     <br>
     <span style="font-style: italic;">Indicatie: {{convert-to-currency this.indication}}</span>
@@ -30,7 +30,7 @@
       {{on "blur" this.update}}
     />
     {{#each this.toRealiseUnitsErrors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
   </td>
   <td>

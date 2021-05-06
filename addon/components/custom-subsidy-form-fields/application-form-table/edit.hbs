@@ -43,7 +43,7 @@
           {{on "blur" (fn this.updateActorNameValue entry)}}
         />
         {{#each entry.actorName.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -57,7 +57,7 @@
           {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
         />
         {{#each entry.numberChildrenForFullDay.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -71,7 +71,7 @@
           {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
         />
         {{#each entry.numberChildrenForHalfDay.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -85,7 +85,7 @@
           {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
         />
         {{#each entry.numberChildrenPerInfrastructure.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td class="u-align-center">

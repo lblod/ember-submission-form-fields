@@ -18,7 +18,7 @@
   {{@field.label}}
 </AuLabel>
 {{#each this.errors as |error|}}
-    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+    <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
 {{/each}}
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
   <caption class="au-u-hidden-visually">Simuleer het te verdelen terugtrekkingsrecht voor de klimaat subsidies</caption>

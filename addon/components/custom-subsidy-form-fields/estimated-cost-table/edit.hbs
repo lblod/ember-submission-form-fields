@@ -6,7 +6,7 @@
 </AuLabel>
 
 {{#each this.errors as |error|}}
-    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+    <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
 {{/each}}
 
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
@@ -40,7 +40,7 @@
             {{on "blur" (fn this.updateCost entry)}}
           />
           {{#each entry.cost.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
         <td>
@@ -53,7 +53,7 @@
             {{on "blur" (fn this.updateShare entry)}}
           />
           {{#each entry.share.errors as |error|}}
-            <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+            <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
           {{/each}}
         </td>
       </tr>

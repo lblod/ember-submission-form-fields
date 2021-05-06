@@ -9,6 +9,6 @@
     {{on "blur" this.update}}
   />
   {{#each this.errors as |error|}}
-    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+    <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
   {{/each}}
 </td>
