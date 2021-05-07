@@ -1,23 +1,34 @@
 <tr>
-  <th scope="row" style="font-weight: 400;">
+  <th scope="row">
     {{yield (hash actionDescription = (component 'custom-subsidy-form-fields/climate-subsidy-costs-table/table-cell-data')) }}
   </th>
   <td>
-    {{convert-to-currency this.costPerUnit}}
+    <AuInput
+      disabled={{@disabled}}
+      type="number"
+      lang="nl-BE"
+      @width="block"
+      @value={{this.costPerUnit}}
+      @error={{if this.costPerUnitErrors true false}}
+      {{on "blur" this.update}}
+    />
     {{yield (hash costPerUnitDescription = (component 'custom-subsidy-form-fields/climate-subsidy-costs-table/table-cell-data')) }}
+    {{#each this.costPerUnitErrors as |error|}}
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
+    {{/each}}
   </td>
   <td>
     <AuInput
       disabled={{@disabled}}
       type="number"
       lang="nl-BE"
-      @width={{"block"}}
+      @width="block"
       @value={{this.toRealiseUnits}}
-      class={{if this.errors "au-c-input--error"}}
-      {{on "blur" (fn this.update)}}
+      @error={{if this.toRealiseUnitsErrors true false}}
+      {{on "blur" this.update}}
     />
-    {{#each this.errors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+    {{#each this.toRealiseUnitsErrors as |error|}}
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
   </td>
   <td>

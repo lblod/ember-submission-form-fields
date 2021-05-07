@@ -44,7 +44,7 @@
           {{on "blur" (fn this.updateActorNameValue entry)}}
         />
         {{#each entry.actorName.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -53,12 +53,12 @@
           <br>
           met personeel
         </AuLabel>
-        <AuInput id="all-day-{{index}}" @width={{"block"}} @value={{entry.numberChildrenForFullDay.value}}
+        <AuInput id="all-day-{{index}}" @width="block" @value={{entry.numberChildrenForFullDay.value}}
                  class={{if entry.numberChildrenForFullDay.errors "au-c-input--error"}}
           {{on "blur" (fn this.updateNumberChildrenForFullDayValue entry)}}
         />
         {{#each entry.numberChildrenForFullDay.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -67,12 +67,12 @@
           <br>
           met personeel
         </AuLabel>
-        <AuInput id="half-day-{{index}}" @width={{"block"}} @value={{entry.numberChildrenForHalfDay.value}}
+        <AuInput id="half-day-{{index}}" @width="block" @value={{entry.numberChildrenForHalfDay.value}}
                  class={{if entry.numberChildrenForHalfDay.errors "au-c-input--error"}}
           {{on "blur" (fn this.updateNumberChildrenForHalfDayValue entry)}}
         />
         {{#each entry.numberChildrenForHalfDay.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td>
@@ -81,12 +81,12 @@
           <br>
           met of zonder personeel
         </AuLabel>
-        <AuInput id="per-infra-{{index}}" @width={{"block"}} @value={{entry.numberChildrenPerInfrastructure.value}}
+        <AuInput id="per-infra-{{index}}" @width="block" @value={{entry.numberChildrenPerInfrastructure.value}}
                  class={{if entry.numberChildrenPerInfrastructure.errors "au-c-input--error"}}
           {{on "blur" (fn this.updateNumberChildrenPerInfrastructureValue entry)}}
         />
         {{#each entry.numberChildrenPerInfrastructure.errors as |error|}}
-          <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+          <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
       <td class="u-align-center">

@@ -28,7 +28,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
   @tracked costPerUnit = null;
-  @tracked errors = [];
+  @tracked toRealiseUnitsErrors = [];
+  @tracked costPerUnitErrors = [];
   @tracked isValidRow = true;
 
   get storeOptions() {
@@ -43,29 +44,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     return this.args.climateTableSubject;
   }
 
-  get defaultCostPerUnit() {
-    const businessRuleMapping  = {
-      'http://data.lblod.info/id/subsidies/rules/384b2567-ab54-4b6f-b19c-a438829b3666' : { cost: 150 },
-      'http://data.lblod.info/id/subsidies/rules/e6339d50-0969-4911-924c-bb0c629c7b00' : { cost: 50 },
-      'http://data.lblod.info/id/subsidies/rules/396fe1bd-0a13-4823-8824-05ea3a527337' : { cost: 13.5 },
-      'http://data.lblod.info/id/subsidies/rules/75ad483c-b7cb-411c-b9b1-07af31bfc0e6' : { cost: 5 },
-      'http://data.lblod.info/id/subsidies/rules/75b3a2d2-bf33-49e7-9ced-c166213970bb' : { cost: 38.50 },
-      'http://data.lblod.info/id/subsidies/rules/567c8492-c587-4876-b910-f6bbcd25c971' : { cost: 540 },
-      'http://data.lblod.info/id/subsidies/rules/0eb27f0d-bbe3-41c1-8793-b1b13b1b8715' : { cost: 75 },
-      'http://data.lblod.info/id/subsidies/rules/23e94ba7-57cf-4ad4-8f5e-b4a8dcc6f816' : { cost: 990 },
-      'http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f' : { cost: 20000 },
-      'http://data.lblod.info/id/subsidies/rules/3b939085-ea60-468e-9fb8-ee0b54f1d73c' : { cost: 12000 },
-      'http://data.lblod.info/id/subsidies/rules/e460d281-8b5b-445e-a34d-2a6cb9c10675' : { cost: 8400 },
-      'http://data.lblod.info/id/subsidies/rules/49150951-e112-4649-a573-475fd3f22e99' : { cost: 4800 },
-      'http://data.lblod.info/id/subsidies/rules/d66a5dbc-8913-4ccf-92bf-a4b62f3d5c58' : { cost: 3750 },
-      'http://data.lblod.info/id/subsidies/rules/f4956772-fd3e-48f5-b546-e5298fff78ad' : { cost: 50 },
-      'http://data.lblod.info/id/subsidies/rules/0efb6b57-2ab4-4526-b71e-ec3568f01d1b' : { cost: 35 },
-      'http://data.lblod.info/id/subsidies/rules/1c4fbee8-1b18-4c1a-9a05-a3b20a5eae94' : { cost: 500 },
-      'http://data.lblod.info/id/subsidies/rules/5d485edc-3352-4bbe-a74c-e50cc0e22dec' : { cost: 1000 }
-    };
-
-    return businessRuleMapping[this.businessRuleUri.value].cost;
-  }
 
   get onUpdateRow(){
     return this.args.onUpdateRow;
@@ -144,7 +122,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
       {
         subject: tableEntryUri,
         predicate: costPerUnitPredicate,
-        object: this.defaultCostPerUnit,
+        object: 0,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -202,11 +180,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     }
   }
 
-  isValid(toRealiseUnits){
-    this.errors = [];
+  validateToRealiseUnits(toRealiseUnits){
+    this.toRealiseUnitsErrors = [];
 
     if (!this.isPositiveInteger(toRealiseUnits)) {
-      this.errors.pushObject({
+      this.toRealiseUnitsErrors.pushObject({
         message: 'Aantal items moeten groter of gelijk aan 0 zijn.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
@@ -214,7 +192,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     }
 
     else if (!this.isValidInteger(toRealiseUnits)) {
-      this.errors.pushObject({
+      this.toRealiseUnitsErrors.pushObject({
         message: 'Aantal items moeten een geheel getal vormen.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
@@ -224,8 +202,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     //OpstartTraject lokale energiegemeentschap
     else if (toRealiseUnits > 1 &&
              'http://data.lblod.info/id/subsidies/rules/38d6d2bd-e42b-4d7e-8fea-9a371d9cf22f' == this.businessRuleUri.value) {
-      this.errors.pushObject({
-        message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
+      this.toRealiseUnitsErrors.pushObject({
+        message: 'Er is maximaal 1 te realiseren item mogelijk voor deze actie.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
@@ -233,6 +211,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     else {
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
       return true;
+    }
+  }
+
+  validateCostPerUnit(valuePerItem) {
+    this.costPerUnitErrors = [];
+
+    if (!this.isPositiveInteger(valuePerItem)) {
+      this.costPerUnitErrors.pushObject({
+        message: 'Waarde per item moeten groter of gelijk aan 0 zijn.'
+      });
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
   }
 
@@ -248,18 +238,22 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
-    if(!this.isValid(this.toRealiseUnits)){
-      return this.onUpdateRow();
-    }
+    /** start validation **/
+    this.validateToRealiseUnits(this.toRealiseUnits);
+    this.validateCostPerUnit(this.costPerUnit);
 
-    const parsedToRealiseUnits = Number(this.toRealiseUnits);
-    const amount = this.costPerUnit * parsedToRealiseUnits;
+    if (this.costPerUnitErrors.length) return this.onUpdateRow();
+    if (this.toRealiseUnitsErrors.length) return this.onUpdateRow();
+    /** end validation **/
+
+    const amount = this.costPerUnit * this.toRealiseUnits;
     const currentRestitution = this.restitution;
     const newRestitution  = amount / 2;
 
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(parsedToRealiseUnits, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.toRealiseUnits, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(amount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(newRestitution, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, costPerUnitPredicate, rdflib.literal(this.costPerUnit, XSD('float')));
     this.setComponentValues(this.tableEntryUri);
 
     // Updates the "Terugtrekkingsrecht te verdelen" value

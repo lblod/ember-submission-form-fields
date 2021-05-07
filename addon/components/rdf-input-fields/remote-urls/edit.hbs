@@ -13,7 +13,7 @@
                 id="{{this.inputId}}-{{index}}"
                 class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
                 placeholder="http://www.uw-bestuur.be/specifiek-document"
-                @width={{"block"}}
+                @width="block"
                 @value={{remoteUrl.address}}
           {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
         />

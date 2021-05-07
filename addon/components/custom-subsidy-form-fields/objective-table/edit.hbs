@@ -5,7 +5,7 @@
   {{/if}}
 </AuLabel>
 {{#each this.errors as |error|}}
-    <AuHelpText @error={{"error"}}>{{error.message}}</AuHelpText>
+    <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
 {{/each}}
 
 <table class="au-c-table au-c-table--zebra">

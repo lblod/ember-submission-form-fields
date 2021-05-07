@@ -28,19 +28,19 @@
           <AuLabel for="existing-staff-{{index}}" class="au-u-hidden-visually">
             Bestaand personeelskader
           </AuLabel>
-          <AuInput id="existing-staff-{{index}}" @width={{"block"}} @value={{entry.existingStaff.value}} disabled={{true}} type="number"/>
+          <AuInput id="existing-staff-{{index}}" @width="block" @value={{entry.existingStaff.value}} disabled={{true}} type="number"/>
         </td>
         <td>
           <AuLabel for="additional-staff-{{index}}" class="au-u-hidden-visually">
             (Tijdelijk) extra aangeworven betaald personeel
           </AuLabel>
-          <AuInput id="additional-staff-{{index}}" @width={{"block"}} @value={{entry.additionalStaff.value}} disabled={{true}} type="number"/>
+          <AuInput id="additional-staff-{{index}}" @width="block" @value={{entry.additionalStaff.value}} disabled={{true}} type="number"/>
         </td>
         <td>
           <AuLabel for="volunteers-{{index}}" class="au-u-hidden-visually">
             Vrijwilligers
           </AuLabel>
-          <AuInput id="volunteers-{{index}}" @width={{"block"}} @value={{entry.volunteers.value}} disabled={{true}} type="number"/>
+          <AuInput id="volunteers-{{index}}" @width="block" @value={{entry.volunteers.value}} disabled={{true}} type="number"/>
         </td>
       </tr>
     {{/each}}

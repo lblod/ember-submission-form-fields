@@ -27,7 +27,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
   @tracked costPerUnit = null;
-  @tracked errors = [];
+  @tracked toRealiseUnitsErrors = [];
+  @tracked costPerUnitErrors = [];
   @tracked isValidRow = true;
 
   get storeOptions() {
@@ -48,6 +49,17 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   get population(){
     return this.args.populationCount;
+  }
+
+  get indication(){
+    const populationBasedCostMultiplier = 0.15;
+    const cost = populationBasedCostMultiplier * this.population;
+
+    if(cost > 20000) {
+      return 20000;
+    } else {
+      return cost;
+    }
   }
 
   constructor() {
@@ -138,13 +150,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       }
     );
 
-    //Default. If businessRules evolve, this will change
-    const costPerUnit = 0.15 * this.population;
     triples.push(
       {
         subject: tableEntryUri,
         predicate: costPerUnitPredicate,
-        object: costPerUnit > 20000 ? 20000 : costPerUnit,
+        object: 0,
         graph: this.storeOptions.sourceGraph
       }
     );
@@ -183,11 +193,11 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     }
   }
 
-  isValid(toRealiseUnits){
-    this.errors = [];
+  validateToRealiseUnits(toRealiseUnits){
+    this.toRealiseUnitsErrors = [];
 
     if (!this.isPositiveInteger(toRealiseUnits)) {
-      this.errors.pushObject({
+      this.toRealiseUnitsErrors.pushObject({
         message: 'Aantal items moeten groter of gelijk aan 0 zijn.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
@@ -195,7 +205,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     }
 
     else if (!this.isValidInteger(toRealiseUnits)) {
-      this.errors.pushObject({
+      this.toRealiseUnitsErrors.pushObject({
         message: 'Aantal items moeten een geheel getal vormen.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
@@ -203,8 +213,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     }
 
     else if (toRealiseUnits > 1) {
-      this.errors.pushObject({
-        message: 'Er is maximaal 1 realiseren item mogelijk voor deze actie.'
+      this.toRealiseUnitsErrors.pushObject({
+        message: 'Er is maximaal 1 te realiseren item mogelijk voor deze actie.'
       });
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
       return false;
@@ -212,6 +222,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     else {
       this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
       return true;
+    }
+  }
+
+  validateCostPerUnit(valuePerItem) {
+    this.costPerUnitErrors = [];
+
+    if (!this.isPositiveInteger(valuePerItem)) {
+      this.costPerUnitErrors.pushObject({
+        message: 'Waarde per item moeten groter of gelijk aan 0 zijn.'
+      });
+      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      return false;
     }
   }
 
@@ -227,18 +249,22 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   update(e) {
     if (e && typeof e.preventDefault === "function") e.preventDefault();
 
-    if(!this.isValid(this.toRealiseUnits)){
-      return this.onUpdateRow();
-    }
+    /** start validation **/
+    this.validateToRealiseUnits(this.toRealiseUnits);
+    this.validateCostPerUnit(this.costPerUnit);
 
-    const parsedToRealiseUnits = Number(this.toRealiseUnits);
-    const amount = this.costPerUnit * parsedToRealiseUnits;
+    if (this.costPerUnitErrors.length) return this.onUpdateRow();
+    if (this.toRealiseUnitsErrors.length) return this.onUpdateRow();
+    /** end validation **/
+
+    const amount = this.costPerUnit * this.toRealiseUnits;
     const currentRestitution = this.restitution;
     const newRestitution  = amount / 2;
 
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(parsedToRealiseUnits, XSD('integer')));
+    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.toRealiseUnits, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(amount, XSD('integer')));
     this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(newRestitution, XSD('float')));
+    this.updateTripleObject(this.tableEntryUri, costPerUnitPredicate, rdflib.literal(this.costPerUnit, XSD('float')));
     this.setComponentValues(this.tableEntryUri);
 
     // Updates the "Terugtrekkingsrecht te verdelen" value
