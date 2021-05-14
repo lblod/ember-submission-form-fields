@@ -8,18 +8,18 @@ import { RDF, XSD } from '@lblod/submission-form-helpers';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
+const climateBaseUri = 'http://data.lblod.info/vocabularies/subsidie/climate/';
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
-const ClimateEntryType = new rdflib.NamedNode(`${extBaseUri}ClimateEntry`);
-const climateEntryPredicate = new rdflib.NamedNode(`${extBaseUri}climateEntry`);
-const actionDescriptionPredicate = new rdflib.NamedNode(`${extBaseUri}actionDescription`);
-const amountPerActionPredicate = new rdflib.NamedNode(`${extBaseUri}amountPerAction`);
-const restitutionPredicate = new rdflib.NamedNode(`${extBaseUri}restitution`);
+const ClimateEntryType = new rdflib.NamedNode(`${climateBaseUri}ClimateEntry`);
+const climateEntryPredicate = new rdflib.NamedNode(`${climateBaseUri}climateEntry`);
+const actionDescriptionPredicate = new rdflib.NamedNode(`${climateBaseUri}actionDescription`);
+const amountPerActionPredicate = new rdflib.NamedNode(`${climateBaseUri}amountPerAction`);
+const restitutionPredicate = new rdflib.NamedNode(`${climateBaseUri}restitution`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
-const toRealiseUnitsPredicate = new rdflib.NamedNode(`${extBaseUri}toRealiseUnits`);
-const costPerUnitPredicate = new rdflib.NamedNode(`${extBaseUri}costPerUnit`);
+const toRealiseUnitsPredicate = new rdflib.NamedNode(`${climateBaseUri}toRealiseUnits`);
+const costPerUnitPredicate = new rdflib.NamedNode(`${climateBaseUri}costPerUnit`);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurgemeestersComponent extends Component {
   @tracked tableEntryUri = null;
