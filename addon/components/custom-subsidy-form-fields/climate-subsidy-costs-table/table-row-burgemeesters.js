@@ -267,7 +267,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     this.updateTripleObject(this.tableEntryUri, costPerUnitPredicate, rdflib.literal(this.costPerUnit, XSD('float')));
     this.setComponentValues(this.tableEntryUri);
 
-    // Updates the "Terugtrekkingsrecht te verdelen" value
+    // Updates the "Trekkingsrecht te verdelen" value
     this.args.updateTotalRestitution(newRestitution - currentRestitution);
     return this.onUpdateRow();
   }

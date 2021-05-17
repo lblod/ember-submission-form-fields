@@ -148,7 +148,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
     else if (!this.isPositiveInteger(this.restitutionToDestribute)) {
       this.errors.pushObject({
-        message: 'Terugtrekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
+        message: 'Trekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
       });
       this.updateTripleObject(this.climateTableSubject, validClimateTable, null);
     }
