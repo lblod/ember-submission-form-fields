@@ -33,7 +33,7 @@
           <AuLabel for="costs-{{index}}" class="au-u-hidden-visually">
             Kosten (Excl. BTW)
           </AuLabel>
-          <AuInput id="costs-{{index}}" @width="block" @value={{entry.cost.value}}
+          <AuInput id="costs-{{index}}" @width="block" step="any" @value={{entry.cost.value}}
             type="number"
             class={{if entry.cost.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateCost entry)}}
@@ -46,7 +46,7 @@
           <AuLabel for="share-{{index}}" class="au-u-hidden-visually">
             Het gemeentelijk aandeel (%) in kosten
           </AuLabel>
-          <AuInput id="share-{{index}}" @width="block" @value={{entry.share.value}}
+          <AuInput id="share-{{index}}" @width="block" step="any" @value={{entry.share.value}}
             type="number"
             class={{if entry.share.errors "au-c-input--error"}}
             {{on "blur" (fn this.updateShare entry)}}
