@@ -5,6 +5,7 @@
     lang="nl-BE"
     @width="block"
     @value={{this.kilometers}}
+    step="any"
     class={{if this.errors "au-c-input--error"}}
     {{on "blur" this.update}}
   />
