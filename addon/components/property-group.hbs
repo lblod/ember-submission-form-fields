@@ -22,7 +22,7 @@
     {{#each this.children as |child index|}}
       {{#unless (is-property-group child.displayType)}}
         <div class="au-u-margin-bottom-small">
-          {{component (component-for-display-type child.displayType show=@show)
+          {{component (ensure-safe-component (component-for-display-type child.displayType show=@show))
                       field=child
                       form=@form
                       formStore=@formStore
