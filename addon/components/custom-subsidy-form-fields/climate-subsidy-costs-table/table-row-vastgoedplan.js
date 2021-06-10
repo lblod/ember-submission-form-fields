@@ -52,9 +52,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
     if (this.populationCount < 25000) {
       return 15000;
     } else if (this.populationCount >= 25000 && this.populationCount < 100000) {
-      return 35000;
+      return 40000;
     } else  {
-      return 55000;
+      return 60000;
     }
   }
 

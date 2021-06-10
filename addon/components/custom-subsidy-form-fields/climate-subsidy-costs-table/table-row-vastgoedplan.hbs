@@ -29,6 +29,7 @@
       @error={{if this.toRealiseUnitsErrors true false}}
       {{on "blur" this.update}}
     />
+    <span class="au-c-info-text">max 1</span>
     {{#each this.toRealiseUnitsErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
