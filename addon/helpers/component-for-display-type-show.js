@@ -1,6 +1,7 @@
 import { helper } from '@ember/component/helper';
+import { assert } from '@ember/debug';
 
-export default helper(function componentForDisplayTypeShow(displayTypeUri) {
+export default helper(function componentForDisplayTypeShow([displayTypeUri]) {
   const mapping = {
     'http://lblod.data.gift/display-types/property-group' : 'property-group',
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/show`,
@@ -31,5 +32,10 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/show`
   };
 
-  return mapping[displayTypeUri] || '';
+  assert(
+    `"${displayTypeUri}" did not resolve to a component name. Make sure the mapping exists or it doesn't contain any typos.`,
+    mapping[displayTypeUri]
+  );
+
+  return mapping[displayTypeUri];
 });

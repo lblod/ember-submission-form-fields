@@ -1,4 +1,6 @@
 import { helper } from '@ember/component/helper';
+import { assert } from '@ember/debug';
+
 const mapping = {
   edit : {
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/edit`,
@@ -54,10 +56,16 @@ const mapping = {
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`
   }
-}
+};
 
 export default helper(function componentForDisplayType([displayType], {show}) {
   let components = mapping.edit;
   if(show) components = mapping.show;
-  return components[displayType] || '';
+
+  assert(
+    `"${displayType}" did not resolve to a component name. Make sure the mapping exists or it doesn't contain any typos.`,
+    components[displayType]
+  );
+
+  return components[displayType];
 });
