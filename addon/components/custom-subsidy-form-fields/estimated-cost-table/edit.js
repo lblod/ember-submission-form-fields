@@ -24,6 +24,7 @@ const costPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}cost`);
 const sharePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}share`);
 const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
 const validEstimatedCostTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validEstimatedCostTable`);
+const optionsPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/forms/options')
 
 class EntryProperties {
   @tracked value;
@@ -54,7 +55,7 @@ class EstimatedCostEntry {
   }
 }
 
-const tableRows = [
+const defaultRows = [
   {
     uuid: "bda9c645-9520-44ff-bac4-8b77647a93e0",
     description: "Totale raming van de kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen",
@@ -65,6 +66,23 @@ const tableRows = [
   {
     uuid: "38f24b3d-e4dd-408e-a530-c8d3a8fca0ff",
     description: "Totale raming van de onteigeningsvergoedingen",
+    cost: 0,
+    share: 100,
+    index: 1
+  }
+];
+
+const aanvraagRows = [
+  {
+    uuid: "b22a9324-874a-42d1-b815-f20f96b31a53",
+    description: "Kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen",
+    cost: 0,
+    share: 100,
+    index: 0
+  },
+  {
+    uuid: "92a25430-ab31-46dc-a0d8-3f4cf1dc1b04",
+    description: "Onteigeningsvergoedingen",
     cost: 0,
     share: 100,
     index: 1
@@ -95,6 +113,15 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
                                           estimatedCostTablePredicate,
                                           this.estimatedCostTableSubject,
                                           this.storeOptions.sourceGraph).length > 0;
+  }
+
+  get isAanvraagStep() {
+    if(this.args.field && this.args.field.options) {
+      const option = JSON.parse(this.args.field.options);
+      return option.isAanvraagStep;
+    } else {
+      return false;
+    }
   }
 
   loadProvidedValue() {
@@ -211,7 +238,15 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
   createEstimatedCostEntries() {
     let triples = [];
     let estimatedCostEntriesDetails = [];
-    tableRows.forEach(target => {
+    let rows = [];
+
+    if(this.isAanvraagStep) {
+      rows = aanvraagRows;
+    } else {
+      rows = defaultRows;
+    }
+
+    rows.forEach(target => {
 
       const uuid = uuidv4();
       const estimatedCostEntrySubject = new rdflib.NamedNode(`${subsidyRulesUri}/${uuid}`);
