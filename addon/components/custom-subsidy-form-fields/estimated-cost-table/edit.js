@@ -116,21 +116,12 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
   }
 
   get isAanvraagStep() {
-    const results = this.storeOptions.store.match(
-      undefined,
-      optionsPredicate,
-      undefined,
-      undefined);
-
-    const optionsList = results.map(item => {
-      return JSON.parse(item.object.value);
-    });
-
-    const aanvraagStepOption = optionsList.filter(option => {
+    if(this.args.field && this.args.field.options) {
+      const option = JSON.parse(this.args.field.options);
       return option.isAanvraagStep;
-    });
-
-    return aanvraagStepOption[0] && aanvraagStepOption[0].isAanvraagStep;
+    } else {
+      return false;
+    }
   }
 
   loadProvidedValue() {
