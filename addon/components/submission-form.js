@@ -4,6 +4,7 @@ import { fieldsForForm }  from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
+import { next } from '@ember/runloop';
 
 export default class SubmissionFormComponent extends Component {
   @tracked fields = A()
@@ -21,12 +22,14 @@ export default class SubmissionFormComponent extends Component {
       );
     }, this.observerLabel);
 
-    this.getPropertyGroups( this.args.formStore,
-      this.args.graphs.formGraph,
-      this.args.graphs.sourceGraph,
-      this.args.sourceNode,
-      this.args.graphs.metaGraph
-    );
+    next(this, () => {
+      this.getPropertyGroups( this.args.formStore,
+        this.args.graphs.formGraph,
+        this.args.graphs.sourceGraph,
+        this.args.sourceNode,
+        this.args.graphs.metaGraph
+      );
+    });
   }
 
   willDestroy(){

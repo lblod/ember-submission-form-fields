@@ -2,6 +2,7 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
+import { next } from '@ember/runloop';
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 const engagementEntryPredicate = new rdflib.NamedNode(`${extBaseUri}engagementEntry`);
@@ -40,7 +41,9 @@ export default class CustomSubsidyFormFieldsEngagementTableShowComponent extends
 
   constructor() {
     super(...arguments);
-    this.loadProvidedValue();
+    next(this, () => {
+      this.loadProvidedValue();
+    });
   }
 
   loadProvidedValue() {

@@ -4,6 +4,7 @@ import { A } from '@ember/array';
 import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
 import { validationResultsForField } from '@lblod/submission-form-helpers';
+import { next } from '@ember/runloop';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
 
@@ -14,15 +15,18 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.update(
-      this.args.group,
-      {
-        form: this.args.form,
-        store: this.args.formStore,
-        graphs: this.args.graphs,
-        node: this.args.sourceNode,
-      },
-    );
+
+    next(this, () => {
+      this.update(
+        this.args.group,
+        {
+          form: this.args.form,
+          store: this.args.formStore,
+          graphs: this.args.graphs,
+          node: this.args.sourceNode,
+        },
+      );
+    });
   }
 
   willDestroy() {
