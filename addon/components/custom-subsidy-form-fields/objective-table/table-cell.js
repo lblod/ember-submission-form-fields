@@ -11,7 +11,6 @@ const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
 const resourceInstanceBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
 const objectiveEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveEntry`);
-const objectiveEntryBaseUri = `${bicycleInfrastructureUri}ObjectiveEntry`;
 const ObjectiveEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveEntry`);
 
 const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveTable`);
@@ -73,12 +72,12 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
   }
 
   hasValues() {
-    const entries = this.storeOptions.store.match(null, RDF('type'), ObjectiveEntryType, this.storeOptions.sourceGraph );
+    const entries = this.storeOptions.store.match(this.objectiveTableSubject, objectiveEntryPredicate, undefined, this.storeOptions.sourceGraph );
     const entriesWithDetails = [];
 
     // Get all properties for each entry
     entries.forEach(element => {
-      const result = this.storeOptions.store.match(element.subject, undefined, undefined, this.storeOptions.sourceGraph);
+      const result = this.storeOptions.store.match(element.object, undefined, undefined, this.storeOptions.sourceGraph);
       if(result.length > 0){
         entriesWithDetails.push(result);
       }
