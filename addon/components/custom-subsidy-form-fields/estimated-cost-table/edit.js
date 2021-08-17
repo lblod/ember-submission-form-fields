@@ -96,10 +96,10 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
 
   constructor() {
     super(...arguments);
-    this.loadProvidedValue();
 
     // Create table and entries in the store if not already existing
     next(this, () => {
+      this.loadProvidedValue();
       this.initializeTable();
       this.validate();
     });

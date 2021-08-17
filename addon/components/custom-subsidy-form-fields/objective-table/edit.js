@@ -23,13 +23,10 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
   @tracked errors = [];
 
   get hasObjectiveTable() {
-    if (!this.objectiveTableSubject)
-      return false;
-    else
-      return this.storeOptions.store.match(this.sourceNode,
-                                          objectiveTablePredicate,
-                                          this.objectiveTableSubject,
-                                          this.storeOptions.sourceGraph).length > 0;
+    return this.storeOptions.store.match(this.sourceNode,
+                                        objectiveTablePredicate,
+                                        this.objectiveTableSubject,
+                                        this.storeOptions.sourceGraph).length > 0;
   }
 
   constructor() {
