@@ -348,8 +348,8 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       this.storeOptions.sourceGraph
     );
 
-    const inValidCosts = entries.filter(entry => isNaN(parseInt(entry.object.value)));
-    if(inValidCosts.length) {
+    const invalidCosts = entries.filter(entry => isNaN(parseInt(entry.object.value)));
+    if(invalidCosts.length) {
       this.errors.pushObject({
         message: 'Eén van de velden werd niet correct ingevuld.'
       });
@@ -364,7 +364,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
     }
 
-    if(positiveCosts.length && !inValidCosts.length) {
+    if(positiveCosts.length && !invalidCosts.length) {
       this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
     }
   }
