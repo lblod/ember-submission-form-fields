@@ -348,13 +348,23 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       this.storeOptions.sourceGraph
     );
 
-    const validCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
-    if(!validCosts.length){
+    const inValidCosts = entries.filter(entry => isNaN(parseInt(entry.object.value)));
+    if(inValidCosts.length) {
+      this.errors.pushObject({
+        message: 'Eén van de velden werd niet correct ingevuld.'
+      });
+      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+    }
+
+    const positiveCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
+    if(!positiveCosts.length){
       this.errors.pushObject({
         message: 'Mintens één kosten veld moet een waarde groter dan 0 bevatten.'
       });
       this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
-    } else {
+    }
+
+    if(positiveCosts.length && !inValidCosts.length) {
       this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
     }
   }
@@ -363,7 +373,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     updateCost(entry){
       entry.cost.errors = [];
 
-      if (!this.isPositiveInteger(Number(entry.cost.value))) {
+      if (!this.isPositiveInteger(entry.cost.value)) {
         entry.cost.errors.pushObject({
           message: 'Kosten moet groter of gelijk aan 0 zijn'
         });
@@ -372,7 +382,13 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
         this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
       }
 
-      this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, entry['cost'].value);
+
+      if(isNaN(parseInt(entry.cost.value))) {
+        this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, "Field is empty");
+      } else {
+        this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, entry['cost'].value);
+      }
+
       this.validate();
     }
 
