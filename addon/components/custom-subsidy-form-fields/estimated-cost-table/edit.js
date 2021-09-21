@@ -1,59 +1,25 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
-const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
-
-const estimatedCostTableBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure/table';
-const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
-const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
-const subsidyRulesUri = 'http://data.lblod.info/id/subsidies/rules/';
-
-const EstimatedCostTableType = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostTable`);
-const EstimatedCostEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}EstimatedCostEntry`);
-const estimatedCostTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostTable`);
-const estimatedCostEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}estimatedCostEntry`);
-
-const descriptionPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}costEstimationType`);
-const costPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}cost`);
-const sharePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}share`);
-const indexPredicate = new rdflib.NamedNode(`${extBaseUri}index`);
-const validEstimatedCostTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validEstimatedCostTable`);
-const optionsPredicate = new rdflib.NamedNode('http://lblod.data.gift/vocabularies/forms/options')
-
-class EntryProperties {
-  @tracked value;
-  @tracked errors = [];
-
-  constructor(value, predicate) {
-    this.value = value;
-    this.predicate = predicate;
-    this.errors = [];
-  }
-}
-
-class EstimatedCostEntry {
-  @tracked estimatedCostEntrySubject;
-
-  constructor({
-    estimatedCostEntrySubject,
-    description,
-    cost,
-    share,
-    index
-  }) {
-    this.estimatedCostEntrySubject = estimatedCostEntrySubject;
-    this.description = new EntryProperties(description, descriptionPredicate);
-    this.cost = new EntryProperties(cost, costPredicate);
-    this.share = new EntryProperties(share, sharePredicate);
-    this.index = new EntryProperties(index, indexPredicate);
-  }
-}
+import BaseTable from './base-table';
+import { EntryProperties, EstimatedCostEntry } from './base-table';
+import { MU,
+         estimatedCostTableBaseUri,
+         EstimatedCostTableType,
+         estimatedCostTablePredicate,
+         subsidyRulesUri,
+         EstimatedCostEntryType,
+         estimatedCostEntryPredicate,
+         costPredicate,
+         validEstimatedCostTable
+       } from './base-table';
 
 const defaultRows = [
   {
@@ -89,17 +55,16 @@ const aanvraagRows = [
   }
 ];
 
-export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent extends InputFieldComponent {
-  @tracked estimatedCostTableSubject = null;
-  @tracked entries = [];
+export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent extends BaseTable {
   @tracked errors = [];
 
   constructor() {
     super(...arguments);
 
-    // Create table and entries in the store if not already existing
+    // There is a lot of stuff that get's updated in the same runloop, we'll need to revise this a bit
+    // Now the workaround is to schedule it.
     next(this, () => {
-      this.loadProvidedValue();
+      this.entries =  this.loadEstimatedCostEntries();
       this.initializeTable();
       this.validate();
     });
@@ -122,66 +87,6 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     } else {
       return false;
     }
-  }
-
-  loadProvidedValue() {
-    const matches = triplesForPath(this.storeOptions);
-    const triples =  matches.triples;
-
-    if (triples.length) {
-      this.estimatedCostTableSubject = triples[0].object; // assuming only one per form
-
-      const entriesMatches = triplesForPath({
-        store: this.storeOptions.store,
-        path: estimatedCostEntryPredicate,
-        formGraph: this.storeOptions.formGraph,
-        sourceNode: this.estimatedCostTableSubject,
-        sourceGraph: this.storeOptions.sourceGraph
-      });
-      const entriesTriples = entriesMatches.triples;
-      if (entriesTriples.length > 0) {
-        for (let entry of entriesTriples) {
-          const entryProperties = this.storeOptions.store.match(entry.object,
-                                        undefined,
-                                        undefined,
-                                        this.storeOptions.sourceGraph);
-
-          const parsedEntry = this.parseEntryProperties(entryProperties);
-
-          this.entries.pushObject(new EstimatedCostEntry({
-            estimatedCostEntrySubject: entry.object,
-            description: parsedEntry.description,
-            cost: parsedEntry.cost,
-            share: parsedEntry.share,
-            index: parsedEntry.index
-          }));
-
-          this.entries.sort((a, b) => a.index.value - b.index.value);
-        }
-      }
-    }
-  }
-
-
-  parseEntryProperties(entryProperties) {
-    let entry = {};
-    if (entryProperties.find(entry => entry.predicate.value == descriptionPredicate.value))
-    entry.description = entryProperties.find(
-      entry => entry.predicate.value == descriptionPredicate.value
-    ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == costPredicate.value))
-      entry.cost = entryProperties.find(
-        entry => entry.predicate.value == costPredicate.value
-      ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == sharePredicate.value))
-      entry.share = entryProperties.find(
-        entry => entry.predicate.value == sharePredicate.value
-      ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == indexPredicate.value))
-    entry.index = entryProperties.find(
-      entry => entry.predicate.value == indexPredicate.value
-    ).object.value;
-    return entry;
   }
 
   initializeTable() {
