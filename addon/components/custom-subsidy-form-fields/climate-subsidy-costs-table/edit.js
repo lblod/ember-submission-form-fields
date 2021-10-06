@@ -38,6 +38,9 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked entries = [];
   @tracked restitutionToDestribute;
   @tracked errors = [];
+  @tracked populationCount;
+  @tracked drawingRight;
+
 
   get hasClimateTable() {
     if (!this.climateTableSubject)
