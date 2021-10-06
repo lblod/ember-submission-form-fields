@@ -2,7 +2,7 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
-import { next } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
@@ -53,10 +53,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     super(...arguments);
     this.loadProvidedValue();
 
-    // Create table and entries in the store if not already existing
-    next(this, () => {
-      this.initializeTable();
-    });
+    scheduleOnce("actions", this, this.initializeTable);
   }
 
   loadProvidedValue() {
