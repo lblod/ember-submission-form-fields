@@ -51,8 +51,6 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
   constructor() {
     super(...arguments);
-    this.loadProvidedValue();
-
     scheduleOnce("actions", this, this.initializeTable);
   }
 
@@ -72,10 +70,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   }
 
   initializeTable() {
-    if (!this.hasClimateTable) {
+    this.loadProvidedValue();
+
+    if(!this.hasClimateTable) {
       this.createClimateTable();
-      super.updateValidations(); // Updates validation of the table
     }
+
+    this.validate();
   }
 
   createClimateTable() {
