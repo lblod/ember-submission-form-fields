@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { next } from '@ember/runloop';
+import { schedule } from '@ember/runloop';
 import rdflib from 'browser-rdflib';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -55,20 +55,21 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
 
   constructor() {
     super(...arguments);
-    //next for technical reasons
-    next(this, () => {
-      if (this.hasValues()) {
-        this.loadProvidedValue();
-      }
-      else {
-        this.initializeDefault();
-      }
+    schedule("actions", this, this.initTableCell);
+  }
 
-      if(!this.args.disabled){
-        this.onUpdateCell();
-      }
+  initTableCell() {
+    if (this.hasValues()) {
+      this.loadProvidedValue();
 
-    });
+    }
+    else {
+      this.initializeDefault();
+    }
+
+    if(!this.args.disabled){
+      this.onUpdateCell();
+    }
   }
 
   hasValues() {

@@ -5,7 +5,7 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
-import { next } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -31,16 +31,18 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
 
   constructor() {
     super(...arguments);
+    scheduleOnce("actions", this, this.initTable );
+  }
+
+  initTable() {
     // Create table and entries in the store if not already existing
-    next(this, () => {
-      if(this.hasObjectiveTable){
-        this.loadProvidedValue();
-        this.validate();
-      }
-      else {
-        this.createObjectiveTable();
-      }
-    });
+    if(this.hasObjectiveTable){
+      this.loadProvidedValue();
+      this.validate();
+    }
+    else {
+      this.createObjectiveTable();
+    }
   }
 
   loadProvidedValue() {

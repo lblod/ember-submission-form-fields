@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import rdflib from 'browser-rdflib';
-import { next } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF, XSD } from '@lblod/submission-form-helpers';
 
@@ -64,17 +64,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   constructor() {
     super(...arguments);
-    //next for technical reasons
-    next(this, () => {
-      if (this.hasValues()) {
-        this.loadProvidedValue();
-        this.args.updateTotalRestitution(this.restitution);
-        this.onUpdateRow();
-      }
-      else {
-        this.initializeDefault();
-      }
-    });
+    scheduleOnce("actions", this, this.initializeTableRow);
+  }
+
+  initializeTableRow() {
+    if (this.hasValues()) {
+      this.loadProvidedValue();
+      this.args.updateTotalRestitution(this.restitution);
+      this.onUpdateRow();
+    }
+    else {
+      this.initializeDefault();
+    }
   }
 
   hasValues() {
