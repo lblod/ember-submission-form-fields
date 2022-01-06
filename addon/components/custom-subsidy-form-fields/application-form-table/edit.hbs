@@ -4,7 +4,7 @@
 </AuLabel>
 <AuHelpText class="au-u-margin-bottom-small">
   Niet zeker wat u moet invullen? Ga naar de <a
-        href="https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur-module-subsidies" target="_blank" rel="noopener">informatiepagina
+  href="https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur-module-subsidies" target="_blank" rel="noopener">informatiepagina
   over subsidies</a> die u kan indienen via het loket.
 </AuHelpText>
 <AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
@@ -14,25 +14,27 @@
   {{/if}}
 </AuLabel>
 <table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
-  <caption class="au-u-hidden-visually">Vul het aantal opgevangen kinderen voor alle volle en halve dagen en het aantal kinderen dat in aanmerking komt voor infrastructuursubsidies per organisator in</caption>
+  <caption class="au-u-hidden-visually">Vul het aantal opgevangen kinderen voor alle volle en halve dagen en het aantal
+    kinderen dat in aanmerking komt voor infrastructuursubsidies per organisator in
+  </caption>
   <thead>
-    <tr>
-      <th scope="col">
-        Naam&nbsp;organisator
-        <AuHelpText>bv. school, jeugdvereniging</AuHelpText>
-      </th>
-      <th scope="col">
-        Aantal kinderen voor alle volle dagen
-      </th>
-      <th scope="col">
-        Aantal kinderen voor alle halve dagen
-      </th>
-      <th scope="col">
-        Aantal kinderen in aanmerking voor infrastructuursubsidies
-      </th>
-      <td></td>
-      <td>&nbsp;</td>
-    </tr>
+  <tr>
+    <th scope="col">
+      Naam&nbsp;organisator
+      <AuHelpText>bv. school, jeugdvereniging</AuHelpText>
+    </th>
+    <th scope="col">
+      Aantal kinderen voor alle volle dagen
+    </th>
+    <th scope="col">
+      Aantal kinderen voor alle halve dagen
+    </th>
+    <th scope="col">
+      Aantal kinderen in aanmerking voor infrastructuursubsidies
+    </th>
+    <td></td>
+    <td>&nbsp;</td>
+  </tr>
   </thead>
   <tbody>
   {{#each this.sortedEntries as |entry index|}}
@@ -89,10 +91,10 @@
           <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
-      <td class="u-align-center">
+      <td style="white-space: nowrap; vertical-align: middle;">
         €{{entry.totalAmount}}
       </td>
-      <td>
+      <td style="vertical-align: middle;">
         <AuButton @hideText="true" @icon="bin" @skin="tertiary" @alert="true"
           {{on "click" (fn this.removeEntry entry)}}>
           <AuIcon @icon="bin" @alignment="left"/>
