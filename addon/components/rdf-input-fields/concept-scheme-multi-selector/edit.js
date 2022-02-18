@@ -4,8 +4,7 @@ import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath, updateSimpleFormValue } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask, timeout } from 'ember-concurrency';
 import rdflib from 'browser-rdflib';
 
 function byLabel(a, b) {
