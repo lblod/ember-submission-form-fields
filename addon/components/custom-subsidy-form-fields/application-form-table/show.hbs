@@ -55,7 +55,7 @@
           </AuLabel>
           <AuInput id="per-infra-{{index}}" @width="block" @value={{entry.numberChildrenPerInfrastructure.value}} disabled={{true}}/>
         </td>
-        <td style="white-space: nowrap; vertical-align: middle;">
+        <td style="white-space: nowrap; vertical-align: middle;" {{! template-lint-disable no-inline-styles }}>
           €&hairsp;{{entry.totalAmount}}
         </td>
       </tr>

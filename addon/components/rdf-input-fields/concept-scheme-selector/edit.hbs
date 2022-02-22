@@ -14,7 +14,7 @@
           @searchEnabled={{this.searchEnabled}}
           @selected={{this.selected}}
           @options={{this.options}}
-          @onClose={{fn (mut this.hasBeenFocused true)}}
+          @onClose={{fn (mut this.hasBeenFocused) true}}
           @onChange={{this.updateSelection}}
           @allowClear={{true}}
           @loadingMessage="Aan het laden..."
@@ -22,7 +22,7 @@
           as |concept|>
           <span data-test-field-uri={{concept.subject.value}}> {{concept.label}} </span>
   </PowerSelect>
-</div> 
+</div>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
