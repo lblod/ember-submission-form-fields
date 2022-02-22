@@ -31,7 +31,7 @@ export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFie
 
   @action
   updateValue() {
-    let updatedValue = null;
+    // let updatedValue = null;
     // When using setHours, the time is transformed from universal time to local time,
     // which is causing mismatching dates.
     // We can comment it out because the user is not able to modfy the time in the frontend's datepicker.

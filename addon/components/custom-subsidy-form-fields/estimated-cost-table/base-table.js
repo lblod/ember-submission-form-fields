@@ -1,4 +1,3 @@
-import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';

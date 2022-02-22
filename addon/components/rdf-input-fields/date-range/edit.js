@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 
-import { removeTriples, SHACL } from '@lblod/submission-form-helpers';
+import { SHACL } from '@lblod/submission-form-helpers';
 
 const DATE_RANGE = new rdflib.Namespace(
   'http://data.lblod.info/form-fields/date-range/'
