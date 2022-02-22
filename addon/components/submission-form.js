@@ -1,20 +1,21 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { fieldsForForm }  from '@lblod/submission-form-helpers';
+import { fieldsForForm } from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
 import { next } from '@ember/runloop';
 
 export default class SubmissionFormComponent extends Component {
-  @tracked fields = A()
+  @tracked fields = A();
 
-  observerLabel = `form-root-${guidFor(this)}`
+  observerLabel = `form-root-${guidFor(this)}`;
 
   constructor() {
     super(...arguments);
     this.args.formStore.registerObserver(() => {
-      this.getPropertyGroups( this.args.formStore,
+      this.getPropertyGroups(
+        this.args.formStore,
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
@@ -23,7 +24,8 @@ export default class SubmissionFormComponent extends Component {
     }, this.observerLabel);
 
     next(this, () => {
-      this.getPropertyGroups( this.args.formStore,
+      this.getPropertyGroups(
+        this.args.formStore,
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
@@ -32,31 +34,39 @@ export default class SubmissionFormComponent extends Component {
     });
   }
 
-  willDestroy(){
+  willDestroy() {
+    super.willDestroy(...arguments);
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
   getPropertyGroups(store, formGraph, sourceGraph, sourceNode, metaGraph) {
-    let fieldUris = fieldsForForm( this.args.form, {
+    let fieldUris = fieldsForForm(this.args.form, {
       store,
       formGraph,
       sourceGraph,
       sourceNode,
-      metaGraph
+      metaGraph,
     });
 
-    const propertyGroups = createPropertyTreeFromFields(fieldUris, {store, formGraph, sourceGraph, sourceNode});
+    const propertyGroups = createPropertyTreeFromFields(fieldUris, {
+      store,
+      formGraph,
+      sourceGraph,
+      sourceNode,
+    });
     // NOTE: these are not updated fields, this contains all the fields
     // Regardless if there where updated or not.
     let updatedFields = [];
-    propertyGroups.forEach(p => updatedFields = [...updatedFields, ...p.fields]);
+    propertyGroups.forEach(
+      (p) => (updatedFields = [...updatedFields, ...p.fields])
+    );
 
     //Procedure to render only new fields. So we don't rerender the full form.
 
     //Remove obsolete fields
     const toRemove = [];
-    this.fields.forEach(field => {
-      if(!updatedFields.find(uField => uField.uri.equals(field.uri))){
+    this.fields.forEach((field) => {
+      if (!updatedFields.find((uField) => uField.uri.equals(field.uri))) {
         toRemove.push(field);
       }
     });
@@ -64,11 +74,12 @@ export default class SubmissionFormComponent extends Component {
 
     //Add the new fields, keep the existing ones
     updatedFields.forEach((field, i) => {
-      const existingField = this.fields.find(eField => eField.uri.equals(field.uri));
-      if(existingField){
+      const existingField = this.fields.find((eField) =>
+        eField.uri.equals(field.uri)
+      );
+      if (existingField) {
         this.fields.replace(i, 1, [existingField]);
-      }
-      else{
+      } else {
         this.fields.replace(i, 1, [field]);
       }
     });

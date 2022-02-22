@@ -8,19 +8,36 @@ import { RDF } from '@lblod/submission-form-helpers';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
-const resourceInstanceBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
-const objectiveEntryPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveEntry`);
-const ObjectiveEntryType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveEntry`);
+const bicycleInfrastructureUri =
+  'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
+const resourceInstanceBaseUri =
+  'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
+const objectiveEntryPredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}objectiveEntry`
+);
+const ObjectiveEntryType = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}ObjectiveEntry`
+);
 
-const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveTable`);
-const approachTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}approachType`);
-const directionTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}directionType`);
-const bikeLaneTypePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}bikeLaneType`);
-const kilometersPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}kilometers`);
+const objectiveTablePredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}objectiveTable`
+);
+const approachTypePredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}approachType`
+);
+const directionTypePredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}directionType`
+);
+const bikeLaneTypePredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}bikeLaneType`
+);
+const kilometersPredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}kilometers`
+);
 
-const hasInvalidCellPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`);
-
+const hasInvalidCellPredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`
+);
 
 export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent extends Component {
   @tracked tableEntryUri = null;
@@ -32,7 +49,12 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
   }
 
   get objectiveTableSubject() {
-    const triple = this.storeOptions.store.match(this.storeOptions.sourceNode, objectiveTablePredicate, null, this.storeOptions.sourceGraph);
+    const triple = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      objectiveTablePredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
     return new rdflib.NamedNode(triple[0].object.value);
   }
 
@@ -49,37 +71,45 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
   }
 
   //...
-  get onUpdateCell(){
+  get onUpdateCell() {
     return this.args.onUpdateCell;
   }
 
   constructor() {
     super(...arguments);
-    schedule("actions", this, this.initTableCell);
+    schedule('actions', this, this.initTableCell);
   }
 
   initTableCell() {
     if (this.hasValues()) {
       this.loadProvidedValue();
-
-    }
-    else {
+    } else {
       this.initializeDefault();
     }
 
-    if(!this.args.disabled){
+    if (!this.args.disabled) {
       this.onUpdateCell();
     }
   }
 
   hasValues() {
-    const entries = this.storeOptions.store.match(this.objectiveTableSubject, objectiveEntryPredicate, undefined, this.storeOptions.sourceGraph );
+    const entries = this.storeOptions.store.match(
+      this.objectiveTableSubject,
+      objectiveEntryPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
     const entriesWithDetails = [];
 
     // Get all properties for each entry
-    entries.forEach(element => {
-      const result = this.storeOptions.store.match(element.object, undefined, undefined, this.storeOptions.sourceGraph);
-      if(result.length > 0){
+    entries.forEach((element) => {
+      const result = this.storeOptions.store.match(
+        element.object,
+        undefined,
+        undefined,
+        this.storeOptions.sourceGraph
+      );
+      if (result.length > 0) {
         entriesWithDetails.push(result);
       }
     });
@@ -90,22 +120,28 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
       let hasApproachType = false;
       let hasDirectionType = false;
 
-      item.forEach(triple => {
-        if (triple.object.value == this.bikeLaneType) { hasBikeLaneType = true; }
-        if (triple.object.value == this.approachType) { hasApproachType = true; }
-        if (triple.object.value == this.directionType) { hasDirectionType = true; }
+      item.forEach((triple) => {
+        if (triple.object.value == this.bikeLaneType) {
+          hasBikeLaneType = true;
+        }
+        if (triple.object.value == this.approachType) {
+          hasApproachType = true;
+        }
+        if (triple.object.value == this.directionType) {
+          hasDirectionType = true;
+        }
       });
 
-      return (hasBikeLaneType && hasApproachType && hasDirectionType);
+      return hasBikeLaneType && hasApproachType && hasDirectionType;
     });
 
     // There is a possibility this can happen in the future so early warning sign for that
-    if(results.length > 1){
+    if (results.length > 1) {
       throw 'A table-cell should only have one matching triple';
     }
 
     //TODO: refactor later -> but in general we don't exepect side effects in checking functions
-    if(results.length == 1){
+    if (results.length == 1) {
       this.tableEntryUri = results[0][0].subject;
     }
 
@@ -113,70 +149,69 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
   }
 
   loadProvidedValue() {
-    const kilometersTriple = this.storeOptions.store.match(this.tableEntryUri, kilometersPredicate, null, this.storeOptions.sourceGraph);
+    const kilometersTriple = this.storeOptions.store.match(
+      this.tableEntryUri,
+      kilometersPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
     this.kilometers = kilometersTriple[0].object.value;
   }
 
   initializeDefault() {
     const uuid = uuidv4();
-    const tableEntryUri = new rdflib.NamedNode(`${resourceInstanceBaseUri}/${uuid}`);
+    const tableEntryUri = new rdflib.NamedNode(
+      `${resourceInstanceBaseUri}/${uuid}`
+    );
 
     let triples = [
       {
         subject: tableEntryUri,
         predicate: RDF('type'),
         object: ObjectiveEntryType,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: tableEntryUri,
         predicate: MU('uuid'),
         object: uuid,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.objectiveTableSubject,
         predicate: objectiveEntryPredicate,
         object: tableEntryUri,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
     ];
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: bikeLaneTypePredicate,
-        object: this.bikeLaneType,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: bikeLaneTypePredicate,
+      object: this.bikeLaneType,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: directionTypePredicate,
-        object: this.directionType,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: directionTypePredicate,
+      object: this.directionType,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: approachTypePredicate,
-        object: this.approachType,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: approachTypePredicate,
+      object: this.approachType,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: kilometersPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: kilometersPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
@@ -184,7 +219,12 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
-    this.kilometers = this.storeOptions.store.match(this.tableEntryUri, kilometersPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.kilometers = this.storeOptions.store.match(
+      this.tableEntryUri,
+      kilometersPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
   }
 
   updateTripleObject(subject, predicate, newObject = null) {
@@ -203,29 +243,41 @@ export default class CustomSubsidyFormFieldsObjectiveTableTableCellComponent ext
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
   @action
-  update(e){
+  update(e) {
     this.errors = [];
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
     if (!this.isPositiveInteger(this.kilometers)) {
       this.errors.pushObject({
-        message: 'Het aantal kilometers mag niet onder 0 liggen'
+        message: 'Het aantal kilometers mag niet onder 0 liggen',
       });
-      this.updateTripleObject(this.objectiveTableSubject, hasInvalidCellPredicate, true);
+      this.updateTripleObject(
+        this.objectiveTableSubject,
+        hasInvalidCellPredicate,
+        true
+      );
     } else {
-      this.updateTripleObject(this.objectiveTableSubject, hasInvalidCellPredicate, null);
+      this.updateTripleObject(
+        this.objectiveTableSubject,
+        hasInvalidCellPredicate,
+        null
+      );
     }
 
     const parsedAmount = Number(this.kilometers);
 
-    this.updateTripleObject(this.tableEntryUri, kilometersPredicate, rdflib.literal(parsedAmount));
+    this.updateTripleObject(
+      this.tableEntryUri,
+      kilometersPredicate,
+      rdflib.literal(parsedAmount)
+    );
     return this.onUpdateCell();
   }
 

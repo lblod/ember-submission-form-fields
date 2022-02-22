@@ -4,7 +4,7 @@
 </AuLabel>
 <AuHelpText class="au-u-margin-bottom-small">
   Niet zeker wat u moet invullen? Ga naar de <a
-  href="https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur-module-subsidies" target="_blank" rel="noopener">informatiepagina
+  href="https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur-module-subsidies" target="_blank" rel="noopener noreferrer">informatiepagina
   over subsidies</a> die u kan indienen via het loket.
 </AuHelpText>
 <AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
@@ -91,10 +91,10 @@
           <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
         {{/each}}
       </td>
-      <td style="white-space: nowrap; vertical-align: middle;">
+      <td style="white-space: nowrap; vertical-align: middle;" {{!template-lint-disable no-inline-styles}}>
         €{{entry.totalAmount}}
       </td>
-      <td style="vertical-align: middle;">
+      <td style="vertical-align: middle;" {{!template-lint-disable no-inline-styles}}>
         <AuButton @hideText="true" @icon="bin" @skin="tertiary" @alert="true"
           {{on "click" (fn this.removeEntry entry)}}>
           <AuIcon @icon="bin" @alignment="left"/>

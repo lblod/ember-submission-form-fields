@@ -16,7 +16,7 @@ export default class FormInputFieldsSearchEditComponent extends SimpleInputField
   }
 
   @restartableTask
-  * updateValue() {
+  *updateValue() {
     yield timeout(250);
     this.value = this._freeTextSearch && this._freeTextSearch.trim();
     super.updateValue(this.value);

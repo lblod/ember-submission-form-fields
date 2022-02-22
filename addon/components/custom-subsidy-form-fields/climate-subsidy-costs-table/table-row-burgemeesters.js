@@ -13,13 +13,27 @@ const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
 const ClimateEntryType = new rdflib.NamedNode(`${climateBaseUri}ClimateEntry`);
-const climateEntryPredicate = new rdflib.NamedNode(`${climateBaseUri}climateEntry`);
-const actionDescriptionPredicate = new rdflib.NamedNode(`${climateBaseUri}actionDescription`);
-const amountPerActionPredicate = new rdflib.NamedNode(`${climateBaseUri}amountPerAction`);
-const restitutionPredicate = new rdflib.NamedNode(`${climateBaseUri}restitution`);
-const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
-const toRealiseUnitsPredicate = new rdflib.NamedNode(`${climateBaseUri}toRealiseUnits`);
-const costPerUnitPredicate = new rdflib.NamedNode(`${climateBaseUri}costPerUnit`);
+const climateEntryPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}climateEntry`
+);
+const actionDescriptionPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}actionDescription`
+);
+const amountPerActionPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}amountPerAction`
+);
+const restitutionPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}restitution`
+);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
+  `${climateTableBaseUri}/hasInvalidClimateTableEntry`
+);
+const toRealiseUnitsPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}toRealiseUnits`
+);
+const costPerUnitPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}costPerUnit`
+);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurgemeestersComponent extends Component {
   @tracked tableEntryUri = null;
@@ -43,19 +57,19 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
-  get onUpdateRow(){
+  get onUpdateRow() {
     return this.args.onUpdateRow;
   }
 
-  get population(){
+  get population() {
     return this.args.populationCount;
   }
 
-  get indication(){
+  get indication() {
     const populationBasedCostMultiplier = 0.15;
     const cost = populationBasedCostMultiplier * this.population;
 
-    if(cost > 20000) {
+    if (cost > 20000) {
       return 20000;
     } else {
       return cost;
@@ -64,7 +78,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   constructor() {
     super(...arguments);
-    scheduleOnce("actions", this, this.initializeTableRow);
+    scheduleOnce('actions', this, this.initializeTableRow);
   }
 
   initializeTableRow() {
@@ -72,23 +86,31 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
       this.loadProvidedValue();
       this.args.updateTotalRestitution(this.restitution);
       this.onUpdateRow();
-    }
-    else {
+    } else {
       this.initializeDefault();
     }
   }
 
   hasValues() {
-    const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
+    const values = this.storeOptions.store.match(
+      null,
+      actionDescriptionPredicate,
+      this.businessRuleUri,
+      this.storeOptions.sourceGraph
+    );
     return values.length;
   }
 
   loadProvidedValue() {
-    const values = this.storeOptions.store.match(null, actionDescriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
+    const values = this.storeOptions.store.match(
+      null,
+      actionDescriptionPredicate,
+      this.businessRuleUri,
+      this.storeOptions.sourceGraph
+    );
     if (values.length > 1) {
       throw `Expected single value for ${this.businessRuleUri}`;
-    }
-    else {
+    } else {
       this.setComponentValues(values[0].subject);
     }
   }
@@ -102,63 +124,55 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
         subject: tableEntryUri,
         predicate: RDF('type'),
         object: ClimateEntryType,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: tableEntryUri,
         predicate: MU('uuid'),
         object: uuid,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.climateTableSubject,
         predicate: climateEntryPredicate,
         object: tableEntryUri,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: tableEntryUri,
         predicate: actionDescriptionPredicate,
         object: this.businessRuleUri,
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: amountPerActionPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: amountPerActionPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: restitutionPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: restitutionPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: toRealiseUnitsPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: toRealiseUnitsPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: costPerUnitPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: costPerUnitPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
@@ -166,10 +180,30 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
-    this.amount = this.storeOptions.store.match(this.tableEntryUri, amountPerActionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    this.restitution = this.storeOptions.store.match(this.tableEntryUri, restitutionPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    this.toRealiseUnits = this.storeOptions.store.match(this.tableEntryUri, toRealiseUnitsPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    this.costPerUnit = this.storeOptions.store.match(this.tableEntryUri, costPerUnitPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.amount = this.storeOptions.store.match(
+      this.tableEntryUri,
+      amountPerActionPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
+    this.restitution = this.storeOptions.store.match(
+      this.tableEntryUri,
+      restitutionPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
+    this.toRealiseUnits = this.storeOptions.store.match(
+      this.tableEntryUri,
+      toRealiseUnitsPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
+    this.costPerUnit = this.storeOptions.store.match(
+      this.tableEntryUri,
+      costPerUnitPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
   }
 
   updateTripleObject(subject, predicate, newObject = null) {
@@ -188,40 +222,52 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
-  validateToRealiseUnits(toRealiseUnits){
+  validateToRealiseUnits(toRealiseUnits) {
     this.toRealiseUnitsErrors = [];
 
     if (!this.isPositiveInteger(toRealiseUnits)) {
       this.toRealiseUnitsErrors.pushObject({
-        message: 'Aantal items moeten groter of gelijk aan 0 zijn.'
+        message: 'Aantal items moeten groter of gelijk aan 0 zijn.',
       });
-      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.climateTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (!this.isValidInteger(toRealiseUnits)) {
+    } else if (!this.isValidInteger(toRealiseUnits)) {
       this.toRealiseUnitsErrors.pushObject({
-        message: 'Aantal items moeten een geheel getal vormen.'
+        message: 'Aantal items moeten een geheel getal vormen.',
       });
-      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.climateTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (toRealiseUnits > 1) {
+    } else if (toRealiseUnits > 1) {
       this.toRealiseUnitsErrors.pushObject({
-        message: 'Er is maximaal 1 te realiseren item mogelijk voor deze actie.'
+        message:
+          'Er is maximaal 1 te realiseren item mogelijk voor deze actie.',
       });
-      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.climateTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-    else {
-      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, null);
+    } else {
+      this.updateTripleObject(
+        this.climateTableSubject,
+        hasInvalidRowPredicate,
+        null
+      );
       return true;
     }
   }
@@ -231,9 +277,13 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
     if (!this.isPositiveInteger(valuePerItem)) {
       this.costPerUnitErrors.pushObject({
-        message: 'Waarde per item moeten groter of gelijk aan 0 zijn.'
+        message: 'Waarde per item moeten groter of gelijk aan 0 zijn.',
       });
-      this.updateTripleObject(this.climateTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.climateTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
     }
   }
@@ -248,7 +298,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
   @action
   update(e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
     /** start validation **/
     this.validateToRealiseUnits(this.toRealiseUnits);
@@ -260,12 +310,28 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
 
     const amount = this.costPerUnit * this.toRealiseUnits;
     const currentRestitution = this.restitution;
-    const newRestitution  = amount / 2;
+    const newRestitution = amount / 2;
 
-    this.updateTripleObject(this.tableEntryUri, toRealiseUnitsPredicate, rdflib.literal(this.toRealiseUnits, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, amountPerActionPredicate, rdflib.literal(amount, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, restitutionPredicate, rdflib.literal(newRestitution, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, costPerUnitPredicate, rdflib.literal(this.costPerUnit, XSD('float')));
+    this.updateTripleObject(
+      this.tableEntryUri,
+      toRealiseUnitsPredicate,
+      rdflib.literal(this.toRealiseUnits, XSD('integer'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      amountPerActionPredicate,
+      rdflib.literal(amount, XSD('integer'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      restitutionPredicate,
+      rdflib.literal(newRestitution, XSD('float'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      costPerUnitPredicate,
+      rdflib.literal(this.costPerUnit, XSD('float'))
+    );
     this.setComponentValues(this.tableEntryUri);
 
     // Updates the "Trekkingsrecht te verdelen" value

@@ -42,7 +42,7 @@
         {{#unless this.remoteUrls}}
           <AuHelpText class="au-u-margin-bottom-tiny au-u-margin-bottom-top">Nog geen links toegevoegd.</AuHelpText>
         {{/unless}}
-        <AuButton id="{{inputId}}" class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
+        <AuButton id={{this.inputId}} class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
           <i class="vi vi-u-xs au-u-margin-right-tiny vi-plus button__icon" aria-hidden="true"></i> Voeg nieuwe link toe
         </AuButton>
         <div class="au-u-margin-bottom-tiny au-u-margin-top-tiny">

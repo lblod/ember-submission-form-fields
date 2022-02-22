@@ -8,8 +8,8 @@ import rdflib from 'browser-rdflib';
 export default class FormInputFieldsConceptSchemeSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
 
-  @tracked selected = null
-  @tracked options = []
+  @tracked selected = null;
+  @tracked options = [];
 
   constructor() {
     super(...arguments);
@@ -17,15 +17,20 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
     this.loadProvidedValue();
   }
 
-  loadOptions(){
+  loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
-      .map(t => {
-        const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
+      .map((t) => {
+        const label = this.args.formStore.any(
+          t.subject,
+          SKOS('prefLabel'),
+          undefined,
+          metaGraph
+        );
         return { subject: t.subject, label: label && label.value };
       });
   }
@@ -37,7 +42,9 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
       // this selector will only accept one value, and we take the first value from the matches.
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
-      this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
+      this.selected = this.options.find((opt) =>
+        matches.find((m) => m.equals(opt.subject))
+      );
     }
   }
 }

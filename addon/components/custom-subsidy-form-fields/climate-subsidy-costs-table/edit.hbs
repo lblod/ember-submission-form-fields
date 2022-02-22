@@ -9,7 +9,7 @@
       </li>
       <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
         <label class="au-c-label ">Trekkingsrecht te verdelen</label>
-        <p style="{{if this.errors 'color:#D92626'}}">{{convert-to-currency this.restitutionToDestribute}}</p>
+        <p style={{if this.errors "color:#D92626"}}>{{convert-to-currency this.restitutionToDestribute}}</p>
       </li>
 </ul>
 <br>
@@ -44,7 +44,7 @@
   </thead>
   <tbody>
     {{#if this.climateTableSubject}}
-      <!--<CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
+      {{!--<CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters
         @storeOptions={{this.storeOptions}}
         @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/0f4e3cff-4fb8-4892-9dca-1d582a433c77"
         @climateTableSubject={{this.climateTableSubject}}
@@ -65,7 +65,7 @@
           </CustomSubsidyFormFields::ClimateSubsidyCostsTable::Accordion>
         </row.actionDescription>
 
-      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>-->
+      </CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowBurgemeesters>--}}
 
       <CustomSubsidyFormFields::ClimateSubsidyCostsTable::TableRowVastgoedplan
         @storeOptions={{this.storeOptions}}

@@ -1,4 +1,3 @@
 import CustomSubsidyFormFieldsObjectiveTableEditComponent from './edit';
 
-export default class CustomSubsidyFormFieldsObjectiveTableShowComponent extends CustomSubsidyFormFieldsObjectiveTableEditComponent {
-}
+export default class CustomSubsidyFormFieldsObjectiveTableShowComponent extends CustomSubsidyFormFieldsObjectiveTableEditComponent {}

@@ -11,7 +11,7 @@
           @searchEnabled={{true}}
           @selected={{this.selected}}
           @options={{this.options}}
-          @onClose={{fn (mut this.hasBeenFocused true)}}
+          @onClose={{fn (mut this.hasBeenFocused) true}}
           @onChange={{this.updateSelection}}
           @allowClear={{true}}
           @loadingMessage="Aan het laden..."

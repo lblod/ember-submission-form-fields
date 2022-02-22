@@ -14,13 +14,27 @@ const engagementEntryBaseUri = 'http://data.lblod.info/engagement-entries';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 
-const EngagementTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}EngagementTable`);
-const EngagementEntryType = new rdflib.NamedNode(`${extBaseUri}EngagementEntry`);
-const engagementTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}engagementTable`);
-const engagementEntryPredicate = new rdflib.NamedNode(`${extBaseUri}engagementEntry`);
-const existingStaffPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/existingStaff');
-const additionalStaffPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/additionalStaff');
-const volunteersPredicate = new rdflib.NamedNode('http://mu.semte.ch/vocabularies/ext/volunteers');
+const EngagementTableType = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}EngagementTable`
+);
+const EngagementEntryType = new rdflib.NamedNode(
+  `${extBaseUri}EngagementEntry`
+);
+const engagementTablePredicate = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}engagementTable`
+);
+const engagementEntryPredicate = new rdflib.NamedNode(
+  `${extBaseUri}engagementEntry`
+);
+const existingStaffPredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/existingStaff'
+);
+const additionalStaffPredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/additionalStaff'
+);
+const volunteersPredicate = new rdflib.NamedNode(
+  'http://mu.semte.ch/vocabularies/ext/volunteers'
+);
 
 class EntryProperties {
   @tracked value;
@@ -40,11 +54,17 @@ class EngagementEntry {
     engagementEntrySubject,
     existingStaff,
     additionalStaff,
-    volunteers
+    volunteers,
   }) {
     this.engagementEntrySubject = engagementEntrySubject;
-    this.existingStaff = new EntryProperties(existingStaff, existingStaffPredicate);
-    this.additionalStaff = new EntryProperties(additionalStaff, additionalStaffPredicate);
+    this.existingStaff = new EntryProperties(
+      existingStaff,
+      existingStaffPredicate
+    );
+    this.additionalStaff = new EntryProperties(
+      additionalStaff,
+      additionalStaffPredicate
+    );
     this.volunteers = new EntryProperties(volunteers, volunteersPredicate);
   }
 }
@@ -64,18 +84,21 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   }
 
   get hasEngagementTable() {
-    if (!this.engagementTableSubject)
-      return false;
+    if (!this.engagementTableSubject) return false;
     else
-      return this.storeOptions.store.match(this.sourceNode,
-                                           engagementTablePredicate,
-                                           this.engagementTableSubject,
-                                           this.storeOptions.sourceGraph).length > 0;
+      return (
+        this.storeOptions.store.match(
+          this.sourceNode,
+          engagementTablePredicate,
+          this.engagementTableSubject,
+          this.storeOptions.sourceGraph
+        ).length > 0
+      );
   }
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const triples =  matches.triples;
+    const triples = matches.triples;
 
     if (triples.length) {
       this.engagementTableSubject = triples[0].object; // assuming only one per form
@@ -85,46 +108,62 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
         path: engagementEntryPredicate,
         formGraph: this.storeOptions.formGraph,
         sourceNode: this.engagementTableSubject,
-        sourceGraph: this.storeOptions.sourceGraph
+        sourceGraph: this.storeOptions.sourceGraph,
       });
       const entriesTriples = entriesMatches.triples;
 
       if (entriesTriples.length > 0) {
         for (let entry of entriesTriples) {
-          const entryProperties = this.storeOptions.store.match(entry.object,
-                                         undefined,
-                                         undefined,
-                                         this.storeOptions.sourceGraph);
+          const entryProperties = this.storeOptions.store.match(
+            entry.object,
+            undefined,
+            undefined,
+            this.storeOptions.sourceGraph
+          );
 
           const parsedEntry = this.parseEntryProperties(entryProperties);
 
-          this.entries.pushObject(new EngagementEntry({
-            engagementEntrySubject: entry.object,
-            existingStaff: parsedEntry.existingStaff,
-            additionalStaff: parsedEntry.additionalStaff,
-            volunteers: parsedEntry.volunteers
-          }));
+          this.entries.pushObject(
+            new EngagementEntry({
+              engagementEntrySubject: entry.object,
+              existingStaff: parsedEntry.existingStaff,
+              additionalStaff: parsedEntry.additionalStaff,
+              volunteers: parsedEntry.volunteers,
+            })
+          );
         }
       }
     }
   }
 
   /**
-  * Parse entry properties from triples to a simple object with the triple values
-  */
+   * Parse entry properties from triples to a simple object with the triple values
+   */
   parseEntryProperties(entryProperties) {
     let entry = {};
-    if (entryProperties.find(entry => entry.predicate.value == existingStaffPredicate.value))
+    if (
+      entryProperties.find(
+        (entry) => entry.predicate.value == existingStaffPredicate.value
+      )
+    )
       entry.existingStaff = entryProperties.find(
-        entry => entry.predicate.value == existingStaffPredicate.value
+        (entry) => entry.predicate.value == existingStaffPredicate.value
       ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == additionalStaffPredicate.value))
+    if (
+      entryProperties.find(
+        (entry) => entry.predicate.value == additionalStaffPredicate.value
+      )
+    )
       entry.additionalStaff = entryProperties.find(
-        entry => entry.predicate.value == additionalStaffPredicate.value
+        (entry) => entry.predicate.value == additionalStaffPredicate.value
       ).object.value;
-    if (entryProperties.find(entry => entry.predicate.value == volunteersPredicate.value))
+    if (
+      entryProperties.find(
+        (entry) => entry.predicate.value == volunteersPredicate.value
+      )
+    )
       entry.volunteers = entryProperties.find(
-        entry => entry.predicate.value == volunteersPredicate.value
+        (entry) => entry.predicate.value == volunteersPredicate.value
       ).object.value;
     return entry;
   }
@@ -139,22 +178,29 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   createEngagementTable() {
     const uuid = uuidv4();
-    this.engagementTableSubject = new rdflib.NamedNode(`${engagementTableBaseUri}/${uuid}`);
-    const triples = [ { subject: this.engagementTableSubject,
-                        predicate: RDF('type'),
-                        object: EngagementTableType,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.engagementTableSubject,
-                        predicate: MU('uuid'),
-                        object: uuid,
-                        graph: this.storeOptions.sourceGraph
-                      },
-                      { subject: this.storeOptions.sourceNode,
-                        predicate: engagementTablePredicate,
-                        object: this.engagementTableSubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+    this.engagementTableSubject = new rdflib.NamedNode(
+      `${engagementTableBaseUri}/${uuid}`
+    );
+    const triples = [
+      {
+        subject: this.engagementTableSubject,
+        predicate: RDF('type'),
+        object: EngagementTableType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.engagementTableSubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: engagementTablePredicate,
+        object: this.engagementTableSubject,
+        graph: this.storeOptions.sourceGraph,
+      },
+    ];
     this.storeOptions.store.addAll(triples);
   }
 
@@ -166,7 +212,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       engagementEntrySubject: engagementEntrySubject,
       existingStaff: 0,
       additionalStaff: 0,
-      volunteers: 0
+      volunteers: 0,
     });
     entries.pushObject(newEntry);
 
@@ -178,23 +224,30 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     let triples = [];
 
     const uuid = uuidv4();
-    const engagementEntrySubject = new rdflib.NamedNode(`${engagementEntryBaseUri}/${uuid}`);
+    const engagementEntrySubject = new rdflib.NamedNode(
+      `${engagementEntryBaseUri}/${uuid}`
+    );
 
-    triples.push({ subject: engagementEntrySubject,
-                  predicate: RDF('type'),
-                  object: EngagementEntryType,
-                  graph: this.storeOptions.sourceGraph
-                },
-                { subject: engagementEntrySubject,
-                  predicate: MU('uuid'),
-                  object: uuid,
-                  graph: this.storeOptions.sourceGraph
-                },
-                { subject: this.engagementTableSubject,
-                  predicate: engagementEntryPredicate,
-                  object: engagementEntrySubject,
-                  graph: this.storeOptions.sourceGraph }
-      );
+    triples.push(
+      {
+        subject: engagementEntrySubject,
+        predicate: RDF('type'),
+        object: EngagementEntryType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: engagementEntrySubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.engagementTableSubject,
+        predicate: engagementEntryPredicate,
+        object: engagementEntrySubject,
+        graph: this.storeOptions.sourceGraph,
+      }
+    );
 
     this.storeOptions.store.addAll(triples);
     return engagementEntrySubject;
@@ -207,9 +260,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
       undefined,
       this.storeOptions.sourceGraph
     );
-    const triples = [
-      ...fieldValueTriples
-    ];
+    const triples = [...fieldValueTriples];
     this.storeOptions.store.removeStatements(triples);
 
     if (entry[field].value.toString().length > 0) {
@@ -218,8 +269,8 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
           subject: entry.engagementEntrySubject,
           predicate: entry[field].predicate,
           object: entry[field].value,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
@@ -228,16 +279,18 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   updateExistingStaffValue(entry) {
     entry.existingStaff.errors = [];
     const parsedValue = Number(entry.existingStaff.value);
-    entry.existingStaff.value = !isNaN(parsedValue) ? parsedValue : entry.existingStaff.value;
+    entry.existingStaff.value = !isNaN(parsedValue)
+      ? parsedValue
+      : entry.existingStaff.value;
     this.updateFieldValueTriple(entry, 'existingStaff');
 
     if (this.isEmpty(entry.existingStaff.value)) {
       entry.existingStaff.errors.pushObject({
-        message: 'Bestaand personeelskader is verplicht.'
+        message: 'Bestaand personeelskader is verplicht.',
       });
     } else if (!this.isPositiveNumber(entry.existingStaff.value)) {
       entry.existingStaff.errors.pushObject({
-        message: 'Bestaand personeelskader is niet een positief nummer.'
+        message: 'Bestaand personeelskader is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -248,16 +301,19 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   updateAdditionalStaffValue(entry) {
     entry.additionalStaff.errors = [];
     const parsedValue = Number(entry.additionalStaff.value);
-    entry.additionalStaff.value = !isNaN(parsedValue) ? parsedValue : entry.additionalStaff.value;
+    entry.additionalStaff.value = !isNaN(parsedValue)
+      ? parsedValue
+      : entry.additionalStaff.value;
     this.updateFieldValueTriple(entry, 'additionalStaff');
 
     if (this.isEmpty(entry.additionalStaff.value)) {
       entry.additionalStaff.errors.pushObject({
-        message: 'Extra aangetrokken betaald personeel is verplicht.'
+        message: 'Extra aangetrokken betaald personeel is verplicht.',
       });
     } else if (!this.isPositiveNumber(entry.additionalStaff.value)) {
       entry.additionalStaff.errors.pushObject({
-        message: 'Extra aangetrokken betaald personeel is niet een positief nummer.'
+        message:
+          'Extra aangetrokken betaald personeel is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -268,16 +324,18 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   updateVolunteersValue(entry) {
     entry.volunteers.errors = [];
     const parsedValue = Number(entry.volunteers.value);
-    entry.volunteers.value = !isNaN(parsedValue) ? parsedValue : entry.volunteers.value;
+    entry.volunteers.value = !isNaN(parsedValue)
+      ? parsedValue
+      : entry.volunteers.value;
     this.updateFieldValueTriple(entry, 'volunteers');
 
     if (this.isEmpty(entry.volunteers.value)) {
       entry.volunteers.errors.pushObject({
-        message: 'Ingezette vrijwilligers is verplicht.'
+        message: 'Ingezette vrijwilligers is verplicht.',
       });
     } else if (!this.isPositiveNumber(entry.volunteers.value)) {
       entry.volunteers.errors.pushObject({
-        message: 'Ingezette vrijwilligers is niet een positief nummer.'
+        message: 'Ingezette vrijwilligers is niet een positief nummer.',
       });
     }
     this.hasBeenFocused = true; // Allows errors to be shown in canShowErrors()
@@ -286,25 +344,25 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   initializeEntriesFields(entries) {
     let triples = [];
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       triples.push(
         {
           subject: entry.engagementEntrySubject,
           predicate: entry['existingStaff'].predicate,
           object: entry['existingStaff'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: entry.engagementEntrySubject,
           predicate: entry['additionalStaff'].predicate,
           object: entry['additionalStaff'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: entry.engagementEntrySubject,
           predicate: entry['volunteers'].predicate,
           object: entry['volunteers'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         }
       );
     });
@@ -312,8 +370,8 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   }
 
   /**
-  * Update entry fields in the store.
-  */
+   * Update entry fields in the store.
+   */
   updateEntryFields(entry) {
     this.updateExistingStaffValue(entry);
     this.updateAdditionalStaffValue(entry);
@@ -329,7 +387,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
   }
 
   isPositiveNumber(value) {
-    const number =  Number(value);
+    const number = Number(value);
     if (isNaN(number)) return false;
     return number >= 0;
   }

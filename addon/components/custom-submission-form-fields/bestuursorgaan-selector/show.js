@@ -9,8 +9,8 @@ import { next } from '@ember/runloop';
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
 
-  @tracked selected = null
-  @tracked options = []
+  @tracked selected = null;
+  @tracked options = [];
 
   constructor() {
     super(...arguments);
@@ -22,15 +22,20 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
     });
   }
 
-  loadOptions(){
+  loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = JSON.parse(this.args.field.options);
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
-      .map(t => {
-        const label = this.args.formStore.any(t.subject, SKOS('prefLabel'), undefined, metaGraph);
+      .map((t) => {
+        const label = this.args.formStore.any(
+          t.subject,
+          SKOS('prefLabel'),
+          undefined,
+          metaGraph
+        );
         return { subject: t.subject, label: label && label.value };
       });
   }
@@ -42,65 +47,100 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
       // this selector will only accept one value, and we take the first value from the matches.
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
-      this.selected = this.options.find(opt => matches.find(m => m.equals(opt.subject)));
+      this.selected = this.options.find((opt) =>
+        matches.find((m) => m.equals(opt.subject))
+      );
     }
   }
 
   loadClassificationsInStore() {
     const metaGraph = this.args.graphs.metaGraph;
-    const [bestuursorgaan, orgaanClassification] = this.getPathToOrgaanClassification(this.selected.subject, metaGraph);
-    const [bestuurseenheid, eenheidClassification] = this.getPathToEenheidClassification(bestuursorgaan.object, metaGraph);
+    const [bestuursorgaan, orgaanClassification] =
+      this.getPathToOrgaanClassification(this.selected.subject, metaGraph);
+    const [bestuurseenheid, eenheidClassification] =
+      this.getPathToEenheidClassification(bestuursorgaan.object, metaGraph);
 
-    const bestuursorgaanInSourceGraph = { subject: bestuursorgaan.subject,
-                                  predicate: bestuursorgaan.predicate,
-                                  object: bestuursorgaan.object,
-                                  graph: this.storeOptions.sourceGraph
-                                };
-    const orgaanClassificationInSourceGraph = { subject: orgaanClassification.subject,
-                                  predicate: orgaanClassification.predicate,
-                                  object: orgaanClassification.object,
-                                  graph: this.storeOptions.sourceGraph
-                                };
-    const bestuurseenheidInSourceGraph = { subject: bestuurseenheid.subject,
-                                  predicate: bestuurseenheid.predicate,
-                                  object: bestuurseenheid.object,
-                                  graph: this.storeOptions.sourceGraph
-                                };
-    const eenheidClassificationInSourceGraph = { subject: eenheidClassification.subject,
-                                  predicate: eenheidClassification.predicate,
-                                  object: eenheidClassification.object,
-                                  graph: this.storeOptions.sourceGraph
-                                };
+    const bestuursorgaanInSourceGraph = {
+      subject: bestuursorgaan.subject,
+      predicate: bestuursorgaan.predicate,
+      object: bestuursorgaan.object,
+      graph: this.storeOptions.sourceGraph,
+    };
+    const orgaanClassificationInSourceGraph = {
+      subject: orgaanClassification.subject,
+      predicate: orgaanClassification.predicate,
+      object: orgaanClassification.object,
+      graph: this.storeOptions.sourceGraph,
+    };
+    const bestuurseenheidInSourceGraph = {
+      subject: bestuurseenheid.subject,
+      predicate: bestuurseenheid.predicate,
+      object: bestuurseenheid.object,
+      graph: this.storeOptions.sourceGraph,
+    };
+    const eenheidClassificationInSourceGraph = {
+      subject: eenheidClassification.subject,
+      predicate: eenheidClassification.predicate,
+      object: eenheidClassification.object,
+      graph: this.storeOptions.sourceGraph,
+    };
 
-    this.storeOptions.store.addAll([bestuursorgaanInSourceGraph, orgaanClassificationInSourceGraph, bestuurseenheidInSourceGraph, eenheidClassificationInSourceGraph]);
+    this.storeOptions.store.addAll([
+      bestuursorgaanInSourceGraph,
+      orgaanClassificationInSourceGraph,
+      bestuurseenheidInSourceGraph,
+      eenheidClassificationInSourceGraph,
+    ]);
   }
 
   getPathToOrgaanClassification(bestuursorgaanInTimeUri, graph) {
-    const MANDAAT = new rdflib.Namespace("http://data.vlaanderen.be/ns/mandaat#");
-    const BESLUIT = new rdflib.Namespace("http://data.vlaanderen.be/ns/besluit#");
+    const MANDAAT = new rdflib.Namespace(
+      'http://data.vlaanderen.be/ns/mandaat#'
+    );
+    const BESLUIT = new rdflib.Namespace(
+      'http://data.vlaanderen.be/ns/besluit#'
+    );
 
-    const bestuursorgaan = this.args.formStore
-      .match(bestuursorgaanInTimeUri, MANDAAT('isTijdspecialisatieVan'), undefined, graph)[0];
+    const bestuursorgaan = this.args.formStore.match(
+      bestuursorgaanInTimeUri,
+      MANDAAT('isTijdspecialisatieVan'),
+      undefined,
+      graph
+    )[0];
 
     let orgaanClassification = undefined;
     if (bestuursorgaan) {
-      orgaanClassification = this.args.formStore
-        .match(bestuursorgaan.object, BESLUIT('classificatie'), undefined, graph)[0];
+      orgaanClassification = this.args.formStore.match(
+        bestuursorgaan.object,
+        BESLUIT('classificatie'),
+        undefined,
+        graph
+      )[0];
     }
 
     return [bestuursorgaan, orgaanClassification];
   }
 
   getPathToEenheidClassification(bestuursorgaanUri, graph) {
-    const BESLUIT = new rdflib.Namespace("http://data.vlaanderen.be/ns/besluit#");
+    const BESLUIT = new rdflib.Namespace(
+      'http://data.vlaanderen.be/ns/besluit#'
+    );
 
-    const bestuurseenheid = this.args.formStore
-      .match(bestuursorgaanUri, BESLUIT('bestuurt'), undefined, graph)[0];
+    const bestuurseenheid = this.args.formStore.match(
+      bestuursorgaanUri,
+      BESLUIT('bestuurt'),
+      undefined,
+      graph
+    )[0];
 
     let eenheidClassification = undefined;
     if (bestuurseenheid) {
-      eenheidClassification = this.args.formStore
-        .match(bestuurseenheid.object, BESLUIT('classificatie'), undefined, undefined)[0];
+      eenheidClassification = this.args.formStore.match(
+        bestuurseenheid.object,
+        BESLUIT('classificatie'),
+        undefined,
+        undefined
+      )[0];
     }
 
     return [bestuurseenheid, eenheidClassification];
