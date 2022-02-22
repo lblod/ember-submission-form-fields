@@ -1,8 +1,7 @@
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '../../rdf-input-fields/simple-value-input-field';
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { scheduleOnce } from '@ember/runloop';
 
 export default class FormSearchPanelFieldsSearchEditComponent extends SimpleInputFieldComponent {
