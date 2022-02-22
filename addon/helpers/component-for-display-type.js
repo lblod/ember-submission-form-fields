@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 const mapping = {
-  edit : {
+  edit: {
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/edit`,
     'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/edit`,
     'http://lblod.data.gift/display-types/dateTime': `rdf-input-fields/date-time/edit`,
@@ -25,10 +25,10 @@ const mapping = {
 
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`,
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/edit`,
-    'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/edit`
+    'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/edit`,
   },
 
-  show : {
+  show: {
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/show`,
     'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/show`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/show`,
@@ -52,12 +52,15 @@ const mapping = {
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/show`,
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/show`,
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
-    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`
-  }
-}
+    'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
+  },
+};
 
-export default helper(function componentForDisplayType([displayType], {show}) {
+export default helper(function componentForDisplayType(
+  [displayType],
+  { show }
+) {
   let components = mapping.edit;
-  if(show) components = mapping.show;
+  if (show) components = mapping.show;
   return components[displayType] || '';
 });

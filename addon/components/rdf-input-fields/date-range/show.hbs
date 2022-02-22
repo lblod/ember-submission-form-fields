@@ -2,7 +2,7 @@
   <AuLabel>{{@field.label}}</AuLabel>
   <AuButtonGroup @inline="true">
     <AuButton
-        class="{{if (not this.isEnabled) "is-active" }}" @skin="secondary" @disabled="true">Alle meldingen</AuButton>
+        class="{{unless this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Alle meldingen</AuButton>
     <AuButton
         class="{{if this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Specifieke periode</AuButton>
   </AuButtonGroup>

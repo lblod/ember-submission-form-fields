@@ -2,10 +2,10 @@ import { tracked } from '@glimmer/tracking';
 
 import { FORM, SHACL } from '@lblod/submission-form-helpers';
 
-export const PROPERTY_GROUP_DISPLAY_TYPE = 'http://lblod.data.gift/display-types/property-group';
+export const PROPERTY_GROUP_DISPLAY_TYPE =
+  'http://lblod.data.gift/display-types/property-group';
 
 export default class PropertyGroupModel {
-
   @tracked
   uri = '';
   @tracked
@@ -15,11 +15,16 @@ export default class PropertyGroupModel {
 
   constructor(uri, options) {
     this.uri = uri;
-    const {store, formGraph} = options;
+    const { store, formGraph } = options;
     this.rdflibName = store.any(this.uri, SHACL('name'), undefined, formGraph);
     this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
-    this.rdflibDescription = store.any(uri, SHACL('description'), undefined, formGraph);
-    this.rdflibHelp = store.any( uri, FORM("help"), undefined, formGraph );
+    this.rdflibDescription = store.any(
+      uri,
+      SHACL('description'),
+      undefined,
+      formGraph
+    );
+    this.rdflibHelp = store.any(uri, FORM('help'), undefined, formGraph);
   }
 
   @tracked

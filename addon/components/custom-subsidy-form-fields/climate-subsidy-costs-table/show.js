@@ -1,5 +1,3 @@
 import CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent from './edit';
 
-export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableShowComponent extends CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent {
-
-}
+export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableShowComponent extends CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent {}

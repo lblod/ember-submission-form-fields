@@ -10,8 +10,8 @@ export default class FormInputFieldsDateEditComponent extends SimpleInputFieldCo
   @action
   updateValue(newValue) {
     let dateString = null;
-    if(newValue != null) {
-      dateString = newValue.toISOString().split("T")[0];
+    if (newValue != null) {
+      dateString = newValue.toISOString().split('T')[0];
     }
     const newDate = dateString ? rdflib.literal(dateString, XSD('date')) : null;
     super.updateValue(newDate);

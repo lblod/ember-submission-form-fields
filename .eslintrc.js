@@ -20,7 +20,7 @@ module.exports = {
     browser: true,
   },
   rules: {
-    semi: [2, "always"]
+    semi: [2, 'always'],
   },
   overrides: [
     // node files

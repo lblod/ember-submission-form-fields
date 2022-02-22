@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { getTopLevelPropertyGroups } from '../utils/model-factory';
 
 export default class RdfForm extends Component {
-
   propertyGroups = []; // NOTE don't think this needs to be an ember array as it will never change
 
   constructor() {

@@ -7,17 +7,29 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 
-const LBLOD_SUBSIDIE = new rdflib.Namespace('http://lblod.data.gift/vocabularies/subsidie/');
+const LBLOD_SUBSIDIE = new rdflib.Namespace(
+  'http://lblod.data.gift/vocabularies/subsidie/'
+);
 const DBPEDIA = new rdflib.Namespace('http://dbpedia.org/ontology/');
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
-const climateTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}ClimateTable`);
-const climateTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}climateTable`);
-const hasInvalidRowPredicate = new rdflib.NamedNode(`${climateTableBaseUri}/hasInvalidClimateTableEntry`);
-const validClimateTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validClimateTable`);
-const totalBudgettedAmount = new rdflib.NamedNode(`${lblodSubsidieBaseUri}totalBudgettedAmount`);
+const climateTableType = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}ClimateTable`
+);
+const climateTablePredicate = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}climateTable`
+);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
+  `${climateTableBaseUri}/hasInvalidClimateTableEntry`
+);
+const validClimateTable = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}validClimateTable`
+);
+const totalBudgettedAmount = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}totalBudgettedAmount`
+);
 
 /*
  * Component wrapping the big subsidy table for climate action.
@@ -41,20 +53,22 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   @tracked populationCount;
   @tracked drawingRight;
 
-
   get hasClimateTable() {
-    if (!this.climateTableSubject)
-      return false;
+    if (!this.climateTableSubject) return false;
     else
-      return this.storeOptions.store.match(this.sourceNode,
-        climateTablePredicate,
-        this.climateTableSubject,
-        this.storeOptions.sourceGraph).length > 0;
+      return (
+        this.storeOptions.store.match(
+          this.sourceNode,
+          climateTablePredicate,
+          this.climateTableSubject,
+          this.storeOptions.sourceGraph
+        ).length > 0
+      );
   }
 
   constructor() {
     super(...arguments);
-    scheduleOnce("actions", this, this.initializeTable);
+    scheduleOnce('actions', this, this.initializeTable);
   }
 
   loadProvidedValue() {
@@ -66,8 +80,18 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
 
     const metaGraph = this.args.graphs.metaGraph;
-    this.populationCount = this.args.formStore.match(undefined, DBPEDIA('populationTotal'), undefined, metaGraph)[0].object.value;
-    const drawingRight = this.args.formStore.match(undefined, LBLOD_SUBSIDIE('drawingRight'), undefined, metaGraph)[0].object.value;
+    this.populationCount = this.args.formStore.match(
+      undefined,
+      DBPEDIA('populationTotal'),
+      undefined,
+      metaGraph
+    )[0].object.value;
+    const drawingRight = this.args.formStore.match(
+      undefined,
+      LBLOD_SUBSIDIE('drawingRight'),
+      undefined,
+      metaGraph
+    )[0].object.value;
     this.drawingRight = drawingRight;
     this.restitutionToDestribute = drawingRight;
   }
@@ -75,7 +99,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
   initializeTable() {
     this.loadProvidedValue();
 
-    if(!this.hasClimateTable) {
+    if (!this.hasClimateTable) {
       this.createClimateTable();
     }
 
@@ -84,25 +108,28 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
   createClimateTable() {
     const uuid = uuidv4();
-    this.climateTableSubject = new rdflib.NamedNode(`${climateTableBaseUri}/${uuid}`);
-    const triples = [{
-      subject: this.climateTableSubject,
-      predicate: RDF('type'),
-      object: climateTableType,
-      graph: this.storeOptions.sourceGraph
-    },
-    {
-      subject: this.climateTableSubject,
-      predicate: MU('uuid'),
-      object: uuid,
-      graph: this.storeOptions.sourceGraph
-    },
-    {
-      subject: this.storeOptions.sourceNode,
-      predicate: climateTablePredicate,
-      object: this.climateTableSubject,
-      graph: this.storeOptions.sourceGraph
-    }
+    this.climateTableSubject = new rdflib.NamedNode(
+      `${climateTableBaseUri}/${uuid}`
+    );
+    const triples = [
+      {
+        subject: this.climateTableSubject,
+        predicate: RDF('type'),
+        object: climateTableType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.climateTableSubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: climateTablePredicate,
+        object: this.climateTableSubject,
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.addAll(triples);
   }
@@ -124,37 +151,58 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
   @action
-  updateTotaleRestitution(value){
+  updateTotaleRestitution(value) {
     this.restitutionToDestribute = this.restitutionToDestribute - value;
-    const totalBudgettedAmountValue = (this.drawingRight - this.restitutionToDestribute).toFixed(2);
-    this.updateTripleObject(this.climateTableSubject, totalBudgettedAmount, totalBudgettedAmountValue);
+    const totalBudgettedAmountValue = (
+      this.drawingRight - this.restitutionToDestribute
+    ).toFixed(2);
+    this.updateTripleObject(
+      this.climateTableSubject,
+      totalBudgettedAmount,
+      totalBudgettedAmountValue
+    );
   }
 
   @action
-  validate(){
+  validate() {
     this.errors = [];
-    const invalidRow = this.storeOptions.store.any(this.climateTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
-    if(invalidRow){
+    const invalidRow = this.storeOptions.store.any(
+      this.climateTableSubject,
+      hasInvalidRowPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
+    if (invalidRow) {
       this.errors.pushObject({
-        message: 'Een van de rijen is niet correct ingevuld'
+        message: 'Een van de rijen is niet correct ingevuld',
       });
-      this.updateTripleObject(this.climateTableSubject, validClimateTable, null);
-    }
-    else if (!this.isPositiveInteger(this.restitutionToDestribute)) {
+      this.updateTripleObject(
+        this.climateTableSubject,
+        validClimateTable,
+        null
+      );
+    } else if (!this.isPositiveInteger(this.restitutionToDestribute)) {
       this.errors.pushObject({
-        message: 'Trekkingsrecht te verdelen moet groter of gelijk aan 0 zijn'
+        message: 'Trekkingsrecht te verdelen moet groter of gelijk aan 0 zijn',
       });
-      this.updateTripleObject(this.climateTableSubject, validClimateTable, null);
-    }
-    else {
-      this.updateTripleObject(this.climateTableSubject, validClimateTable, true);
+      this.updateTripleObject(
+        this.climateTableSubject,
+        validClimateTable,
+        null
+      );
+    } else {
+      this.updateTripleObject(
+        this.climateTableSubject,
+        validClimateTable,
+        true
+      );
     }
   }
 

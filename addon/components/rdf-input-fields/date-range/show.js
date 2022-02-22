@@ -5,7 +5,9 @@ import { tracked } from '@glimmer/tracking';
 
 import { SHACL } from '@lblod/submission-form-helpers';
 
-const DATE_RANGE = new rdflib.Namespace('http://data.lblod.info/form-fields/date-range/');
+const DATE_RANGE = new rdflib.Namespace(
+  'http://data.lblod.info/form-fields/date-range/'
+);
 
 export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-' + guidFor(this);
@@ -24,12 +26,22 @@ export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFi
   }
 
   loadProvidedValue() {
-    const {store, formGraph, sourceGraph, sourceNode} = this.storeOptions;
+    const { store, formGraph, sourceGraph, sourceNode } = this.storeOptions;
     const field = this.args.field;
 
     this.paths = {
-      from: store.any(store.any(field.uri, DATE_RANGE('from'), undefined, formGraph), SHACL('path'), undefined, formGraph),
-      to: store.any(store.any(field.uri, DATE_RANGE('to'), undefined, formGraph), SHACL('path'), undefined, formGraph),
+      from: store.any(
+        store.any(field.uri, DATE_RANGE('from'), undefined, formGraph),
+        SHACL('path'),
+        undefined,
+        formGraph
+      ),
+      to: store.any(
+        store.any(field.uri, DATE_RANGE('to'), undefined, formGraph),
+        SHACL('path'),
+        undefined,
+        formGraph
+      ),
     };
 
     const from = store.any(sourceNode, this.paths.from, undefined, sourceGraph);

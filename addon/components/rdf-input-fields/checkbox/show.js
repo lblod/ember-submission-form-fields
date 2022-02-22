@@ -9,7 +9,7 @@ export default class RdfInputFieldsCheckboxShowComponent extends SimpleInputFiel
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
       this.nodeValue = matches.values[0];
-      this.value = matches.values[0].value === "1";
+      this.value = matches.values[0].value === '1';
     }
   }
 }

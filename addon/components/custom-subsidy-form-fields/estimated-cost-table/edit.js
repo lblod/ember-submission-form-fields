@@ -10,49 +10,52 @@ import { next } from '@ember/runloop';
 
 import BaseTable from './base-table';
 import { EntryProperties, EstimatedCostEntry } from './base-table';
-import { MU,
-         estimatedCostTableBaseUri,
-         EstimatedCostTableType,
-         estimatedCostTablePredicate,
-         subsidyRulesUri,
-         EstimatedCostEntryType,
-         estimatedCostEntryPredicate,
-         costPredicate,
-         validEstimatedCostTable
-       } from './base-table';
+import {
+  MU,
+  estimatedCostTableBaseUri,
+  EstimatedCostTableType,
+  estimatedCostTablePredicate,
+  subsidyRulesUri,
+  EstimatedCostEntryType,
+  estimatedCostEntryPredicate,
+  costPredicate,
+  validEstimatedCostTable,
+} from './base-table';
 
 const defaultRows = [
   {
-    uuid: "bda9c645-9520-44ff-bac4-8b77647a93e0",
-    description: "Totale raming van de kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen",
+    uuid: 'bda9c645-9520-44ff-bac4-8b77647a93e0',
+    description:
+      'Totale raming van de kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen',
     cost: 0,
     share: 100,
-    index: 0
+    index: 0,
   },
   {
-    uuid: "38f24b3d-e4dd-408e-a530-c8d3a8fca0ff",
-    description: "Totale raming van de onteigeningsvergoedingen",
+    uuid: '38f24b3d-e4dd-408e-a530-c8d3a8fca0ff',
+    description: 'Totale raming van de onteigeningsvergoedingen',
     cost: 0,
     share: 100,
-    index: 1
-  }
+    index: 1,
+  },
 ];
 
 const aanvraagRows = [
   {
-    uuid: "b22a9324-874a-42d1-b815-f20f96b31a53",
-    description: "Kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen",
+    uuid: 'b22a9324-874a-42d1-b815-f20f96b31a53',
+    description:
+      'Kostprijs excl. BTW (enkel subsidieerbare kosten) en excl. onteigeningsvergoedingen',
     cost: 0,
     share: 100,
-    index: 0
+    index: 0,
   },
   {
-    uuid: "92a25430-ab31-46dc-a0d8-3f4cf1dc1b04",
-    description: "Onteigeningsvergoedingen",
+    uuid: '92a25430-ab31-46dc-a0d8-3f4cf1dc1b04',
+    description: 'Onteigeningsvergoedingen',
     cost: 0,
     share: 100,
-    index: 1
-  }
+    index: 1,
+  },
 ];
 
 export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent extends BaseTable {
@@ -64,24 +67,27 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     // There is a lot of stuff that get's updated in the same runloop, we'll need to revise this a bit
     // Now the workaround is to schedule it.
     next(this, () => {
-      this.entries =  this.loadEstimatedCostEntries();
+      this.entries = this.loadEstimatedCostEntries();
       this.initializeTable();
       this.validate();
     });
   }
 
   get hasEstimatedCostTable() {
-    if (!this.estimatedCostTableSubject)
-      return false;
+    if (!this.estimatedCostTableSubject) return false;
     else
-      return this.storeOptions.store.match(this.sourceNode,
-                                          estimatedCostTablePredicate,
-                                          this.estimatedCostTableSubject,
-                                          this.storeOptions.sourceGraph).length > 0;
+      return (
+        this.storeOptions.store.match(
+          this.sourceNode,
+          estimatedCostTablePredicate,
+          this.estimatedCostTableSubject,
+          this.storeOptions.sourceGraph
+        ).length > 0
+      );
   }
 
   get isAanvraagStep() {
-    if(this.args.field && this.args.field.options) {
+    if (this.args.field && this.args.field.options) {
       const option = JSON.parse(this.args.field.options);
       return option.isAanvraagStep;
     } else {
@@ -98,26 +104,28 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
 
   createEstimatedCostTable() {
     const uuid = uuidv4();
-    this.estimatedCostTableSubject = new rdflib.NamedNode(`${estimatedCostTableBaseUri}/${uuid}`);
+    this.estimatedCostTableSubject = new rdflib.NamedNode(
+      `${estimatedCostTableBaseUri}/${uuid}`
+    );
     const triples = [
       {
         subject: this.estimatedCostTableSubject,
         predicate: RDF('type'),
         object: EstimatedCostTableType,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.estimatedCostTableSubject,
         predicate: MU('uuid'),
         object: uuid,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.storeOptions.sourceNode,
         predicate: estimatedCostTablePredicate,
         object: this.estimatedCostTableSubject,
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.addAll(triples);
   }
@@ -125,13 +133,13 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
   createEntries() {
     let entries = [];
     const estimatedCostEntriesDetails = this.createEstimatedCostEntries();
-    estimatedCostEntriesDetails.forEach(detail => {
+    estimatedCostEntriesDetails.forEach((detail) => {
       const newEntry = new EstimatedCostEntry({
         estimatedCostEntrySubject: detail.subject,
         description: detail.description,
         cost: detail.cost,
         share: detail.share,
-        index: detail.index
+        index: detail.index,
       });
       entries.pushObject(newEntry);
     });
@@ -145,42 +153,44 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     let estimatedCostEntriesDetails = [];
     let rows = [];
 
-    if(this.isAanvraagStep) {
+    if (this.isAanvraagStep) {
       rows = aanvraagRows;
     } else {
       rows = defaultRows;
     }
 
-    rows.forEach(target => {
-
+    rows.forEach((target) => {
       const uuid = uuidv4();
-      const estimatedCostEntrySubject = new rdflib.NamedNode(`${subsidyRulesUri}/${uuid}`);
+      const estimatedCostEntrySubject = new rdflib.NamedNode(
+        `${subsidyRulesUri}/${uuid}`
+      );
 
       estimatedCostEntriesDetails.push({
         subject: estimatedCostEntrySubject,
         description: target.description,
         cost: target.cost,
         share: target.share,
-        index: target.index
+        index: target.index,
       });
 
-      triples.push({
-        subject: estimatedCostEntrySubject,
-        predicate: RDF('type'),
-        object: EstimatedCostEntryType,
-        graph: this.storeOptions.sourceGraph
-      },
+      triples.push(
+        {
+          subject: estimatedCostEntrySubject,
+          predicate: RDF('type'),
+          object: EstimatedCostEntryType,
+          graph: this.storeOptions.sourceGraph,
+        },
         {
           subject: estimatedCostEntrySubject,
           predicate: MU('uuid'),
           object: target.uuid,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: this.estimatedCostTableSubject,
           predicate: estimatedCostEntryPredicate,
           object: estimatedCostEntrySubject,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         }
       );
     });
@@ -188,35 +198,34 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     return estimatedCostEntriesDetails;
   }
 
-
   initializeEntriesFields(entries) {
     let triples = [];
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       triples.push(
         {
           subject: entry.estimatedCostEntrySubject,
           predicate: entry['description'].predicate,
           object: entry['description'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: entry.estimatedCostEntrySubject,
           predicate: entry['cost'].predicate,
           object: entry['cost'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: entry.estimatedCostEntrySubject,
           predicate: entry['share'].predicate,
           object: entry['share'].value,
-          graph: this.storeOptions.sourceGraph
+          graph: this.storeOptions.sourceGraph,
         },
         {
           subject: entry.estimatedCostEntrySubject,
           predicate: entry['index'].predicate,
           object: entry['index'].value,
-          graph: this.storeOptions.sourceGraph
-        },
+          graph: this.storeOptions.sourceGraph,
+        }
       );
     });
     this.storeOptions.store.addAll(triples);
@@ -238,13 +247,13 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
-  validate(){
+  validate() {
     this.errors = [];
     const entries = this.storeOptions.store.match(
       undefined,
@@ -253,77 +262,128 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
       this.storeOptions.sourceGraph
     );
 
-    const invalidCosts = entries.filter(entry => isNaN(parseInt(entry.object.value)));
-    if(invalidCosts.length) {
+    const invalidCosts = entries.filter((entry) =>
+      isNaN(parseInt(entry.object.value))
+    );
+    if (invalidCosts.length) {
       this.errors.pushObject({
-        message: 'Eén van de velden werd niet correct ingevuld.'
+        message: 'Eén van de velden werd niet correct ingevuld.',
       });
-      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
     }
 
-    const positiveCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
-    if(!positiveCosts.length){
+    const positiveCosts = entries.filter(
+      (entry) => parseInt(entry.object.value) > 0
+    );
+    if (!positiveCosts.length) {
       this.errors.pushObject({
-        message: 'Mintens één kosten veld moet een waarde groter dan 0 bevatten.'
+        message:
+          'Mintens één kosten veld moet een waarde groter dan 0 bevatten.',
       });
-      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
     }
 
-    if(positiveCosts.length && !invalidCosts.length) {
-      this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
+    if (positiveCosts.length && !invalidCosts.length) {
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        true
+      );
     }
   }
 
   @action
-    updateCost(entry){
-      entry.cost.errors = [];
+  updateCost(entry) {
+    entry.cost.errors = [];
 
-      if (!this.isPositiveInteger(entry.cost.value)) {
-        entry.cost.errors.pushObject({
-          message: 'Kosten moet groter of gelijk aan 0 zijn'
-        });
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
-      } else {
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
-      }
-
-
-      if(isNaN(parseInt(entry.cost.value))) {
-        this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, "Field is empty");
-      } else {
-        this.updateTripleObject(entry.estimatedCostEntrySubject, entry['cost'].predicate, entry['cost'].value);
-      }
-
-      this.validate();
+    if (!this.isPositiveInteger(entry.cost.value)) {
+      entry.cost.errors.pushObject({
+        message: 'Kosten moet groter of gelijk aan 0 zijn',
+      });
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
+    } else {
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        true
+      );
     }
 
+    if (isNaN(parseInt(entry.cost.value))) {
+      this.updateTripleObject(
+        entry.estimatedCostEntrySubject,
+        entry['cost'].predicate,
+        'Field is empty'
+      );
+    } else {
+      this.updateTripleObject(
+        entry.estimatedCostEntrySubject,
+        entry['cost'].predicate,
+        entry['cost'].value
+      );
+    }
+
+    this.validate();
+  }
+
   @action
-    updateShare(entry){
-      entry.share.errors = [];
+  updateShare(entry) {
+    entry.share.errors = [];
 
-      if (this.isEmpty(entry.share.value)) {
-        entry.share.errors.pushObject({
-          message: 'Gemeentelijk aandeel in kosten is verplicht.'
-        });
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
-      }
-      else if (!this.isPositiveInteger(Number(entry.share.value))) {
-        entry.share.errors.pushObject({
-          message: 'Het gemeentelijke aandeel in kosten moet groter of gelijk aan 0 zijn'
-        });
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
-      }
-      else if (!this.isSmallerThan(Number(entry.share.value), 100)) {
-        entry.share.errors.pushObject({
-          message: 'Het gemeentelijke aandeel in kosten mag niet hoger liggen dan 100%'
-        });
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
-      }
-      else {
-        this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, true);
-      }
+    if (this.isEmpty(entry.share.value)) {
+      entry.share.errors.pushObject({
+        message: 'Gemeentelijk aandeel in kosten is verplicht.',
+      });
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
+    } else if (!this.isPositiveInteger(Number(entry.share.value))) {
+      entry.share.errors.pushObject({
+        message:
+          'Het gemeentelijke aandeel in kosten moet groter of gelijk aan 0 zijn',
+      });
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
+    } else if (!this.isSmallerThan(Number(entry.share.value), 100)) {
+      entry.share.errors.pushObject({
+        message:
+          'Het gemeentelijke aandeel in kosten mag niet hoger liggen dan 100%',
+      });
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        null
+      );
+    } else {
+      this.updateTripleObject(
+        this.estimatedCostTableSubject,
+        validEstimatedCostTable,
+        true
+      );
+    }
 
-      this.updateTripleObject(entry.estimatedCostEntrySubject, entry['share'].predicate, entry['share'].value);
+    this.updateTripleObject(
+      entry.estimatedCostEntrySubject,
+      entry['share'].predicate,
+      entry['share'].value
+    );
   }
 
   isPositiveInteger(value) {
@@ -341,5 +401,4 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
   isSmallerThan(value, max) {
     return value <= max;
   }
-
 }

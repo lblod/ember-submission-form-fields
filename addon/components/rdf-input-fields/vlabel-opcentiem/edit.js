@@ -11,14 +11,16 @@ const uriTemplate = 'http://data.lblod.info/tax-rates';
 const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
 
 const TaxRateType = new rdflib.NamedNode(`${lblodBesluit}/TaxRate`);
-const hasAdditionalTaxRate = new rdflib.NamedNode(`${lblodBesluit}/hasAdditionalTaxRate`);
+const hasAdditionalTaxRate = new rdflib.NamedNode(
+  `${lblodBesluit}/hasAdditionalTaxRate`
+);
 const schemaPrice = new rdflib.NamedNode(`http://schema.org/price`);
 const taxRate = new rdflib.NamedNode(`${lblodBesluit}/taxRate`);
 
 class TaxEntry {
-  @tracked oldValue
-  @tracked value
-  @tracked errors
+  @tracked oldValue;
+  @tracked value;
+  @tracked errors;
 
   constructor({ value, errors }) {
     this.oldValue = value;
@@ -38,9 +40,9 @@ class TaxEntry {
 export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFieldComponent {
   inputId = 'checkbox-' + guidFor(this);
 
-  @tracked taxRateSubject = null
-  @tracked fields = []
-  @tracked differentiatie = false
+  @tracked taxRateSubject = null;
+  @tracked fields = [];
+  @tracked differentiatie = false;
 
   constructor() {
     super(...arguments);
@@ -60,112 +62,146 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
   }
 
   get hasTaxRate() {
-    if (!this.taxRateSubject)
-      return false;
+    if (!this.taxRateSubject) return false;
+    // TODO: the semantics from any in forking-store and rdflibstore are different,
+    // that's why we use match. (to easy potential migration)_
     else
-      // TODO: the semantics from any in forking-store and rdflibstore are different,
-      // that's why we use match. (to easy potential migration)_
-      return this.storeOptions.store.match(this.sourceNode,
-                                           taxRate,
-                                           this.taxRateSubject,
-                                           this.storeOptions.sourceGraph).length > 0;
+      return (
+        this.storeOptions.store.match(
+          this.sourceNode,
+          taxRate,
+          this.taxRateSubject,
+          this.storeOptions.sourceGraph
+        ).length > 0
+      );
   }
 
   get hasPrices() {
-    return this.storeOptions.store.match(this.taxRateSubject,
-                                         schemaPrice,
-                                         undefined,
-                                         this.storeOptions.sourceGraph).length > 0;
+    return (
+      this.storeOptions.store.match(
+        this.taxRateSubject,
+        schemaPrice,
+        undefined,
+        this.storeOptions.sourceGraph
+      ).length > 0
+    );
   }
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const triples =  matches.triples;
+    const triples = matches.triples;
 
     if (triples.length) {
       this.taxRateSubject = triples[0].object; // assuming only one per form
 
       const prices = matches.values;
       for (let price of prices) {
-        this.fields.pushObject( new TaxEntry({
-          value: price.value,
-          errors: []
-        }));
+        this.fields.pushObject(
+          new TaxEntry({
+            value: price.value,
+            errors: [],
+          })
+        );
       }
     }
 
-    const statements = this.storeOptions.store.match(this.storeOptions.sourceNode,
-                                                     hasAdditionalTaxRate,
-                                                     undefined,
-                                                     this.storeOptions.sourceGraph);
+    const statements = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      hasAdditionalTaxRate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
     if (statements.length > 0) {
-      this.differentiatie = statements[0].object.value == "1"; // There is a bug in conversion from rdflib
+      this.differentiatie = statements[0].object.value == '1'; // There is a bug in conversion from rdflib
     }
   }
 
   updateAdditionalTaxRateTriple(newValue) {
-    const statements = this.storeOptions.store.match(this.storeOptions.sourceNode,
-                                                     hasAdditionalTaxRate,
-                                                     undefined,
-                                                     this.storeOptions.sourceGraph);
+    const statements = this.storeOptions.store.match(
+      this.storeOptions.sourceNode,
+      hasAdditionalTaxRate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
     this.storeOptions.store.removeStatements(statements);
 
-    this.storeOptions.store.addAll([{
-      subject: this.storeOptions.sourceNode,
-      predicate: hasAdditionalTaxRate,
-      object: newValue,
-      graph: this.storeOptions.sourceGraph
-    }]);
+    this.storeOptions.store.addAll([
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: hasAdditionalTaxRate,
+        object: newValue,
+        graph: this.storeOptions.sourceGraph,
+      },
+    ]);
   }
 
   createTaxRate() {
     this.taxRateSubject = new rdflib.NamedNode(`${uriTemplate}/${uuidv4()}`);
-    const triples = [ { subject: this.taxRateSubject,
-                        predicate: RDF('type'),
-                        object: TaxRateType, graph:
-                        this.storeOptions.sourceGraph },
-                      { subject: this.storeOptions.sourceNode,
-                        predicate: taxRate,
-                        object: this.taxRateSubject,
-                        graph: this.storeOptions.sourceGraph }
-                    ];
+    const triples = [
+      {
+        subject: this.taxRateSubject,
+        predicate: RDF('type'),
+        object: TaxRateType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: taxRate,
+        object: this.taxRateSubject,
+        graph: this.storeOptions.sourceGraph,
+      },
+    ];
     this.storeOptions.store.addAll(triples);
   }
 
   removeTaxRate() {
-    const taxRateTriples = this.storeOptions.store.match(this.taxRateSubject, undefined, undefined, this.storeOptions.sourceGraph);
+    const taxRateTriples = this.storeOptions.store.match(
+      this.taxRateSubject,
+      undefined,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
     const triples = [
       ...taxRateTriples,
-      { subject: this.storeOptions.sourceNode,
+      {
+        subject: this.storeOptions.sourceNode,
         predicate: taxRate,
         object: this.taxRateSubject,
-        graph: this.storeOptions.sourceGraph }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.removeStatements(triples);
   }
 
-  updatePriceTriple(oldValue, newValue){
+  updatePriceTriple(oldValue, newValue) {
     this.storeOptions.store.removeStatements([
-       { subject: this.taxRateSubject, predicate: schemaPrice, object: oldValue, graph: this.storeOptions.sourceGraph },
+      {
+        subject: this.taxRateSubject,
+        predicate: schemaPrice,
+        object: oldValue,
+        graph: this.storeOptions.sourceGraph,
+      },
     ]);
 
     if (newValue)
-      this.storeOptions.store.addAll([{ subject: this.taxRateSubject,
-                                        predicate: schemaPrice,
-                                        object: newValue,
-                                        graph: this.storeOptions.sourceGraph}
-                                     ]);
+      this.storeOptions.store.addAll([
+        {
+          subject: this.taxRateSubject,
+          predicate: schemaPrice,
+          object: newValue,
+          graph: this.storeOptions.sourceGraph,
+        },
+      ]);
   }
 
   @action
   addPrice() {
-    this.fields.pushObject(new TaxEntry({ value: "", errors: [] }));
+    this.fields.pushObject(new TaxEntry({ value: '', errors: [] }));
   }
 
   @action
   updatePrice(field) {
-    if (!this.hasTaxRate)
-      this.createTaxRate();
+    if (!this.hasTaxRate) this.createTaxRate();
 
     field.value = field.value.trim();
     this.updatePriceTriple(field.oldValue, field.value);
@@ -177,11 +213,10 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
 
   @action
   removePrice(field) {
-    if(this.taxRateSubject) {
+    if (this.taxRateSubject) {
       this.updatePriceTriple(field.value, null);
 
-      if (!this.hasPrices)
-        this.removeTaxRate();
+      if (!this.hasPrices) this.removeTaxRate();
     }
     this.fields.removeObject(field);
 
@@ -193,8 +228,7 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
   toggleDifferentiatie(event) {
     this.differentiatie = event.target.checked;
 
-    if (this.differentiatie && this.hasTaxRate)
-      this.removeTaxRate();
+    if (this.differentiatie && this.hasTaxRate) this.removeTaxRate();
 
     this.updateAdditionalTaxRateTriple(this.differentiatie);
 
