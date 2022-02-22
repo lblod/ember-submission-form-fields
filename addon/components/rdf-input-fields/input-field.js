@@ -48,7 +48,7 @@ export default class InputFieldComponent extends Component {
       this.args.field.uri,
       this.storeOptions
     );
-    return validationTypes.any(
+    return validationTypes.some(
       (v) =>
         v.value ===
         'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
