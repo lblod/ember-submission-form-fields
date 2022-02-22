@@ -18,10 +18,21 @@
         </div>
       </div>
     </m.sidebar>
-    <m.content @scroll={{true}}>
-      <div class="au-o-box au-o-box--large au-u-2-3@medium au-u-1-1">
-        {{outlet}}
-      </div>
+    <m.content @scroll={{false}}>
+      <AuToolbar @border="bottom" @size="small" @skin="tint">
+        <AuToolbarGroup>
+          <AuToggleSwitch
+            @label="Read only mode"
+            @checked={{this.formConfig.isReadOnly}}
+            @onChange={{fn (mut this.formConfig.isReadOnly)}}
+          />
+        </AuToolbarGroup>
+      </AuToolbar>
+      <AuBodyContainer @scroll={{true}}>
+        <div class="au-o-box au-o-box--large au-u-2-3@medium au-u-1-1">
+          {{outlet}}
+        </div>
+      </AuBodyContainer>
     </m.content>
   </AuMainContainer>
 </AuApp>

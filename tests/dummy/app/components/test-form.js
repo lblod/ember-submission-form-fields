@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { ForkingStore } from '@lblod/ember-submission-form-fields';
+import { inject as service } from '@ember/service';
 import rdflib from 'browser-rdflib';
 import { task } from 'ember-concurrency';
 
@@ -18,6 +19,8 @@ const FORM = new rdflib.Namespace('http://lblod.data.gift/vocabularies/forms/');
 const RDF = new rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 
 export default class TestFormComponent extends Component {
+  @service formConfig;
+
   @tracked form;
   @tracked formStore;
   graphs = FORM_GRAPHS;
