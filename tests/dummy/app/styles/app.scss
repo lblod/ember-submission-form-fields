@@ -1,1 +1,30 @@
 @import "ember-appuniversum";
+
+// These styles should be part of the consuming app, or ideally appuniversum
+
+
+// copied from loket
+.au-c-close {
+  position: absolute;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  top: $au-unit-small;
+  right: $au-unit-small;
+  color: $au-gray-700;
+
+  &:hover {
+    color: $au-gray-600;
+  }
+
+  &:focus {
+    outline: $au-outline;
+  }
+}
+
+.au-c-close--large {
+  top: $au-unit;
+  right: $au-unit;
+}
