@@ -16,6 +16,7 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
 
   @tracked selected = null;
   @tracked options = [];
+  noop = () => {};
 
   get subset() {
     return this.options.slice(0, 50);

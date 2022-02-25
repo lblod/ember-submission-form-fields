@@ -10,6 +10,7 @@ export default class FormInputFieldsConceptSchemeSelectorShowComponent extends I
 
   @tracked selected = null;
   @tracked options = [];
+  noop = () => {};
 
   constructor() {
     super(...arguments);

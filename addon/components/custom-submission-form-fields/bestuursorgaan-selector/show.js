@@ -11,6 +11,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
 
   @tracked selected = null;
   @tracked options = [];
+  noop = () => {};
 
   constructor() {
     super(...arguments);
