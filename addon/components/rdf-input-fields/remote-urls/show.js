@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { guidFor } from '@ember/object/internals';
+import { A } from '@ember/array';
 
 import { RDF } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
@@ -12,7 +13,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldCo
 
   @service store;
 
-  @tracked remoteUrls = [];
+  @tracked remoteUrls = A();
+  @tracked hasRemoteUrlErrors = false;
 
   constructor() {
     super(...arguments);
@@ -29,9 +31,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldCo
           this.remoteUrls.pushObject(record);
         }
       } catch (error) {
-        this.errors.pushObject({
-          resultMessage: 'Er ging iets fout bij het ophalen van de addressen.',
-        });
+        this.hasRemoteUrlErrors = true;
       }
     }
   }
@@ -56,7 +56,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldCo
       page: { size: 1 },
     });
     if (remoteUrls.length) {
-      return remoteUrls.get('firstObject');
+      return remoteUrls.firstObject;
     } else {
       throw `No remote-url could be found for ${remoteObjectUri}`;
     }
