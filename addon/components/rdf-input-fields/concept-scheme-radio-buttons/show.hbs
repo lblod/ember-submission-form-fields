@@ -1,20 +1,17 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel for={{this.inputId}}>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
 <ul id={{this.inputId}}>
   {{#each this.options as |option|}}
     <li>
-      <AuControlRadio @identifier="{{@field.uri}}/<{{option.value}}"
-                      @name={{@field.uri.value}}
-                      @label={{option.label}}
-                      @value={{option.label}}
-                      @disabled={{true}}
-                      checked={{if (eq this.value option.value) true false}}/>
+      <AuControlRadio
+        @identifier="{{@field.uri}}/<{{option.value}}"
+        @name={{@field.uri.value}}
+        @label={{option.label}}
+        @value={{option.label}}
+        @disabled={{true}}
+        checked={{eq this.value option.value}}
+      />
     </li>
   {{/each}}
 </ul>
-
-
