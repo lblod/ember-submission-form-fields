@@ -1,11 +1,13 @@
+import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import {
+  RDF,
+  FORM,
   removeTriples,
   validationResultsForField,
   validationTypesForField,
 } from '@lblod/submission-form-helpers';
-import { RDF, FORM } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
@@ -28,8 +30,8 @@ export default class InputFieldComponent extends Component {
   }
 
   get errors() {
-    if (this.canShowErrors) return this.validations.filter((r) => !r.valid);
-    else return [];
+    if (this.canShowErrors) return A(this.validations.filter((r) => !r.valid));
+    else return A();
   }
 
   get hasErrors() {
