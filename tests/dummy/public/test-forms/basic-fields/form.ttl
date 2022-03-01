@@ -223,3 +223,22 @@ fields:8bdb4749-74cd-4299-91a2-abbf47c33474 a form:Field ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
 fieldGroups:main form:hasField fields:8bdb4749-74cd-4299-91a2-abbf47c33474 .
+
+##########################################################
+# Search
+##########################################################
+fields:a43c7bfe-0a12-4645-aa6d-44b24eddbd3f a form:Field ;
+    mu:uuid "a43c7bfe-0a12-4645-aa6d-44b24eddbd3f";
+    sh:name "Search" ;
+    sh:order 330 ;
+    sh:path ext:e0d63253-04d9-4362-a644-2bb83b32e7c4 ;
+    form:options """{}""" ;
+    form:displayType displayTypes:search ;
+    form:validations
+    [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Dit veld is verplicht." ;
+      sh:path ext:e0d63253-04d9-4362-a644-2bb83b32e7c4 ] ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:a43c7bfe-0a12-4645-aa6d-44b24eddbd3f .
