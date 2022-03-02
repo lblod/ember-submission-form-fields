@@ -264,7 +264,8 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     const positiveCosts = entries.filter(entry => parseInt(entry.object.value) > 0 );
     if(!positiveCosts.length){
       this.errors.pushObject({
-        message: 'Mintens één kosten veld moet een waarde groter dan 0 bevatten.'
+        message:
+          'Minstens één kosten veld moet een waarde groter dan 0 bevatten.',
       });
       this.updateTripleObject(this.estimatedCostTableSubject, validEstimatedCostTable, null);
     }
