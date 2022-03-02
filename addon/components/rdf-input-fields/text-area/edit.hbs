@@ -3,17 +3,16 @@
   {{#if this.isRequired}}
     <AuPill>Verplicht</AuPill>
   {{/if}}
-  {{#if this.maxLength}}
-    <AuPill @skin={{unless this.hasRemainingCharacters "error"}} >Resterende karakters: {{this.remainingCharacters}}</AuPill>
-  {{/if}}
 </AuLabel>
 <AuTextarea
-        id="{{this.inputId}}"
-        rows="5"
-        @width="block"
-        @value={{this.value}}
-        onblur={{this.updateValue}}/>
-
+  id="{{this.inputId}}"
+  rows="5"
+  @width="block"
+  @value={{this.value}}
+  onblur={{this.updateValue}}/>
+{{#if this.maxLength}}
+  <AuPill @skin={{unless this.hasRemainingCharacters "error"}} >Resterende karakters: {{this.remainingCharacters}}</AuPill>
+{{/if}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}
