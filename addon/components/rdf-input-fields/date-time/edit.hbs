@@ -1,27 +1,26 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel
+  @error={{this.hasErrors}}
+  @required={{this.isRequired}}
+  for={{this.inputId}}
+>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
 <div class="au-o-grid au-o-grid--flush">
-  <div class="au-o-grid__item au-u-2-4">
-    <div class="au-c-date-picker-container {{if this.errors "au-c-date-picker-container--error"}}">
-      <div class="datepicker">
-      <WuDatepickerInput 
-              data-test-field-uri={{@field.uri.value}}
-              id="{{this.inputId}}"
-              class="au-c-input au-c-input--block"
-              @dateFormat="DD.MM.YYYY"
-              @onChange={{this.updateValue}}
-              @rawValue={{this.value}}
-      />
-      </div>
-    </div>
-    <AuHelpText class="au-u-margin-bottom-tiny {{if this.errors "au-c-help-text--error"}}">Datum formaat: DD.MM.JJJJ
+  <div class="au-o-grid__item au-u-3-4">
+    <AuDatePicker
+      @id={{this.inputId}}
+      @error={{this.hasErrors}}
+      @value={{this.value}}
+      @onChange={{this.updateValue}}
+      @localization={{this.localization}}
+      @adapter={{this.adapter}}
+    />
+
+    <AuHelpText @error={{this.hasErrors}}>
+      Datum formaat: DD.MM.JJJJ
     </AuHelpText>
     {{#each this.errors as |error|}}
-      <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+      <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
     {{/each}}
 
     {{!--  Temporally disabled hour & min input fields
