@@ -32,6 +32,10 @@ export default class InputFieldComponent extends Component {
     else return [];
   }
 
+  get hasErrors() {
+    return this.errors.length > 0;
+  }
+
   get isValid() {
     return this.validations.filter((r) => !r.valid).length === 0;
   }
