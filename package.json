@@ -36,11 +36,9 @@
     "ember-cli-htmlbars": "^6.0.1",
     "ember-concurrency": "^2.0.0",
     "ember-math-helpers": "^2.18.1",
-    "ember-moment": "^8.0.0",
     "ember-test-selectors": "^5.0.0 || ^6.0.0",
     "ember-truth-helpers": "^3.0.0",
     "forking-store": "^1.0.0",
-    "moment": "~2.24.0",
     "uuid": "^7.0.3"
   },
   "peerDependencies": {
@@ -61,7 +59,6 @@
     "ember-cli": "~3.28.5",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-moment-shim": "^3.8.0",
     "ember-cli-release-tag": "^0.1.5",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
