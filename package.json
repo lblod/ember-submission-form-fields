@@ -23,7 +23,7 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
-    "@lblod/submission-form-helpers": "^1.2.5",
+    "@lblod/submission-form-helpers": "^1.2.6",
     "browser-rdflib": "^1.1.0",
     "clipboardy": "^2.3.0",
     "ember-auto-import": "^1.6.0",
