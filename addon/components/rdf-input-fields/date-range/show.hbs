@@ -1,22 +1,45 @@
-<div class="js-accordion js-accordion--open">
-  <AuLabel>{{@field.label}}</AuLabel>
-  <AuButtonGroup @inline="true">
-    <AuButton
-        class="{{unless this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Alle meldingen</AuButton>
-    <AuButton
-        class="{{if this.isEnabled "is-active" }}" @skin="secondary" @disabled="true">Specifieke periode</AuButton>
-  </AuButtonGroup>
+<AuLabel>{{@field.label}}</AuLabel>
+<AuButtonGroup @inline={{true}}>
+  <AuButton
+    @skin={{if this.isEnabled "secondary"}}
+    @disabled={{true}}
+    class={{unless this.isEnabled "is-active"}}
+  >
+    Alle meldingen
+  </AuButton>
+  <AuButton
+    @skin={{unless this.isEnabled "secondary"}}
+    @disabled={{true}}
+    class={{if this.isEnabled "is-active"}}
+  >
+    Specifieke periode
+  </AuButton>
+</AuButtonGroup>
 
-  {{#if this.isEnabled}}
-    <div class="accordion__content">
-      <AuInput
-              disabled={{true}}
-              @value={{moment-format this.from "DD.MM.YYYY"}}
-      />
-      <AuInput
-              disabled={{true}}
-              @value={{moment-format this.to "DD.MM.YYYY"}}
-      />
+{{#if this.isEnabled}}
+  <div class="au-u-margin-top-small">
+    <div class="au-o-grid au-o-grid--tiny">
+      <div class="au-o-grid__item au-u-1-5">
+        <AuLabel for={{this.inputId}} @inline={{true}}>Van</AuLabel>
+      </div>
+      <div class="au-o-grid__item au-u-4-5">
+        <AuInput
+          @disabled={{true}}
+          @value={{this.formattedFrom}}
+          id={{this.inputId}}
+        />
+      </div>
+
+      <div class="au-o-grid__item au-u-1-5">
+        <AuLabel for={{this.inputIdTo}} @inline={{true}}>Tot</AuLabel>
+      </div>
+      <div class="au-o-grid__item au-u-4-5">
+        <AuInput
+          @disabled={{true}}
+          @value={{this.formattedTo}}
+          id={{this.inputIdTo}}
+        />
+      </div>
     </div>
-  {{/if}}
-</div>
+  </div>
+{{/if}}

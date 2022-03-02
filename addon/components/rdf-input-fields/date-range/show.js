@@ -2,6 +2,7 @@ import SimpleInputFieldComponent from '../simple-value-input-field';
 import rdflib from 'browser-rdflib';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
+import { formatDate } from '@lblod/ember-submission-form-fields/utils/date';
 
 import { SHACL } from '@lblod/submission-form-helpers';
 
@@ -10,7 +11,8 @@ const DATE_RANGE = new rdflib.Namespace(
 );
 
 export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFieldComponent {
-  inputId = 'date-range-' + guidFor(this);
+  inputId = 'date-range-from-' + guidFor(this);
+  inputIdTo = 'date-range-to-' + guidFor(this);
 
   @tracked from;
   @tracked to;
@@ -48,12 +50,20 @@ export default class FormInputFieldsDateRangeShowComponent extends SimpleInputFi
     const to = store.any(sourceNode, this.paths.to, undefined, sourceGraph);
 
     if (from && to) {
-      this.from = from.value;
-      this.to = to.value;
+      this.from = new Date(from.value);
+      this.to = new Date(to.value);
     }
   }
 
   get isEnabled() {
     return !!(this.from && this.to);
+  }
+
+  get formattedFrom() {
+    return this.from ? formatDate(this.from) : '';
+  }
+
+  get formattedTo() {
+    return this.to ? formatDate(this.to) : '';
   }
 }
