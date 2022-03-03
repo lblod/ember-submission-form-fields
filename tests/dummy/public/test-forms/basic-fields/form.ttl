@@ -64,6 +64,25 @@ fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 a form:Field ;
 fieldGroups:main form:hasField fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 .
 
 ##########################################################
+# Concept scheme multi select checkboxes
+##########################################################
+fields:5c854e33-7aa1-4571-b2e5-8ced8969f6e5 a form:Field ;
+    mu:uuid "5c854e33-7aa1-4571-b2e5-8ced8969f6e5";
+    sh:name "Concept scheme multi select checkbox" ;
+    sh:order 192 ;
+    sh:path ext:c41dbe1d-44b0-4672-b33d-3b27eff7195d ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ext:c41dbe1d-44b0-4672-b33d-3b27eff7195d] ;
+    form:options  """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
+    form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11.
+
+fieldGroups:main form:hasField fields:5c854e33-7aa1-4571-b2e5-8ced8969f6e5 .
+
+##########################################################
 # Radio buttons
 ##########################################################
 fields:48cad714-6ba0-4900-b5c3-f85879a7f580 a form:Field ;
