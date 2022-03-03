@@ -86,14 +86,14 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
 
     // 5. create a new list to render, merging already (rendered) children, with new children.
     // We don't want to re-render components, to avoid flickering behaviour and state loss.
-    const mergedChildren = [];
+    const mergedChildren = A();
 
     for(const child of children){
       const existingField = this.children.find(eField => eField.uri.equals(child.uri));
       if (existingField) {
-        mergedChildren.push(existingField);
+        mergedChildren.pushObject(existingField);
       } else {
-        mergedChildren.push(child);
+        mergedChildren.pushObject(child);
       }
     }
 
