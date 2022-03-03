@@ -1,11 +1,11 @@
 import InputFieldComponent from '../input-field';
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
-import { triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
-import { RDF } from '@lblod/submission-form-helpers';
+import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 
 const uriTemplate = 'http://data.lblod.info/tax-rates';
 const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
@@ -38,10 +38,10 @@ class TaxEntry {
 }
 
 export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFieldComponent {
-  inputId = 'checkbox-' + guidFor(this);
+  amountColumnId = 'amount-column-' + guidFor(this);
 
   @tracked taxRateSubject = null;
-  @tracked fields = [];
+  @tracked fields = A();
   @tracked differentiatie = false;
 
   constructor() {
@@ -50,15 +50,15 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
   }
 
   get isTaxRatesEmpty() {
-    return this.fields.length == 0;
+    return this.fields.length === 0;
   }
 
   get showTable() {
-    return !this.differentiatie || this.errors.length > 0;
+    return this.differentiatie || !this.isTaxRatesEmpty;
   }
 
   get showDifferentiatie() {
-    return this.isTaxRatesEmpty || this.errors.length > 0;
+    return this.isTaxRatesEmpty;
   }
 
   get hasTaxRate() {
@@ -225,8 +225,8 @@ export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFi
   }
 
   @action
-  toggleDifferentiatie(event) {
-    this.differentiatie = event.target.checked;
+  toggleDifferentiatie(isChecked) {
+    this.differentiatie = isChecked;
 
     if (this.differentiatie && this.hasTaxRate) this.removeTaxRate();
 

@@ -1,3 +1,4 @@
+import { A } from '@ember/array';
 import InputFieldComponent from '../input-field';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
@@ -12,10 +13,10 @@ const hasAdditionalTaxRate = new rdflib.NamedNode(
 const taxRate = new rdflib.NamedNode(`${lblodBesluit}/taxRate`);
 
 export default class FormInputFieldsVlabelOpcentiemShowComponent extends InputFieldComponent {
-  inputId = 'checkbox-' + guidFor(this);
+  amountColumnId = 'amount-column-' + guidFor(this);
 
   @tracked taxRateSubject = null;
-  @tracked fields = [];
+  @tracked fields = A();
   @tracked differentiatie = false;
 
   constructor() {
@@ -24,17 +25,18 @@ export default class FormInputFieldsVlabelOpcentiemShowComponent extends InputFi
   }
 
   get isTaxRatesEmpty() {
-    return this.fields.length == 0;
+    return this.fields.length === 0;
   }
 
   get showTable() {
-    return !this.differentiatie || this.errors.length > 0;
+    return !this.differentiatie || !this.isTaxRatesEmpty;
   }
 
   get showDifferentiatie() {
-    return this.isTaxRatesEmpty || this.errors.length > 0;
+    return this.isTaxRatesEmpty;
   }
 
+  // TODO: I think this isn't used?
   get hasTaxRate() {
     if (!this.taxRateSubject) return false;
     // TODO: the semantics from any in forking-store and rdflibstore are different,
