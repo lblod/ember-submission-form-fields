@@ -1,8 +1,5 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel for={{this.inputId}}>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
 <PowerSelect
   @triggerId={{this.inputId}}
@@ -10,6 +7,7 @@
   @selected={{this.selected}}
   @options={{this.options}}
   @onChange={{this.noop}}
-  as |concept|>
+  as |concept|
+>
   {{concept.label}}
 </PowerSelect>
