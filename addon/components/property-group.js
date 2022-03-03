@@ -84,15 +84,20 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       this.children.removeObjects(deletes);
     }
 
-    // 5) insert new fields or move old fields accordingly
-    children.forEach((field, i) => {
-      const existingField = this.children.find(eField => eField.uri.equals(field.uri));
+    // 5. create a new list to render, merging already (rendered) children, with new children.
+    // We don't want to re-render components, to avoid flickering behaviour and state loss.
+    const mergedChildren = A();
+
+    for(const child of children){
+      const existingField = this.children.find(eField => eField.uri.equals(child.uri));
       if (existingField) {
-        this.children.replace(i, 1, [existingField]);
+        mergedChildren.pushObject(existingField);
       } else {
-        this.children.replace(i, 1, [field]);
+        mergedChildren.pushObject(child);
       }
-    });
+    }
+
+    this.children = mergedChildren;
 
     // 6) update the validation
     this.validations = validationResultsForField(group.uri, this.storeOptions);
