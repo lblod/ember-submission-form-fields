@@ -14,7 +14,7 @@
 </ul>
 <br>
 <br>
-<AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
+<AuLabel @error={{this.hasErrors}} for={{this.inputFor}}>
   {{@field.label}}
 </AuLabel>
 {{#each this.errors as |error|}}
