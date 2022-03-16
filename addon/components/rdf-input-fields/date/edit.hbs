@@ -14,6 +14,8 @@
       @onChange={{this.updateValue}}
       @localization={{this.localization}}
       @adapter={{this.adapter}}
+      {{! TODO: This uses "private" apis since AuDatePicker doesn't support a blur event yet }}
+      {{on "duetBlur" (fn (mut this.hasBeenFocused) true)}}
     />
   </div>
 </div>
