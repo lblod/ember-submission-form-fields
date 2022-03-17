@@ -1,0 +1,61 @@
+{{!--
+<h3 class="au-u-h5">Hieronder vind je alle acties die gesubsidieerd worden door het Plan Samenleven.</h3>
+<ul>
+  <li class="au-c-help-text">- Geef in de tweede kolom aan wat het huidige bereik is voor deze actie (zonder middelen van het Plan Samenleven). Dit moet enkel ingevuld worden als jullie ook bijkomende middelen hiervoor inzetten.</li>
+  <li class="au-c-help-text">- Geef in de derde kolom aan welke bijkomende doelstellingen jullie bestuur wenst te realiseren voor het Plan Samenleven. Enkel deze bijkomende acties komen in aanmerking voor subsidiering door de Vlaamse overheid.</li>
+  <li class="au-c-help-text">- In de vierde kolom ziet u het bedrag dat in aanmerking komt voor subsidiering door de Vlaamse overheid. Er wordt verwacht dat het bestuur voor deze acties evenveel financiert.</li>
+  <li class="au-c-help-text">- Geef in de vierde kolom aan de hand van cijfers aan wat de prioriteit is per actie waarop het bestuur bijkomend inzet. Wanneer er niet voldoende middelen zijn, zal de Vlaamse overheid aan de hand van deze prioritering bepalen naar welke acties de subsidies gaan. Wanneer jullie bestuur intekent voor bv. 5 acties, dan moeten de nummer 1 t.e.m. 5 verdeeld worden over deze acties.</li>
+</ul> --}}
+
+
+<AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
+  {{@field.label}}
+</AuLabel>
+{{#each this.errors as |error|}}
+    <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
+{{/each}}
+
+<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small">
+  <caption class="au-u-hidden-visually">Algemene beleidsdoelstellingen</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        Vlaamse doelstellingen Plan Samenleven
+      </th>
+      <th scope="col">
+        Jullie huidige gemeentelijk bereik <br>
+        <span class="au-u-regular">(enkel invullen als jullie bijkomende acties doen)</span>
+      </th>
+      <th scope="col">
+        Jullie gepland bereik in kader van het Plan Samenleven
+      </th>
+      <th scope="col">
+        Bijdrage Vlaanderen
+        <span class="au-u-regular">(er wordt verwacht dat het bestuur hetzelfde bedrag bijdraagt)</span>
+      </th>
+      <th scope="col">
+        Prioritering
+        <span class="au-u-regular">(iedere doelstelling moet een aparte prioriteit hebben: 1, 2, 3 ...)</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow
+      @storeOptions={{this.storeOptions}}
+      @planTableSubject={{this.planTableSubject}}
+      @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/7f7f1d20-942d-48ac-85a0-748db7f3d835"
+      @multiplier="12500"
+      @maxRange="1"
+      @onUpdateRow={{this.validate}}
+      as |row|>
+      <row.description>
+        <AuHeading  @level="2" @skin="6">
+            Veiligheid en leefbaarheid:
+        </AuHeading>
+        <p>
+          Ontwikkelen van een lokaal actieplan voor de aanpak van negatieve polarisatie en zetten in op de uitrol ervan.
+        </p>
+      </row.description>
+    </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
+  </tbody>
+</table>
