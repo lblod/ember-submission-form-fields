@@ -16,6 +16,7 @@ const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const planTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}PlanLivingTogetherTablee`);
 const planTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}planLivingTogetherTable`);
 const plannedRangePredicate = new rdflib.NamedNode(`${planBaseUri}plannedRange`);
+const contributionPredicate = new rdflib.NamedNode(`${planBaseUri}contribution`);
 const hasInvalidRowPredicate = new rdflib.NamedNode(`${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`);
 const validPlanTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validPlanLivingTogetherTable`);
 
@@ -24,6 +25,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
   @tracked planTableSubject = null;
   @tracked errors = [];
   @tracked entries = [];
+  @tracked totalContribution = 0;
 
   get hasPlanTable() {
     if (!this.planTableSubject)
@@ -111,7 +113,20 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
   validate(){
     this.errors = [];
 
-    const entries = this.storeOptions.store.match(
+    // Calculate total contribution (column D)
+    const contributionEntries = this.storeOptions.store.match(
+      undefined,
+      contributionPredicate,
+      undefined,
+      this.storeOptions.sourceGraph
+    );
+
+    this.totalContribution = contributionEntries.reduce((prev, curr) =>
+      prev + Number(curr.object.value), 0);
+
+
+    // check that at least 1 value set in column C
+    const rangeEntries = this.storeOptions.store.match(
       undefined,
       plannedRangePredicate,
       undefined,
@@ -119,7 +134,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
     );
 
     const invalidRow = this.storeOptions.store.any(this.planTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
-    const hasPlannedRange = entries.filter(entry => parseInt(entry.object.value) > 0 );
+    const hasPlannedRange = rangeEntries.filter(entry => parseInt(entry.object.value) > 0 );
 
     if(!hasPlannedRange.length){
       this.errors.pushObject({
