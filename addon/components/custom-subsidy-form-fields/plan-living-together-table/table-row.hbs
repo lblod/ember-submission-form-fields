@@ -12,7 +12,7 @@
       @error={{if this.currentRangeErrors true false}}
       {{on "blur" this.update}}
     />
-    lokaal actieplan
+    {{@rangeLabel}}
 
     {{#each this.currentRangeErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
@@ -28,7 +28,7 @@
       @error={{if this.plannedRangeErrors true false}}
       {{on "blur" this.update}}
     />
-    lokaal actieplan (max. 1)
+    {{@rangeLabel}} (max. {{@maxRange}})
 
     {{#each this.plannedRangeErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
