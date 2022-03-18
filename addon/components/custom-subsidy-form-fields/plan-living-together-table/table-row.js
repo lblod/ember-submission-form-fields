@@ -94,7 +94,6 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
     this.tableEntryUri = subject;
     this.currentRange = this.storeOptions.store.match(this.tableEntryUri, currentRangePredicate, null, this.storeOptions.sourceGraph)[0].object.value;
     this.plannedRange = this.storeOptions.store.match(this.tableEntryUri, plannedRangePredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    console.log(this.plannedRange)
     this.priority = this.storeOptions.store.match(this.tableEntryUri, priorityPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
   }
 
