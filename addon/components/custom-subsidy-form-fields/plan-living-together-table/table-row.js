@@ -133,7 +133,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
       {
         subject: tableEntryUri,
         predicate: currentRangePredicate,
-        object: null,
+        object: 0,
         graph: this.storeOptions.sourceGraph
       }
     );
