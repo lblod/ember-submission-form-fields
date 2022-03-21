@@ -13,7 +13,7 @@ const planBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/plan-samenleve
 const planTableBaseUri = 'http://data.lblod.info/plan-living-together-tables';
 
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
-const planTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}PlanLivingTogetherTablee`);
+const planTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}PlanLivingTogetherTable`);
 const planTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}planLivingTogetherTable`);
 const plannedRangePredicate = new rdflib.NamedNode(`${planBaseUri}plannedRange`);
 const contributionPredicate = new rdflib.NamedNode(`${planBaseUri}contribution`);
@@ -141,9 +141,9 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
         message:
           'Minstens één gepland bereik veld moet een waarde groter dan 0 bevatten.',
       });
-      this.updateTripleObject(this.estimatedCostTableSubject, validPlanTable, null);
+      this.updateTripleObject(this.planTableSubject, validPlanTable, null);
     }
-    if(invalidRow){
+    else if(invalidRow){
       this.errors.pushObject({
         message: 'Een van de rijen is niet correct ingevuld'
       });
