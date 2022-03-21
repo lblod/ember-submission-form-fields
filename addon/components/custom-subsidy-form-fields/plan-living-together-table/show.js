@@ -1,4 +1,4 @@
-import Component from '@glimmer/component';
+import CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent from "./edit";
 
-export default class CustomSubsidyFormFieldsPlanLivingTogetherTableShowComponent extends Component {
+export default class CustomSubsidyFormFieldsPlanLivingTogetherTableShowComponent extends CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent {
 }
