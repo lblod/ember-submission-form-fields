@@ -37,6 +37,6 @@ trigger:
 
 kind: secret
 name: npm_access_token
-data: W/iOS6f5egD3GBypICWZbUM1+fEcZKN9fymqhDMmHOMiN04PuMn1DjV0HYqh3GxoGWbiNR8giBKATlONUvNvEA=
+data: x/OM1TZuZRqXclL11UY6mxZzHOjJzJ6YUjeaPiI+q7a3cbRbQ5wSyTePa6ETwma8s+183auWQVam3WbCY2YO+p4GYP8=
 
 ...
