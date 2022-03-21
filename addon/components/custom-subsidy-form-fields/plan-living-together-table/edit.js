@@ -136,16 +136,16 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
     const invalidRow = this.storeOptions.store.any(this.planTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
     const hasPlannedRange = rangeEntries.filter(entry => parseInt(entry.object.value) > 0 );
 
-    if(!hasPlannedRange.length){
+    if(invalidRow){
       this.errors.pushObject({
-        message:
-          'Minstens één gepland bereik veld moet een waarde groter dan 0 bevatten.',
+        message: 'Een van de rijen is niet correct ingevuld'
       });
       this.updateTripleObject(this.planTableSubject, validPlanTable, null);
     }
-    else if(invalidRow){
+    else if(!hasPlannedRange.length){
       this.errors.pushObject({
-        message: 'Een van de rijen is niet correct ingevuld'
+        message:
+          'Minstens één gepland bereik veld moet een waarde groter dan 0 bevatten.',
       });
       this.updateTripleObject(this.planTableSubject, validPlanTable, null);
     }
