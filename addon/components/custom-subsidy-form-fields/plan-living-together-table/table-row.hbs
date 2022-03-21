@@ -12,7 +12,7 @@
       @error={{if this.currentRangeErrors true false}}
       {{on "blur" this.update}}
     />
-    {{@rangeLabel}}
+    <div class="au-u-margin-top-tiny">{{@rangeLabel}}</div>
 
     {{#each this.currentRangeErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
@@ -28,7 +28,7 @@
       @error={{if this.plannedRangeErrors true false}}
       {{on "blur" this.update}}
     />
-    {{@rangeLabel}} (max. {{@maxRange}})
+    <div class="au-u-margin-top-tiny">{{@rangeLabel}} (max. {{@maxRange}})</div>
 
     {{#each this.plannedRangeErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
