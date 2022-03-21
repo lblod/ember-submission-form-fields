@@ -32,8 +32,11 @@ steps:
 trigger:
   event:
     - tag
+
 ---
+
 kind: secret
 name: npm_access_token
-data: ysIrFxY9MRSM3Encnin2nevctnK3AJOk2foHrNVrENcU53k9xijTaF9XTRSmS97qDd26Zm1c6Vn/+FmDklCv6Q=
+data: W/iOS6f5egD3GBypICWZbUM1+fEcZKN9fymqhDMmHOMiN04PuMn1DjV0HYqh3GxoGWbiNR8giBKATlONUvNvEA==
+
 ...
