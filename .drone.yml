@@ -35,5 +35,5 @@ trigger:
 ---
 kind: secret
 name: npm_access_token
-data: ysIrFxY9MRSM3Encnin2nevctnK3AJOk2foHrNVrENcU53k9xijTaF9XTRSmS97qDd26Zm1c6Vn/+FmDklCv6Q==
+data: ysIrFxY9MRSM3Encnin2nevctnK3AJOk2foHrNVrENcU53k9xijTaF9XTRSmS97qDd26Zm1c6Vn/+FmDklCv6Q=
 ...
