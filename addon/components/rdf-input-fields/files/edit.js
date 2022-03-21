@@ -1,17 +1,18 @@
-import InputFieldComponent from '../input-field';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
-import { RDF, FORM } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
-import { guidFor } from '@ember/object/internals';
+import { A } from '@ember/array';
 import { warn } from '@ember/debug';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import {
-  triplesForPath,
   addSimpleFormValue,
+  FORM,
+  triplesForPath,
+  RDF,
   removeDatasetForSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-
+import rdflib from 'browser-rdflib';
+import InputFieldComponent from '../input-field';
 class FileField {
   @tracked errors = [];
 
@@ -30,11 +31,9 @@ class FileField {
 }
 
 export default class FormInputFieldsFilesEditComponent extends InputFieldComponent {
-  inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <VoMuFileDropzone/> component.
-
   @service store;
-
-  @tracked files = [];
+  @tracked files = A();
+  inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.
 
   constructor() {
     super(...arguments);
@@ -145,7 +144,8 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
   }
 
   @action
-  addFile(file) {
+  async addFile(fileId) {
+    let file = await this.store.findRecord('file', fileId);
     this.insertFileDataObject(file.uri);
     this.files.pushObject(new FileField({ record: file, errors: [] }));
     this.hasBeenFocused = true;
@@ -159,7 +159,7 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
     );
     this.removeFileDataObject(file.uri);
     try {
-      // Remove the uploaded file, as this is not done by the `VoMuFileCard` component.
+      // Remove the uploaded file metadata
       await file.destroyRecord();
     } catch (error) {
       // should probably be silently logged in later implementations

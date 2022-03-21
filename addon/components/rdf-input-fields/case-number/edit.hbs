@@ -1,24 +1,27 @@
-<AuLabel>{{@field.label}}</AuLabel>
+<AuLabel for={{this.id}}>{{@field.label}}</AuLabel>
 {{#if this.showAlert}}
-  <AuAlert class="au-u-margin-bottom-small"
-           @alertIcon="alert-triangle"
-           @alertTitle="Oeps, dit is een beetje gênant!"
-           @alertskin={{"warning"}}
-           @alertsize={{"small"}}
-           @closable={{true}}>
+  <AuAlert
+    @alertIcon="alert-triangle"
+    @alertTitle="Oeps, dit is een beetje gênant!"
+    @alertskin={{"warning"}}
+    @alertsize={{"small"}}
+    @closable={{true}}
+    class="au-u-margin-bottom-small"
+  >
     <AuHelpText class="au-u-margin-none">
-      Onderstaande veld zou automatisch ingevuld moeten worden door één van onze processen,
-      <br>maar deze lijkt op dit moment niet beschikbaar.
-      <br><strong>Probeer de pagina te herladen of kom later nog eens terug.</strong>
+      Onderstaande veld zou automatisch ingevuld moeten worden door één van onze
+      processen,
+      <br />maar deze lijkt op dit moment niet beschikbaar.
+      <br /><strong>Probeer de pagina te herladen of kom later nog eens terug.</strong>
     </AuHelpText>
   </AuAlert>
 {{/if}}
 <AuButtonGroup @inline={{true}}>
-  <AuInput id="{{this.id}}"
-           @value={{this.value}}
-           disabled="disabled"/>
-  <AuButton @skin="secondary"
-            @icon="document"
-            @hideText={{true}}
-            onclick={{this.copy}}>Kopieren</AuButton>
+  <AuInput id={{this.id}} @value={{this.value}} @disabled={{true}} />
+  <AuButton
+    @skin="secondary"
+    @icon="document"
+    @hideText={{true}}
+    {{on "click" this.copy}}
+  >Kopieren</AuButton>
 </AuButtonGroup>

@@ -11,7 +11,7 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/files/variation/1': `rdf-input-fields/files/show`,
     'http://lblod.data.gift/display-types/remoteUrls/variation/1': `rdf-input-fields/remote-urls/show`,
     'http://lblod.data.gift/display-types/files': `rdf-input-fields/files/show`,
-    'http://lblod.data.gift/display-types/remoteUrls': `custom-submission-form-fields/remote-urls/show`,
+    'http://lblod.data.gift/display-types/remoteUrls': `rdf-input-fields/remote-urls/show`,
     'http://lblod.data.gift/display-types/conceptSchemeSelector': `rdf-input-fields/concept-scheme-selector/show`,
     'http://lblod.data.gift/display-types/vLabelOpcentiem': `rdf-input-fields/vlabel-opcentiem/show`,
     'http://lblod.data.gift/display-types/switch': `rdf-input-fields/switch/show`,

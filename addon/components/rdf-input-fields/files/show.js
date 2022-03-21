@@ -1,19 +1,14 @@
-import InputFieldComponent from '../input-field';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
-import { RDF, FORM } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { A } from '@ember/array';
 import { warn } from '@ember/debug';
-import { triplesForPath } from '@lblod/submission-form-helpers';
-
-import { guidFor } from '@ember/object/internals';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { RDF, FORM, triplesForPath } from '@lblod/submission-form-helpers';
+import rdflib from 'browser-rdflib';
+import InputFieldComponent from '../input-field';
 
 export default class FormInputFieldsFilesShowComponent extends InputFieldComponent {
-  inputId = 'file-' + guidFor(this); // TODO for now this doesn't work on the <VoMuFileDropzone/> component.
-
   @service store;
-
-  @tracked files = [];
+  @tracked files = A();
 
   constructor() {
     super(...arguments);

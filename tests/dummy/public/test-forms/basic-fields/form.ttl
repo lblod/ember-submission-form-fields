@@ -8,6 +8,11 @@
 @prefix displayTypes: <http://lblod.data.gift/display-types/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 @prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/>.
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+
 
 ##########################################################
 # form
@@ -57,6 +62,25 @@ fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 a form:Field ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
 fieldGroups:main form:hasField fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 .
+
+##########################################################
+# Concept scheme multi select checkboxes
+##########################################################
+fields:5c854e33-7aa1-4571-b2e5-8ced8969f6e5 a form:Field ;
+    mu:uuid "5c854e33-7aa1-4571-b2e5-8ced8969f6e5";
+    sh:name "Concept scheme multi select checkbox" ;
+    sh:order 192 ;
+    sh:path ext:c41dbe1d-44b0-4672-b33d-3b27eff7195d ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ext:c41dbe1d-44b0-4672-b33d-3b27eff7195d] ;
+    form:options  """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
+    form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11.
+
+fieldGroups:main form:hasField fields:5c854e33-7aa1-4571-b2e5-8ced8969f6e5 .
 
 ##########################################################
 # Radio buttons
@@ -223,3 +247,72 @@ fields:8bdb4749-74cd-4299-91a2-abbf47c33474 a form:Field ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
 fieldGroups:main form:hasField fields:8bdb4749-74cd-4299-91a2-abbf47c33474 .
+
+##########################################################
+# Search
+##########################################################
+fields:a43c7bfe-0a12-4645-aa6d-44b24eddbd3f a form:Field ;
+    mu:uuid "a43c7bfe-0a12-4645-aa6d-44b24eddbd3f";
+    sh:name "Search" ;
+    sh:order 330 ;
+    sh:path ext:e0d63253-04d9-4362-a644-2bb83b32e7c4 ;
+    form:options """{}""" ;
+    form:displayType displayTypes:search ;
+    form:validations
+    [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Dit veld is verplicht." ;
+      sh:path ext:e0d63253-04d9-4362-a644-2bb83b32e7c4 ] ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:a43c7bfe-0a12-4645-aa6d-44b24eddbd3f .
+
+##########################################################
+# Vlabel opcentiem
+##########################################################
+fields:1ee5132e-28c0-4292-9fe6-24c7be456580 a form:Field ;
+    mu:uuid "1ee5132e-28c0-4292-9fe6-24c7be456580" ;
+    sh:name "Opcentiem" ;
+    sh:order 340;
+    sh:path ( lblodBesluit:taxRate schema:price );
+    form:validations [
+      a form:VlabelExtraTaxRateOrAmountConstraint ;
+      form:grouping form:Bag ;
+      sh:path lblodBesluit:taxRate;
+      sh:resultMessage "Differentiatie en bedrag opcentiem kunnen niet tegelijk ingevuld worden."
+    ],
+    [ a form:ValidBoolean ;
+        form:grouping form:MatchEvery ;
+        sh:path lblodBesluit:hasAdditionalTaxRate ;
+        sh:resultMessage "Geen geldige waarde voor differentiatie."@nl
+    ],
+    [ a form:VlabelSingleInstanceTaxRateOrExtraTaxRate ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:hasAdditionalTaxRate ;
+        sh:resultMessage "Slechts één waarde voor differentiatie wordt aanvaard."@nl
+    ],
+    [ a form:VlabelSingleInstanceTaxRateOrExtraTaxRate ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:taxRate ;
+        sh:resultMessage "Slechts één instantie van opcentiem wordt aanvaard"@nl
+    ];
+    form:displayType displayTypes:vLabelOpcentiem ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fields:f3c1f62e-0fc6-4440-8208-7a0ef49fb28c a form:Field ;
+    mu:uuid "f3c1f62e-0fc6-4440-8208-7a0ef49fb28c" ;
+    sh:name "Differentiatie [hidden input]" ;
+    sh:order 5002 ;
+    sh:path lblodBesluit:hasAdditionalTaxRate ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fields:eaf71eec-6ca8-4f63-b4a6-adfe4f21651b a form:Field ;
+    mu:uuid "eaf71eec-6ca8-4f63-b4a6-adfe4f21651b" ;
+    sh:name "TaxType type [hidden input]" ;
+    sh:order 5003 ;
+    sh:path ( lblodBesluit:taxRate rdf:type );
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:1ee5132e-28c0-4292-9fe6-24c7be456580 .
+fieldGroups:main form:hasField fields:f3c1f62e-0fc6-4440-8208-7a0ef49fb28c .
+fieldGroups:main form:hasField fields:eaf71eec-6ca8-4f63-b4a6-adfe4f21651b .

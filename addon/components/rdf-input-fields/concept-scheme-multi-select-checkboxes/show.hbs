@@ -1,23 +1,24 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel for={{this.inputId}}>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
 
-<div id="{{this.inputId}}" class="au-o-grid au-o-grid--flush">
+<div id={{this.inputId}} class="au-o-grid au-o-grid--flush">
   {{#each this.options as |option|}}
-    <div class="au-o-grid__item {{if this.isColumnLayout "au-u-1-1@tiny au-u-1-2@small au-u-1-3@medium"}}">
-      <AuControlCheckbox @identifier="{{@field.uri}}/<{{option.subject.value}}"
-                         @name={{@field.uri.value}}
-                         @label={{option.label}}
-                         @value={{option.label}}
-                         checked={{option.provided}}
-                         @disabled={{true}}/>
+    <div
+      class="au-o-grid__item
+        {{if
+          this.isColumnLayout
+          'au-u-1-1@tiny au-u-1-2@small au-u-1-3@medium'
+        }}"
+    >
+      <AuControlCheckbox
+        @identifier="{{@field.uri}}/<{{option.subject.value}}"
+        @name={{@field.uri.value}}
+        @label={{option.label}}
+        @value={{option.label}}
+        @disabled={{true}}
+        checked={{option.provided}}
+      />
     </div>
   {{/each}}
 </div>
-
-{{#each this.errors as |error|}}
-  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
-{{/each}}

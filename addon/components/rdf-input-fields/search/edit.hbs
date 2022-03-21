@@ -1,8 +1,10 @@
 <AuLabel for={{this.inputId}}>
   {{@field.label}}
 </AuLabel>
-<AuInput class="au-u-margin-bottom-tiny"
-         id="{{this.inputId}}"
-         @width="block"
-         @value={{this._freeTextSearch}}
-  {{on "input" (perform this.updateValue)}}/>
+<AuInput
+  @width="block"
+  value={{this.value}}
+  id={{this.inputId}}
+  class="au-u-margin-bottom-tiny"
+  {{on "input" (perform this.search)}}
+/>

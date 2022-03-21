@@ -1,9 +1,9 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel for={{this.inputId}}>
   {{@field.label}}
 </AuLabel>
 <AuInput
-  id="{{this.inputId}}"
-  disabled={{true}}
+  @disabled={{true}}
   @width="block"
   @value={{this.value}}
+  id={{this.inputId}}
 />

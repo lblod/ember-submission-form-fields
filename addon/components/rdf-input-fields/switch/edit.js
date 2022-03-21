@@ -18,8 +18,8 @@ export default class FormInputFieldsSwitchEditComponent extends SimpleInputField
   }
 
   @action
-  updateValue(e) {
-    this.value = e.target.checked;
+  updateValue(checked) {
+    this.value = checked;
     super.updateValue(this.value);
   }
 }
