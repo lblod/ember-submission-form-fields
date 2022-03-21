@@ -4,12 +4,6 @@
   for={{this.inputId}}
 >
   {{@field.label}}
-  {{#if this.maxLength}}
-    <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
-      Resterende karakters:
-      {{this.remainingCharacters}}
-    </AuPill>
-  {{/if}}
 </AuLabel>
 
 <AuTextarea
@@ -20,7 +14,9 @@
   rows="5"
   {{on "blur" this.updateValue}}
 />
-
+{{#if this.maxLength}}
+  <AuPill @skin={{unless this.hasRemainingCharacters "error"}} >Resterende karakters: {{this.remainingCharacters}}</AuPill>
+{{/if}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}

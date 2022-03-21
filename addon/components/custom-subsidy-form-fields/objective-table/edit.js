@@ -143,7 +143,7 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
 
     if (!this.cellHasValue()) {
       this.errors.pushObject({
-        message: 'Mintens één veld moet een waarde groter dan 0 bevatten.',
+        message: 'Minstens één veld moet een waarde groter dan 0 bevatten.',
       });
       this.updateTripleObject(
         this.objectiveTableSubject,

@@ -280,7 +280,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
     if (!positiveCosts.length) {
       this.errors.pushObject({
         message:
-          'Mintens één kosten veld moet een waarde groter dan 0 bevatten.',
+          'Minstens één kosten veld moet een waarde groter dan 0 bevatten.',
       });
       this.updateTripleObject(
         this.estimatedCostTableSubject,
