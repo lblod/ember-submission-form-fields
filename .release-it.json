@@ -5,14 +5,10 @@
       "development"
     ]
   },
-  "github": {
-    "release": true,
-    "tokenRef": "GITHUB_AUTH"
-  },
   "plugins": {
-    "release-it-lerna-changelog": {
-      "infile": "CHANGELOG.md",
-      "launchEditor": true
+    "@release-it/conventional-changelog": {
+      "preset": "ember",
+      "infile": "CHANGELOG.md"
     }
   },
   "npm": {
