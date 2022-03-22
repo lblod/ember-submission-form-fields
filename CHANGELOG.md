@@ -1,3 +1,6 @@
+# 1.3.0 (2022-03-22)
+## :house: Internal
+  - refactored dummy app
 # 1.2.0 (2022-03-22)
 ## :house: Internal
   - bump submission form fields (extra conditions are possible)
