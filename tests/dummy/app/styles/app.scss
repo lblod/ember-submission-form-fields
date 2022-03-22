@@ -2,7 +2,6 @@
 
 // These styles should be part of the consuming app, or ideally appuniversum
 
-
 // copied from loket
 .au-c-close {
   position: absolute;
@@ -28,3 +27,12 @@
   top: $au-unit;
   right: $au-unit;
 }
+
+.au-c-info-text {
+  @include au-font-size($au-base);
+  font-family: $au-font;
+  font-weight: $au-regular;
+  color: $au-gray-700;
+  font-style: italic;
+}
+

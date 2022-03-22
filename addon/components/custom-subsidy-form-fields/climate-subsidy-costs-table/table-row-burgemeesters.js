@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import rdflib from 'browser-rdflib';
+import { A } from '@ember/array';
 import { scheduleOnce } from '@ember/runloop';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF, XSD } from '@lblod/submission-form-helpers';
@@ -41,8 +42,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowBurg
   @tracked restitution = null;
   @tracked toRealiseUnits = null;
   @tracked costPerUnit = null;
-  @tracked toRealiseUnitsErrors = [];
-  @tracked costPerUnitErrors = [];
+  @tracked toRealiseUnitsErrors = A();
+  @tracked costPerUnitErrors = A();
   @tracked isValidRow = true;
 
   get storeOptions() {

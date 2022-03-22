@@ -1,4 +1,3 @@
 <http://climate-subidy/meta/1234>
     <http://lblod.data.gift/vocabularies/subsidie/drawingRight> 1234;
-    <http://dbpedia.org/ontology/populationTotal> 1232314;
-    <http://data.lblod.info/climate-tables/allowCustomData> true.
+    <http://dbpedia.org/ontology/populationTotal> 1232314.

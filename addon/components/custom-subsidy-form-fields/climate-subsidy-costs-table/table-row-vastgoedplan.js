@@ -3,6 +3,7 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { A } from '@ember/array';
 import { scheduleOnce } from '@ember/runloop';
 
 import { RDF, XSD } from '@lblod/submission-form-helpers';
@@ -42,8 +43,8 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   @tracked restitution = null;
   @tracked costPerUnit = null;
   @tracked toRealiseUnits = null;
-  @tracked toRealiseUnitsErrors = [];
-  @tracked costPerUnitErrors = [];
+  @tracked toRealiseUnitsErrors = A();
+  @tracked costPerUnitErrors = A();
   @tracked isValidRow = true;
 
   get storeOptions() {
@@ -228,7 +229,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   }
 
   validateToRealiseUnits(toRealiseUnits) {
-    this.toRealiseUnitsErrors = [];
+    this.toRealiseUnitsErrors = A();
 
     if (!this.isPositiveInteger(toRealiseUnits)) {
       this.toRealiseUnitsErrors.pushObject({
@@ -272,7 +273,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowVast
   }
 
   validateCostPerUnit(valuePerItem) {
-    this.costPerUnitErrors = [];
+    this.costPerUnitErrors = A();
 
     if (!this.isPositiveInteger(valuePerItem)) {
       this.costPerUnitErrors.pushObject({

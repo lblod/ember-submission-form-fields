@@ -1,5 +1,6 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { scheduleOnce } from '@ember/runloop';
@@ -15,6 +16,8 @@ const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
+const climateBaseUri = 'http://data.lblod.info/vocabularies/subsidie/climate/';
+
 const climateTableType = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}ClimateTable`
 );
@@ -29,6 +32,12 @@ const validClimateTable = new rdflib.NamedNode(
 );
 const totalBudgettedAmount = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}totalBudgettedAmount`
+);
+const allowNewActions = new rdflib.NamedNode(
+  `${climateTableBaseUri}/allowNewActions`
+);
+const climateEntryCustomAction = new rdflib.NamedNode(
+  `${climateBaseUri}customAction`
 );
 
 /*
@@ -45,13 +54,15 @@ const totalBudgettedAmount = new rdflib.NamedNode(
  *     So yes, this implies double bookkeeping. And hopefuly we can refactor this a bit.
  *    - The same argumentation is valid for the custom rows here. Yes, these could be abstracted NOW, but that wasn't the case a the start.
  */
-export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponent extends InputFieldComponent {
+export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableComponent extends InputFieldComponent {
   @tracked climateTableSubject = null;
-  @tracked entries = [];
+  @tracked entries = A();
   @tracked restitutionToDestribute;
-  @tracked errors = [];
+  @tracked errors = A();
   @tracked populationCount;
   @tracked drawingRight;
+  @tracked customActions = [];
+  orderCounter = 0;
 
   get hasClimateTable() {
     if (!this.climateTableSubject) return false;
@@ -66,9 +77,38 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       );
   }
 
+  get canAddNewActions() {
+    if (this.args.show) {
+      return false;
+    }
+
+    let triples = this.args.formStore.match(
+      undefined,
+      allowNewActions,
+      undefined,
+      this.args.graphs.formGraph
+    );
+
+    if (triples.length > 0) {
+      return triples[0].object.value === '1';
+    } else {
+      return false;
+    }
+  }
+
   constructor() {
     super(...arguments);
     scheduleOnce('actions', this, this.initializeTable);
+  }
+
+  initializeTable() {
+    this.loadProvidedValue();
+
+    if (!this.hasClimateTable) {
+      this.createClimateTable();
+    }
+
+    this.validate();
   }
 
   loadProvidedValue() {
@@ -86,24 +126,58 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
       undefined,
       metaGraph
     )[0].object.value;
+
     const drawingRight = this.args.formStore.match(
       undefined,
       LBLOD_SUBSIDIE('drawingRight'),
       undefined,
       metaGraph
     )[0].object.value;
+
     this.drawingRight = drawingRight;
     this.restitutionToDestribute = drawingRight;
+
+    this.loadCustomActions();
   }
 
-  initializeTable() {
-    this.loadProvidedValue();
+  loadCustomActions() {
+    let store = this.args.formStore;
+    let sourceGraph = this.args.graphs.sourceGraph;
 
-    if (!this.hasClimateTable) {
-      this.createClimateTable();
+    let triples = store.match(
+      undefined,
+      climateEntryCustomAction,
+      undefined,
+      sourceGraph
+    );
+
+    if (triples.length > 0) {
+      let tableEntryUris = triples.map((result) => {
+        return result.subject;
+      });
+
+      this.customActions = tableEntryUris
+        .map((entryUri) => {
+          let triples = store.match(entryUri, undefined, undefined);
+
+          let order = triples.find(
+            ({ predicate }) =>
+              predicate.value === 'http://purl.org/linked-data/cube#order'
+          )?.object.value;
+          order = parseInt(order);
+
+          let businessRuleUri = triples.find(
+            ({ predicate }) =>
+              predicate.value === `${climateBaseUri}actionDescription`
+          )?.object;
+
+          return {
+            businessRuleUri,
+            order,
+          };
+        })
+        .sort(sortByOrder);
     }
-
-    this.validate();
   }
 
   createClimateTable() {
@@ -172,7 +246,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
 
   @action
   validate() {
-    this.errors = [];
+    this.errors = A();
     const invalidRow = this.storeOptions.store.any(
       this.climateTableSubject,
       hasInvalidRowPredicate,
@@ -206,7 +280,38 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableEditComponen
     }
   }
 
+  @action
+  addNewAction() {
+    let uuid = uuidv4();
+
+    let highestOrderValue = this.customActions.length
+      ? this.customActions[this.customActions.length - 1].order
+      : 0;
+
+    this.customActions = [
+      ...this.customActions,
+      {
+        businessRuleUri: new rdflib.NamedNode(
+          `http://data.lblod.info/id/subsidies/rules/custom/${uuid}`
+        ),
+        order: highestOrderValue + 1,
+      },
+    ];
+  }
+
+  @action
+  removeCustomAction(actionToRemove) {
+    this.customActions = this.customActions.filter(
+      (action) => action !== actionToRemove
+    );
+    this.validate();
+  }
+
   isPositiveInteger(value) {
     return parseInt(value) >= 0;
   }
+}
+
+function sortByOrder(actionA, actionB) {
+  return actionA?.order - actionB?.order;
 }

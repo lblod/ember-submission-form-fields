@@ -1,4 +1,4 @@
-# Copy-paste from here: https://github.com/lblod/app-digitaal-loket/blob/d0ca292f91197008b0d8b39e69999eed744ff7e5/config/subsidy-application-management/forms/climate/oproep-2/step-submit-proposal/versions/20220314162442/form.ttl 
+# Copy-paste from here: https://github.com/lblod/app-digitaal-loket/blob/d0ca292f91197008b0d8b39e69999eed744ff7e5/config/subsidy-application-management/forms/climate/oproep-2/step-submit-proposal/versions/20220314162442/form.ttl
 
 @prefix form: <http://lblod.data.gift/vocabularies/forms/> .
 @prefix sh: <http://www.w3.org/ns/shacl#>.
@@ -39,7 +39,11 @@ fields:da0923ca-5dac-4bf8-a5fd-dacb47304ab0 a form:PropertyGroup;
     mu:uuid "da0923ca-5dac-4bf8-a5fd-dacb47304ab0";
     sh:order 2;
     sh:name "Simulatie verdeling subsidies" ;
-    form:help "Gebruik deze stap -vrijblijvend- om een planning voor de verdeling van middelen op te maken. U krijgt een overzicht van de subsidieerbare klimaatacties. Er wordt telkens een indicatieve waarde in euro vastgesteld per item als inspiratie, die u kan aanpassen naar de situatie in uw bestuur." ;
+    form:help """
+      Gebruik deze stap -vrijblijvend- om een planning voor de verdeling van middelen op te maken. U krijgt een overzicht van de subsidieerbare klimaatacties.
+      Er wordt telkens een indicatieve waarde in euro vastgesteld per item als inspiratie, die u kan aanpassen naar de situatie in uw bestuur.
+      U kan zelf ook eigen lokale acties toevoegen door gebruik te maken van de knop 'voeg acties toe'. Op de website van <a href="https://redpencil.io" class="au-c-link">Netwerk Klimaat</a> vind u hierover meer info.
+    """;
     sh:group fields:2524865a-d463-4e0b-9528-924b8439e9e6 .
 
 ##########################################################
@@ -51,6 +55,7 @@ fields:69519aa9-b827-4a73-af1f-9e8a76540195 a form:Field ;
     sh:order 24 ;
     sh:path lblodSubsidie:climateTable ;
     form:options """{}""" ;
+    <http://data.lblod.info/climate-tables/allowNewActions> true;
     form:displayType displayTypes:climateSubsidyCostTable ;
     form:validations
     [ a form:RequiredConstraint ;
