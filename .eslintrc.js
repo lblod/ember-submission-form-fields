@@ -21,6 +21,7 @@ module.exports = {
   },
   rules: {
     semi: [2, 'always'],
+    'ember/routes-segments-snake-case': 'off',
   },
   overrides: [
     // node files
