@@ -1,17 +1,18 @@
-import InputFieldComponent from '../input-field';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
-import { RDF, FORM } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
-import { guidFor } from '@ember/object/internals';
+import { A } from '@ember/array';
 import { warn } from '@ember/debug';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import {
-  triplesForPath,
   addSimpleFormValue,
-  removeDatasetForSimpleFormValue
+  FORM,
+  triplesForPath,
+  RDF,
+  removeDatasetForSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-
+import rdflib from 'browser-rdflib';
+import InputFieldComponent from '../input-field';
 class FileField {
   @tracked errors = [];
 
@@ -30,27 +31,31 @@ class FileField {
 }
 
 export default class FormInputFieldsFilesEditComponent extends InputFieldComponent {
-  inputId = `files-${guidFor(this)}` // TODO for now this doesn't work on the <VoMuFileDropzone/> component.
-
-  @service store
-
-  @tracked files = []
+  @service store;
+  @tracked files = A();
+  inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue();
-    this.args.formStore.registerObserver(this.onStoreUpdate.bind(this), this.inputId);
+    this.args.formStore.registerObserver(
+      this.onStoreUpdate.bind(this),
+      this.inputId
+    );
   }
 
   get containsRemoteUrls() {
-    return this.storeOptions.store.match(
-      undefined,
-      FORM('displayType'),
-      new rdflib.NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
-      this.storeOptions.formGraph).length > 0;
+    return (
+      this.storeOptions.store.match(
+        undefined,
+        FORM('displayType'),
+        new rdflib.NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
+        this.storeOptions.formGraph
+      ).length > 0
+    );
   }
 
-  willDestroy(){
+  willDestroy() {
     this.storeOptions.store.deregisterObserver(this.inputId);
   }
 
@@ -72,54 +77,75 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
   }
 
   isFileDataObject(subject) {
-    const fileDataObjectType = new rdflib.NamedNode('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject');
-    return this.storeOptions.store.match(subject,
-                                         RDF('type'),
-                                         fileDataObjectType,
-                                         this.storeOptions.sourceGraph).length > 0;
+    const fileDataObjectType = new rdflib.NamedNode(
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+    );
+    return (
+      this.storeOptions.store.match(
+        subject,
+        RDF('type'),
+        fileDataObjectType,
+        this.storeOptions.sourceGraph
+      ).length > 0
+    );
   }
 
   async retrieveFileField(uri) {
     try {
       const files = await this.store.query('file', {
-        'filter[:uri:]' : uri.value,
-        page: { size: 1 }
+        'filter[:uri:]': uri.value,
+        page: { size: 1 },
       });
       const file = files.get('firstObject');
-      if (file)
-        return new FileField( { record: file, errors: [] });
+      if (file) return new FileField({ record: file, errors: [] });
       else
-        return new FileField( { record: null, errors: ['Geen bestand gevonden'] });
+        return new FileField({
+          record: null,
+          errors: ['Geen bestand gevonden'],
+        });
     } catch (error) {
       warn(`Failed to retrieve file with URI ${uri}: ${JSON.stringify(error)}`);
-      return new FileField( { record: null, errors: ['Ophalen van het bestand is mislukt'] });
+      return new FileField({
+        record: null,
+        errors: ['Ophalen van het bestand is mislukt'],
+      });
     }
   }
 
-  insertFileDataObject(fileUri){
-    const fileDataObjectType = new rdflib.NamedNode('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject');
-    const typeT = { subject: new rdflib.NamedNode(fileUri),
-                    predicate: RDF('type'),
-                    object: fileDataObjectType,
-                    graph: this.storeOptions.sourceGraph
-                  };
-    this.storeOptions.store.addAll([ typeT ]);
+  insertFileDataObject(fileUri) {
+    const fileDataObjectType = new rdflib.NamedNode(
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+    );
+    const typeT = {
+      subject: new rdflib.NamedNode(fileUri),
+      predicate: RDF('type'),
+      object: fileDataObjectType,
+      graph: this.storeOptions.sourceGraph,
+    };
+    this.storeOptions.store.addAll([typeT]);
     addSimpleFormValue(new rdflib.NamedNode(fileUri), this.storeOptions);
   }
 
-  removeFileDataObject(fileUri){
-    const fileDataObjectType = new rdflib.NamedNode('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject');
-    const typeT = { subject: new rdflib.NamedNode(fileUri),
-                    predicate: RDF('type'),
-                    object: fileDataObjectType,
-                    graph: this.storeOptions.sourceGraph
-                  };
-    this.storeOptions.store.removeStatements([ typeT ]);
-    removeDatasetForSimpleFormValue(new rdflib.NamedNode(fileUri), this.storeOptions);
+  removeFileDataObject(fileUri) {
+    const fileDataObjectType = new rdflib.NamedNode(
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+    );
+    const typeT = {
+      subject: new rdflib.NamedNode(fileUri),
+      predicate: RDF('type'),
+      object: fileDataObjectType,
+      graph: this.storeOptions.sourceGraph,
+    };
+    this.storeOptions.store.removeStatements([typeT]);
+    removeDatasetForSimpleFormValue(
+      new rdflib.NamedNode(fileUri),
+      this.storeOptions
+    );
   }
 
   @action
-  addFile(file) {
+  async addFile(fileId) {
+    let file = await this.store.findRecord('file', fileId);
     this.insertFileDataObject(file.uri);
     this.files.pushObject(new FileField({ record: file, errors: [] }));
     this.hasBeenFocused = true;
@@ -128,10 +154,12 @@ export default class FormInputFieldsFilesEditComponent extends InputFieldCompone
 
   @action
   async removeFile(file) {
-    const fileField = this.files.find(f => f.record && f.record.uri == file.uri);
+    const fileField = this.files.find(
+      (f) => f.record && f.record.uri == file.uri
+    );
     this.removeFileDataObject(file.uri);
     try {
-      // Remove the uploaded file, as this is not done by the `VoMuFileCard` component.
+      // Remove the uploaded file metadata
       await file.destroyRecord();
     } catch (error) {
       // should probably be silently logged in later implementations

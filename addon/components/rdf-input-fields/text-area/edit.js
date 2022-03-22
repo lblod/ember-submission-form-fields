@@ -7,8 +7,7 @@ export default class FormInputFieldsTextAreaEditComponent extends SimpleInputFie
 
   @action
   updateValue(e) {
-    if (e && typeof e.preventDefault === "function")
-      e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
     super.updateValue(this.value && this.value.trim());
   }
 }

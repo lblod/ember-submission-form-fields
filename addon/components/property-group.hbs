@@ -6,6 +6,7 @@
           {{@group.name}}
         </AuHeading>
         {{#if @group.help}}
+          {{! template-lint-disable no-triple-curlies}}
           <p class="au-u-light au-u-margin-top-xsmall">{{{@group.help}}}</p>
         {{/if}}
         {{#each this.errors as |error|}}
@@ -20,7 +21,7 @@
     {{/if}}
     {{!-- NOTE: Children can be property-groups as well as fields --}}
     {{#each this.children as |child index|}}
-      {{#unless (is-property-group child.displayType)}}
+      {{#if (not (is-property-group child.displayType))}}
         <div class="au-u-margin-bottom-small">
           {{component (component-for-display-type child.displayType show=@show)
                       field=child
@@ -32,7 +33,8 @@
                       cacheConditionals=@cacheConditionals
                       show=@show
           }}
-          <AuHelpText class="au-u-margin-none">{{{child.help}}}</AuHelpText>
+          {{! template-lint-disable no-triple-curlies}}
+          <AuHelpText>{{{child.help}}}</AuHelpText>
         </div>
       {{else}}
         <PropertyGroup
@@ -46,13 +48,13 @@
                 @cacheConditionals={{@cacheConditionals}}
                 @show={{@show}}/>
         {{#if @last}}
-          {{#unless (eq index (sub this.children.length 1))}}
+          {{#if (not-eq index (sub this.children.length 1))}}
             <AuHr @size="large"/>
-          {{/unless }}
+          {{/if}}
         {{else}}
           <AuHr @size="large"/>
         {{/if }}
-      {{/unless}}
+      {{/if}}
     {{/each}}
   </div>
 {{/if}}

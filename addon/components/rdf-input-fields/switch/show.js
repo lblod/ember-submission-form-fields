@@ -10,7 +10,7 @@ export default class FormInputFieldsSwitchShowComponent extends SimpleInputField
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
       this.nodeValue = matches.values[0];
-      this.value = matches.values[0].value === "1"; // There is a bug in conversion from rdflib
+      this.value = matches.values[0].value === '1'; // There is a bug in conversion from rdflib
     }
   }
 }

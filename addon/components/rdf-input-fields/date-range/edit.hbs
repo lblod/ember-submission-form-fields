@@ -1,24 +1,57 @@
-<div class="js-accordion js-accordion--open">
-  <AuLabel>{{@field.label}}</AuLabel>
-  <AuButtonGroup @inline="true">
-    <AuButton {{ on "click" this.reset }}
-        class="{{if (not this.isEnabled) "is-active" }}" @skin="secondary">Alle meldingen</AuButton>
-    <AuButton {{ on "click" this.enable }}
-        class="{{if this.isEnabled "is-active" }}" @skin="secondary">Specifieke periode</AuButton>
-  </AuButtonGroup>
+<AuLabel>{{@field.label}}</AuLabel>
+<AuButtonGroup @inline={{true}}>
+  <AuButton
+    @skin={{if this.isEnabled "secondary"}}
+    class={{unless this.isEnabled "is-active"}}
+    {{on "click" this.reset}}
+  >
+    Alle meldingen
+  </AuButton>
+  <AuButton
+    @skin={{unless this.isEnabled "secondary"}}
+    class={{if this.isEnabled "is-active"}}
+    {{on "click" this.enable}}
+  >
+    Specifieke periode
+  </AuButton>
+</AuButtonGroup>
 
-  {{#if this.isEnabled}}
-    <div class="accordion__content">
-      <WuDateRange
-              @fromValue={{this.from}}
-              @toValue={{this.to}}
-              @onChangeFromValue={{this.updateFrom}}
-              @onChangeToValue={{this.updateTo}}
-              @fromMinDate="01.01.2012"
-              @fromMaxDate="01.01.2050"
-              @toMinDate="01.01.2012"
-              @toMaxDate="01.01.2050"
-      />
+{{#if this.isEnabled}}
+  <div class="au-u-margin-top-small">
+    <div class="au-o-grid au-o-grid--tiny">
+      <div class="au-o-grid__item au-u-1-5">
+        <AuLabel for={{this.inputId}} @inline={{true}}>Van</AuLabel>
+      </div>
+      <div class="au-o-grid__item au-u-4-5">
+        <AuDatePicker
+          @id={{this.inputId}}
+          @value={{this.from}}
+          @onChange={{this.updateFrom}}
+          @localization={{this.localization}}
+          @adapter={{this.adapter}}
+          @min="2012-01-01"
+          @max="2049-12-31"
+          {{! TODO: This uses "private" apis since AuDatePicker doesn't support a blur event yet }}
+          {{on "duetBlur" (fn (mut this.hasBeenFocused) true)}}
+        />
+      </div>
+
+      <div class="au-o-grid__item au-u-1-5">
+        <AuLabel for={{this.inputIdTo}} @inline={{true}}>Tot</AuLabel>
+      </div>
+      <div class="au-o-grid__item au-u-4-5">
+        <AuDatePicker
+          @id={{this.inputIdTo}}
+          @value={{this.to}}
+          @onChange={{this.updateTo}}
+          @localization={{this.localization}}
+          @adapter={{this.adapter}}
+          @min="2012-01-01"
+          @max="2049-12-31"
+          {{! TODO: This uses "private" apis since AuDatePicker doesn't support a blur event yet }}
+          {{on "duetBlur" (fn (mut this.hasBeenFocused) true)}}
+        />
+      </div>
     </div>
-  {{/if}}
-</div>
+  </div>
+{{/if}}

@@ -1,4 +1,4 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel @error={{this.hasErrors}} for={{this.inputId}}>
   {{@field.label}}
 </AuLabel>
 <AuInput

@@ -1,78 +1,91 @@
-<AuLabel>
+<AuLabel @required={{this.isRequired}}>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
+
 {{#if this.showDifferentiatie}}
-  <div class="au-o-grid au-o-grid--flush">
-    <div class="au-o-grid__item au-u-1-1">
-      <WuCheckbox @checked={{this.differentiatie}} @onClick={{this.toggleDifferentiatie}} aria-labelledby="description-checkbox-differentiatie"/>
-      <AuLabel id="description-checkbox-differentiatie">
-        Vink aan indien er sprake is van differentiatie
-      </AuLabel> {{!-- setting ID's (to link the label to the input field) does not work with checkboxes --}}
-    </div>
-  </div>
+  <AuControlCheckbox
+    @label="Vink aan indien er sprake is van differentiatie"
+    @onChange={{this.toggleDifferentiatie}}
+    checked={{this.differentiatie}}
+  />
 {{else}}
   <AuHelpText>
-    Er kan geen sprake zijn van differentiatie wanneer er bedragen worden ingevuld. <br/>
+    Er kan geen sprake zijn van differentiatie wanneer er bedragen worden
+    ingevuld.
+    <br />
     Klik 'verwijder' als u deze wel wenst in te geven.
   </AuHelpText>
 {{/if}}
 
-<table class="data-table data-table--zebra data-table--tight au-u-margin-top-small {{if this.errors "data-table--error"}}"> {{!-- This error does not seem to work? --}}
-  <thead>
-  <tr>
-    <th>Bedrag</th>
-    <th>&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-  {{#if this.showTable}}
-    {{#each this.fields as |field|}}
-      <tr>
-        <td>
-          <AuInput
-                  class="{{if field.errors "au-c-input--error"}}"
-                  @width="block"
-                  @value={{field.value}}
-            {{on "blur" (fn this.updatePrice field)}}
-          />
-          <div>
-            {{#each field.errors as |error|}}
-              <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
-            {{/each}}
-          </div>
-        </td>
-        <td>
-          <AuButton @skin="tertiary" class="au-u-margin-bottom-tiny"
-            {{on "click" (fn this.removePrice field)}}>
-            <AuIcon @icon="bin" @alignment="left" />
-            Verwijder
-          </AuButton>
-        </td>
-      </tr>
-    {{/each}}
-    <tr>
-      <td colspan="5" class="data-table__add-row u-align-center">
-        <AuButton class="au-u-margin-bottom-tiny au-u-margin-top-tiny" {{on "click" this.addPrice}}>
-          <i class="vi vi-plus vi-u-xs au-u-margin-right-tiny" aria-hidden="true"></i>Voeg bedrag opcentiem toe
-        </AuButton>
-      </td>
-    </tr>
-  {{else}}
-    <tr>
-      <td colspan="5" class="data-table__add-row u-align-center">
-        <AuHelpText>Indien er sprake is van differentiatie, hoeft het bedrag niet ingevuld te worden.</AuHelpText>
-      </td>
-    </tr>
-  {{/if}}
-  </tbody>
-</table>
+{{#if this.showTable}}
+  <div class="au-u-margin-top-small">
+    <AuTable>
+      <:header>
+        <tr>
+          <th id={{this.amountColumnId}}>Bedrag</th>
+          <th>&nbsp;</th>
+        </tr>
+      </:header>
+      <:body>
+        {{#each this.fields as |field|}}
+          <tr>
+            <td>
+              <AuInput
+                @error={{field.isInvalid}}
+                @width="block"
+                @value={{field.value}}
+                aria-labelledby={{this.amountColumnId}}
+                {{auto-focus}}
+                {{on "blur" (fn this.updatePrice field)}}
+              />
+              {{#each field.errors as |error|}}
+                <AuHelpText @error={{true}}>
+                  {{error.resultMessage}}
+                </AuHelpText>
+              {{/each}}
+            </td>
+            <td
+              style="vertical-align: middle;"
+              {{!template-lint-disable no-inline-styles}}
+            >
+              <AuButton
+                @skin="link"
+                @icon="bin"
+                @iconAlignment="left"
+                @alert={{true}}
+                {{on "click" (fn this.removePrice field)}}
+              >
+                Verwijder
+              </AuButton>
+            </td>
+          </tr>
+        {{/each}}
+
+        {{#if this.differentiatie}}
+          <tr>
+            <td colspan="2">
+              <AuHelpText class="au-u-text-center">
+                Indien er sprake is van differentiatie, hoeft het bedrag niet
+                ingevuld te worden.
+              </AuHelpText>
+            </td>
+          </tr>
+        {{/if}}
+      </:body>
+    </AuTable>
+  </div>
+{{/if}}
+
+{{#unless this.differentiatie}}
+  <div class="au-u-margin-top-small au-u-text-center">
+    <AuButton @icon="plus" @iconAlignment="left" {{on "click" this.addPrice}}>
+      Voeg bedrag opcentiem toe
+    </AuButton>
+  </div>
+{{/unless}}
 
 {{#each this.errors as |error|}}
-  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}
 
 {{!-- suggestion for error: <AuHelpText @error={{"error"}}>Voeg opcentiemen in of geef differentiatie aan.</AuHelpText> --}}
-{{yield}}

@@ -2,15 +2,14 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const customBuildConfig = {
     // Add options here
   };
 
-  if(process.env.EMBER_TEST_SELECTORS_STRIP == 'false'){
+  if (process.env.EMBER_TEST_SELECTORS_STRIP == 'false') {
     customBuildConfig['ember-test-selectors'] = { strip: false };
-  }
-  else if(process.env.EMBER_TEST_SELECTORS_STRIP == 'true'){
+  } else if (process.env.EMBER_TEST_SELECTORS_STRIP == 'true') {
     customBuildConfig['ember-test-selectors'] = { strip: true };
   }
   //if EMBER_TEST_SELECTORS_STRIP left unspecificied, we fall back to default behavoir
@@ -24,5 +23,12 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  return app.toTree();
+  const { maybeEmbroider } = require('@embroider/test-setup');
+  return maybeEmbroider(app, {
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
+  });
 };

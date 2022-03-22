@@ -7,7 +7,6 @@ import { validationResultsForField } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
-
   @tracked children = A();
   @tracked validations = [];
 
@@ -17,19 +16,17 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     super(...arguments);
 
     next(this, () => {
-      this.update(
-        this.args.group,
-        {
-          form: this.args.form,
-          store: this.args.formStore,
-          graphs: this.args.graphs,
-          node: this.args.sourceNode,
-        },
-      );
+      this.update(this.args.group, {
+        form: this.args.form,
+        store: this.args.formStore,
+        graphs: this.args.graphs,
+        node: this.args.sourceNode,
+      });
     });
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     this.deregister();
   }
 
@@ -38,7 +35,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   get errors() {
-    return this.validations.filter(r => !r.valid);
+    return this.validations.filter((r) => !r.valid);
   }
 
   get storeOptions() {
@@ -54,15 +51,12 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
 
   register() {
     this.args.formStore.registerObserver(() => {
-      this.update(
-        this.args.group,
-        {
-          form: this.args.form,
-          store: this.args.formStore,
-          graphs: this.args.graphs,
-          node: this.args.sourceNode,
-        },
-      );
+      this.update(this.args.group, {
+        form: this.args.form,
+        store: this.args.formStore,
+        graphs: this.args.graphs,
+        node: this.args.sourceNode,
+      });
     }, this.observerLabel);
   }
 
@@ -70,14 +64,21 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  update(group, {form, store, graphs, node}) {
+  update(group, { form, store, graphs, node }) {
     this.deregister(); // NOTE: to prevent calling ourself up again with changes
 
     // 1) retrieve the to be rendered children (!!could be nested property-groups or fields) for this property-group
-    const children = getChildrenForPropertyGroup(group, {form, store, graphs, node});
+    const children = getChildrenForPropertyGroup(group, {
+      form,
+      store,
+      graphs,
+      node,
+    });
 
     // 2) calculate to be removed
-    const deletes = this.children.filter(rendered => !children.find(child => child.uri.equals(rendered.uri)));
+    const deletes = this.children.filter(
+      (rendered) => !children.find((child) => child.uri.equals(rendered.uri))
+    );
 
     // 4) remove the "unwanted" children
     if (deletes.length) {
@@ -88,8 +89,10 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     // We don't want to re-render components, to avoid flickering behaviour and state loss.
     const mergedChildren = A();
 
-    for(const child of children){
-      const existingField = this.children.find(eField => eField.uri.equals(child.uri));
+    for (const child of children) {
+      const existingField = this.children.find((eField) =>
+        eField.uri.equals(child.uri)
+      );
       if (existingField) {
         mergedChildren.pushObject(existingField);
       } else {

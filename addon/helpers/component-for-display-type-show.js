@@ -2,7 +2,7 @@ import { helper } from '@ember/component/helper';
 
 export default helper(function componentForDisplayTypeShow(displayTypeUri) {
   const mapping = {
-    'http://lblod.data.gift/display-types/property-group' : 'property-group',
+    'http://lblod.data.gift/display-types/property-group': 'property-group',
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/show`,
     'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/show`,
     'http://lblod.data.gift/display-types/textArea': `rdf-input-fields/text-area/show`,
@@ -11,7 +11,7 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/files/variation/1': `rdf-input-fields/files/show`,
     'http://lblod.data.gift/display-types/remoteUrls/variation/1': `rdf-input-fields/remote-urls/show`,
     'http://lblod.data.gift/display-types/files': `rdf-input-fields/files/show`,
-    'http://lblod.data.gift/display-types/remoteUrls': `custom-submission-form-fields/remote-urls/show`,
+    'http://lblod.data.gift/display-types/remoteUrls': `rdf-input-fields/remote-urls/show`,
     'http://lblod.data.gift/display-types/conceptSchemeSelector': `rdf-input-fields/concept-scheme-selector/show`,
     'http://lblod.data.gift/display-types/vLabelOpcentiem': `rdf-input-fields/vlabel-opcentiem/show`,
     'http://lblod.data.gift/display-types/switch': `rdf-input-fields/switch/show`,
@@ -29,7 +29,7 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/show`,
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/show`,
-    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/show`
+    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/show`,
   };
 
   return mapping[displayTypeUri] || '';

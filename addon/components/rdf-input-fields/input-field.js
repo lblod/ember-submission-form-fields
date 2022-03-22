@@ -1,7 +1,13 @@
+import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { removeTriples, validationResultsForField, validationTypesForField } from '@lblod/submission-form-helpers';
-import { RDF, FORM } from '@lblod/submission-form-helpers';
+import {
+  RDF,
+  FORM,
+  removeTriples,
+  validationResultsForField,
+  validationTypesForField,
+} from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
@@ -24,32 +30,51 @@ export default class InputFieldComponent extends Component {
   }
 
   get errors() {
-    if (this.canShowErrors)
-      return this.validations.filter(r => !r.valid);
-    else
-      return [];
+    if (this.canShowErrors) return A(this.validations.filter((r) => !r.valid));
+    else return A();
+  }
+
+  get hasErrors() {
+    return this.errors.length > 0;
   }
 
   get isValid() {
-    return this.validations.filter(r => !r.valid).length === 0;
+    return this.validations.filter((r) => !r.valid).length === 0;
   }
 
   get validationConstraints() {
-    const {store, formGraph} = this.storeOptions;
-    return store.match(this.args.field.uri, FORM('validations'), undefined, formGraph).map(t => t.object);
+    const { store, formGraph } = this.storeOptions;
+    return store
+      .match(this.args.field.uri, FORM('validations'), undefined, formGraph)
+      .map((t) => t.object);
   }
 
   get isRequired() {
-    const validationTypes = validationTypesForField(this.args.field.uri, this.storeOptions);
-    return validationTypes.any(v => v.value === 'http://lblod.data.gift/vocabularies/forms/RequiredConstraint');
+    const validationTypes = validationTypesForField(
+      this.args.field.uri,
+      this.storeOptions
+    );
+    return validationTypes.some(
+      (v) =>
+        v.value ===
+        'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
+    );
   }
 
   get maxLength() {
-    const {store, formGraph} = this.storeOptions;
-    const constraint = this.validationConstraints.find(
-      constraint => store.any(constraint, RDF('type'), new rdflib.NamedNode(MAX_LENGTH_URI), formGraph));
+    const { store, formGraph } = this.storeOptions;
+    const constraint = this.validationConstraints.find((constraint) =>
+      store.any(
+        constraint,
+        RDF('type'),
+        new rdflib.NamedNode(MAX_LENGTH_URI),
+        formGraph
+      )
+    );
     if (constraint) {
-      return Number(store.any(constraint, FORM('max'), undefined, formGraph).value);
+      return Number(
+        store.any(constraint, FORM('max'), undefined, formGraph).value
+      );
     }
     return constraint;
   }
@@ -81,12 +106,16 @@ export default class InputFieldComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     if (!this.args.cacheConditionals) {
       removeTriples(this.storeOptions);
     }
   }
 
   updateValidations() {
-    this.validations = validationResultsForField(this.args.field.uri, this.storeOptions);
+    this.validations = validationResultsForField(
+      this.args.field.uri,
+      this.storeOptions
+    );
   }
 }

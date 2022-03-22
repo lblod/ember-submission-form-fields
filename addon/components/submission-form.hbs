@@ -25,7 +25,8 @@
               sourceNode=@sourceNode
               forceShowErrors=@forceShowErrors
           }}
-          <AuHelpText class="au-u-margin-none">{{{field.help}}}</AuHelpText>
+          {{! template-lint-disable no-triple-curlies}}
+          <AuHelpText>{{{field.help}}}</AuHelpText>
         {{/if}}
       </li>
     {{/each}}

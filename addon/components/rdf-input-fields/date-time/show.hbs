@@ -1,12 +1,9 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel for={{this.inputId}}>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
 <AuInput
-   data-test-field-uri={{@field.uri.value}}
-  id="{{this.inputId}}"
-  disabled={{true}}
-  @value={{moment-format this.value "DD.MM.YYYY"}}
+  @disabled={{true}}
+  @value={{this.formattedDate}}
+  data-test-field-uri={{@field.uri.value}}
+  id={{this.inputId}}
 />

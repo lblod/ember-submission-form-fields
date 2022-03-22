@@ -41,8 +41,8 @@ export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputF
 
   @tracked error;
 
-  get showAlert(){
-    return this.error && !this.value
+  get showAlert() {
+    return this.error && !this.value;
   }
 
   loadProvidedValue() {
@@ -58,22 +58,23 @@ export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputF
     if (options.prefix) {
       url = url + `&prefix=${options.prefix}`;
     }
-    fetch(url, {method: 'POST'}).then(async response => {
-      if (response.ok) {
-        this.value = (await response.json())[0];
-        this.updateValue(this.value);
-      } else {
-        /**
-         * NOTE: if we get here, we assume something went wrong with the request.
-         */
-        this.error = response;
-      }
-    }).catch(error => this.error = error);
+    fetch(url, { method: 'POST' })
+      .then(async (response) => {
+        if (response.ok) {
+          this.value = (await response.json())[0];
+          this.updateValue(this.value);
+        } else {
+          /**
+           * NOTE: if we get here, we assume something went wrong with the request.
+           */
+          this.error = response;
+        }
+      })
+      .catch((error) => (this.error = error));
   }
 
   @action
   copy() {
     clipboardy.write(this.value);
   }
-
 }

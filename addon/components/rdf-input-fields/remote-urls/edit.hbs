@@ -1,20 +1,23 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputFor}}>
+<AuLabel
+  @error={{this.hasErrors}}
+  @required={{this.isRequired}}
+  @requiredLabel={{@requiredLabel}}
+  for={{this.inputFor}}
+>
   {{@field.label}}
-  {{#if this.isRequired}}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
-<table class="data-table au-u-margin-bottom-tiny {{if this.errors "data-table--error"}}">
-  <tbody data-test-mn="url-box-list">
-  {{#each this.remoteUrls as |remoteUrl index|}}
-    <tr>
-      <td>
+
+{{#if this.remoteUrls}}
+  <ul class="au-o-flow au-o-flow--tiny">
+    {{#each this.remoteUrls as |remoteUrl index|}}
+      <li class="au-c-card au-o-box au-o-box--small">
         <AuInput
-                id="{{this.inputId}}-{{index}}"
-                class="{{if remoteUrl.isInvalid "au-c-input--error"}}"
-                placeholder="http://www.uw-bestuur.be/specifiek-document"
-                @width="block"
-                @value={{remoteUrl.address}}
+          @error={{remoteUrl.isInvalid}}
+          @width="block"
+          @value={{remoteUrl.address}}
+          id="{{this.inputId}}-{{index}}"
+          placeholder="http://www.uw-bestuur.be/specifiek-document"
+          {{auto-focus}}
           {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
         />
         {{#if remoteUrl.isInvalid}}
@@ -24,37 +27,50 @@
         {{/if}}
         <div class="au-u-margin-top-tiny">
           {{#if remoteUrl.address}}
-            <a class="link link--icon--external u-padding--right--small" href={{remoteUrl.address}} target="_blank" rel="noopener noreferrer">
+            <AuLinkExternal
+              @icon="external-link"
+              @iconAlignment="left"
+              href={{remoteUrl.address}}
+            >
               Test&nbsp;link
-            </a>
+            </AuLinkExternal>
           {{/if}}
-          <AuButton @skin="tertiary"{{on "click" (fn this.removeRemoteUrl remoteUrl)}}>
-            <AuIcon @icon="bin" @alignment="left" /> Verwijder&nbsp;link
+          <AuButton
+            @skin="link"
+            @icon="bin"
+            @iconAlignment="left"
+            {{on "click" (fn this.removeRemoteUrl remoteUrl)}}
+          >
+            Verwijder&nbsp;link
           </AuButton>
         </div>
-      </td>
-    </tr>
-  {{/each}}
-  <tr>
-    <td>
-      <div class="au-u-text-center">
-        {{#unless this.remoteUrls}}
-          <AuHelpText class="au-u-margin-bottom-tiny au-u-margin-bottom-top">Nog geen links toegevoegd.</AuHelpText>
-        {{/unless}}
-        <AuButton id="{{inputId}}" class="au-u-margin-bottom-tiny" {{on "click" this.addUrlField}}>
-          <i class="vi vi-u-xs au-u-margin-right-tiny vi-plus button__icon" aria-hidden="true"></i> Voeg nieuwe link toe
-        </AuButton>
-        <div class="au-u-margin-bottom-tiny au-u-margin-top-tiny">
-          <AuHelpText>Enkel links naar specifieke documenten, geen overzichtspagina's.</AuHelpText>
-        </div>
-      </div>
-    </td>
-  </tr>
-  </tbody>
-</table>
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+<div class="au-u-margin-top au-u-text-center">
+  {{#unless this.remoteUrls}}
+    <AuHelpText class="au-u-margin-bottom-tiny au-u-margin-bottom-top">
+      Nog geen links toegevoegd.
+    </AuHelpText>
+  {{/unless}}
+  <AuButton
+    @icon="plus"
+    @iconAlignment="left"
+    id={{this.inputId}}
+    class="au-u-margin-bottom-tiny"
+    {{on "click" this.addUrlField}}
+  >
+    Voeg nieuwe link toe
+  </AuButton>
+  <div class="au-u-margin-bottom-tiny au-u-margin-top-tiny">
+    <AuHelpText>Enkel links naar specifieke documenten, geen overzichtspagina's.</AuHelpText>
+  </div>
+</div>
 
 {{#unless this.hasInvalidRemoteUrl}}
   {{#each this.errors as |error|}}
-    <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+    <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
   {{/each}}
 {{/unless}}

@@ -1,0 +1,11 @@
+{
+  "git": {
+    "requireBranch": [
+      "master",
+      "development"
+    ]
+  },
+  "npm": {
+    "publish": false
+  }
+}

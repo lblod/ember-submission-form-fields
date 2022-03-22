@@ -1,16 +1,24 @@
 import SimpleInputFieldComponent from '../simple-value-input-field';
 import rdflib from 'browser-rdflib';
-import moment from 'moment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
+import {
+  DUTCH_LOCALIZATION,
+  BELGIAN_FORMAT_ADAPTER,
+} from '@lblod/ember-submission-form-fields/config/date-picker';
 
-import { removeTriples, SHACL } from '@lblod/submission-form-helpers';
+import { SHACL } from '@lblod/submission-form-helpers';
 
-const DATE_RANGE = new rdflib.Namespace('http://data.lblod.info/form-fields/date-range/');
+const DATE_RANGE = new rdflib.Namespace(
+  'http://data.lblod.info/form-fields/date-range/'
+);
 
 export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFieldComponent {
-  inputId = 'date-range-' + guidFor(this);
+  inputId = 'date-range-from' + guidFor(this);
+  inputIdTo = `date-range-to-${guidFor(this)}`;
+  localization = DUTCH_LOCALIZATION;
+  adapter = BELGIAN_FORMAT_ADAPTER;
 
   @tracked from;
   @tracked to;
@@ -26,26 +34,36 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
   }
 
   loadProvidedValue() {
-    const {store, formGraph, sourceGraph, sourceNode} = this.storeOptions;
+    const { store, formGraph, sourceGraph, sourceNode } = this.storeOptions;
     const field = this.args.field;
 
     this.paths = {
-      from: store.any(store.any(field.uri, DATE_RANGE('from'), undefined, formGraph), SHACL('path'), undefined, formGraph),
-      to: store.any(store.any(field.uri, DATE_RANGE('to'), undefined, formGraph), SHACL('path'), undefined, formGraph),
+      from: store.any(
+        store.any(field.uri, DATE_RANGE('from'), undefined, formGraph),
+        SHACL('path'),
+        undefined,
+        formGraph
+      ),
+      to: store.any(
+        store.any(field.uri, DATE_RANGE('to'), undefined, formGraph),
+        SHACL('path'),
+        undefined,
+        formGraph
+      ),
     };
 
     const from = store.any(sourceNode, this.paths.from, undefined, sourceGraph);
     const to = store.any(sourceNode, this.paths.to, undefined, sourceGraph);
 
     if (from && to) {
-      this.from = from.value;
-      this.to = to.value;
+      this.from = new Date(from.value);
+      this.to = new Date(to.value);
     }
   }
 
   // NOTE overrides because this is a special custom component
   willDestroy() {
-    if(!this.args.cacheConditionals) {
+    if (!this.args.cacheConditionals) {
       this.delete(this.paths.from);
       this.delete(this.paths.to);
     }
@@ -69,11 +87,15 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
 
   @action
   enable() {
-    const yesterday = moment().subtract(1, 'day').startOf('day');
-    const today = moment().endOf('day');
+    const today = new Date();
+    today.setHours(23, 59, 59, 59);
 
-    this.update(yesterday.toDate(), this.paths.from);
-    this.update(today.toDate(), this.paths.to);
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+
+    this.update(yesterday, this.paths.from);
+    this.update(today, this.paths.to);
 
     this.hasBeenFocused = true;
     this.loadProvidedValue();
@@ -84,7 +106,8 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
       this.storeOptions.sourceNode,
       predicate,
       undefined,
-      this.storeOptions.sourceGraph);
+      this.storeOptions.sourceGraph
+    );
     this.storeOptions.store.removeStatements(triples);
   }
 
@@ -98,12 +121,13 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
         predicate: predicate,
         object: date.toISOString(),
         graph: this.storeOptions.sourceGraph,
-      }];
+      },
+    ];
     this.storeOptions.store.addAll(triples);
   }
 
   @action
-  updateFrom(date) {
+  updateFrom(isoDate, date) {
     if (date) {
       this.update(date, this.paths.from);
     }
@@ -112,7 +136,7 @@ export default class FormInputFieldsDateRangeEditComponent extends SimpleInputFi
   }
 
   @action
-  updateTo(date) {
+  updateTo(isoDate, date) {
     if (date) {
       this.update(date, this.paths.to);
     }

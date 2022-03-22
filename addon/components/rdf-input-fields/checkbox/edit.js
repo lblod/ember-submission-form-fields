@@ -13,13 +13,13 @@ export default class RdfInputFieldsCheckboxEditComponent extends SimpleInputFiel
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
       this.nodeValue = matches.values[0];
-      this.value = matches.values[0].value === "1"; // There is a bug in conversion from rdflib
+      this.value = matches.values[0].value === '1'; // There is a bug in conversion from rdflib
     }
   }
 
   @action
-  updateValue(e) {
-    this.value = e.target.checked;
+  updateValue(checked) {
+    this.value = checked;
     super.updateValue(this.value);
   }
 }

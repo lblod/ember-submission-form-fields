@@ -1,15 +1,20 @@
-<AuLabel class="{{if this.errors "au-c-label--error"}}" for={{this.inputId}}>
+<AuLabel>
   {{@field.label}}
-  {{#if (and this.isRequired this.containsRemoteUrls)}}
-    <AuPill>Enkel indien geen links</AuPill>
-  {{else if this.isRequired }}
-    <AuPill>Verplicht</AuPill>
-  {{/if}}
 </AuLabel>
-{{#each this.files as |file|}}
-  <VoMuFileCard data-test-field-uri={{@field.uri.value}} id="{{this.inputId}}" @file={{file}} @active={{false}}/>
-{{/each}}
 
-{{#unless this.files}}
+{{#if this.files}}
+  <ul class="au-o-flow au-o-flow--tiny">
+    {{#each this.files as |file|}}
+      <li>
+        <FileCard
+          @filename={{file.filename}}
+          @fileSize={{file.humanReadableSize}}
+          @downloadLink={{file.downloadLink}}
+          data-test-field-uri={{@field.uri.value}}
+        />
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
   <AuHelpText>Er werden geen bestanden toegevoegd.</AuHelpText>
-{{/unless}}
+{{/if}}

@@ -9,12 +9,12 @@
       </li>
       <li class="au-o-grid__item au-u-1-2 au-u-2-6@medium">
         <label class="au-c-label ">Trekkingsrecht te verdelen</label>
-        <p style="{{if this.errors 'color:#D92626'}}">{{convert-to-currency this.restitutionToDestribute}}</p>
+        <p style={{if this.errors "color:#D92626"}}>{{convert-to-currency this.restitutionToDestribute}}</p>
       </li>
 </ul>
 <br>
 <br>
-<AuLabel class="{{if this.errors " au-c-label--error"}}" for={{this.inputFor}}>
+<AuLabel @error={{this.hasErrors}} for={{this.inputFor}}>
   {{@field.label}}
 </AuLabel>
 {{#each this.errors as |error|}}

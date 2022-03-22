@@ -2,7 +2,7 @@ import { helper } from '@ember/component/helper';
 
 export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
   const mapping = {
-    'http://lblod.data.gift/display-types/property-group' : 'property-group',
+    'http://lblod.data.gift/display-types/property-group': 'property-group',
     'http://lblod.data.gift/display-types/defaultInput': `rdf-input-fields/input/edit`,
     'http://lblod.data.gift/display-types/numericalInput': `rdf-input-fields/numerical-input/edit`,
     'http://lblod.data.gift/display-types/dateTime': `rdf-input-fields/date-time/edit`,
@@ -29,7 +29,7 @@ export default helper(function componentForDisplayTypeEdit(displayTypeUri) {
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`,
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/edit`,
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/edit`,
-    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/edit`
+    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/edit`,
   };
 
   return mapping[displayTypeUri] || '';

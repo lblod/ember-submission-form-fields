@@ -5,8 +5,8 @@ import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 
 export default class SimpleValueInputFieldComponent extends InputFieldComponent {
-  @tracked value = null
-  @tracked nodeValue = null
+  @tracked value = null;
+  @tracked nodeValue = null;
 
   constructor() {
     super(...arguments);

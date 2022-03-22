@@ -1,3 +1,40 @@
-<h2 id="title">Welcome to Ember</h2>
+{{page-title "Dynamic form fields"}}
 
-{{outlet}}
+<AuApp>
+  <AuMainHeader @homeRoute="index" @appTitle="Dynamic form fields" />
+  <AuMainContainer as |m|>
+    <m.sidebar>
+      <div class="au-c-sidebar">
+        <div class="au-c-sidebar__content">
+          <nav>
+            <ul class="au-c-list-navigation">
+              <li class="au-c-list-navigation__item">
+                <AuNavigationLink @route="index">
+                  Basic form fields
+                </AuNavigationLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </m.sidebar>
+    <m.content @scroll={{false}}>
+      <AuBodyContainer @scroll={{false}}>
+        <AuToolbar @border="bottom" @size="small" @skin="tint">
+          <AuToolbarGroup>
+            <AuToggleSwitch
+              @label="Read only mode"
+              @checked={{this.formConfig.isReadOnly}}
+              @onChange={{fn (mut this.formConfig.isReadOnly)}}
+            />
+          </AuToolbarGroup>
+        </AuToolbar>
+        <AuBodyContainer @scroll={{true}}>
+          <div class="au-o-box au-o-box--large au-u-2-3@medium au-u-1-1">
+            {{outlet}}
+          </div>
+        </AuBodyContainer>
+      </AuBodyContainer>
+    </m.content>
+  </AuMainContainer>
+</AuApp>

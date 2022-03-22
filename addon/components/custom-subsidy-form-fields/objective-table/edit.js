@@ -9,38 +9,53 @@ import { scheduleOnce } from '@ember/runloop';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const bicycleInfrastructureUri = 'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
-const resourceInstanceBaseUri = 'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
-const ObjectiveTableType = new rdflib.NamedNode(`${bicycleInfrastructureUri}ObjectiveTable`);
-const objectiveTablePredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}objectiveTable`);
-const kilometersPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}kilometers`);
+const bicycleInfrastructureUri =
+  'http://lblod.data.gift/vocabularies/subsidie/bicycle-infrastructure#';
+const resourceInstanceBaseUri =
+  'http://lblod.data.gift/id/subsidie/bicycle-infrastructure';
+const ObjectiveTableType = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}ObjectiveTable`
+);
+const objectiveTablePredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}objectiveTable`
+);
+const kilometersPredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}kilometers`
+);
 
-const hasInvalidCellPredicate = new rdflib.NamedNode(`${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`);
-const validObjectiveTable = new rdflib.NamedNode(`${bicycleInfrastructureUri}validObjectiveTable`);
+const hasInvalidCellPredicate = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}/hasInvalidObjectiveTableEntry`
+);
+const validObjectiveTable = new rdflib.NamedNode(
+  `${bicycleInfrastructureUri}validObjectiveTable`
+);
 
 export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends InputFieldComponent {
   @tracked objectiveTableSubject = null;
   @tracked errors = [];
 
   get hasObjectiveTable() {
-    return this.storeOptions.store.match(this.sourceNode,
-                                        objectiveTablePredicate,
-                                        this.objectiveTableSubject,
-                                        this.storeOptions.sourceGraph).length > 0;
+    return (
+      this.storeOptions.store.match(
+        this.sourceNode,
+        objectiveTablePredicate,
+        this.objectiveTableSubject,
+        this.storeOptions.sourceGraph
+      ).length > 0
+    );
   }
 
   constructor() {
     super(...arguments);
-    scheduleOnce("actions", this, this.initTable );
+    scheduleOnce('actions', this, this.initTable);
   }
 
   initTable() {
     // Create table and entries in the store if not already existing
-    if(this.hasObjectiveTable){
+    if (this.hasObjectiveTable) {
       this.loadProvidedValue();
       this.validate();
-    }
-    else {
+    } else {
       this.createObjectiveTable();
     }
   }
@@ -56,26 +71,28 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
 
   createObjectiveTable() {
     const uuid = uuidv4();
-    this.objectiveTableSubject = new rdflib.NamedNode(`${resourceInstanceBaseUri}/${uuid}`);
+    this.objectiveTableSubject = new rdflib.NamedNode(
+      `${resourceInstanceBaseUri}/${uuid}`
+    );
     const triples = [
       {
         subject: this.objectiveTableSubject,
         predicate: RDF('type'),
         object: ObjectiveTableType,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.objectiveTableSubject,
         predicate: MU('uuid'),
         object: uuid,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.storeOptions.sourceNode,
         predicate: objectiveTablePredicate,
         object: this.objectiveTableSubject,
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.addAll(triples);
   }
@@ -96,37 +113,58 @@ export default class CustomSubsidyFormFieldsObjectiveTableEditComponent extends 
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
-  cellHasValue(){
-    const cells = this.storeOptions.store.match(null, kilometersPredicate, null, this.storeOptions.sourceGraph);
-    const cellsWithValue = cells.filter((item) =>  item.object.value > 0 );
+  cellHasValue() {
+    const cells = this.storeOptions.store.match(
+      null,
+      kilometersPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
+    const cellsWithValue = cells.filter((item) => item.object.value > 0);
     return cellsWithValue.length > 0;
   }
 
   @action
-  validate(){
+  validate() {
     this.errors = [];
 
-    const invalidRow = this.storeOptions.store.any(this.objectiveTableSubject, hasInvalidCellPredicate, null, this.storeOptions.sourceGraph);
+    const invalidRow = this.storeOptions.store.any(
+      this.objectiveTableSubject,
+      hasInvalidCellPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
 
-    if(!this.cellHasValue()) {
+    if (!this.cellHasValue()) {
       this.errors.pushObject({
         message: 'Minstens één veld moet een waarde groter dan 0 bevatten.',
       });
-      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
-    }
-    else if (invalidRow){
+      this.updateTripleObject(
+        this.objectiveTableSubject,
+        validObjectiveTable,
+        null
+      );
+    } else if (invalidRow) {
       this.errors.pushObject({
-        message: 'Een van de rijen is niet correct ingevuld'
+        message: 'Een van de rijen is niet correct ingevuld',
       });
-      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, null);
+      this.updateTripleObject(
+        this.objectiveTableSubject,
+        validObjectiveTable,
+        null
+      );
     } else {
-      this.updateTripleObject(this.objectiveTableSubject, validObjectiveTable, true);
+      this.updateTripleObject(
+        this.objectiveTableSubject,
+        validObjectiveTable,
+        true
+      );
     }
   }
 }
