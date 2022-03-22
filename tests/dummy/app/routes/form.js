@@ -13,6 +13,7 @@ const RDF = new rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 
 const FORM_TITLES = {
   'basic-fields': 'Basic form fields',
+  'climate-subsidy-costs-table': 'Climate subsidy costs table',
   'plan-living-together': 'Plan living together table',
 };
 
