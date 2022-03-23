@@ -1,0 +1,67 @@
+
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix fieldGroups: <http://data.lblod.info/field-groups/> .
+@prefix fields: <http://data.lblod.info/fields/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix schema: <http://schema.org/>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix lblodSubsidie: <http://lblod.data.gift/vocabularies/subsidie/>.
+@prefix planSamenleven: <http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+
+##########################################################
+# Property groups
+##########################################################
+
+fields:4558f2d6-1ba4-4211-beb9-5e3a4b65b975 a form:PropertyGroup;
+    mu:uuid "4558f2d6-1ba4-4211-beb9-5e3a4b65b975";
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:order 1 .
+
+fields:1351b517-2c69-4179-be27-b684739dc006 a form:PropertyGroup;
+    mu:uuid "1351b517-2c69-4179-be27-b684739dc006";
+    sh:description "objectives";
+    sh:order 4;
+    sh:name "Op welke doelstellingen wenst het bestuur in te zetten?" ;
+    sh:group fields:4558f2d6-1ba4-4211-beb9-5e3a4b65b975 .
+
+##########################################################
+# policy goals: Plan Living together table
+##########################################################
+
+fields:a07b54fd-ac60-4968-94ee-65bb1bd702fd a form:Field ;
+    mu:uuid "a07b54fd-ac60-4968-94ee-65bb1bd702fd";
+    sh:name "Algemene beleidsdoelstellingen" ;
+    sh:order 45 ;
+    sh:path lblodSubsidie:planLivingTogetherTable ;
+    form:options """{}""" ;
+    form:displayType displayTypes:planLivingTogetherTable ;
+    form:validations
+    [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Gelieve de tabel correct in te vullen." ;
+      sh:path ( lblodSubsidie:planLivingTogetherTable lblodSubsidie:validPlanLivingTogetherTable ) ] ;
+    sh:group fields:1351b517-2c69-4179-be27-b684739dc006 .
+
+
+##########################################################
+# Field groups
+##########################################################
+
+##########################################################
+# Main
+##########################################################
+fieldGroups:main a form:FieldGroup ;
+    mu:uuid "70eebdf0-14dc-47f7-85df-e1cfd41c3855" ;
+    form:hasField
+        ### Plan Living Together Table
+        fields:a07b54fd-ac60-4968-94ee-65bb1bd702fd.
+
+form:6b70a6f0-cce2-4afe-81f5-5911f45b0b27 a form:Form ;
+    mu:uuid "6b70a6f0-cce2-4afe-81f5-5911f45b0b27" ;
+    form:hasFieldGroup fieldGroups:main .
