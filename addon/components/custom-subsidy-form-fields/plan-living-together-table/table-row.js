@@ -8,18 +8,32 @@ import { RDF, XSD } from '@lblod/submission-form-helpers';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const planBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
+const planBaseUri =
+  'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
 const planTableBaseUri = 'http://data.lblod.info/plan-living-together-tables';
 
-const tableEntryBaseUri = 'http://data.lblod.info/id/plan-living-together-table/row-entry';
-const PlanEntryType = new rdflib.NamedNode(`${planBaseUri}PlanLivingTogetherEntry`);
-const planEntryPredicate = new rdflib.NamedNode(`${planBaseUri}planLivingTogetherEntry`);
+const tableEntryBaseUri =
+  'http://data.lblod.info/id/plan-living-together-table/row-entry';
+const PlanEntryType = new rdflib.NamedNode(
+  `${planBaseUri}PlanLivingTogetherEntry`
+);
+const planEntryPredicate = new rdflib.NamedNode(
+  `${planBaseUri}planLivingTogetherEntry`
+);
 const descriptionPredicate = new rdflib.NamedNode(`${planBaseUri}description`);
-const currentRangePredicate = new rdflib.NamedNode(`${planBaseUri}currentRange`);
-const plannedRangePredicate = new rdflib.NamedNode(`${planBaseUri}plannedRange`);
-const contributionPredicate = new rdflib.NamedNode(`${planBaseUri}contribution`);
+const currentRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}currentRange`
+);
+const plannedRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}plannedRange`
+);
+const contributionPredicate = new rdflib.NamedNode(
+  `${planBaseUri}contribution`
+);
 const priorityPredicate = new rdflib.NamedNode(`${planBaseUri}priority`);
-const hasInvalidRowPredicate = new rdflib.NamedNode(`${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
+  `${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`
+);
 
 export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowComponent extends Component {
   @tracked tableEntryUri = null;
@@ -30,7 +44,6 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   @tracked currentRangeErrors = [];
   @tracked plannedRangeErrors = [];
   @tracked priorityErrors = [];
-
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -44,7 +57,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
     return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
-  get onUpdateRow(){
+  get onUpdateRow() {
     return this.args.onUpdateRow;
   }
 
@@ -62,39 +75,62 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
   constructor() {
     super(...arguments);
-    scheduleOnce("actions", this, this.initializeTableRow);
+    scheduleOnce('actions', this, this.initializeTableRow);
   }
 
   initializeTableRow() {
     if (this.hasValues()) {
       this.loadProvidedValue();
       this.onUpdateRow();
-    }
-    else {
+    } else {
       this.initializeDefault();
     }
   }
 
   hasValues() {
-    const values = this.storeOptions.store.match(null, descriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
+    const values = this.storeOptions.store.match(
+      null,
+      descriptionPredicate,
+      this.businessRuleUri,
+      this.storeOptions.sourceGraph
+    );
     return values.length;
   }
 
   loadProvidedValue() {
-    const values = this.storeOptions.store.match(null, descriptionPredicate, this.businessRuleUri, this.storeOptions.sourceGraph);
+    const values = this.storeOptions.store.match(
+      null,
+      descriptionPredicate,
+      this.businessRuleUri,
+      this.storeOptions.sourceGraph
+    );
     if (values.length > 1) {
       throw `Expected single value for ${this.businessRuleUri}`;
-    }
-    else {
+    } else {
       this.setComponentValues(values[0].subject);
     }
   }
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
-    this.currentRange = this.storeOptions.store.match(this.tableEntryUri, currentRangePredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    this.plannedRange = this.storeOptions.store.match(this.tableEntryUri, plannedRangePredicate, null, this.storeOptions.sourceGraph)[0].object.value;
-    this.priority = this.storeOptions.store.match(this.tableEntryUri, priorityPredicate, null, this.storeOptions.sourceGraph)[0].object.value;
+    this.currentRange = this.storeOptions.store.match(
+      this.tableEntryUri,
+      currentRangePredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
+    this.plannedRange = this.storeOptions.store.match(
+      this.tableEntryUri,
+      plannedRangePredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
+    this.priority = this.storeOptions.store.match(
+      this.tableEntryUri,
+      priorityPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    )[0].object.value;
   }
 
   initializeDefault() {
@@ -106,54 +142,48 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
         subject: tableEntryUri,
         predicate: RDF('type'),
         object: PlanEntryType,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: tableEntryUri,
         predicate: MU('uuid'),
         object: uuid,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: this.planTableSubject,
         predicate: planEntryPredicate,
         object: tableEntryUri,
-        graph: this.storeOptions.sourceGraph
+        graph: this.storeOptions.sourceGraph,
       },
       {
         subject: tableEntryUri,
         predicate: descriptionPredicate,
         object: this.businessRuleUri,
-        graph: this.storeOptions.sourceGraph
-      }
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: currentRangePredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: currentRangePredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: plannedRangePredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: plannedRangePredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
-    triples.push(
-      {
-        subject: tableEntryUri,
-        predicate: priorityPredicate,
-        object: 0,
-        graph: this.storeOptions.sourceGraph
-      }
-    );
+    triples.push({
+      subject: tableEntryUri,
+      predicate: priorityPredicate,
+      object: 0,
+      graph: this.storeOptions.sourceGraph,
+    });
 
     this.storeOptions.store.addAll(triples);
     this.setComponentValues(tableEntryUri);
@@ -175,8 +205,8 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
@@ -186,17 +216,23 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
     if (!this.isPositiveInteger(currentRange)) {
       this.currentRangeErrors.pushObject({
-        message: 'De waarde moet groter of gelijk aan 0 zijn.'
+        message: 'De waarde moet groter of gelijk aan 0 zijn.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (!this.isValidInteger(currentRange)) {
+    } else if (!this.isValidInteger(currentRange)) {
       this.currentRangeErrors.pushObject({
-        message: 'De waarde moet een geheel getal vormen.'
+        message: 'De waarde moet een geheel getal vormen.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
     }
   }
@@ -206,25 +242,33 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
     if (!this.isPositiveInteger(plannedRange)) {
       this.plannedRangeErrors.pushObject({
-        message: 'De waarde moet groter of gelijk aan 0 zijn.'
+        message: 'De waarde moet groter of gelijk aan 0 zijn.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (!this.isValidInteger(plannedRange)) {
+    } else if (!this.isValidInteger(plannedRange)) {
       this.plannedRangeErrors.pushObject({
-        message: 'De waarde moet een geheel getal vormen.'
+        message: 'De waarde moet een geheel getal vormen.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (plannedRange > this.maxRange) {
+    } else if (plannedRange > this.maxRange) {
       this.plannedRangeErrors.pushObject({
-        message: `De waarde mag niet hoger liggen dan ${this.maxRange}.`
+        message: `De waarde mag niet hoger liggen dan ${this.maxRange}.`,
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
     }
   }
@@ -234,35 +278,46 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
     if (this.plannedRange > 0 && this.priority == 0) {
       this.priorityErrors.pushObject({
-        message: 'Gelieve een waarde groter dan 0 in te geven.'
+        message: 'Gelieve een waarde groter dan 0 in te geven.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (!this.isPositiveInteger(priority)) {
+    } else if (!this.isPositiveInteger(priority)) {
       this.priorityErrors.pushObject({
-        message: 'De waarde moet groter of gelijk aan 0 zijn.'
+        message: 'De waarde moet groter of gelijk aan 0 zijn.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
-    }
-
-    else if (!this.isValidInteger(priority)) {
+    } else if (!this.isValidInteger(priority)) {
       this.priorityErrors.pushObject({
-        message: 'De waarde moet een geheel getal vormen.'
+        message: 'De waarde moet een geheel getal vormen.',
       });
-      this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, this.tableEntryUri);
+      this.updateTripleObject(
+        this.planTableSubject,
+        hasInvalidRowPredicate,
+        this.tableEntryUri
+      );
       return false;
     }
-
   }
 
   @action
   update(e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
-    this.updateTripleObject(this.planTableSubject, hasInvalidRowPredicate, null);
+    this.updateTripleObject(
+      this.planTableSubject,
+      hasInvalidRowPredicate,
+      null
+    );
 
     /** start validation **/
     this.validateCurrentRange(this.currentRange);
@@ -274,10 +329,26 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
     if (this.priorityErrors.length) return this.onUpdateRow();
     /** end validation **/
 
-    this.updateTripleObject(this.tableEntryUri, currentRangePredicate, rdflib.literal(this.currentRange, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, plannedRangePredicate, rdflib.literal(this.plannedRange, XSD('integer')));
-    this.updateTripleObject(this.tableEntryUri, contributionPredicate, rdflib.literal(this.contribution, XSD('float')));
-    this.updateTripleObject(this.tableEntryUri, priorityPredicate, rdflib.literal(this.priority, XSD('integer')));
+    this.updateTripleObject(
+      this.tableEntryUri,
+      currentRangePredicate,
+      rdflib.literal(this.currentRange, XSD('integer'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      plannedRangePredicate,
+      rdflib.literal(this.plannedRange, XSD('integer'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      contributionPredicate,
+      rdflib.literal(this.contribution, XSD('float'))
+    );
+    this.updateTripleObject(
+      this.tableEntryUri,
+      priorityPredicate,
+      rdflib.literal(this.priority, XSD('integer'))
+    );
     this.setComponentValues(this.tableEntryUri);
 
     return this.onUpdateRow();
@@ -290,5 +361,4 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   isValidInteger(value) {
     return parseFloat(value) % 1 === 0;
   }
-
 }

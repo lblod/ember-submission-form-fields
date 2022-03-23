@@ -9,17 +9,29 @@ import { RDF } from '@lblod/submission-form-helpers';
 
 const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
-const planBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
+const planBaseUri =
+  'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
 const planTableBaseUri = 'http://data.lblod.info/plan-living-together-tables';
 
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
-const planTableType = new rdflib.NamedNode(`${lblodSubsidieBaseUri}PlanLivingTogetherTable`);
-const planTablePredicate = new rdflib.NamedNode(`${lblodSubsidieBaseUri}planLivingTogetherTable`);
-const plannedRangePredicate = new rdflib.NamedNode(`${planBaseUri}plannedRange`);
-const contributionPredicate = new rdflib.NamedNode(`${planBaseUri}contribution`);
-const hasInvalidRowPredicate = new rdflib.NamedNode(`${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`);
-const validPlanTable = new rdflib.NamedNode(`${lblodSubsidieBaseUri}validPlanLivingTogetherTable`);
-
+const planTableType = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}PlanLivingTogetherTable`
+);
+const planTablePredicate = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}planLivingTogetherTable`
+);
+const plannedRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}plannedRange`
+);
+const contributionPredicate = new rdflib.NamedNode(
+  `${planBaseUri}contribution`
+);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
+  `${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`
+);
+const validPlanTable = new rdflib.NamedNode(
+  `${lblodSubsidieBaseUri}validPlanLivingTogetherTable`
+);
 
 export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent extends InputFieldComponent {
   @tracked planTableSubject = null;
@@ -28,18 +40,21 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
   @tracked totalContribution = 0;
 
   get hasPlanTable() {
-    if (!this.planTableSubject)
-      return false;
+    if (!this.planTableSubject) return false;
     else
-      return this.storeOptions.store.match(this.sourceNode,
-        planTablePredicate,
-        this.planTableSubject,
-        this.storeOptions.sourceGraph).length > 0;
+      return (
+        this.storeOptions.store.match(
+          this.sourceNode,
+          planTablePredicate,
+          this.planTableSubject,
+          this.storeOptions.sourceGraph
+        ).length > 0
+      );
   }
 
   constructor() {
     super(...arguments);
-    scheduleOnce("actions", this, this.initializeTable);
+    scheduleOnce('actions', this, this.initializeTable);
   }
 
   loadProvidedValue() {
@@ -53,7 +68,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
   initializeTable() {
     this.loadProvidedValue();
 
-    if(!this.hasPlanTable) {
+    if (!this.hasPlanTable) {
       this.createPlanTable();
     }
 
@@ -64,24 +79,25 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
     const uuid = uuidv4();
     this.planTableSubject = new rdflib.NamedNode(`${planTableBaseUri}/${uuid}`);
 
-    const triples = [{
-      subject: this.planTableSubject,
-      predicate: RDF('type'),
-      object: planTableType,
-      graph: this.storeOptions.sourceGraph
-    },
-    {
-      subject: this.planTableSubject,
-      predicate: MU('uuid'),
-      object: uuid,
-      graph: this.storeOptions.sourceGraph
-    },
-    {
-      subject: this.storeOptions.sourceNode,
-      predicate: planTablePredicate,
-      object: this.planTableSubject,
-      graph: this.storeOptions.sourceGraph
-    }
+    const triples = [
+      {
+        subject: this.planTableSubject,
+        predicate: RDF('type'),
+        object: planTableType,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.planTableSubject,
+        predicate: MU('uuid'),
+        object: uuid,
+        graph: this.storeOptions.sourceGraph,
+      },
+      {
+        subject: this.storeOptions.sourceNode,
+        predicate: planTablePredicate,
+        object: this.planTableSubject,
+        graph: this.storeOptions.sourceGraph,
+      },
     ];
     this.storeOptions.store.addAll(triples);
   }
@@ -103,14 +119,14 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
           subject: subject,
           predicate: predicate,
           object: newObject,
-          graph: this.storeOptions.sourceGraph
-        }
+          graph: this.storeOptions.sourceGraph,
+        },
       ]);
     }
   }
 
   @action
-  validate(){
+  validate() {
     this.errors = [];
 
     // Calculate total contribution (column D)
@@ -121,9 +137,10 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
       this.storeOptions.sourceGraph
     );
 
-    this.totalContribution = contributionEntries.reduce((prev, curr) =>
-      prev + Number(curr.object.value), 0);
-
+    this.totalContribution = contributionEntries.reduce(
+      (prev, curr) => prev + Number(curr.object.value),
+      0
+    );
 
     // check that at least 1 value set in column C
     const rangeEntries = this.storeOptions.store.match(
@@ -133,25 +150,29 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
       this.storeOptions.sourceGraph
     );
 
-    const invalidRow = this.storeOptions.store.any(this.planTableSubject, hasInvalidRowPredicate, null, this.storeOptions.sourceGraph);
-    const hasPlannedRange = rangeEntries.filter(entry => parseInt(entry.object.value) > 0 );
+    const invalidRow = this.storeOptions.store.any(
+      this.planTableSubject,
+      hasInvalidRowPredicate,
+      null,
+      this.storeOptions.sourceGraph
+    );
+    const hasPlannedRange = rangeEntries.filter(
+      (entry) => parseInt(entry.object.value) > 0
+    );
 
-    if(invalidRow){
+    if (invalidRow) {
       this.errors.pushObject({
-        message: 'Een van de rijen is niet correct ingevuld'
+        message: 'Een van de rijen is niet correct ingevuld',
       });
       this.updateTripleObject(this.planTableSubject, validPlanTable, null);
-    }
-    else if(!hasPlannedRange.length){
+    } else if (!hasPlannedRange.length) {
       this.errors.pushObject({
         message:
           'Minstens één gepland bereik veld moet een waarde groter dan 0 bevatten.',
       });
       this.updateTripleObject(this.planTableSubject, validPlanTable, null);
-    }
-    else {
+    } else {
       this.updateTripleObject(this.planTableSubject, validPlanTable, true);
     }
   }
-
 }
