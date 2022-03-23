@@ -1,5 +1,6 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { scheduleOnce } from '@ember/runloop';
@@ -35,7 +36,7 @@ const validPlanTable = new rdflib.NamedNode(
 
 export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent extends InputFieldComponent {
   @tracked planTableSubject = null;
-  @tracked errors = [];
+  @tracked errors = A();
   @tracked entries = [];
   @tracked totalContribution = 0;
 
@@ -127,7 +128,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
 
   @action
   validate() {
-    this.errors = [];
+    this.errors = A();
 
     // Calculate total contribution (column D)
     const contributionEntries = this.storeOptions.store.match(
