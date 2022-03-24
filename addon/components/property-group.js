@@ -34,6 +34,18 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
     return this.args.level || 1;
   }
 
+  get titleLevel() {
+    return `${this.level}`;
+  }
+
+  get titleSkin() {
+    return `${this.level + 1}`;
+  }
+
+  get nextLevel() {
+    return this.level + 1;
+  }
+
   get errors() {
     return this.validations.filter((r) => !r.valid);
   }
