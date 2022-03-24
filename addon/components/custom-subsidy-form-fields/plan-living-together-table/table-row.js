@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import rdflib from 'browser-rdflib';
 import { scheduleOnce } from '@ember/runloop';
@@ -41,9 +42,9 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   @tracked plannedRange = null;
   @tracked priority = null;
 
-  @tracked currentRangeErrors = [];
-  @tracked plannedRangeErrors = [];
-  @tracked priorityErrors = [];
+  @tracked currentRangeErrors = A();
+  @tracked plannedRangeErrors = A();
+  @tracked priorityErrors = A();
 
   get storeOptions() {
     return this.args.storeOptions;
@@ -212,7 +213,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   }
 
   validateCurrentRange(currentRange) {
-    this.currentRangeErrors = [];
+    this.currentRangeErrors = A();
 
     if (!this.isPositiveInteger(currentRange)) {
       this.currentRangeErrors.pushObject({
@@ -238,7 +239,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   }
 
   validatePlannedRange(plannedRange) {
-    this.plannedRangeErrors = [];
+    this.plannedRangeErrors = A();
 
     if (!this.isPositiveInteger(plannedRange)) {
       this.plannedRangeErrors.pushObject({
@@ -274,7 +275,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   }
 
   validatePriority(priority) {
-    this.priorityErrors = [];
+    this.priorityErrors = A();
 
     if (this.plannedRange > 0 && this.priority == 0) {
       this.priorityErrors.pushObject({
