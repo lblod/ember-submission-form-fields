@@ -4,12 +4,12 @@
   </th>
   <td>
     <AuInput
-      disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
+      @disabled={{@disabled}}
       @width="block"
       @value={{this.currentRange}}
       @error={{if this.currentRangeErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     <div class="au-u-margin-top-tiny">{{@rangeLabel}}</div>
@@ -20,12 +20,12 @@
   </td>
   <td>
     <AuInput
-      disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
+      @disabled={{@disabled}}
       @width="block"
       @value={{this.plannedRange}}
       @error={{if this.plannedRangeErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     <div class="au-u-margin-top-tiny">{{@rangeLabel}} (max. {{@maxRange}})</div>
@@ -39,12 +39,12 @@
   </td>
   <td>
     <AuInput
-      disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
+      @disabled={{@disabled}}
       @width="block"
       @value={{this.priority}}
       @error={{if this.priorityErrors true false}}
+      test="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
 
