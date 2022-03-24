@@ -114,6 +114,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
   setComponentValues(subject) {
     this.tableEntryUri = subject;
+
     this.currentRange = this.storeOptions.store.match(
       this.tableEntryUri,
       currentRangePredicate,
@@ -132,6 +133,8 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
       null,
       this.storeOptions.sourceGraph
     )[0].object.value;
+
+    this.convertInputValuesToNumbers();
   }
 
   initializeDefault() {
@@ -320,6 +323,8 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
       null
     );
 
+    this.convertInputValuesToNumbers();
+
     /** start validation **/
     this.validateCurrentRange(this.currentRange);
     this.validatePlannedRange(this.plannedRange);
@@ -355,11 +360,28 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
     return this.onUpdateRow();
   }
 
+  /**
+   * Both rdflib and <Input>'s 2-way-binding return strings, so we convert everything to numbers
+   */
+  convertInputValuesToNumbers() {
+    this.currentRange = !isNaN(parseFloat(this.currentRange))
+      ? parseFloat(this.currentRange)
+      : null;
+
+    this.plannedRange = !isNaN(parseFloat(this.plannedRange))
+      ? parseFloat(this.plannedRange)
+      : null;
+
+    this.priority = !isNaN(parseFloat(this.priority))
+      ? parseFloat(this.priority)
+      : null;
+  }
+
   isPositiveInteger(value) {
-    return parseInt(value) >= 0;
+    return value >= 0;
   }
 
   isValidInteger(value) {
-    return parseFloat(value) % 1 === 0;
+    return value % 1 === 0;
   }
 }
