@@ -17,7 +17,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
 
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = JSON.parse(this.args.field.options);
+    const fieldOptions = this.args.field.options;
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)

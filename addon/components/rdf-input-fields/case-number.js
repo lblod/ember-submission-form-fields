@@ -51,7 +51,7 @@ export default class RdfInputFieldsCaseNumberComponent extends SimpleInputFieldC
   }
 
   setRandomCaseNumber() {
-    const options = JSON.parse(this.args.field.options);
+    const options = this.args.field.options;
     let url = `/case-number-generator/generate?node=${this.storeOptions.sourceNode.value}`;
     if (options.prefix) {
       url = url + `&prefix=${options.prefix}`;

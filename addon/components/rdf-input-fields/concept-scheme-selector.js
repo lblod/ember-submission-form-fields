@@ -30,7 +30,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = JSON.parse(this.args.field.options);
+    const fieldOptions = this.args.field.options;
     const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
 
     /**

@@ -52,7 +52,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     const store = this.args.formStore;
     const { sourceGraph, metaGraph } = this.args.graphs;
     const path = this.args.field.rdflibPath;
-    const options = JSON.parse(this.args.field.options);
+    const options = this.args.field.options;
     const scheme = new rdflib.namedNode(options.conceptScheme);
 
     let orderBy;
