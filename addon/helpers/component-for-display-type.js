@@ -26,6 +26,7 @@ const mapping = {
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/edit`,
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/edit`,
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/edit`,
+    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/edit`,
   },
 
   show: {
@@ -53,6 +54,7 @@ const mapping = {
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/show`,
     'http://lblod.data.gift/display-types/engagementTable': `custom-subsidy-form-fields/engagement-table/show`,
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
+    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/show`,
   },
 };
 

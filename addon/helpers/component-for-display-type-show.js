@@ -29,6 +29,7 @@ export default helper(function componentForDisplayTypeShow(displayTypeUri) {
     'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes': `rdf-input-fields/concept-scheme-multi-select-checkboxes/show`,
     'http://lblod.data.gift/display-types/estimatedCostTable': `custom-subsidy-form-fields/estimated-cost-table/show`,
     'http://lblod.data.gift/display-types/objectiveTable': `custom-subsidy-form-fields/objective-table/show`,
+    'http://lblod.data.gift/display-types/planLivingTogetherTable': `custom-subsidy-form-fields/plan-living-together-table/show`,
   };
 
   return mapping[displayTypeUri] || '';
