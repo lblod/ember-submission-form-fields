@@ -7,28 +7,25 @@
 {{/unless}}
 <div class="au-c-form">
   <ul class="au-o-grid au-o-grid--small">
-
     {{#each this.fields as |field|}}
-      <li class="au-o-grid__item au-u-1-1">
-        {{#if @show}}
-          {{component (component-for-display-type-show field.displayType)
-              field=field
-              formStore=@formStore
-              graphs=@graphs
-              sourceNode=@sourceNode}}
-        {{else}}
-          {{component
-              (component-for-display-type-edit field.displayType)
-              field=field
-              formStore=@formStore
-              graphs=@graphs
-              sourceNode=@sourceNode
-              forceShowErrors=@forceShowErrors
-          }}
-          {{! template-lint-disable no-triple-curlies}}
-          <AuHelpText>{{{field.help}}}</AuHelpText>
-        {{/if}}
-      </li>
+      {{#if field.displayType}}
+        <li class="au-o-grid__item au-u-1-1">
+          {{#let (component-for-display-type field.displayType show=@show) as |FormField|}}
+            <FormField
+              @field={{field}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @show={{@show}}
+            />
+            {{#unless @show}}
+              {{! template-lint-disable no-triple-curlies}}
+              <AuHelpText>{{{field.help}}}</AuHelpText>
+            {{/unless}}
+          {{/let}}
+        </li>
+      {{/if}}
     {{/each}}
   </ul>
 </div>
