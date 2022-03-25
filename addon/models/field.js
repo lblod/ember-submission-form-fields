@@ -89,7 +89,7 @@ export default class FieldModel {
   }
 
   @tracked
-  rdflibOptions = null;
+  rdflibDefaultValue = null;
   get defaultValue() {
     return this.rdflibDefaultValue && this.rdflibDefaultValue.value;
   }
