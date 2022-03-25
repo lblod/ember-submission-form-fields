@@ -2,7 +2,7 @@
   <div ...attributes>
     {{#if @group.name}}
       <div class="au-u-margin-bottom-small">
-        <AuHeading @level={{this.level}} @skin={{add this.level 1}}>
+        <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
           {{@group.name}}
         </AuHeading>
         {{#if @group.help}}
@@ -38,7 +38,7 @@
         </div>
       {{else}}
         <PropertyGroup
-                @level={{add this.level 1}}
+                @level={{this.nextLevel}}
                 @form={{@form}}
                 @group={{child}}
                 @formStore={{@formStore}}
