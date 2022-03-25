@@ -1,3 +1,7 @@
+# 1.4.0 (2022-03-25)
+## :house: Internal
+  - added plan samenleven table
+  - minor bugfixes
 # 1.3.0 (2022-03-22)
 ## :house: Internal
   - refactored dummy app
