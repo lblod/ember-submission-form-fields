@@ -41,7 +41,10 @@
           {{/if }}
         {{else}}
           <div class="au-u-margin-bottom-small">
-            {{#let (component-for-display-type field.displayType show=@show) as |FormField|}}
+            {{#let (ensure-safe-component
+              (component-for-display-type field.displayType show=@show))
+              as |FormField|
+            }}
               <FormField
                 @field={{field}}
                 @form={{@form}}
