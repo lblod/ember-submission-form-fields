@@ -1,16 +1,15 @@
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import rdflib from 'browser-rdflib';
-import { triplesForPath } from '@lblod/submission-form-helpers';
-import { XSD } from '@lblod/submission-form-helpers';
-import SimpleInputFieldComponent from '../simple-value-input-field';
+import { tracked } from '@glimmer/tracking';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import {
   DUTCH_LOCALIZATION,
   BELGIAN_FORMAT_ADAPTER,
 } from '@lblod/ember-submission-form-fields/config/date-picker';
+import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
+import rdflib from 'browser-rdflib';
 
-export default class FormInputFieldsDateTimeEditComponent extends SimpleInputFieldComponent {
+export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldComponent {
   inputId = 'date-time-' + guidFor(this);
 
   @tracked value = null;
