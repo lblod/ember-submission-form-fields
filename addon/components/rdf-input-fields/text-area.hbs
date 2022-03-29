@@ -10,13 +10,16 @@
   @width="block"
   @value={{this.value}}
   @error={{this.hasErrors}}
+  @disabled={{@show}}
   id={{this.inputId}}
   rows="5"
   {{on "blur" this.updateValue}}
 />
-{{#if this.maxLength}}
-  <AuPill @skin={{unless this.hasRemainingCharacters "error"}} >Resterende karakters: {{this.remainingCharacters}}</AuPill>
-{{/if}}
+{{#unless @show}}
+  {{#if this.maxLength}}
+    <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>Resterende karakters: {{this.remainingCharacters}}</AuPill>
+  {{/if}}
+{{/unless}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}
