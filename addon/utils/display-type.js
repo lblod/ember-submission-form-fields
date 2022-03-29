@@ -12,8 +12,7 @@ import ConceptSchemeSelectorShowComponent from '@lblod/ember-submission-form-fie
 import ConceptSchemeMultiSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/edit';
 import ConceptSchemeMultiSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/show';
 import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
-import DateEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date/edit';
-import DateShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date/show';
+import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date';
 import DateTimeEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time/edit';
 import DateTimeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time/show';
 import FilesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/edit';
@@ -85,7 +84,7 @@ const EDIT_COMPONENTS = {
     ConceptSchemeRadioButtonsComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
     ConceptSchemeSelectorEditComponent,
-  'http://lblod.data.gift/display-types/date': DateEditComponent,
+  'http://lblod.data.gift/display-types/date': DateComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeEditComponent,
   'http://lblod.data.gift/display-types/defaultInput': InputComponent,
   'http://lblod.data.gift/display-types/files': FilesEditComponent,
@@ -129,7 +128,6 @@ const SHOW_COMPONENTS = {
     ConceptSchemeMultiSelectorShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
     ConceptSchemeSelectorShowComponent,
-  'http://lblod.data.gift/display-types/date': DateShowComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeShowComponent,
   'http://lblod.data.gift/display-types/files': FilesShowComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
