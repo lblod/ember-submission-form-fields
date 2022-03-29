@@ -5,8 +5,7 @@ import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fi
 import BestuursorgaanSelectorShowComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/show';
 import CaseNumberEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/edit';
 import CaseNumberShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/show';
-import CheckboxEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox/edit';
-import CheckboxShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox/show';
+import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox';
 import ConceptSchemeRadioButtonsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/edit';
 import ConceptSchemeRadioButtonsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/show';
 import ConceptSchemeSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/edit';
@@ -82,7 +81,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorEditComponent,
   'http://lblod.data.gift/display-types/caseNumber': CaseNumberEditComponent,
-  'http://lblod.data.gift/display-types/checkbox': CheckboxEditComponent,
+  'http://lblod.data.gift/display-types/checkbox': CheckboxComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
     ConceptSchemeMultiSelectCheckboxesEditComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
@@ -131,7 +130,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorShowComponent,
   'http://lblod.data.gift/display-types/caseNumber': CaseNumberShowComponent,
-  'http://lblod.data.gift/display-types/checkbox': CheckboxShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
     ConceptSchemeMultiSelectCheckboxesShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
