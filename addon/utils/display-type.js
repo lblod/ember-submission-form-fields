@@ -30,8 +30,7 @@ import CustomSearchEditComponent from '@lblod/ember-submission-form-fields/compo
 import CustomSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
 import DateRangeEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/edit';
 import DateRangeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/show';
-import SearchEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search/edit';
-import SearchShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search/show';
+import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
 
 // Custom table components
 import ApplicationFormTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/edit';
@@ -101,7 +100,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchEditComponent,
   'http://lblod.data.gift/display-types/dateRange': DateRangeEditComponent,
-  'http://lblod.data.gift/display-types/search': SearchEditComponent,
+  'http://lblod.data.gift/display-types/search': SearchComponent,
 
   'http://lblod.data.gift/display-types/applicationFormTable':
     ApplicationFormTableEditComponent,
@@ -131,7 +130,6 @@ const SHOW_COMPONENTS = {
     VlabelOpcentiemShowComponent,
 
   'http://lblod.data.gift/display-types/dateRange': DateRangeShowComponent,
-  'http://lblod.data.gift/display-types/search': SearchShowComponent,
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchShowComponent,
 

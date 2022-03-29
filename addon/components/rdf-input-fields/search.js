@@ -1,8 +1,8 @@
 import { guidFor } from '@ember/object/internals';
-import SimpleInputFieldComponent from '../simple-value-input-field';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { restartableTask, timeout } from 'ember-concurrency';
 
-export default class FormInputFieldsSearchEditComponent extends SimpleInputFieldComponent {
+export default class RdfInputFieldsSearchComponent extends SimpleInputFieldComponent {
   inputId = 'search-' + guidFor(this);
 
   @restartableTask
