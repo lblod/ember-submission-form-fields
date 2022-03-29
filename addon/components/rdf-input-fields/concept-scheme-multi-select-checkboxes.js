@@ -1,10 +1,16 @@
-import InputFieldComponent from '../input-field';
+import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
-import { SKOS } from '@lblod/submission-form-helpers';
+import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import {
+  addSimpleFormValue,
+  removeDatasetForSimpleFormValue,
+  SKOS,
+  triplesForPath,
+} from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
-export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowComponent extends InputFieldComponent {
+export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   id = 'multi-select-checkboxes-' + guidFor(this);
 
   @tracked options = [];
@@ -20,6 +26,26 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesShowCompone
      *        the column layout is abandoned.
      */
     return !this.options.find((option) => option.label.length >= 50);
+  }
+
+  @action
+  updateValue(option) {
+    const update = (option) => {
+      /**
+       * NOTE: Retrieve option from store, if found we assume it was selected before and needs to be removed
+       */
+      const matches = triplesForPath(this.storeOptions, true).values.map(
+        (value) => value.value
+      );
+      if (matches.includes(option.subject.value)) {
+        removeDatasetForSimpleFormValue(option.subject, this.storeOptions);
+      } else {
+        addSimpleFormValue(option.subject, this.storeOptions);
+      }
+      this.hasBeenFocused = true;
+      super.updateValidations();
+    };
+    setTimeout(() => update(option), 1);
   }
 
   loadOptions() {
