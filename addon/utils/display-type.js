@@ -7,8 +7,7 @@ import CaseNumberEditComponent from '@lblod/ember-submission-form-fields/compone
 import CaseNumberShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/show';
 import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox';
 import ConceptSchemeRadioButtonsComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons';
-import ConceptSchemeSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/edit';
-import ConceptSchemeSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/show';
+import ConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector';
 import ConceptSchemeMultiSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/edit';
 import ConceptSchemeMultiSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/show';
 import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
@@ -82,7 +81,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
     ConceptSchemeRadioButtonsComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
-    ConceptSchemeSelectorEditComponent,
+    ConceptSchemeSelectorComponent,
   'http://lblod.data.gift/display-types/date': DateComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeComponent,
   'http://lblod.data.gift/display-types/defaultInput': InputComponent,
@@ -125,8 +124,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/caseNumber': CaseNumberShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
     ConceptSchemeMultiSelectorShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeSelector':
-    ConceptSchemeSelectorShowComponent,
   'http://lblod.data.gift/display-types/files': FilesShowComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,

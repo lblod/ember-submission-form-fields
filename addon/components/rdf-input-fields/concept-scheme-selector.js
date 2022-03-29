@@ -1,12 +1,12 @@
-import InputFieldComponent from '../input-field';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
+import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import {
+  SKOS,
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
 function byLabel(a, b) {
@@ -15,7 +15,7 @@ function byLabel(a, b) {
   return textA < textB ? -1 : textA > textB ? 1 : 0;
 }
 
-export default class FormInputFieldsConceptSchemeSelectorEditComponent extends InputFieldComponent {
+export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
 
   @tracked selected = null;
