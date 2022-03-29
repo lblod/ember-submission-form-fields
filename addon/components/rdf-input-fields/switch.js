@@ -1,7 +1,6 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-
-import SimpleInputFieldComponent from '../simple-value-input-field';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 
 // Note : default values are not working yet with this component, loadProvidedValue is overriden

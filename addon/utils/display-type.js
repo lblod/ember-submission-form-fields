@@ -26,8 +26,7 @@ import PropertyGroupComponent from '@lblod/ember-submission-form-fields/componen
 import RemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/edit';
 import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/remote-urls/edit';
 import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/show';
-import SwitchEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch/edit';
-import SwitchShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch/show';
+import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
 import TextAreaEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area/edit';
 import TextAreaShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area/show';
 import VlabelOpcentiemEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem/edit';
@@ -101,7 +100,7 @@ const EDIT_COMPONENTS = {
     CustomRemoteUrlsEditComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsEditComponent,
-  'http://lblod.data.gift/display-types/switch': SwitchEditComponent,
+  'http://lblod.data.gift/display-types/switch': SwitchComponent,
   'http://lblod.data.gift/display-types/textArea': TextAreaEditComponent,
   'http://lblod.data.gift/display-types/vLabelOpcentiem':
     VlabelOpcentiemEditComponent,
@@ -145,7 +144,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsShowComponent,
-  'http://lblod.data.gift/display-types/switch': SwitchShowComponent,
   'http://lblod.data.gift/display-types/textArea': TextAreaShowComponent,
   'http://lblod.data.gift/display-types/vLabelOpcentiem':
     VlabelOpcentiemShowComponent,
