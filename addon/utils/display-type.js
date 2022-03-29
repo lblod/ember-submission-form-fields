@@ -19,8 +19,7 @@ import DateTimeShowComponent from '@lblod/ember-submission-form-fields/component
 import FilesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/edit';
 import FilesShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/show';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
-import NumericalInputEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/edit';
-import NumericalInputShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/show';
+import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
 import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
 import RemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/edit';
 import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/remote-urls/edit';
@@ -93,7 +92,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/files': FilesEditComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesEditComponent,
   'http://lblod.data.gift/display-types/numericalInput':
-    NumericalInputEditComponent,
+    NumericalInputComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
   'http://lblod.data.gift/display-types/remoteUrls':
     CustomRemoteUrlsEditComponent,
@@ -135,8 +134,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/dateTime': DateTimeShowComponent,
   'http://lblod.data.gift/display-types/files': FilesShowComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
-  'http://lblod.data.gift/display-types/numericalInput':
-    NumericalInputShowComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
   'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
