@@ -1,11 +1,11 @@
-import InputFieldComponent from '../input-field';
 import { A } from '@ember/array';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
+import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
-import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 
 const uriTemplate = 'http://data.lblod.info/tax-rates';
 const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
@@ -37,7 +37,7 @@ class TaxEntry {
   }
 }
 
-export default class FormInputFieldsVlabelOpcentiemEditComponent extends InputFieldComponent {
+export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldComponent {
   amountColumnId = 'amount-column-' + guidFor(this);
 
   @tracked taxRateSubject = null;

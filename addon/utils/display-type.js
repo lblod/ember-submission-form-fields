@@ -22,8 +22,7 @@ import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/c
 import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/show';
 import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
 import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
-import VlabelOpcentiemEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem/edit';
-import VlabelOpcentiemShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem/show';
+import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
 
 // Search related fields
 import CustomSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
@@ -95,7 +94,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/switch': SwitchComponent,
   'http://lblod.data.gift/display-types/textArea': TextAreaComponent,
   'http://lblod.data.gift/display-types/vLabelOpcentiem':
-    VlabelOpcentiemEditComponent,
+    VlabelOpcentiemComponent,
 
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchEditComponent,
@@ -126,8 +125,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsShowComponent,
-  'http://lblod.data.gift/display-types/vLabelOpcentiem':
-    VlabelOpcentiemShowComponent,
 
   'http://lblod.data.gift/display-types/dateRange': DateRangeShowComponent,
   'http://lblod.data.gift/display-types/customSearch':
