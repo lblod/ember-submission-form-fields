@@ -6,8 +6,7 @@ import BestuursorgaanSelectorShowComponent from '@lblod/ember-submission-form-fi
 import CaseNumberEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/edit';
 import CaseNumberShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/show';
 import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox';
-import ConceptSchemeRadioButtonsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/edit';
-import ConceptSchemeRadioButtonsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/show';
+import ConceptSchemeRadioButtonsComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons';
 import ConceptSchemeSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/edit';
 import ConceptSchemeSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/show';
 import ConceptSchemeMultiSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/edit';
@@ -85,7 +84,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
     ConceptSchemeMultiSelectorEditComponent,
   'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
-    ConceptSchemeRadioButtonsEditComponent,
+    ConceptSchemeRadioButtonsComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
     ConceptSchemeSelectorEditComponent,
   'http://lblod.data.gift/display-types/date': DateEditComponent,
@@ -130,8 +129,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/caseNumber': CaseNumberShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
     ConceptSchemeMultiSelectorShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
-    ConceptSchemeRadioButtonsShowComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
     ConceptSchemeSelectorShowComponent,
   'http://lblod.data.gift/display-types/date': DateShowComponent,

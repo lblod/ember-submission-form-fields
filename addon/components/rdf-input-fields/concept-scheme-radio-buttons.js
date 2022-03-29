@@ -1,18 +1,11 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-
-import SimpleInputFieldComponent from '../simple-value-input-field';
 import { tracked } from '@glimmer/tracking';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { SKOS } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
-
-export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extends SimpleInputFieldComponent {
+export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   inputId = 'concept-scheme-radio-buttons-' + guidFor(this);
 
   @tracked options = [];
@@ -48,4 +41,10 @@ export default class RdfInputFieldsconceptSchemeRadioButtonsEditComponent extend
   updateValue(option) {
     setTimeout(() => super.updateValue(option.nodeValue), 1);
   }
+}
+
+function byLabel(a, b) {
+  const textA = a.label.toUpperCase();
+  const textB = b.label.toUpperCase();
+  return textA < textB ? -1 : textA > textB ? 1 : 0;
 }

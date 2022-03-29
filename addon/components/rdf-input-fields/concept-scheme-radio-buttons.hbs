@@ -17,6 +17,7 @@
         @label={{option.label}}
         @value={{option.label}}
         @onChange={{fn this.updateValue option}}
+        @disabled={{@show}}
         checked={{eq this.value option.value}}
       />
     </li>
