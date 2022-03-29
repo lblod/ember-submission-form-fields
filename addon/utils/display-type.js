@@ -27,8 +27,7 @@ import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/compon
 // Search related fields
 import CustomSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
 import CustomSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
-import DateRangeEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/edit';
-import DateRangeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/show';
+import DateRangeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range';
 import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
 
 // Custom table components
@@ -98,7 +97,7 @@ const EDIT_COMPONENTS = {
 
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchEditComponent,
-  'http://lblod.data.gift/display-types/dateRange': DateRangeEditComponent,
+  'http://lblod.data.gift/display-types/dateRange': DateRangeComponent,
   'http://lblod.data.gift/display-types/search': SearchComponent,
 
   'http://lblod.data.gift/display-types/applicationFormTable':
@@ -126,7 +125,6 @@ const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsShowComponent,
 
-  'http://lblod.data.gift/display-types/dateRange': DateRangeShowComponent,
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchShowComponent,
 
