@@ -1,8 +1,8 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import SimpleInputFieldComponent from '../simple-value-input-field';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 
-export default class FormInputFieldsInputEditComponent extends SimpleInputFieldComponent {
+export default class RdfInputFieldsInputComponent extends SimpleInputFieldComponent {
   inputId = 'input-' + guidFor(this);
 
   @action

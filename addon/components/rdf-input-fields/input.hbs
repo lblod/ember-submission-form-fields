@@ -15,6 +15,7 @@
 <AuInput
   @error={{this.hasErrors}}
   @value={{this.value}}
+  @disabled={{@show}}
   id={{this.inputId}}
   {{on "blur" this.updateValue}}
 />

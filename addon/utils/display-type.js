@@ -21,8 +21,7 @@ import DateTimeEditComponent from '@lblod/ember-submission-form-fields/component
 import DateTimeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time/show';
 import FilesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/edit';
 import FilesShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/show';
-import InputEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input/edit';
-import InputShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input/show';
+import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
 import NumericalInputEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/edit';
 import NumericalInputShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/show';
 import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
@@ -94,7 +93,7 @@ const EDIT_COMPONENTS = {
     ConceptSchemeSelectorEditComponent,
   'http://lblod.data.gift/display-types/date': DateEditComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeEditComponent,
-  'http://lblod.data.gift/display-types/defaultInput': InputEditComponent,
+  'http://lblod.data.gift/display-types/defaultInput': InputComponent,
   'http://lblod.data.gift/display-types/files': FilesEditComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesEditComponent,
   'http://lblod.data.gift/display-types/numericalInput':
@@ -143,7 +142,6 @@ const SHOW_COMPONENTS = {
     ConceptSchemeSelectorShowComponent,
   'http://lblod.data.gift/display-types/date': DateShowComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeShowComponent,
-  'http://lblod.data.gift/display-types/defaultInput': InputShowComponent,
   'http://lblod.data.gift/display-types/files': FilesShowComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
   'http://lblod.data.gift/display-types/numericalInput':
