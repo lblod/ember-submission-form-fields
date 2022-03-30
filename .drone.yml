@@ -13,7 +13,6 @@ steps:
   - npm run lint
 - name: test
   image: danlynn/ember-cli:4.2.0-node_16.14
-  failure: ignore
   commands:
   - npm run test:ember
 trigger:
