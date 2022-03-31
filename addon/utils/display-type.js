@@ -11,8 +11,7 @@ import ConceptSchemeMultiSelectorComponent from '@lblod/ember-submission-form-fi
 import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
 import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date';
 import DateTimeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time';
-import FilesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/edit';
-import FilesShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/show';
+import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
 import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
 import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
@@ -80,8 +79,8 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/date': DateComponent,
   'http://lblod.data.gift/display-types/dateTime': DateTimeComponent,
   'http://lblod.data.gift/display-types/defaultInput': InputComponent,
-  'http://lblod.data.gift/display-types/files': FilesEditComponent,
-  'http://lblod.data.gift/display-types/files/variation/1': FilesEditComponent,
+  'http://lblod.data.gift/display-types/files': FilesComponent,
+  'http://lblod.data.gift/display-types/files/variation/1': FilesComponent,
   'http://lblod.data.gift/display-types/numericalInput':
     NumericalInputComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
@@ -116,8 +115,6 @@ const EDIT_COMPONENTS = {
 const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorShowComponent,
-  'http://lblod.data.gift/display-types/files': FilesShowComponent,
-  'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
   'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':

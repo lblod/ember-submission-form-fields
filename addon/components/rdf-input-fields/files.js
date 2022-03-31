@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import {
   addSimpleFormValue,
   FORM,
@@ -12,7 +13,7 @@ import {
   removeDatasetForSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
-import InputFieldComponent from '../input-field';
+
 class FileField {
   @tracked errors = [];
 
@@ -30,7 +31,7 @@ class FileField {
   }
 }
 
-export default class FormInputFieldsFilesEditComponent extends InputFieldComponent {
+export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @service store;
   @tracked files = A();
   inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.

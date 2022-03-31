@@ -1,0 +1,48 @@
+<AuLabel
+  @error={{this.hasErrors}}
+  @required={{this.isRequired}}
+  @requiredLabel={{if this.containsRemoteUrls "Enkel indien geen links"}}
+  for={{this.inputId}}
+>
+  {{@field.label}}
+</AuLabel>
+
+{{#if this.files}}
+  <ul class="au-o-flow au-o-flow--tiny au-u-margin-bottom-small">
+    {{#each this.files as |fileField|}}
+      {{#if fileField.record}}
+        {{#let fileField.record as |file|}}
+          <li>
+            <FileCard
+              @filename={{file.filename}}
+              @fileSize={{file.humanReadableSize}}
+              @downloadLink={{file.downloadLink}}
+              @onDelete={{unless @show (fn this.removeFile file)}}
+            />
+          </li>
+        {{/let}}
+      {{!-- {{else}} --}}
+      {{! TODO: Something went wrong when fetching the file }}
+      {{/if}}
+    {{/each}}
+  </ul>
+{{else if @show}}
+  <AuHelpText>Er werden geen bestanden toegevoegd.</AuHelpText>
+{{/if}}
+
+{{#unless @show}}
+  {{! The id can't be added to the AuFileUpload component since it will be passed to the inner FileUpload component.
+  That causes issues because it looks up its own element using `this.elementId` which won't work if we set a custom id. }}
+  <div id={{this.inputId}}>
+    <AuFileUpload
+      @onFinishUpload={{this.addFile}}
+      @maxFileSizeMB="1024"
+      data-test-field-uri={{@field.uri.value}}
+      class="{{if this.errors 'upload--error'}}"
+    />
+  </div>
+
+  {{#each this.errors as |error|}}
+    <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+  {{/each}}
+{{/unless}}
