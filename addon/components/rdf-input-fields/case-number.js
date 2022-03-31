@@ -1,11 +1,9 @@
-import SimpleInputFieldComponent from '../simple-value-input-field';
-
-import fetch from 'fetch';
-import clipboardy from 'clipboardy';
-
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
+import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import clipboardy from 'clipboardy';
+import fetch from 'fetch';
 
 /**
  *
@@ -36,7 +34,7 @@ import { guidFor } from '@ember/object/internals';
  *  ```
  *
  */
-export default class FormInputFieldsCaseNumberEditComponent extends SimpleInputFieldComponent {
+export default class RdfInputFieldsCaseNumberComponent extends SimpleInputFieldComponent {
   id = 'case-number-' + guidFor(this);
 
   @tracked error;

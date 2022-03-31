@@ -3,8 +3,7 @@ import { assert } from '@ember/debug';
 // Basic fields
 import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/edit';
 import BestuursorgaanSelectorShowComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/show';
-import CaseNumberEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/edit';
-import CaseNumberShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/show';
+import CaseNumberComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number';
 import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox';
 import ConceptSchemeRadioButtonsComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons';
 import ConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector';
@@ -68,7 +67,7 @@ export function getComponentForDisplayType(displayType, show) {
 const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorEditComponent,
-  'http://lblod.data.gift/display-types/caseNumber': CaseNumberEditComponent,
+  'http://lblod.data.gift/display-types/caseNumber': CaseNumberComponent,
   'http://lblod.data.gift/display-types/checkbox': CheckboxComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
     ConceptSchemeMultiSelectCheckboxesComponent,
@@ -117,7 +116,6 @@ const EDIT_COMPONENTS = {
 const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorShowComponent,
-  'http://lblod.data.gift/display-types/caseNumber': CaseNumberShowComponent,
   'http://lblod.data.gift/display-types/files': FilesShowComponent,
   'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
