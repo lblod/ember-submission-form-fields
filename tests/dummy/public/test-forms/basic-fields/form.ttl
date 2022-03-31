@@ -11,6 +11,7 @@
 @prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/>.
 @prefix schema: <http://schema.org/>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 
 
 
@@ -316,3 +317,24 @@ fields:eaf71eec-6ca8-4f63-b4a6-adfe4f21651b a form:Field ;
 fieldGroups:main form:hasField fields:1ee5132e-28c0-4292-9fe6-24c7be456580 .
 fieldGroups:main form:hasField fields:f3c1f62e-0fc6-4440-8208-7a0ef49fb28c .
 fieldGroups:main form:hasField fields:eaf71eec-6ca8-4f63-b4a6-adfe4f21651b .
+
+##########################################################
+# Case-number
+##########################################################
+
+fields:6aa476d8-e0ec-4321-8120-660ea6846062 a form:Field ;
+    mu:uuid "6aa476d8-e0ec-4321-8120-660ea6846062";
+    sh:name "Case number" ;
+    sh:order 350 ;
+    sh:path nie:identifier ;
+    form:validations
+      [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Dit veld is verplicht."@nl;
+      sh:path nie:identifier
+      ] ;
+    form:options  """{"prefix" : "some-prefix-"}""" ;
+    form:displayType displayTypes:caseNumber ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11  .
+
+fieldGroups:main form:hasField fields:6aa476d8-e0ec-4321-8120-660ea6846062 .
