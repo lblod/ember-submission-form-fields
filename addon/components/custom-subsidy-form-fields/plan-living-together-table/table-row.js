@@ -366,15 +366,15 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   convertInputValuesToNumbers() {
     this.currentRange = !isNaN(parseFloat(this.currentRange))
       ? parseFloat(this.currentRange)
-      : null;
+      : 0;
 
     this.plannedRange = !isNaN(parseFloat(this.plannedRange))
       ? parseFloat(this.plannedRange)
-      : null;
+      : 0;
 
     this.priority = !isNaN(parseFloat(this.priority))
       ? parseFloat(this.priority)
-      : null;
+      : 0;
   }
 
   isPositiveInteger(value) {

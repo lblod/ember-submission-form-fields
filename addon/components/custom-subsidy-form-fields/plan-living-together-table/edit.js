@@ -27,6 +27,9 @@ const plannedRangePredicate = new rdflib.NamedNode(
 const contributionPredicate = new rdflib.NamedNode(
   `${planBaseUri}contribution`
 );
+const totalContributionPredicate = new rdflib.NamedNode(
+  `${planBaseUri}totalContribution`
+);
 const hasInvalidRowPredicate = new rdflib.NamedNode(
   `${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`
 );
@@ -173,6 +176,11 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
       });
       this.updateTripleObject(this.planTableSubject, validPlanTable, null);
     } else {
+      this.updateTripleObject(
+        this.planTableSubject,
+        totalContributionPredicate,
+        this.totalContribution
+      );
       this.updateTripleObject(this.planTableSubject, validPlanTable, true);
     }
   }
