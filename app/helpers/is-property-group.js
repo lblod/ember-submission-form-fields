@@ -1,4 +1,1 @@
-export {
-  default,
-  isPropertyGroup,
-} from '@lblod/ember-submission-form-fields/helpers/is-property-group';
+export { default } from '@lblod/ember-submission-form-fields/helpers/is-property-group';
