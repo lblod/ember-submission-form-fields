@@ -15,10 +15,10 @@ steps:
   image: danlynn/ember-cli:4.2.0-node_16.14
   commands:
   - npm run test:ember
-- name: test-embroider
-  image: danlynn/ember-cli:4.2.0-node_16.14
-  commands:
-  - npx ember try:one embroider-optimized
+# - name: test-embroider
+#   image: danlynn/ember-cli:4.2.0-node_16.14
+#   commands:
+#   - npx ember try:one embroider-optimized
 trigger:
   event:
     - pull_request
