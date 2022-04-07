@@ -24,8 +24,36 @@ ember install ember-submission-form-fields
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+### Registering new form field components
 
+If your app wants to support display types that aren't supported by the built-in components you can use the `registerFormFields` util.
+
+The utility accepts an array of objects with the following structure:
+```ts
+type FormFieldRegistration = {
+  displayType: string;
+  edit: Component;
+  show?: Component;
+}
+```
+
+The "show" component is optional. If it isn't provided we fall back to the edit component. This allows you to use a single component for both the "edit" and "show" states of the form which is useful when both variants aren't that much different. The custom component receive the same arguments as the built-in components so you can use `@show` if you need to conditional behavior based on the form state.
+
+Registering components can be done wherever you want, as long as it's done before the form is being rendered.
+
+> Note: It's not allowed to register components with a display type that's already handled by one of the built-in components.
+
+#### Usage example
+
+```js
+import { registerFormFields } from '@lblod/ember-submission-form-fields';
+import SomeFormFieldComponent from 'project/components/some-form-field-component';
+
+registerFormFields([{
+  displayType: 'http://some-display-type-uri',
+  edit: SomeFormFieldComponent
+}]);
+```
 
 Contributing
 ------------------------------------------------------------------------------

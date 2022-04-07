@@ -41,15 +41,94 @@ import ObjectiveTableShowComponent from '@lblod/ember-submission-form-fields/com
 import PlanLivingTogetherTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/edit';
 import PlanLivingTogetherTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/show';
 
+const BUILT_IN_EDIT_COMPONENTS = new Map();
+const BUILT_IN_SHOW_COMPONENTS = new Map();
+const CUSTOM_EDIT_COMPONENTS = new Map();
+const CUSTOM_SHOW_COMPONENTS = new Map();
+
+export function registerFormFields(customFields) {
+  registerComponentsForDisplayType(customFields, false);
+}
+
+// Private utils
+
+export function registerComponentsForDisplayType(
+  formFields = [],
+  shouldBeRegisteredAsBuiltIn = true
+) {
+  assert(
+    'The form fields should be provided as an array',
+    Array.isArray(formFields)
+  );
+
+  formFields.forEach(({ displayType, edit, show }) => {
+    assert(
+      '`displayType` is required when registering a form field',
+      typeof displayType === 'string'
+    );
+
+    assert(
+      `Registering a component for the '${displayType}' display type isn't allowed since a built-in component already handles it.`,
+      !BUILT_IN_SHOW_COMPONENTS.has(displayType) &&
+        !BUILT_IN_EDIT_COMPONENTS.has(displayType)
+    );
+
+    assert(
+      `The edit component is required when registering custom fields`,
+      Boolean(edit)
+    );
+
+    if (shouldBeRegisteredAsBuiltIn) {
+      registerBuiltInComponent(displayType, edit, show);
+    } else {
+      registerCustomComponent(displayType, edit, show);
+    }
+  });
+}
+
+function registerCustomComponent(displayType, editComponent, showComponent) {
+  CUSTOM_EDIT_COMPONENTS.set(displayType, editComponent);
+
+  if (showComponent) {
+    CUSTOM_SHOW_COMPONENTS.set(displayType, showComponent);
+  }
+}
+
+function registerBuiltInComponent(displayType, editComponent, showComponent) {
+  BUILT_IN_EDIT_COMPONENTS.set(displayType, editComponent);
+
+  if (showComponent) {
+    BUILT_IN_SHOW_COMPONENTS.set(displayType, showComponent);
+  }
+}
+
+export function resetCustomComponentRegistrations() {
+  CUSTOM_SHOW_COMPONENTS.clear();
+  CUSTOM_EDIT_COMPONENTS.clear();
+}
+
+export function resetBuiltInComponentRegistrations() {
+  BUILT_IN_EDIT_COMPONENTS.clear();
+  BUILT_IN_SHOW_COMPONENTS.clear();
+}
+
 export function getComponentForDisplayType(displayType, show) {
   let component;
 
   if (show) {
-    component = SHOW_COMPONENTS[displayType];
+    component = BUILT_IN_SHOW_COMPONENTS.get(displayType);
   }
 
   if (!component) {
-    component = EDIT_COMPONENTS[displayType];
+    component = BUILT_IN_EDIT_COMPONENTS.get(displayType);
+  }
+
+  if (show && !component) {
+    component = CUSTOM_SHOW_COMPONENTS.get(displayType);
+  }
+
+  if (!component) {
+    component = CUSTOM_EDIT_COMPONENTS.get(displayType);
   }
 
   assert(
@@ -62,74 +141,135 @@ export function getComponentForDisplayType(displayType, show) {
   return component;
 }
 
-const EDIT_COMPONENTS = {
-  'http://lblod.data.gift/display-types/bestuursorgaanSelector':
-    BestuursorgaanSelectorEditComponent,
-  'http://lblod.data.gift/display-types/caseNumber': CaseNumberComponent,
-  'http://lblod.data.gift/display-types/checkbox': CheckboxComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
-    ConceptSchemeMultiSelectCheckboxesComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
-    ConceptSchemeMultiSelectorComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
-    ConceptSchemeRadioButtonsComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeSelector':
-    ConceptSchemeSelectorComponent,
-  'http://lblod.data.gift/display-types/date': DateComponent,
-  'http://lblod.data.gift/display-types/dateTime': DateTimeComponent,
-  'http://lblod.data.gift/display-types/defaultInput': InputComponent,
-  'http://lblod.data.gift/display-types/files': FilesComponent,
-  'http://lblod.data.gift/display-types/files/variation/1': FilesComponent,
-  'http://lblod.data.gift/display-types/numericalInput':
-    NumericalInputComponent,
-  'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
-  'http://lblod.data.gift/display-types/remoteUrls':
-    CustomRemoteUrlsEditComponent,
-  'http://lblod.data.gift/display-types/remoteUrls/variation/1':
-    RemoteUrlsEditComponent,
-  'http://lblod.data.gift/display-types/switch': SwitchComponent,
-  'http://lblod.data.gift/display-types/textArea': TextAreaComponent,
-  'http://lblod.data.gift/display-types/vLabelOpcentiem':
-    VlabelOpcentiemComponent,
+// Register all the built-in components
+registerComponentsForDisplayType([
+  // Basic fields
+  {
+    displayType: 'http://lblod.data.gift/display-types/bestuursorgaanSelector',
+    edit: BestuursorgaanSelectorEditComponent,
+    show: BestuursorgaanSelectorShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/caseNumber',
+    edit: CaseNumberComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/checkbox',
+    edit: CheckboxComponent,
+  },
+  {
+    displayType:
+      'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes',
+    edit: ConceptSchemeMultiSelectCheckboxesComponent,
+  },
+  {
+    displayType:
+      'http://lblod.data.gift/display-types/conceptSchemeMultiSelector',
+    edit: ConceptSchemeMultiSelectorComponent,
+  },
+  {
+    displayType:
+      'http://lblod.data.gift/display-types/conceptSchemeRadioButtons',
+    edit: ConceptSchemeRadioButtonsComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/conceptSchemeSelector',
+    edit: ConceptSchemeSelectorComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/date',
+    edit: DateComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/dateTime',
+    edit: DateTimeComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/defaultInput',
+    edit: InputComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/files',
+    edit: FilesComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/files/variation/1',
+    edit: FilesComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/numericalInput',
+    edit: NumericalInputComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/property-group',
+    edit: PropertyGroupComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/remoteUrls',
+    edit: CustomRemoteUrlsEditComponent,
+    show: RemoteUrlsShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/remoteUrls/variation/1',
+    edit: RemoteUrlsEditComponent,
+    show: RemoteUrlsShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/switch',
+    edit: SwitchComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/textArea',
+    edit: TextAreaComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/vLabelOpcentiem',
+    edit: VlabelOpcentiemComponent,
+  },
 
-  'http://lblod.data.gift/display-types/customSearch':
-    CustomSearchEditComponent,
-  'http://lblod.data.gift/display-types/dateRange': DateRangeComponent,
-  'http://lblod.data.gift/display-types/search': SearchComponent,
+  // Search related fields
+  {
+    displayType: 'http://lblod.data.gift/display-types/customSearch',
+    edit: CustomSearchEditComponent,
+    show: CustomSearchShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/dateRange',
+    edit: DateRangeComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/search',
+    edit: SearchComponent,
+  },
 
-  'http://lblod.data.gift/display-types/applicationFormTable':
-    ApplicationFormTableEditComponent,
-  'http://lblod.data.gift/display-types/climateSubsidyCostTable':
-    ClimateSubsidyCostsTableComponent,
-  'http://lblod.data.gift/display-types/engagementTable':
-    EngagementTableEditComponent,
-  'http://lblod.data.gift/display-types/estimatedCostTable':
-    EstimatedCostEditComponent,
-  'http://lblod.data.gift/display-types/objectiveTable':
-    ObjectiveTableEditComponent,
-  'http://lblod.data.gift/display-types/planLivingTogetherTable':
-    PlanLivingTogetherTableEditComponent,
-};
-
-const SHOW_COMPONENTS = {
-  'http://lblod.data.gift/display-types/bestuursorgaanSelector':
-    BestuursorgaanSelectorShowComponent,
-  'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
-  'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
-  'http://lblod.data.gift/display-types/remoteUrls/variation/1':
-    RemoteUrlsShowComponent,
-
-  'http://lblod.data.gift/display-types/customSearch':
-    CustomSearchShowComponent,
-
-  'http://lblod.data.gift/display-types/applicationFormTable':
-    ApplicationFormTableShowComponent,
-  'http://lblod.data.gift/display-types/engagementTable':
-    EngagementTableShowComponent,
-  'http://lblod.data.gift/display-types/estimatedCostTable':
-    EstimatedCostShowComponent,
-  'http://lblod.data.gift/display-types/objectiveTable':
-    ObjectiveTableShowComponent,
-  'http://lblod.data.gift/display-types/planLivingTogetherTable':
-    PlanLivingTogetherTableShowComponent,
-};
+  // Custom table components
+  {
+    displayType: 'http://lblod.data.gift/display-types/applicationFormTable',
+    edit: ApplicationFormTableEditComponent,
+    show: ApplicationFormTableShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/climateSubsidyCostTable',
+    edit: ClimateSubsidyCostsTableComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/engagementTable',
+    edit: EngagementTableEditComponent,
+    show: EngagementTableShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/estimatedCostTable',
+    edit: EstimatedCostEditComponent,
+    show: EstimatedCostShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/objectiveTable',
+    edit: ObjectiveTableEditComponent,
+    show: ObjectiveTableShowComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/planLivingTogetherTable',
+    edit: PlanLivingTogetherTableEditComponent,
+    show: PlanLivingTogetherTableShowComponent,
+  },
+]);
