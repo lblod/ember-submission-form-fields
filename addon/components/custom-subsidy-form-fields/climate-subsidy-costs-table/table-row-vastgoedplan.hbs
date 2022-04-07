@@ -5,11 +5,11 @@
   <td>
     <AuInput
       @disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
       @width="block"
       @value={{this.costPerUnit}}
       @error={{if this.costPerUnitErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     per Strategisch Vastgoedplan
@@ -22,11 +22,11 @@
   <td>
     <AuInput
       @disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
       @width="block"
       @value={{this.toRealiseUnits}}
       @error={{if this.toRealiseUnitsErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     <span class="au-c-info-text">max 1</span>
@@ -38,6 +38,9 @@
     {{convert-to-currency this.amount}}
   </td>
   <td>
-   {{convert-to-currency this.restitution}}
- </td>
+    {{convert-to-currency this.restitution}}
+  </td>
+  {{#if @showDeleteColumn}}
+    <td></td>
+  {{/if}}
 </tr>

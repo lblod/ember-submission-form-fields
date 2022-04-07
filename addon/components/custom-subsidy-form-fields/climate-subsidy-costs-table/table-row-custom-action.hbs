@@ -1,6 +1,24 @@
 <tr>
   <th scope="row" class="au-u-regular">
-    {{yield (hash actionDescription = (component 'custom-subsidy-form-fields/climate-subsidy-costs-table/table-cell-data')) }}
+    <label
+      class="au-u-hidden-visually"
+      for="description-{{this.id}}"
+    >Omschrijving actie</label>
+    <AuTextarea
+      @error={{if this.descriptionErrors true false}}
+      @value={{this.description}}
+      @disabled={{@disabled}}
+      @width="block"
+      placeholder="Omschrijving actie"
+      id="description-{{this.id}}"
+      style="resize: vertical;"
+      {{!template-lint-disable no-inline-styles}}
+      {{on "blur" this.update}}
+      {{auto-focus}}
+    />
+    {{#each this.descriptionErrors as |error|}}
+      <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
+    {{/each}}
   </th>
   <td>
     <AuInput
@@ -12,9 +30,6 @@
       lang="nl-BE"
       {{on "blur" this.update}}
     />
-    per actieplan
-    <br>
-    <span class="au-c-info-text">Indicatie: {{convert-to-currency this.indication}}</span>
     {{#each this.costPerUnitErrors as |error|}}
       <AuHelpText @error={{true}}>{{error.message}}</AuHelpText>
     {{/each}}
@@ -40,6 +55,16 @@
     {{convert-to-currency this.restitution}}
   </td>
   {{#if @showDeleteColumn}}
-    <td></td>
+    <td>
+      <AuButton
+        @skin="link"
+        @alert={{true}}
+        @icon="bin"
+        @iconAlignment="left"
+        {{on "click" this.deleteAction}}
+      >
+        Verwijder
+      </AuButton>
+    </td>
   {{/if}}
 </tr>

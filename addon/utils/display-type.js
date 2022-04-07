@@ -31,8 +31,7 @@ import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-
 // Custom table components
 import ApplicationFormTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/edit';
 import ApplicationFormTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/show';
-import ClimateSubsidyCostsTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/climate-subsidy-costs-table/edit';
-import ClimateSubsidyCostsTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/climate-subsidy-costs-table/show';
+import ClimateSubsidyCostsTableComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/climate-subsidy-costs-table';
 import EngagementTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/edit';
 import EngagementTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/show';
 import EstimatedCostEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/estimated-cost-table/edit';
@@ -101,7 +100,7 @@ const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/applicationFormTable':
     ApplicationFormTableEditComponent,
   'http://lblod.data.gift/display-types/climateSubsidyCostTable':
-    ClimateSubsidyCostsTableEditComponent,
+    ClimateSubsidyCostsTableComponent,
   'http://lblod.data.gift/display-types/engagementTable':
     EngagementTableEditComponent,
   'http://lblod.data.gift/display-types/estimatedCostTable':
@@ -125,8 +124,6 @@ const SHOW_COMPONENTS = {
 
   'http://lblod.data.gift/display-types/applicationFormTable':
     ApplicationFormTableShowComponent,
-  'http://lblod.data.gift/display-types/climateSubsidyCostTable':
-    ClimateSubsidyCostsTableShowComponent,
   'http://lblod.data.gift/display-types/engagementTable':
     EngagementTableShowComponent,
   'http://lblod.data.gift/display-types/estimatedCostTable':

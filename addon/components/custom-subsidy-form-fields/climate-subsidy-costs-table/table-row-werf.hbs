@@ -5,11 +5,11 @@
   <td>
     <AuInput
       @disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
       @width="block"
       @value={{this.costPerUnit}}
       @error={{if this.costPerUnitErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     {{yield (hash costPerUnitDescription = (component 'custom-subsidy-form-fields/climate-subsidy-costs-table/table-cell-data')) }}
@@ -20,11 +20,11 @@
   <td>
     <AuInput
       @disabled={{@disabled}}
-      type="number"
-      lang="nl-BE"
       @width="block"
       @value={{this.toRealiseUnits}}
       @error={{if this.toRealiseUnitsErrors true false}}
+      type="number"
+      lang="nl-BE"
       {{on "blur" this.update}}
     />
     {{#each this.toRealiseUnitsErrors as |error|}}
@@ -37,4 +37,7 @@
   <td>
     {{convert-to-currency this.restitution}}
   </td>
+  {{#if @showDeleteColumn}}
+    <td></td>
+  {{/if}}
 </tr>
