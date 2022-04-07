@@ -1,0 +1,25 @@
+<AuLabel
+  @error={{this.hasErrors}}
+  @required={{this.isRequired}}
+  for={{this.inputId}}
+>
+  {{@field.label}}
+  {{#if this.maxLength}}
+    <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
+      Resterende karakters:
+      {{this.remainingCharacters}}
+    </AuPill>
+  {{/if}}
+</AuLabel>
+
+<AuInput
+  @error={{this.hasErrors}}
+  @value={{this.value}}
+  @disabled={{@show}}
+  id={{this.inputId}}
+  {{on "blur" this.updateValue}}
+/>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

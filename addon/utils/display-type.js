@@ -3,46 +3,30 @@ import { assert } from '@ember/debug';
 // Basic fields
 import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/edit';
 import BestuursorgaanSelectorShowComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/show';
-import CaseNumberEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/edit';
-import CaseNumberShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number/show';
-import CheckboxEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox/edit';
-import CheckboxShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox/show';
-import ConceptSchemeRadioButtonsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/edit';
-import ConceptSchemeRadioButtonsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons/show';
-import ConceptSchemeSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/edit';
-import ConceptSchemeSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector/show';
-import ConceptSchemeMultiSelectorEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/edit';
-import ConceptSchemeMultiSelectorShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector/show';
-import ConceptSchemeMultiSelectCheckboxesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes/edit';
-import ConceptSchemeMultiSelectCheckboxesShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes/show';
-import DateEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date/edit';
-import DateShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date/show';
-import DateTimeEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time/edit';
-import DateTimeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time/show';
-import FilesEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/edit';
-import FilesShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files/show';
-import InputEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input/edit';
-import InputShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input/show';
-import NumericalInputEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/edit';
-import NumericalInputShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input/show';
+import CaseNumberComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number';
+import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/checkbox';
+import ConceptSchemeRadioButtonsComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons';
+import ConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector';
+import ConceptSchemeMultiSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector';
+import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
+import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date';
+import DateTimeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time';
+import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files';
+import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
+import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
 import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
 import RemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/edit';
 import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/remote-urls/edit';
 import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/show';
-import SwitchEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch/edit';
-import SwitchShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch/show';
-import TextAreaEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area/edit';
-import TextAreaShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area/show';
-import VlabelOpcentiemEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem/edit';
-import VlabelOpcentiemShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem/show';
+import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
+import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
+import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
 
 // Search related fields
 import CustomSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
 import CustomSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
-import DateRangeEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/edit';
-import DateRangeShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range/show';
-import SearchEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search/edit';
-import SearchShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search/show';
+import DateRangeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range';
+import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
 
 // Custom table components
 import ApplicationFormTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/edit';
@@ -82,37 +66,37 @@ export function getComponentForDisplayType(displayType, show) {
 const EDIT_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorEditComponent,
-  'http://lblod.data.gift/display-types/caseNumber': CaseNumberEditComponent,
-  'http://lblod.data.gift/display-types/checkbox': CheckboxEditComponent,
+  'http://lblod.data.gift/display-types/caseNumber': CaseNumberComponent,
+  'http://lblod.data.gift/display-types/checkbox': CheckboxComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
-    ConceptSchemeMultiSelectCheckboxesEditComponent,
+    ConceptSchemeMultiSelectCheckboxesComponent,
   'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
-    ConceptSchemeMultiSelectorEditComponent,
+    ConceptSchemeMultiSelectorComponent,
   'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
-    ConceptSchemeRadioButtonsEditComponent,
+    ConceptSchemeRadioButtonsComponent,
   'http://lblod.data.gift/display-types/conceptSchemeSelector':
-    ConceptSchemeSelectorEditComponent,
-  'http://lblod.data.gift/display-types/date': DateEditComponent,
-  'http://lblod.data.gift/display-types/dateTime': DateTimeEditComponent,
-  'http://lblod.data.gift/display-types/defaultInput': InputEditComponent,
-  'http://lblod.data.gift/display-types/files': FilesEditComponent,
-  'http://lblod.data.gift/display-types/files/variation/1': FilesEditComponent,
+    ConceptSchemeSelectorComponent,
+  'http://lblod.data.gift/display-types/date': DateComponent,
+  'http://lblod.data.gift/display-types/dateTime': DateTimeComponent,
+  'http://lblod.data.gift/display-types/defaultInput': InputComponent,
+  'http://lblod.data.gift/display-types/files': FilesComponent,
+  'http://lblod.data.gift/display-types/files/variation/1': FilesComponent,
   'http://lblod.data.gift/display-types/numericalInput':
-    NumericalInputEditComponent,
+    NumericalInputComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
   'http://lblod.data.gift/display-types/remoteUrls':
     CustomRemoteUrlsEditComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsEditComponent,
-  'http://lblod.data.gift/display-types/switch': SwitchEditComponent,
-  'http://lblod.data.gift/display-types/textArea': TextAreaEditComponent,
+  'http://lblod.data.gift/display-types/switch': SwitchComponent,
+  'http://lblod.data.gift/display-types/textArea': TextAreaComponent,
   'http://lblod.data.gift/display-types/vLabelOpcentiem':
-    VlabelOpcentiemEditComponent,
+    VlabelOpcentiemComponent,
 
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchEditComponent,
-  'http://lblod.data.gift/display-types/dateRange': DateRangeEditComponent,
-  'http://lblod.data.gift/display-types/search': SearchEditComponent,
+  'http://lblod.data.gift/display-types/dateRange': DateRangeComponent,
+  'http://lblod.data.gift/display-types/search': SearchComponent,
 
   'http://lblod.data.gift/display-types/applicationFormTable':
     ApplicationFormTableEditComponent,
@@ -131,34 +115,11 @@ const EDIT_COMPONENTS = {
 const SHOW_COMPONENTS = {
   'http://lblod.data.gift/display-types/bestuursorgaanSelector':
     BestuursorgaanSelectorShowComponent,
-  'http://lblod.data.gift/display-types/caseNumber': CaseNumberShowComponent,
-  'http://lblod.data.gift/display-types/checkbox': CheckboxShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeMultiSelectCheckboxes':
-    ConceptSchemeMultiSelectCheckboxesShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeMultiSelector':
-    ConceptSchemeMultiSelectorShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeRadioButtons':
-    ConceptSchemeRadioButtonsShowComponent,
-  'http://lblod.data.gift/display-types/conceptSchemeSelector':
-    ConceptSchemeSelectorShowComponent,
-  'http://lblod.data.gift/display-types/date': DateShowComponent,
-  'http://lblod.data.gift/display-types/dateTime': DateTimeShowComponent,
-  'http://lblod.data.gift/display-types/defaultInput': InputShowComponent,
-  'http://lblod.data.gift/display-types/files': FilesShowComponent,
-  'http://lblod.data.gift/display-types/files/variation/1': FilesShowComponent,
-  'http://lblod.data.gift/display-types/numericalInput':
-    NumericalInputShowComponent,
   'http://lblod.data.gift/display-types/property-group': PropertyGroupComponent,
   'http://lblod.data.gift/display-types/remoteUrls': RemoteUrlsShowComponent,
   'http://lblod.data.gift/display-types/remoteUrls/variation/1':
     RemoteUrlsShowComponent,
-  'http://lblod.data.gift/display-types/switch': SwitchShowComponent,
-  'http://lblod.data.gift/display-types/textArea': TextAreaShowComponent,
-  'http://lblod.data.gift/display-types/vLabelOpcentiem':
-    VlabelOpcentiemShowComponent,
 
-  'http://lblod.data.gift/display-types/dateRange': DateRangeShowComponent,
-  'http://lblod.data.gift/display-types/search': SearchShowComponent,
   'http://lblod.data.gift/display-types/customSearch':
     CustomSearchShowComponent,
 

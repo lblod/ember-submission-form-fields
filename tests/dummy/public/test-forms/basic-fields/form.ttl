@@ -138,6 +138,12 @@ fields:c0bc308a-17c6-4ce4-a92e-a29cb8df93ca a form:Field ;
     sh:path ext:47420052-2cc1-4e13-a62e-8d67b9c19493 ;
     form:options """{}""" ;
     form:displayType displayTypes:textArea ;
+    form:validations
+    [ a form:MaxLength ;
+      form:grouping form:MatchEvery ;
+      form:max "100" ;
+      sh:resultMessage "Max. karakters overschreden." ;
+      sh:path ext:2c7db782-3f7c-42b0-8b1c-18925082e6c4 ];
 
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 

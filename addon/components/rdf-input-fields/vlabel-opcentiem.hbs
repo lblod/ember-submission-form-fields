@@ -1,0 +1,108 @@
+<AuLabel @required={{this.isRequired}}>
+  {{@field.label}}
+</AuLabel>
+
+{{#if this.showDifferentiatie}}
+  <AuControlCheckbox
+    @label="Vink aan indien er sprake is van differentiatie"
+    @onChange={{this.toggleDifferentiatie}}
+    @disabled={{@show}}
+    checked={{this.differentiatie}}
+  />
+{{else}}
+  <AuHelpText>
+    {{#if @show}}
+      Geen differentiatie opgegeven.
+    {{else}}
+      Er kan geen sprake zijn van differentiatie wanneer er bedragen worden
+      ingevuld.
+      <br />
+      Klik 'verwijder' als u deze wel wenst in te geven.
+    {{/if}}
+  </AuHelpText>
+{{/if}}
+
+{{#if this.showTable}}
+  <div class="au-u-margin-top-small">
+    <AuTable>
+      <:header>
+        <tr>
+          <th id={{this.amountColumnId}}>Bedrag</th>
+          {{#unless @show}}
+            <th>&nbsp;</th>
+          {{/unless}}
+        </tr>
+      </:header>
+      <:body>
+        {{#each this.fields as |field|}}
+          <tr>
+            <td>
+              <AuInput
+                @error={{field.isInvalid}}
+                @width="block"
+                @value={{field.value}}
+                @disabled={{@show}}
+                aria-labelledby={{this.amountColumnId}}
+                {{auto-focus}}
+                {{on "blur" (fn this.updatePrice field)}}
+              />
+              {{#each field.errors as |error|}}
+                <AuHelpText @error={{true}}>
+                  {{error.resultMessage}}
+                </AuHelpText>
+              {{/each}}
+            </td>
+            {{#unless @show}}
+              <td
+                style="vertical-align: middle;"
+                {{!template-lint-disable no-inline-styles}}
+              >
+                <AuButton
+                  @skin="link"
+                  @icon="bin"
+                  @iconAlignment="left"
+                  @alert={{true}}
+                  {{on "click" (fn this.removePrice field)}}
+                >
+                  Verwijder
+                </AuButton>
+              </td>
+            {{/unless}}
+          </tr>
+        {{/each}}
+
+        {{#if this.differentiatie}}
+          <tr>
+            <td colspan={{unless @show "2"}}>
+              <AuHelpText class="au-u-text-center">
+                {{#if @show}}
+                  Er is sprake van differentiatie, daarom is er geen bedrag
+                  zichtbaar.
+                {{else}}
+                  Indien er sprake is van differentiatie, hoeft het bedrag niet
+                  ingevuld te worden.
+                {{/if}}
+              </AuHelpText>
+            </td>
+          </tr>
+        {{/if}}
+      </:body>
+    </AuTable>
+  </div>
+{{/if}}
+
+{{#unless @show}}
+  {{#unless this.differentiatie}}
+    <div class="au-u-margin-top-small au-u-text-center">
+      <AuButton @icon="plus" @iconAlignment="left" {{on "click" this.addPrice}}>
+        Voeg bedrag opcentiem toe
+      </AuButton>
+    </div>
+  {{/unless}}
+{{/unless}}
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{!-- suggestion for error: <AuHelpText @error={{"error"}}>Voeg opcentiemen in of geef differentiatie aan.</AuHelpText> --}}
