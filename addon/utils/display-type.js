@@ -1,4 +1,5 @@
 import { assert } from '@ember/debug';
+import { getOwnConfig, macroCondition } from '@embroider/macros';
 
 // Basic fields
 import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/edit';
@@ -226,50 +227,60 @@ registerComponentsForDisplayType([
     displayType: 'http://lblod.data.gift/display-types/vLabelOpcentiem',
     edit: VlabelOpcentiemComponent,
   },
-
-  // Search related fields
-  {
-    displayType: 'http://lblod.data.gift/display-types/customSearch',
-    edit: CustomSearchEditComponent,
-    show: CustomSearchShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/dateRange',
-    edit: DateRangeComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/search',
-    edit: SearchComponent,
-  },
-
-  // Custom table components
-  {
-    displayType: 'http://lblod.data.gift/display-types/applicationFormTable',
-    edit: ApplicationFormTableEditComponent,
-    show: ApplicationFormTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/climateSubsidyCostTable',
-    edit: ClimateSubsidyCostsTableComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/engagementTable',
-    edit: EngagementTableEditComponent,
-    show: EngagementTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/estimatedCostTable',
-    edit: EstimatedCostEditComponent,
-    show: EstimatedCostShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/objectiveTable',
-    edit: ObjectiveTableEditComponent,
-    show: ObjectiveTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/planLivingTogetherTable',
-    edit: PlanLivingTogetherTableEditComponent,
-    show: PlanLivingTogetherTableShowComponent,
-  },
 ]);
+
+// Search related fields
+if (macroCondition(getOwnConfig().includeSearchComponents)) {
+  registerComponentsForDisplayType([
+    {
+      displayType: 'http://lblod.data.gift/display-types/customSearch',
+      edit: CustomSearchEditComponent,
+      show: CustomSearchShowComponent,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/dateRange',
+      edit: DateRangeComponent,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/search',
+      edit: SearchComponent,
+    },
+  ]);
+}
+
+// Custom table components
+if (macroCondition(getOwnConfig().includeTableComponents)) {
+  registerComponentsForDisplayType([
+    {
+      displayType: 'http://lblod.data.gift/display-types/applicationFormTable',
+      edit: ApplicationFormTableEditComponent,
+      show: ApplicationFormTableShowComponent,
+    },
+    {
+      displayType:
+        'http://lblod.data.gift/display-types/climateSubsidyCostTable',
+      edit: ClimateSubsidyCostsTableComponent,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/engagementTable',
+      edit: EngagementTableEditComponent,
+      show: EngagementTableShowComponent,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/estimatedCostTable',
+      edit: EstimatedCostEditComponent,
+      show: EstimatedCostShowComponent,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/objectiveTable',
+      edit: ObjectiveTableEditComponent,
+      show: ObjectiveTableShowComponent,
+    },
+    {
+      displayType:
+        'http://lblod.data.gift/display-types/planLivingTogetherTable',
+      edit: PlanLivingTogetherTableEditComponent,
+      show: PlanLivingTogetherTableShowComponent,
+    },
+  ]);
+}
