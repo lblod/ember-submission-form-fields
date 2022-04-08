@@ -1,10 +1,10 @@
-<div class=" au-u-margin-bottom">
+<div class="au-u-margin-bottom">
   <AuHeading @level="3" @skin="6">Hieronder vind je alle acties die gesubsidieerd worden door het Plan Samenleven.</AuHeading>
   <AuHelpText class="au-c-content">
     <ul>
-      <li>Geef in de tweede kolom aan wat het huidige bereik is voor deze actie (zonder middelen van het Plan Samenleven). Dit moet enkel ingevuld worden als jullie ook bijkomende middelen hiervoor inzetten.</li>
-      <li>Geef in de derde kolom aan welke bijkomende doelstellingen jullie bestuur wenst te realiseren voor het Plan Samenleven. Enkel deze bijkomende acties komen in aanmerking voor subsidiering door de Vlaamse overheid.</li>
-      <li>In de vierde kolom ziet u het bedrag dat in aanmerking komt voor subsidiering door de Vlaamse overheid. Er wordt verwacht dat het bestuur voor deze acties evenveel financiert.</li>
+      <li>Geef in de tweede kolom aan wat het huidige bereik is voor deze actie (zonder middelen van het Plan Samenleven). Dit moet enkel ingevuld worden als jullie zich voor deze actie engageren.</li>
+      <li>Geef in de derde kolom aan welke bijkomende doelstellingen jullie bestuur wenst te realiseren voor het Plan Samenleven. Enkel deze bijkomende acties komen in aanmerking voor subsidiëring door de Vlaamse overheid.</li>
+      <li>In de vierde kolom ziet u het bedrag dat in aanmerking komt voor subsidiëring door de Vlaamse overheid. Er wordt verwacht dat het bestuur voor deze acties evenveel investeert.</li>
       <li>Geef in de vierde kolom aan de hand van cijfers aan wat de prioriteit is per actie waarop het bestuur bijkomend inzet. Wanneer er niet voldoende middelen zijn, zal de Vlaamse overheid aan de hand van deze prioritering bepalen naar welke acties de subsidies gaan. Wanneer jullie bestuur intekent voor bv. 5 acties, dan moeten de nummers 1 t.e.m. 5 verdeeld worden over deze acties.</li>
     </ul>
   </AuHelpText>
@@ -54,7 +54,7 @@
           Veiligheid en leefbaarheid:
         </AuHeading>
         <p>
-          Ontwikkelen van een lokaal actieplan voor de aanpak van negatieve polarisatie en zetten in op de uitrol ervan.
+          Ontwikkelen van een lokaal actieplan voor de aanpak van polarisatie en zetten in op de uitrol ervan.
         </p>
       </:description>
     </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
@@ -111,7 +111,7 @@
           Competenties
         </AuHeading>
         <p>
-          Begeleiden van kwetsbare kinderen in het secundair onderwijs naar hogere studies.
+          Begeleiden van kwetsbare kinderen naar hogere studies.
         </p>
       </:description>
     </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
@@ -158,7 +158,7 @@
       @storeOptions={{this.storeOptions}}
       @planTableSubject={{this.planTableSubject}}
       @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/a7643e23-3eee-477c-baf4-bd1eb93d9aa5"
-      @rangeLabel="personen met een handicap"
+      @rangeLabel="begeleide personen met een handicap"
       @maxRange={{38}}
       @multiplier={{650}}
       @onUpdateRow={{this.validate}}
@@ -168,7 +168,7 @@
       @storeOptions={{this.storeOptions}}
       @planTableSubject={{this.planTableSubject}}
       @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/88388d78-f277-43ee-963e-6e111fc28d46"
-      @rangeLabel="55-plussers"
+      @rangeLabel="begeleide 55-plussers"
       @maxRange={{75}}
       @multiplier={{650}}
       @onUpdateRow={{this.validate}}
@@ -197,7 +197,7 @@
       @storeOptions={{this.storeOptions}}
       @planTableSubject={{this.planTableSubject}}
       @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/8bae2cec-4b7c-4e16-acc2-e747d9e3b853"
-      @rangeLabel="vrouwen"
+      @rangeLabel="begeleide vrouwen"
       @maxRange={{30}}
       @multiplier={{650}}
       @onUpdateRow={{this.validate}}
@@ -207,7 +207,7 @@
       @storeOptions={{this.storeOptions}}
       @planTableSubject={{this.planTableSubject}}
       @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/619edfa8-0004-45d3-af51-7faf71d477d5"
-      @rangeLabel="personen met een handicap"
+      @rangeLabel="begeleide personen met een handicap"
       @maxRange={{15}}
       @multiplier={{650}}
       @onUpdateRow={{this.validate}}
@@ -265,7 +265,7 @@
       @storeOptions={{this.storeOptions}}
       @planTableSubject={{this.planTableSubject}}
       @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/5faefdda-75aa-45cd-acd4-1ee051e806fd"
-      @rangeLabel="kwetbare jongeren"
+      @rangeLabel="jongeren met grotere afstand tot de arbeidsmarkt"
       @maxRange={{180}}
       @multiplier={{210}}
       @onUpdateRow={{this.validate}}
@@ -275,7 +275,7 @@
           Netwerk
         </AuHeading>
         <p>
-          Kwetsbare jongeren in contact brengen met opleidingen, stages, jobs en ondernemerschap
+          Jongeren met een grotere afstand tot de arbeidsmarkt in contact brengen met opleidingen, stages, jobs en ondernemerschap
         </p>
       </:description>
     </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
@@ -452,35 +452,6 @@
         </p>
       </:description>
     </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
-    <CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow
-      @disabled={{true}}
-      @storeOptions={{this.storeOptions}}
-      @planTableSubject={{this.planTableSubject}}
-      @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/2952c920-fbe5-403a-a267-c94c0813f85f"
-      @rangeLabel="jongeren van buitenlandse herkomst "
-      @maxRange={{150}}
-      @multiplier={{210}}
-      @onUpdateRow={{this.validate}}
-    >
-      <:description>
-        <AuHeading  @level="4" @skin="6">
-          1 gemeenschap
-        </AuHeading>
-        <p>
-          Jongeren van buitenlandse herkomst en jongeren met een handicap in contact brengen met jeugdwerk.
-        </p>
-      </:description>
-    </CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow>
-    <CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow
-      @disabled={{true}}
-      @storeOptions={{this.storeOptions}}
-      @planTableSubject={{this.planTableSubject}}
-      @businessRuleUriStr="http://data.lblod.info/id/subsidies/rules/17afa0d1-c0be-4800-a9bc-9f48506346eb"
-      @rangeLabel="jongeren met een handicap"
-      @maxRange={{30}}
-      @multiplier={{210}}
-      @onUpdateRow={{this.validate}}
-    />
     <CustomSubsidyFormFields::PlanLivingTogetherTable::TableRow
       @disabled={{true}}
       @storeOptions={{this.storeOptions}}
