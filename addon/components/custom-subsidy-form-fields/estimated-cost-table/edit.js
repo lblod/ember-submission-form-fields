@@ -85,12 +85,7 @@ export default class CustomSubsidyFormFieldsEstimatedCostTableEditComponent exte
   }
 
   get isAanvraagStep() {
-    if (this.args.field && this.args.field.options) {
-      const option = JSON.parse(this.args.field.options);
-      return option.isAanvraagStep;
-    } else {
-      return false;
-    }
+    return Boolean(this.args.field?.options?.isAanvraagStep);
   }
 
   initializeTable() {

@@ -77,11 +77,19 @@ export default class FieldModel {
   @tracked
   rdflibOptions = null;
   get options() {
-    return this.rdflibOptions && this.rdflibOptions.value;
+    let options;
+
+    try {
+      options = JSON.parse(this.rdflibOptions?.value);
+    } catch {
+      options = {};
+    }
+
+    return options;
   }
 
   @tracked
-  rdflibOptions = null;
+  rdflibDefaultValue = null;
   get defaultValue() {
     return this.rdflibDefaultValue && this.rdflibDefaultValue.value;
   }
