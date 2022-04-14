@@ -1,4 +1,5 @@
 import { assert } from '@ember/debug';
+import { getOwnConfig, importSync, macroCondition } from '@embroider/macros';
 
 // Basic fields
 import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/edit';
@@ -21,25 +22,6 @@ import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/compone
 import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
 import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
 import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
-
-// Search related fields
-import CustomSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
-import CustomSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
-import DateRangeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range';
-import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
-
-// Custom table components
-import ApplicationFormTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/edit';
-import ApplicationFormTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/show';
-import ClimateSubsidyCostsTableComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/climate-subsidy-costs-table';
-import EngagementTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/edit';
-import EngagementTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/show';
-import EstimatedCostEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/estimated-cost-table/edit';
-import EstimatedCostShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/estimated-cost-table/show';
-import ObjectiveTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/objective-table/edit';
-import ObjectiveTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/objective-table/show';
-import PlanLivingTogetherTableEditComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/edit';
-import PlanLivingTogetherTableShowComponent from '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/show';
 
 const BUILT_IN_EDIT_COMPONENTS = new Map();
 const BUILT_IN_SHOW_COMPONENTS = new Map();
@@ -226,50 +208,90 @@ registerComponentsForDisplayType([
     displayType: 'http://lblod.data.gift/display-types/vLabelOpcentiem',
     edit: VlabelOpcentiemComponent,
   },
-
-  // Search related fields
-  {
-    displayType: 'http://lblod.data.gift/display-types/customSearch',
-    edit: CustomSearchEditComponent,
-    show: CustomSearchShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/dateRange',
-    edit: DateRangeComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/search',
-    edit: SearchComponent,
-  },
-
-  // Custom table components
-  {
-    displayType: 'http://lblod.data.gift/display-types/applicationFormTable',
-    edit: ApplicationFormTableEditComponent,
-    show: ApplicationFormTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/climateSubsidyCostTable',
-    edit: ClimateSubsidyCostsTableComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/engagementTable',
-    edit: EngagementTableEditComponent,
-    show: EngagementTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/estimatedCostTable',
-    edit: EstimatedCostEditComponent,
-    show: EstimatedCostShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/objectiveTable',
-    edit: ObjectiveTableEditComponent,
-    show: ObjectiveTableShowComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/planLivingTogetherTable',
-    edit: PlanLivingTogetherTableEditComponent,
-    show: PlanLivingTogetherTableShowComponent,
-  },
 ]);
+
+// Search related fields
+if (macroCondition(getOwnConfig().includeSearchComponents)) {
+  registerComponentsForDisplayType([
+    {
+      displayType: 'http://lblod.data.gift/display-types/customSearch',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show'
+      ).default,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/dateRange',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range'
+      ).default,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/search',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/rdf-input-fields/search'
+      ).default,
+    },
+  ]);
+}
+
+// Custom table components
+if (macroCondition(getOwnConfig().includeTableComponents)) {
+  registerComponentsForDisplayType([
+    {
+      displayType: 'http://lblod.data.gift/display-types/applicationFormTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/application-form-table/show'
+      ).default,
+    },
+    {
+      displayType:
+        'http://lblod.data.gift/display-types/climateSubsidyCostTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/climate-subsidy-costs-table'
+      ).default,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/engagementTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/engagement-table/show'
+      ).default,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/estimatedCostTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/estimated-cost-table/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/estimated-cost-table/show'
+      ).default,
+    },
+    {
+      displayType: 'http://lblod.data.gift/display-types/objectiveTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/objective-table/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/objective-table/show'
+      ).default,
+    },
+    {
+      displayType:
+        'http://lblod.data.gift/display-types/planLivingTogetherTable',
+      edit: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/edit'
+      ).default,
+      show: importSync(
+        '@lblod/ember-submission-form-fields/components/custom-subsidy-form-fields/plan-living-together-table/show'
+      ).default,
+    },
+  ]);
+}
