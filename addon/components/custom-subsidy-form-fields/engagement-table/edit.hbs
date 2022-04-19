@@ -26,7 +26,7 @@
             Bestaand personeelskader
           </AuLabel>
           <AuInput id="existing-staff-{{index}}" @width="block" @value={{entry.existingStaff.value}}
-            type="number"
+            @type="number"
             class={{if entry.existingStaff.errors "au-c-input--error"}}
             {{on "change" (fn this.updateExistingStaffValue entry)}}
           />
@@ -39,7 +39,7 @@
             (Tijdelijk) extra aangeworven betaald personeel
           </AuLabel>
           <AuInput id="additional-staff-{{index}}" @width="block" @value={{entry.additionalStaff.value}}
-            type="number"
+            @type="number"
             class={{if entry.additionalStaff.errors "au-c-input--error"}}
             {{on "change" (fn this.updateAdditionalStaffValue entry)}}
           />
@@ -52,7 +52,7 @@
             Vrijwilligers
           </AuLabel>
           <AuInput id="volunteers-{{index}}" @width="block" @value={{entry.volunteers.value}}
-            type="number"
+            @type="number"
             class={{if entry.volunteers.errors "au-c-input--error"}}
             {{on "change" (fn this.updateVolunteersValue entry)}}
           />
