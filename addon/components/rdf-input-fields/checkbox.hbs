@@ -10,7 +10,7 @@
   @label={{@field.label}}
   @disabled={{@show}}
   @onChange={{this.updateValue}}
-  checked={{this.value}}
+  @checked={{this.value}}
 />
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
