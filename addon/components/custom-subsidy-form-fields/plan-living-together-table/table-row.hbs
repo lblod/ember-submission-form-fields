@@ -8,7 +8,7 @@
       @width="block"
       @value={{this.currentRange}}
       @error={{if this.currentRangeErrors true false}}
-      type="number"
+      @type="number"
       lang="nl-BE"
       {{on "blur" this.update}}
     />
@@ -24,7 +24,7 @@
       @width="block"
       @value={{this.plannedRange}}
       @error={{if this.plannedRangeErrors true false}}
-      type="number"
+      @type="number"
       lang="nl-BE"
       {{on "blur" this.update}}
     />

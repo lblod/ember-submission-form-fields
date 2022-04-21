@@ -8,7 +8,7 @@
       @width="block"
       @value={{this.costPerUnit}}
       @error={{if this.costPerUnitErrors true false}}
-      type="number"
+      @type="number"
       lang="nl-BE"
       {{on "blur" this.update}}
     />
@@ -23,7 +23,7 @@
       @width="block"
       @value={{this.toRealiseUnits}}
       @error={{if this.toRealiseUnitsErrors true false}}
-      type="number"
+      @type="number"
       lang="nl-BE"
       {{on "blur" this.update}}
     />
