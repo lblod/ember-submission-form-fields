@@ -11,10 +11,10 @@
         {{/if}}
         {{#each this.errors as |error|}}
           <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"
-                   @alertIcon="alert-triangle"
-                   @alertTitle={{error.resultMessage}}
-                   @alertskin={{"error"}}
-                   @alertsize={{"small"}}>
+                   @icon="alert-triangle"
+                   @title={{error.resultMessage}}
+                   @skin="error"
+                   @size="small">
           </AuAlert>
         {{/each}}
       </div>
