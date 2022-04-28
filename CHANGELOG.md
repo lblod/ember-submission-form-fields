@@ -1,32 +1,41 @@
+## 1.7.1 (2022-04-28)
+
+#### :bug: Bug Fix
+* [#73](https://github.com/lblod/ember-submission-form-fields/pull/73) Resolve `AuAlert` deprecation warnings ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#75](https://github.com/lblod/ember-submission-form-fields/pull/75) Install Webpack as a devDependency ([@Windvis](https://github.com/Windvis))
+* [#74](https://github.com/lblod/ember-submission-form-fields/pull/74) Use MSW to mock the case-number request ([@Windvis](https://github.com/Windvis))
+
 ## 1.7.0 (2022-04-21)
 
-### :rocket: Enhancement
+#### :rocket: Enhancement
 * [#70](https://github.com/lblod/ember-submission-form-fields/pull/70) Add flags to disable some of the built-in components ([@Windvis](https://github.com/Windvis))
 * [#65](https://github.com/lblod/ember-submission-form-fields/pull/65) Custom form field component registration ([@Windvis](https://github.com/Windvis))
 
-### :bug: Bug Fix
+#### :bug: Bug Fix
 * [#71](https://github.com/lblod/ember-submission-form-fields/pull/71) Ensure checkboxes show the correct checked state when data is loaded ([@Windvis](https://github.com/Windvis))
 * [#72](https://github.com/lblod/ember-submission-form-fields/pull/72) Fix a problem where number input fields were displayed as text input fields ([@Windvis](https://github.com/Windvis))
 
-### :house: Internal
+#### :house: Internal
 * [#52](https://github.com/lblod/ember-submission-form-fields/pull/52) Parse field options in the field model ([@Windvis](https://github.com/Windvis))
 
 ## v1.6.0 (2022-04-08)
 
-### :rocket: Enhancement
+#### :rocket: Enhancement
 * [#66](https://github.com/lblod/ember-submission-form-fields/pull/66) "Plan samenleven" subsidy modifications ([@aatauil](https://github.com/aatauil))
 * [#48](https://github.com/lblod/ember-submission-form-fields/pull/48) Optionally add new actions to the climate subsidy table ([@Windvis](https://github.com/Windvis))
 
-### :bug: Bug Fix
+#### :bug: Bug Fix
 * [#64](https://github.com/lblod/ember-submission-form-fields/pull/64) Fix climate table row links ([@Windvis](https://github.com/Windvis))
 * [#53](https://github.com/lblod/ember-submission-form-fields/pull/53) Display type mapping improvements ([@Windvis](https://github.com/Windvis))
 * [#60](https://github.com/lblod/ember-submission-form-fields/pull/60) Enable the "burgemeesterconvenant" row for the edit table ([@Windvis](https://github.com/Windvis))
 * [#61](https://github.com/lblod/ember-submission-form-fields/pull/61) Fix the disabled state of the form fields when the form is in readonly mode ([@Windvis](https://github.com/Windvis))
 
-### :house: Internal
+#### :house: Internal
 * [#54](https://github.com/lblod/ember-submission-form-fields/pull/54) Deduplicate field components ([@Windvis](https://github.com/Windvis))
 
-### Committers: 2
+#### Committers: 2
 - Achraf Atauil ([@aatauil](https://github.com/aatauil))
 - Sam Van Campenhout ([@Windvis](https://github.com/Windvis))
 
@@ -46,23 +55,28 @@
 - Sam Van Campenhout ([@Windvis](https://github.com/Windvis))
 
 ## 1.4.0 (2022-03-25)
-### :house: Internal
+#### :house: Internal
   - added plan samenleven table
   - minor bugfixes
+
 ## 1.3.0 (2022-03-22)
-### :house: Internal
+#### :house: Internal
   - refactored dummy app
+
 ## 1.2.0 (2022-03-22)
-### :house: Internal
+#### :house: Internal
   - bump submission form fields (extra conditions are possible)
   - extend dummy app
+
 ## 1.1.0 (2022-03-21)
-### :house: Internal
+#### :house: Internal
   - Re-write CHANGELOG.md
   - plugin @release-it/conventional-changelog not very clear change log
+
 ## 1.0.5 (2022-03-21)
-### :house: Internal=
+#### :house: Internal=
   - setting up drone.yml configs
+
 ## 1.0.0 (2022-03-21)
-### :house: Internal
+#### :house: Internal
   - :fireworks: first major release
