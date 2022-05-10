@@ -1,3 +1,8 @@
+## 1.7.2 (2022-05-10)
+
+#### :bug: Bug Fix
+* [#76](https://github.com/lblod/ember-submission-form-fields/pull/76) Fix the problem where the case-number error message was always shown ([@Windvis](https://github.com/Windvis))
+
 ## 1.7.1 (2022-04-28)
 
 #### :bug: Bug Fix
