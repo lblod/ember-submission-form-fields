@@ -4,3 +4,32 @@
   @form={{@model.form}}
   @formStore={{@model.formStore}}
 />
+
+
+<AuHeading
+  @level=1
+  @skin=3
+>
+  Data
+</AuHeading>
+<AuTable
+  @size="large"
+>
+  <:title>Test</:title>
+  <:header>
+  <tr>
+    <th>Subject</th>
+    <th>Predicate</th>
+    <th>Object</th>
+  </tr>
+  </:header>
+  <:body>
+  {{#each this.datasetTriples as |triple|}}
+    <tr>
+      <td>{{triple.subject}}</td>
+      <td>{{triple.predicate}}</td>
+      <td>{{triple.object}}</td>
+    </tr>
+  {{/each}}
+  </:body>
+</AuTable>
