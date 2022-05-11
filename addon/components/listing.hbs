@@ -1,0 +1,13 @@
+{{#each this.subForms as |subForm index|}}
+  <SubForm
+    class={{@groupClass}}
+    @subForm={{subForm}}
+    @formStore={{@formStore}}
+    @graphs={{@graphs}}
+    @sourceNode={{subForm.sourceNode}}
+    @forceShowErrors={{@forceShowErrors}}
+    @cacheConditionals={{@cacheConditionals}}
+    @last={{eq index (sub this.listings.length 1)}}
+    @show={{@show}}
+    @level={{@level}}/>
+{{/each}}
