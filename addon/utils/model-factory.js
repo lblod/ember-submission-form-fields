@@ -1,10 +1,13 @@
 import Field from '@lblod/ember-submission-form-fields/models/field';
 import PropertyGroup from '@lblod/ember-submission-form-fields/models/property-group';
+import Listing from '@lblod/ember-submission-form-fields/models/listing';
+import SubForm from '@lblod/ember-submission-form-fields/models/sub-form';
 import {
   SHACL,
   FORM,
   RDF,
   fieldsForForm,
+  isFormModelV3
 } from '@lblod/submission-form-helpers';
 
 function createPropertyTreeFromFields(
@@ -52,18 +55,41 @@ function createPropertyTreeFromFields(
  *
  * @returns list of top-level property-groups, in order.
  */
-export function getTopLevelPropertyGroups({ store, graphs }) {
+export function getTopLevelPropertyGroups({ store, graphs, form }) {
   const groups = store
-    .match(undefined, RDF('type'), FORM('PropertyGroup'), graphs.formGraph)
-    .map((t) => t.subject);
-  const top = groups.filter(
-    (group) => !store.any(group, SHACL('group'), undefined, graphs.formGraph)
-  );
-  return top
-    .map(
-      (group) =>
-        new PropertyGroup(group, { store, formGraph: graphs.formGraph })
-    )
+        .match(undefined, RDF('type'), FORM('PropertyGroup'), graphs.formGraph)
+        .map((t) => t.subject);
+
+  //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
+  const top = groups.filter(group => !store.any(group, SHACL('group'), undefined, graphs.formGraph));
+
+  let filteredGroups = [];
+
+  //TODO: make helpers
+  if(isFormModelV3(form, { store, formGraph: graphs.formGraph })) {
+    const toplevelSubFormGroups = [];
+    for(const group of top) {
+      const formItems = store.match(undefined, SHACL('group'), group, graphs.formGraph);
+
+      if(formItems.find(item => store.any(form, FORM('formItem'), item.subject, graphs.formGraph))) {
+        toplevelSubFormGroups.push(group);
+      }
+    }
+    filteredGroups = toplevelSubFormGroups;
+  }
+  else {
+    const toplevelFormGroups = [];
+    for(const group of top) {
+     const formItems = store.match(undefined, SHACL('group'), group, graphs.formGraph);
+      if(formItems.find(item => !store.any(undefined, FORM('formItem'), item.subject, graphs.formGraph))) {
+        toplevelFormGroups.push(group);
+      }
+    }
+    filteredGroups = toplevelFormGroups;
+  }
+
+  return filteredGroups
+    .map(group => new PropertyGroup(group, { store, formGraph: graphs.formGraph }))
     .sort((a, b) => a.order - b.order);
 }
 
