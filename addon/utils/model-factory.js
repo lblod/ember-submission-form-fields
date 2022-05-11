@@ -147,17 +147,17 @@ export function getChildrenForPropertyGroup(group, { form, store, graphs, node }
       );
   }
 
-  // NOTE: retrieve fields from the children and process them
-  let fields = children.filter(
-    (child) => !!store.any(child, RDF('type'), FORM('Field'), graphs.formGraph)
-  );
-  if (fields.length) {
-    fields = fields
-      .filter((field) => conditionals.map((t) => t.value).includes(field.value))
-      .map((field) => new Field(field, { store, formGraph: graphs.formGraph }));
-  }
+  const listings = children
+        .filter(child => store.any(child, RDF('type'), FORM('Listing'), graphs.formGraph))
+        .filter(child => conditionals.map((t) => t.value).includes(child.value))
+        .map(child => new Listing(child, { store, formGraph: graphs.formGraph }));
 
-  return [...groups, ...fields].sort((a, b) => a.order - b.order);
+  const fields = children
+        .filter(child => store.any(child, RDF('type'), FORM('Field'), graphs.formGraph))
+        .filter(child => conditionals.map((t) => t.value).includes(child.value))
+        .map(child => new Field(child, { store, formGraph: graphs.formGraph }));
+
+  return [...groups, ...listings, ...fields].sort((a, b) => a.order - b.order);
 }
 
 export { createPropertyTreeFromFields };
