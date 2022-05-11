@@ -67,6 +67,19 @@ export function getTopLevelPropertyGroups({ store, graphs }) {
     .sort((a, b) => a.order - b.order);
 }
 
+export function getSubFormsForNode({ store, graphs, node, sourceNode }) {
+  const subForms = store
+        .match(undefined, RDF('type'), FORM('SubForm'), graphs.formGraph)
+        .map((t) => t.subject);
+  const top = subForms.filter((subForm) =>
+    store.any(node, FORM('itemForm'), subForm, graphs.formGraph) //TODO confusing naming itemform vs formItem
+  );
+  return top.map(
+    (subform) =>
+      new SubForm(subform, { store, formGraph: graphs.formGraph, sourceNode })
+  );
+}
+
 /**
  * Returns all the children (fields & property-groups) for the given property-group, in order.
  *
