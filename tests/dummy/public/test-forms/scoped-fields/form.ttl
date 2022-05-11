@@ -1,0 +1,94 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+
+##########################################################
+# form
+##########################################################
+ext:mainFg a form:FieldGroup.
+
+ext:form a form:Form, form:TopLevelForm ;
+    #form:hasFieldGroup ext:mainFg ;
+    form:formItem ext:listing;
+    form:formItem ext:authorName.
+
+ext:listing a form:Listing;
+  sh:name "[LISTING] book listing";
+  form:itemForm ext:itemForm;
+  form:scope ext:listingScope;
+  sh:group ext:listingPg;
+  sh:order 20 .
+
+##########################################################
+#  listing-scope
+##########################################################
+ext:listingScope a form:Scope;
+  sh:path ext:book.
+
+ext:itemForm a form:SubForm;
+   sh:name "[SUBFORM] book" ;
+   form:formItem ext:field.
+
+##########################################################
+#  property-group
+##########################################################
+ext:mainPg a form:PropertyGroup;
+    sh:description "[PROPERTY GROUP] book title";
+    sh:name "[PROPERTY GROUP] book title" ;
+    sh:order 1 .
+
+##########################################################
+#  Listing property-group
+##########################################################
+ext:listingPg a form:PropertyGroup;
+    sh:description "[PROPERTY GROUP] author";
+    sh:name "[PROPERTY GROUP] author" ;
+    sh:order 1 .
+
+##########################################################
+# Field
+##########################################################
+ext:authorName a form:Field ;
+    sh:name "[FIELD] author name" ;
+    sh:order 10 ;
+    sh:path ext:authorName ;
+    form:displayType displayTypes:defaultInput ;
+
+    sh:group ext:listingPg .
+
+
+##########################################################
+# Field
+##########################################################
+ext:field a form:Field ;
+    sh:name "[FIELD] book name" ;
+    sh:order 1 ;
+    #form:scope ext:newScope ;
+    sh:path ext:prefLabel ;
+    form:displayType displayTypes:defaultInput ;
+
+    sh:group ext:mainPg .
+
+##########################################################
+# New scope
+##########################################################
+ext:newScope a form:Scope ;
+  sh:path ( [ sh:inversePath ext:valueFornewSubject ] ext:hasNewSubject )
+  #  ;
+  # form:constraint [
+  #   a sh:NodeShape ;
+  #   sh:property [
+  #     sh:path m8g:role ;
+  #     sh:targetNode lblod:executingAuthority
+  #   ]
+  # ]
+  .
+
+
+
+ext:mainFg form:hasField ext:field .
