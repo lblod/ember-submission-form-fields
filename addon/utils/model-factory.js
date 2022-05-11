@@ -85,21 +85,20 @@ export function getSubFormsForNode({ store, graphs, node, sourceNode }) {
  *
  * @returns list of children for the given property-group, in order.
  */
-export function getChildrenForPropertyGroup(
-  group,
-  { form, store, graphs, node },
-  conditionals = fieldsForForm(form, {
+export function getChildrenForPropertyGroup(group, { form, store, graphs, node }) {
+
+  const conditionals = fieldsForForm(form, {
     store,
     formGraph: graphs.formGraph,
     sourceGraph: graphs.sourceGraph,
     metaGraph: graphs.metaGraph,
     sourceNode: node,
-  })
-) {
+  });
+
   // NOTE: contains all children for a property-group (this can include other nested property-groups)
   const children = store
-    .match(undefined, SHACL('group'), group.uri, graphs.formGraph)
-    .map((t) => t.subject);
+        .match(undefined, SHACL('group'), group.uri, graphs.formGraph)
+        .map((t) => t.subject);
 
   // NOTE: retrieve the property-groups from the children and process them
   let groups = children.filter(
