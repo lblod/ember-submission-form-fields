@@ -102,6 +102,7 @@ export default class InputFieldComponent extends Component {
       sourceNode: this.args.sourceNode,
       store: this.args.formStore,
       path: this.args.field.rdflibPath,
+      scope: this.args.field.rdflibScope,
     };
   }
 
