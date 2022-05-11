@@ -1,16 +1,16 @@
 <div class="au-o-grid au-o-grid--small">
   {{#each this.propertyGroups as |group index|}}
     <PropertyGroup
-            class={{@groupClass}}
-            @form={{@form}}
-            @group={{group}}
-            @formStore={{@formStore}}
-            @graphs={{@graphs}}
-            @sourceNode={{@sourceNode}}
-            @forceShowErrors={{@forceShowErrors}}
-            @cacheConditionals={{@cacheConditionals}}
-            @last={{eq index (sub this.propertyGroups.length 1)}}
-            @show={{@show}}
-            @level={{@level}}/>
+      class={{@groupClass}}
+      @form={{@form}}
+      @group={{group}}
+      @formStore={{@formStore}}
+      @graphs={{@graphs}}
+      @sourceNode={{@sourceNode}}
+      @forceShowErrors={{@forceShowErrors}}
+      @cacheConditionals={{@cacheConditionals}}
+      @last={{eq index (sub this.propertyGroups.length 1)}}
+      @show={{@show}}
+      @level={{@level}}/>
   {{/each}}
 </div>
