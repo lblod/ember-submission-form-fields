@@ -67,9 +67,10 @@ async function fetchForm(formName) {
 
 async function fetchFormMeta(formName) {
   let response = await fetch(getFormDataPath(formName, 'meta.ttl'));
-  let ttl = await response.text();
-
-  return ttl;
+  if(response.status >= 200 && response.status < 300 ){
+    return await response.text();
+  }
+  return '';
 }
 
 async function fetchFormData(formName) {
