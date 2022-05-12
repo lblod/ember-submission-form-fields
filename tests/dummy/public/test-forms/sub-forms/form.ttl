@@ -117,22 +117,3 @@ ext:moreComment a form:Field ;
     sh:group ext:mainPg .
 
 ext:result-from-star-1 form:hasField ext:moreComment .
-
-##########################################################
-# New scope
-##########################################################
-ext:newScope a form:Scope ;
-  sh:path ( [ sh:inversePath ext:valueFornewSubject ] ext:hasNewSubject )
-  #  ;
-  # form:constraint [
-  #   a sh:NodeShape ;
-  #   sh:property [
-  #     sh:path m8g:role ;
-  #     sh:targetNode lblod:executingAuthority
-  #   ]
-  # ]
-  .
-
-
-
-ext:mainFg form:hasField ext:field .
