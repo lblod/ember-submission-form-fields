@@ -1,0 +1,11 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+
+<http://rating/1/person> ext:rates <http://ember-submission-form-fields/source-node>;
+  ext:createdBy <http://a/person>.
+
+<http://a/person> a ext:Person.
+
+<http://rating/2/machine> ext:rates <http://ember-submission-form-fields/source-node>;
+  ext:createdBy <http://a/machine>.
+
+<http://a/machine> a ext:Machine.

@@ -15,13 +15,15 @@ ext:mainFg a form:FieldGroup.
 ext:form a form:Form, form:TopLevelForm ;
     form:formItem ext:authorNameF;
     form:formItem ext:bookNameF;
-    form:formItem ext:bookReviewF.
+    form:formItem ext:bookReviewF;
+    form:formItem ext:personRatingF;
+    form:formItem ext:machineRatingF.
 
 ##########################################################
 #  main property-group
 ##########################################################
 ext:mainPg a form:PropertyGroup;
-    sh:name "author and book" ;
+    sh:name "Review author and book" ;
     sh:order 1 .
 
 ##########################################################
@@ -61,3 +63,61 @@ ext:bookReviewF a form:Field ;
 ##########################################################
 ext:bookS a form:Scope;
   sh:path ext:hasBook.
+
+##########################################################
+#  Review rating by person: scope
+##########################################################
+ext:personRatingS a form:Scope;
+  sh:path ( [ sh:inversePath ext:rates ] );
+  form:constraint [
+     a sh:NodeShape ;
+     sh:property [
+       sh:path (ext:createdBy rdf:type) ;
+       sh:targetNode ext:Person
+     ];
+  ].
+
+##########################################################
+#  Review rating by machine: scope
+##########################################################
+ext:machineRatingS a form:Scope;
+  sh:path ( [ sh:inversePath ext:rates ] );
+  form:constraint [
+     a sh:NodeShape ;
+     sh:property [
+       sh:path (ext:createdBy rdf:type) ;
+       sh:targetNode ext:Machine
+     ];
+  ].
+
+##########################################################
+# Dropdown: rating by person
+##########################################################
+ext:personRatingF a form:Field ;
+    sh:name "Rating of this review (by a person)" ;
+    sh:order 100 ;
+    form:scope ext:personRatingS;
+    sh:path ext:score ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group ext:ratingOfReview .
+
+##########################################################
+# Dropdown: rating by machine
+##########################################################
+ext:machineRatingF a form:Field ;
+    sh:name "Rating of this review (by a machine)" ;
+    sh:order 200 ;
+    form:scope ext:machineRatingS;
+    sh:path ext:score ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group ext:ratingOfReview .
+
+
+##########################################################
+#  Rating of review property-group
+##########################################################
+ext:ratingOfReview a form:PropertyGroup;
+    sh:name "Rating of this review" ;
+    sh:order 2 .
