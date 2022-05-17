@@ -1,0 +1,68 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+
+##########################################################
+# form
+##########################################################
+ext:mainFg a form:FieldGroup.
+
+ext:form a form:Form, form:TopLevelForm ;
+    form:formItem ext:authorNameF;
+    form:formItem ext:bookNameF;
+    form:initGenerator ext:authorG.
+
+##########################################################
+#  main property-group
+##########################################################
+ext:mainPg a form:PropertyGroup;
+    sh:name "Review author and book" ;
+    sh:order 1 .
+
+##########################################################
+# Field
+##########################################################
+ext:authorNameF a form:Field ;
+    sh:name "author name" ;
+    sh:order 1 ;
+    sh:path ext:authorName ;
+    form:displayType displayTypes:defaultInput ;
+    sh:group ext:mainPg .
+
+##########################################################
+# Field
+##########################################################
+ext:bookNameF a form:Field ;
+    sh:name "book name: " ;
+    sh:order 2 ;
+    form:scope ext:bookS;
+    sh:path ext:bookName ;
+    form:displayType displayTypes:defaultInput ;
+    sh:group ext:mainPg .
+
+##########################################################
+#  Book scope
+##########################################################
+ext:bookS a form:Scope;
+  sh:path ext:hasBook.
+
+##########################################################
+#  generator
+# will generate triples with rooot node -> will be processed layer bove
+##########################################################
+ext:authorG a form:Generator;
+  form:prototype [
+    form:shape [
+      a ext:Author ;
+      ext:authorName "Richard";
+      ext:hasBook [
+        a ext:Book ;
+        ext:bookName "Book 1"
+      ]
+    ]
+  ].
