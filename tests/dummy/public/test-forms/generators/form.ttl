@@ -21,7 +21,7 @@ ext:form a form:Form, form:TopLevelForm ;
 #  main property-group
 ##########################################################
 ext:mainPg a form:PropertyGroup;
-    sh:name "Review author and book" ;
+    sh:name "Generate author and book" ;
     sh:order 1 .
 
 ##########################################################
@@ -65,4 +65,5 @@ ext:authorG a form:Generator;
         ext:bookName "Book 1"
       ]
     ]
-  ].
+  ];
+  form:dataGenerator form:addMuUuid.
