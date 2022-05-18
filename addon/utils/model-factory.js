@@ -91,7 +91,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
   return filteredGroups
     .map(group => new PropertyGroup(group, { store, formGraph: graphs.formGraph }))
     .sort((a, b) => a.order - b.order);
-nn}
+}
 
 export function getRootNodeForm({ store, graphs }){
   return store.any(undefined, RDF('type'), FORM('TopLevelForm'), graphs.formGraph)

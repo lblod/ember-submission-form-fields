@@ -9,3 +9,5 @@
   ext:createdBy <http://a/machine>.
 
 <http://a/machine> a ext:Machine.
+
+<http://ember-submission-form-fields/source-node> ext:hasBook <http://book/1>.

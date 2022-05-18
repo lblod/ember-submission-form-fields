@@ -1,13 +1,27 @@
-{{#each this.subForms as |subForm index|}}
-  <SubForm
-    class={{@groupClass}}
-    @subForm={{subForm}}
-    @formStore={{@formStore}}
-    @graphs={{@graphs}}
-    @sourceNode={{subForm.sourceNode}}
-    @forceShowErrors={{@forceShowErrors}}
-    @cacheConditionals={{@cacheConditionals}}
-    @last={{eq index (sub this.listings.length 1)}}
-    @show={{@show}}
-    @level={{@level}}/>
-{{/each}}
+<div class="au-o-grid">
+  <div class="au-o-grid__item au-u-4-5">
+    {{#each this.subForms as |subForm index|}}
+      <SubForm
+        class={{@groupClass}}
+        @subForm={{subForm}}
+        @formStore={{@formStore}}
+        @graphs={{@graphs}}
+        @sourceNode={{subForm.sourceNode}}
+        @forceShowErrors={{@forceShowErrors}}
+        @cacheConditionals={{@cacheConditionals}}
+        @last={{eq index (sub this.subForms.length 1)}}
+        @show={{@show}}
+        @level={{@level}}/>
+    {{/each}}
+  </div>
+  <div class="au-o-grid__item au-u-1-5">
+    <AuButton
+      @icon="plus"
+      @iconAlignment="left"
+      class="au-u-margin-bottom-tiny"
+      {{on "click" this.addEntry}}
+    >
+      Add item
+    </AuButton>
+  </div>
+</div>

@@ -1,13 +1,11 @@
 import Component from '@glimmer/component';
 import {
-  getTopLevelPropertyGroups,
-  getTopLevelListings,
-  getRootNodeForm
-} from '../utils/model-factory';
-import {
- generatorsForNode,
- triplesForGenerator
+    generatorsForNode,
+    triplesForGenerator
 } from '@lblod/submission-form-helpers';
+import {
+    getRootNodeForm, getTopLevelPropertyGroups
+} from '../utils/model-factory';
 
 export default class RdfForm extends Component {
   propertyGroups = []; // NOTE don't think this needs to be an ember array as it will never change
@@ -28,7 +26,7 @@ export default class RdfForm extends Component {
     });
   }
 
-  runGenerator({ store, graphs, sourceNode }) {
+  runGenerator( { store, graphs, sourceNode } ) {
     const rootNode = getRootNodeForm({
       store, graphs
     });
@@ -36,14 +34,14 @@ export default class RdfForm extends Component {
     const generators = generatorsForNode(rootNode, { store, formGraph: graphs.formGraph } );
 
     if(generators.initGenerators.length) {
-      const dataset = triplesForGenerator(generators.initGenerators[0].object,
+      const dataset = triplesForGenerator(generators.initGenerators[0],
                                           { store, formGraph: graphs.formGraph });
 
       store.addAll(this.rescopeGeneratedTriples(dataset, { sourceNode, graphs }));
     }
   }
 
-  rescopeGeneratedTriples(dataset, options) {
+  rescopeGeneratedTriples( dataset, options ) {
     //TODO: only very basic re-scoping is supported currently
     // in the future, we'd like to go back to a form:Scope to allow a more flexible approach
     const { sourceNode, graphs } = options;

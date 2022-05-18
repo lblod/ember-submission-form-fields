@@ -24,6 +24,7 @@ ext:listing a form:Listing;
   form:itemForm ext:itemForm;
   form:scope ext:listingScope;
   sh:group ext:listingPg;
+  form:createGenerator ext:bookGenerator;
   sh:order 20 .
 
 ##########################################################
@@ -117,3 +118,15 @@ ext:moreComment a form:Field ;
     sh:group ext:mainPg .
 
 ext:result-from-star-1 form:hasField ext:moreComment .
+
+##########################################################
+#  Generator
+##########################################################
+ext:bookGenerator a form:Generator;
+  form:prototype [
+    form:shape [
+      a ext:Book ;
+      ext:prefLabel ""
+    ]
+  ];
+  form:dataGenerator form:addMuUuid.
