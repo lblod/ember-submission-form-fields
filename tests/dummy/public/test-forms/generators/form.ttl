@@ -52,8 +52,7 @@ ext:bookS a form:Scope;
   sh:path ext:hasBook.
 
 ##########################################################
-#  generator
-# will generate triples with rooot node -> will be processed layer bove
+#  Generator
 ##########################################################
 ext:authorG a form:Generator;
   form:prototype [
