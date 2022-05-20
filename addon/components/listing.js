@@ -101,7 +101,7 @@ export default class ListingComponent extends Component {
   }
 
 
-  attachGeneratedTriples( dataset ){
+  attachGeneratedTriples( dataset ) {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allTriples = dataset.triples.map(t => {return {...t, graph: this.graphs.sourceGraph }; });
     const shacl = new rdflib.Namespace('http://www.w3.org/ns/shacl#');
