@@ -1,4 +1,34 @@
-{{#if this.children}}
+{{! TODO: Do this check based on a predicate in the form ttl }}
+{{#if (eq @group.name "Collapsible")}}
+  <PropertyGroup::Collapsible
+    @group={{@group}}
+    @children={{this.children}}
+    @groupClass={{@groupClass}}
+    @form={{@form}}
+    @formStore={{@formStore}}
+    @graphs={{@graphs}}
+    @sourceNode={{@sourceNode}}
+    @forceShowErrors={{@forceShowErrors}}
+    @cacheConditionals={{@cacheConditionals}}
+    @show={{@show}}
+    @level={{@level}}
+  />
+{{else}}
+  <PropertyGroup::Default
+    @group={{@group}}
+    @children={{this.children}}
+    @groupClass={{@groupClass}}
+    @form={{@form}}
+    @formStore={{@formStore}}
+    @graphs={{@graphs}}
+    @sourceNode={{@sourceNode}}
+    @forceShowErrors={{@forceShowErrors}}
+    @cacheConditionals={{@cacheConditionals}}
+    @show={{@show}}
+    @level={{@level}}
+  />
+{{/if}}
+{{!-- {{#if this.children}}
   <div ...attributes>
     {{#if @group.name}}
       <div class="au-u-margin-bottom-small">
@@ -64,4 +94,4 @@
       {{/if}}
     {{/each}}
   </div>
-{{/if}}
+{{/if}} --}}

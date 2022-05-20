@@ -1,0 +1,71 @@
+{{#if @children}}
+  <div ...attributes>
+    {{#if @group.name}}
+      <div class="au-u-margin-bottom-small">
+        <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+          {{@group.name}}
+        </AuHeading>
+        {{#if @group.help}}
+          {{! template-lint-disable no-triple-curlies}}
+          <p class="au-u-light au-u-margin-top-xsmall">{{{@group.help}}}</p>
+        {{/if}}
+        {{#each @errors as |error|}}
+          <AuAlert
+            class="au-u-margin-bottom-small au-u-margin-top-small"
+            @icon="alert-triangle"
+            @title={{error.resultMessage}}
+            @skin="error"
+            @size="small"
+          />
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#each @children as |field index|}}
+      {{#if field.displayType}}
+        {{#if (is-property-group field.displayType)}}
+          <PropertyGroup
+            @level={{this.nextLevel}}
+            @form={{@form}}
+            @group={{field}}
+            @formStore={{@formStore}}
+            @graphs={{@graphs}}
+            @sourceNode={{@sourceNode}}
+            @forceShowErrors={{@forceShowErrors}}
+            @cacheConditionals={{@cacheConditionals}}
+            @show={{@show}}
+          />
+          {{#if @last}}
+            {{#if (not-eq index (sub this.children.length 1))}}
+              <AuHr @size="large" />
+            {{/if}}
+          {{else}}
+            <AuHr @size="large" />
+          {{/if}}
+        {{else}}
+          <div class="au-u-margin-bottom-small">
+            {{#let
+              (ensure-safe-component
+                (component-for-display-type field.displayType show=@show)
+              )
+              as |FormField|
+            }}
+              <FormField
+                @field={{field}}
+                @form={{@form}}
+                @formStore={{@formStore}}
+                @graphs={{@graphs}}
+                @sourceNode={{@sourceNode}}
+                @forceShowErrors={{@forceShowErrors}}
+                @cacheConditionals={{@cacheConditionals}}
+                @show={{@show}}
+              />
+            {{/let}}
+
+            {{! template-lint-disable no-triple-curlies}}
+            <AuHelpText>{{{field.help}}}</AuHelpText>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  </div>
+{{/if}}

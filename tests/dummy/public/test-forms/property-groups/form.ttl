@@ -1,0 +1,91 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix fieldGroups: <http://data.lblod.info/field-groups/> .
+@prefix fields: <http://data.lblod.info/fields/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/>.
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+
+
+
+##########################################################
+# form
+##########################################################
+fieldGroups:main a form:FieldGroup ;
+    mu:uuid "70eebdf0-14dc-47f7-85df-e1cfd41c3855" .
+
+form:6b70a6f0-cce2-4afe-81f5-5911f45b0b27 a form:Form ;
+    mu:uuid "6b70a6f0-cce2-4afe-81f5-5911f45b0b27" ;
+    form:hasFieldGroup fieldGroups:main .
+
+##########################################################
+#  property-group
+##########################################################
+fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 a form:PropertyGroup;
+    mu:uuid "8e24d707-0e29-45b5-9bbf-a39e4fdb2c11";
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:name "Property groups" ;
+    sh:order 1 .
+
+fields:94625643-583b-46b3-b66e-17b629c20c54 a form:PropertyGroup;
+    mu:uuid "94625643-583b-46b3-b66e-17b629c20c54";
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:name "Regular" ;
+    sh:order 2 ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:94625643-583b-46b3-b66e-17b629c20c54 .
+
+fields:beb10b77-761f-4a42-9b7e-0a6286bbcbcd a form:PropertyGroup;
+    mu:uuid "beb10b77-761f-4a42-9b7e-0a6286bbcbcd";
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:name "Nested" ;
+    sh:order 3 ;
+    sh:group fields:94625643-583b-46b3-b66e-17b629c20c54 .
+
+fieldGroups:main form:hasField fields:beb10b77-761f-4a42-9b7e-0a6286bbcbcd .
+
+
+fields:9c81b487-20a7-4b46-ba38-e3f6e261f013 a form:PropertyGroup;
+    mu:uuid "9c81b487-20a7-4b46-ba38-e3f6e261f013";
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:name "Collapsible" ;
+    sh:order 3 ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:9c81b487-20a7-4b46-ba38-e3f6e261f013 .
+
+##########################################################
+# Checkbox
+##########################################################
+fields:5cf93775-37b3-4e38-8b00-c1690949dbd5 a form:Field ;
+    mu:uuid "5cf93775-37b3-4e38-8b00-c1690949dbd5";
+    sh:name "Checkbox" ;
+    sh:order 190 ;
+    sh:path ext:732e98da-2ea5-4414-9094-82af73717c27 ;
+    form:options """{}""" ;
+    form:displayType displayTypes:checkbox ;
+
+    sh:group fields:beb10b77-761f-4a42-9b7e-0a6286bbcbcd .
+
+fieldGroups:main form:hasField fields:5cf93775-37b3-4e38-8b00-c1690949dbd5 .
+
+##########################################################
+# Switch
+##########################################################
+fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 a form:Field ;
+    mu:uuid "f5aad1e9-41c6-48ec-aa45-b881098ec4e5";
+    sh:name "Switch" ;
+    sh:order 191 ;
+    sh:path ext:58cee24d-840f-4de4-9baf-8fb2499c5bda ;
+    form:options """{}""" ;
+    form:displayType displayTypes:switch ;
+
+    sh:group fields:9c81b487-20a7-4b46-ba38-e3f6e261f013 .
+
+fieldGroups:main form:hasField fields:f5aad1e9-41c6-48ec-aa45-b881098ec4e5 .
