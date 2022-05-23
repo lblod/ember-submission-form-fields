@@ -12,6 +12,7 @@ module.exports = function (defaults) {
   } else if (process.env.EMBER_TEST_SELECTORS_STRIP == 'true') {
     customBuildConfig['ember-test-selectors'] = { strip: true };
   }
+  customBuildConfig['sassOptions'] = { extension: 'scss' };
   //if EMBER_TEST_SELECTORS_STRIP left unspecificied, we fall back to default behavoir
 
   let app = new EmberAddon(defaults, customBuildConfig);
