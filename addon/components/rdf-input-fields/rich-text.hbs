@@ -1,0 +1,25 @@
+<AuLabel
+  @error={{this.hasErrors}}
+  @required={{this.isRequired}}
+  for={{this.inputId}}
+>
+  {{@field.label}}
+</AuLabel>
+
+{{#if @field.description}}
+  <p class="au-u-light au-u-margin-bottom-tiny">{{@field.description}}</p>
+{{/if}}
+
+<RdfaEditorContainer
+  @rdfaEditorInit={{this.handleRdfaEditorInit}}
+  @showToggleRdfaAnnotations={{true}}
+  @onBlur={{this.updateValue}}
+/>
+{{#unless @show}}
+  {{#if this.maxLength}}
+    <AuPill @skin={{unless this.hasRemainingCharacters "error"}} class="au-u-margin-top-tiny">Resterende karakters: {{this.remainingCharacters}}</AuPill>
+  {{/if}}
+{{/unless}}
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}} 

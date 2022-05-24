@@ -344,3 +344,18 @@ fields:6aa476d8-e0ec-4321-8120-660ea6846062 a form:Field ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11  .
 
 fieldGroups:main form:hasField fields:6aa476d8-e0ec-4321-8120-660ea6846062 .
+
+##########################################################
+# Rich text
+##########################################################
+fields:2731a77b-bbf3-465f-804f-871e7f8f61a4 a form:Field ;
+    mu:uuid "2731a77b-bbf3-465f-804f-871e7f8f61a4";
+    sh:name "Rich text" ;
+    sh:order 230 ;
+    sh:path ext:e09c05be-b434-45df-a48f-b8cba6b9b651 ;
+    form:options """{}""" ;
+    form:displayType displayTypes:richText ;
+
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:2731a77b-bbf3-465f-804f-871e7f8f61a4 .

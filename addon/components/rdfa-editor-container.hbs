@@ -24,15 +24,22 @@
     </div>
   </AuBodyContainer>
 {{else}}
-  <AuBodyContainer vocab="{{this.vocab}}" {{did-insert this.setPrefix}}
-       typeof="{{@typeOfWrappingDiv}}" property="{{@property}}" resource="#">
-    <Rdfa::RdfaEditor
-      class="au-c-rdfa-editor"
-      @profile={{@profile}}
-      @rdfaEditorInit={{this.rdfaEditorInit}}
-      @editorOptions={{this.editorOptions}}
-      @toolbarOptions={{this.toolbarOptions}}
-      @plugins={{this.plugins}}
-    />
+  <AuBodyContainer 
+    vocab="{{this.vocab}}" 
+    {{did-insert this.setPrefix}}
+    typeof="{{@typeOfWrappingDiv}}" 
+    property="{{@property}}" 
+    resource="#"
+  >
+    <div {{on "focusout" @onBlur}}>
+      <Rdfa::RdfaEditor
+        class="au-c-rdfa-editor"
+        @profile={{@profile}}
+        @rdfaEditorInit={{this.rdfaEditorInit}}
+        @editorOptions={{this.editorOptions}}
+        @toolbarOptions={{this.toolbarOptions}}
+        @plugins={{this.plugins}}
+      />
+    </div>
   </AuBodyContainer>
 {{/if}}

@@ -1,3 +1,9 @@
+{{page-title 'Editor'}}
+<AuButton
+  {{on 'click' (perform this.save)}}
+> 
+  Save 
+</AuButton>
 <RdfaEditorContainer
   @rdfaEditorInit={{this.handleRdfaEditorInit}}
   @showToggleRdfaAnnotations={{true}}
