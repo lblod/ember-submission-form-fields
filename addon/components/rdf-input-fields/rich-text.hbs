@@ -12,14 +12,8 @@
 
 <RdfaEditorContainer
   @rdfaEditorInit={{this.handleRdfaEditorInit}}
-  @showToggleRdfaAnnotations={{true}}
   @onBlur={{this.updateValue}}
 />
-{{#unless @show}}
-  {{#if this.maxLength}}
-    <AuPill @skin={{unless this.hasRemainingCharacters "error"}} class="au-u-margin-top-tiny">Resterende karakters: {{this.remainingCharacters}}</AuPill>
-  {{/if}}
-{{/unless}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}} 
