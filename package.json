@@ -27,6 +27,9 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
+    "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/lang-html": "^0.20.0",
+    "@codemirror/lang-xml": "^0.20.0",
     "@embroider/macros": "^1.6.0",
     "@embroider/util": "^1.6.0",
     "@lblod/ember-rdfa-editor": "^0.58.1",
@@ -43,7 +46,8 @@
     "ember-test-selectors": "^5.0.0 || ^6.0.0",
     "ember-truth-helpers": "^3.0.0",
     "forking-store": "^1.0.0",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "xml-formatter": "^2.6.1"
   },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^1.0.9",
