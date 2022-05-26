@@ -8,12 +8,11 @@ export default class RdfInputFieldsRichTextComponent extends SimpleInputFieldCom
   @action
   handleRdfaEditorInit(editor) {
     this.editor = editor;
-    editor.setHtmlContent('test');
+    editor.setHtmlContent(this.value ? this.value : '');
   }
 
   @action
   updateValue(e) {
-    console.log('saving');
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const editorValue = this.editor.htmlContent;
     super.updateValue(editorValue);
