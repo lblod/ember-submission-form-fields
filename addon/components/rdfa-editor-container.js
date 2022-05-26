@@ -4,16 +4,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class RdfaEditorContainerComponent extends Component {
   @tracked editor;
-  plugins = [
-    'besluit-type',
-    'standard-template',
-    'besluit',
-    'roadsign-regulation',
-    'template-variable',
-    'rdfa-date',
-    'import-snippet',
-    'citaten-plugin',
-  ];
+  plugins = [];
   get editorOptions() {
     return (
       this.args.editorOptions ?? {
