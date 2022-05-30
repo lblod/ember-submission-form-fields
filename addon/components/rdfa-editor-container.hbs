@@ -1,45 +1,18 @@
-{{#if @busy}}
-  <AuBodyContainer>
-    <div class="au-c-rdfa-editor">
-      <div class="say-container say-container--sidebar-left say-container--paper say-container--sidebar-right">
-        <div class="say-container__main">
-          <div class="say-editor rdfa-annotations rdfa-annotations-highlight rdfa-annotations-hover">
-            <div class="say-editor__paper">
-              <div class="au-c-scanner">
-                <div class="au-c-scanner__text">
-                  <AuLoader @padding="small"/>
-                  <AuHelpText @size="large">{{if @busyText @busyText
-                                                 (t "rdfaEditorContainer.defaultBusyText") }}
-                  </AuHelpText>
-                </div>
-                <span class="au-c-scanner__bar"></span>
-              </div>
-              <div class="say-editor__inner say-content">
-                {{html-safe this.editor.htmlContent}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </AuBodyContainer>
-{{else}}
-  <AuBodyContainer 
-    vocab="{{this.vocab}}" 
-    {{did-insert this.setPrefix}}
-    typeof="{{@typeOfWrappingDiv}}" 
-    property="{{@property}}" 
-    resource="#"
-  >
-    <div {{on "focusout" @onBlur}}>
-      <Rdfa::RdfaEditor
-        class="au-c-rdfa-editor"
-        @profile={{@profile}}
-        @rdfaEditorInit={{this.rdfaEditorInit}}
-        @editorOptions={{this.editorOptions}}
-        @toolbarOptions={{this.toolbarOptions}}
-        @plugins={{this.plugins}}
-      />
-    </div>
-  </AuBodyContainer>
-{{/if}}
+<AuBodyContainer 
+  vocab="{{this.vocab}}" 
+  {{did-insert this.setPrefix}}
+  typeof="{{@typeOfWrappingDiv}}" 
+  property="{{@property}}" 
+  resource="#"
+>
+  <div {{on "focusout" @onBlur}}>
+    <Rdfa::RdfaEditor
+      class="au-c-rdfa-editor"
+      @profile={{@profile}}
+      @rdfaEditorInit={{this.rdfaEditorInit}}
+      @editorOptions={{this.editorOptions}}
+      @toolbarOptions={{this.toolbarOptions}}
+      @plugins={{this.plugins}}
+    />
+  </div>
+</AuBodyContainer>
