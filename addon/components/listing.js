@@ -1,18 +1,19 @@
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import {
     generatorsForNode,
     triplesForGenerator, triplesForScope
 } from '@lblod/submission-form-helpers';
-import { getRootNodeForm, getSubFormsForNode } from '../utils/model-factory';
 import rdflib from 'browser-rdflib';
+import { getSubFormsForNode } from '../utils/model-factory';
 
 const SHACL = new rdflib.Namespace('http://www.w3.org/ns/shacl#');
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
+  pathConnection = {};
   scope = null;
 
   get formStore() {
@@ -35,6 +36,7 @@ export default class ListingComponent extends Component {
     super(...arguments);
     this.updateScope();
     this.renderSubForms();
+    this.setPathConnection();
   }
 
   @action
@@ -43,6 +45,39 @@ export default class ListingComponent extends Component {
     this.formStore.addAll(triples);
     this.updateScope();
     this.renderSubForms();
+  }
+
+  @action
+  removeEntry( entrySourceNode ) {
+    //TODO: this is a simplified version. We need a spec on how to delete related resources and not to delete too much
+    const triples = this.formStore.match(entrySourceNode, undefined, undefined, this.graphs.sourceGraph);
+    if(!this.pathConnection.inverse) {
+      triples.push({
+        subject: this.sourceNode,
+        predicate: this.pathConnection.pathSegment,
+        object: entrySourceNode,
+        graph: this.graphs.sourceGraph
+      });
+    }
+    this.formStore.removeStatements(triples);
+    this.updateScope();
+    this.renderSubForms();
+  }
+
+  setPathConnection() {
+    const path = this.formStore.any(this.listing.rdflibScope, SHACL("path"), undefined, this.graphs.formGraph);
+    let pathSegment = path;
+    if(pathSegment.termType === "Collection") {
+      pathSegment = pathSegment.elements[0];
+    }
+
+    if (pathSegment.termType == "NamedNode") {
+      this.pathConnection = { pathSegment: pathSegment };
+    }
+    else {
+      const inversePath = this.formStore.any(pathSegment, SHACL("inversePath"), undefined, this.graphs.formGraph);
+      this.pathConnection = { pathSegment: inversePath, inverse: true };
+    }
   }
 
   updateScope() {
@@ -125,8 +160,7 @@ export default class ListingComponent extends Component {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allTriples = dataset.triples.map(t => { return {...t, graph: this.graphs.sourceGraph }; });
 
-    const path = this.formStore.any(this.listing.rdflibScope, SHACL("path"), undefined, this.graphs.formGraph);
-    const { pathSegment, inverse }  = this.pathSegmentToConnect(path);
+    const { pathSegment, inverse }  = this.pathConnection;
     if(inverse){
       for(const targetNode of dataset.sourceNodes) {
         allTriples.push({
@@ -148,21 +182,5 @@ export default class ListingComponent extends Component {
       }
     }
     return allTriples;
-  }
-
-  pathSegmentToConnect( path ) {
-    if(path.termType === "Collection") {
-      const firstHop = path.elements[0];
-      if (firstHop.termType == "NamedNode") {
-        return { pathSegment: firstHop };
-      }
-      else {
-        const inversePath = this.formStore.any(firstHop, SHACL("inversePath"), undefined, this.graphs.formGraph);
-        return { pathSegment: inversePath, inverse: true };
-      }
-    }
-    else {
-      return { pathSegment: path } ;
-    }
   }
 }

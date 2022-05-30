@@ -27,8 +27,9 @@
       @skin="link"
       @icon="bin"
       @iconAlignment="left"
+      {{on "click" (fn  @removeEntry @sourceNode)}}
     >
-      Verwijder&nbsp;link
+      Remove entry
     </AuButton>
   </div>
 </div>
