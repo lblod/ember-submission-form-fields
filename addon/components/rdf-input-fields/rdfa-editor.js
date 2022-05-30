@@ -2,9 +2,9 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 
-export default class RichTextComponent extends SimpleInputFieldComponent {
+export default class RdfaEditorComponent extends SimpleInputFieldComponent {
   inputId = 'richtext-' + guidFor(this);
-
+  plugins = ['citaten-plugin', 'standard-template'];
   @action
   handleRdfaEditorInit(editor) {
     this.editor = editor;

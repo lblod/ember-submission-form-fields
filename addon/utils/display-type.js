@@ -23,6 +23,7 @@ import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-
 import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
 import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
 import RichTextComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/rich-text';
+import RdfaEditorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/rdfa-editor';
 
 const BUILT_IN_EDIT_COMPONENTS = new Map();
 const BUILT_IN_SHOW_COMPONENTS = new Map();
@@ -212,6 +213,10 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/richText',
     edit: RichTextComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/rdfaEditor',
+    edit: RdfaEditorComponent,
   },
 ]);
 

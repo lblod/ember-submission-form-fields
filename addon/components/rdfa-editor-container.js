@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 
 export default class RdfaEditorContainerComponent extends Component {
   @tracked editor;
-  plugins = [];
   get editorOptions() {
     return (
       this.args.editorOptions ?? {
@@ -50,6 +49,10 @@ export default class RdfaEditorContainerComponent extends Component {
 
   get vocab() {
     return this.documentContext['vocab'];
+  }
+
+  get plugins() {
+    return this.args.plugins ? this.args.plugins : [];
   }
 
   /**

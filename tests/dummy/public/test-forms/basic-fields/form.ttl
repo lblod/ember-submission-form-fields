@@ -359,3 +359,18 @@ fields:2731a77b-bbf3-465f-804f-871e7f8f61a4 a form:Field ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
 fieldGroups:main form:hasField fields:2731a77b-bbf3-465f-804f-871e7f8f61a4 .
+
+##########################################################
+# Rdfa Editor
+##########################################################
+fields:10c8165c-c3c7-45fe-b57e-13a9691b73e0 a form:Field ;
+    mu:uuid "10c8165c-c3c7-45fe-b57e-13a9691b73e0";
+    sh:name "Rdfa Editor" ;
+    sh:order 230 ;
+    sh:path ext:7a5ca4d9-2a04-46ab-b404-b941d01b3920 ;
+    form:options """{}""" ;
+    form:displayType displayTypes:rdfaEditor ;
+
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:10c8165c-c3c7-45fe-b57e-13a9691b73e0 .

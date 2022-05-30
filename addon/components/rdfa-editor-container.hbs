@@ -1,45 +1,18 @@
-{{#if @busy}}
-  <AuBodyContainer>
-    <div class="au-c-rdfa-editor">
-      <div class="say-container say-container--sidebar-left say-container--paper say-container--sidebar-right">
-        <div class="say-container__main">
-          <div class="say-editor rdfa-annotations rdfa-annotations-highlight rdfa-annotations-hover">
-            <div class="say-editor__paper">
-              <div class="au-c-scanner">
-                <div class="au-c-scanner__text">
-                  <AuLoader @padding="small"/>
-                  <AuHelpText @size="large">{{if @busyText @busyText
-                                                 (t "rdfaEditorContainer.defaultBusyText") }}
-                  </AuHelpText>
-                </div>
-                <span class="au-c-scanner__bar"></span>
-              </div>
-              <div class="say-editor__inner say-content">
-                {{html-safe this.editor.htmlContent}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </AuBodyContainer>
-{{else}}
-  <AuBodyContainer 
-    vocab="{{this.vocab}}" 
-    {{did-insert this.setPrefix}}
-    typeof="{{@typeOfWrappingDiv}}" 
-    property="{{@property}}" 
-    resource="#"
-  >
-    <div {{on "focusout" @onBlur}}>
-      <Rdfa::RdfaEditor
-        class="au-c-rdfa-editor"
-        @profile={{@profile}}
-        @rdfaEditorInit={{this.rdfaEditorInit}}
-        @editorOptions={{this.editorOptions}}
-        @toolbarOptions={{this.toolbarOptions}}
-        @plugins={{this.plugins}}
-      />
-    </div>
-  </AuBodyContainer>
-{{/if}}
+<AuBodyContainer 
+  vocab="{{this.vocab}}" 
+  {{did-insert this.setPrefix}}
+  typeof="{{@typeOfWrappingDiv}}" 
+  property="{{@property}}" 
+  resource="#"
+>
+  <div {{on "focusout" @onBlur}} class="au-c-body-container " vocab="http://data.vlaanderen.be/ns/besluit#" typeof="besluit:BehandelingVanAgendapunt" resource="#" prefix="eli: http://data.europa.eu/eli/ontology# prov: http://www.w3.org/ns/prov# mandaat: http://data.vlaanderen.be/ns/mandaat# besluit: http://data.vlaanderen.be/ns/besluit# ext: http://mu.semte.ch/vocabularies/ext/ person: http://www.w3.org/ns/person# persoon: http://data.vlaanderen.be/ns/persoon# dateplugin: http://say.data.gift/manipulators/insertion/ besluittype: https://data.vlaanderen.be/id/concept/BesluitType/ dct: http://purl.org/dc/terms/ mobiliteit: https://data.vlaanderen.be/ns/mobiliteit# lblodmow: http://data.lblod.info/vocabularies/mobiliteit/">
+    <Rdfa::RdfaEditor
+      class="au-c-rdfa-editor"
+      @profile={{@profile}}
+      @rdfaEditorInit={{this.rdfaEditorInit}}
+      @editorOptions={{this.editorOptions}}
+      @toolbarOptions={{this.toolbarOptions}}
+      @plugins={{this.plugins}}
+    />
+  </div>
+</AuBodyContainer>
