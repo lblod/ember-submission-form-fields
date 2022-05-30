@@ -73,7 +73,8 @@ export default class ListingComponent extends Component {
         sourceNode
       })[0];
 
-      subForms.push(subForm);
+      if(subForm)
+        subForms.push(subForm);
     }
 
     // 2) calculate to be removed
