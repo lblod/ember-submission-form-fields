@@ -49,13 +49,23 @@ export default class ListingComponent extends Component {
 
   @action
   removeEntry( entrySourceNode ) {
-    //TODO: this is a simplified version. We need a spec on how to delete related resources and not to delete too much
-    const triples = this.formStore.match(entrySourceNode, undefined, undefined, this.graphs.sourceGraph);
+    // TODO: this is a simplified version and will result in dangling triples
+    //  - We need a proper spec in the model on how to define a delete pattern
+    //  - We could be more aggressive (i.e. delete all ?s ?p ?o) but might risk deleting too much (and breaking the data)
+    const triples = [];
     if(!this.pathConnection.inverse) {
       triples.push({
         subject: this.sourceNode,
         predicate: this.pathConnection.pathSegment,
         object: entrySourceNode,
+        graph: this.graphs.sourceGraph
+      });
+    }
+    else {
+      triples.push({
+        subject: entrySourceNode,
+        predicate: this.pathConnection.pathSegment,
+        object: this.sourceNode,
         graph: this.graphs.sourceGraph
       });
     }
@@ -99,8 +109,10 @@ export default class ListingComponent extends Component {
     // - TODO: ordering of hasMany
     // - TODO: a listing might have multiple subforms; where different info can be respresented
     // - TODO: there is currently no specific 'create' form
+    // Note further:
+    // - The rendering procedure might be similar to property-group; but is not the same.
+    //   Given that it might get even more complex; I think we need to wait before abstracting this away.
     for (const sourceNode of this.scope.values) {
-      //TODO: we need a way to order subforms. And probably multiple ways
       const subForm = getSubFormsForNode({
         store: this.formStore,
         graphs: this.graphs,
