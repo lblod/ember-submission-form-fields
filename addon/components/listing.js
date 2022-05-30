@@ -60,20 +60,25 @@ export default class ListingComponent extends Component {
   renderSubForms() {
     let subForms = [];
 
+    //This is a simplified version of rendering the subforms. It misses the following:
+    // - TODO: ordering of hasMany
+    // - TODO: a listing might have multiple subforms; where different info can be respresented
+    // - TODO: there is currently no specific 'create' form
     for (const sourceNode of this.scope.values) {
       //TODO: we need a way to order subforms. And probably multiple ways
-      const newSubForms = getSubFormsForNode({
+      const subForm = getSubFormsForNode({
         store: this.formStore,
         graphs: this.graphs,
         node: this.listing.uri,
         sourceNode
-      });
-      subForms = [ ...subForms, ...newSubForms ];
+      })[0];
+
+      subForms.push(subForm);
     }
 
     // 2) calculate to be removed
     const deletes = this.subForms.filter(
-      (rendered) => !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode) && child.uri.equals(rendered.uri))
+      (rendered) => !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
     );
 
     // 3) remove the "unwanted" children
