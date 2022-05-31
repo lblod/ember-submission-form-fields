@@ -9,12 +9,30 @@
 {{#if @field.description}}
   <p class="au-u-light au-u-margin-bottom-tiny">{{@field.description}}</p>
 {{/if}}
-
-<RdfaEditorContainer
-  @rdfaEditorInit={{this.handleRdfaEditorInit}}
-  @onBlur={{this.updateValue}}
-  @show={{@show}}
-/>
+{{#if @show}}
+  <div style="border: 1px solid black">
+    <div class="say-container">
+      <div class="say-container__main">
+        <div class="say-editor">
+          <div class="say-editor__paper">
+            <div class="say-editor__inner say-content">
+              {{{this.editor.htmlContent}}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{else}}
+  <div {{on "focusout" this.updateValue}} style="border: 1px solid black">
+    <Rdfa::RdfaEditor
+      @rdfaEditorInit={{this.handleRdfaEditorInit}}
+      @editorOptions={{this.editorOptions}}
+      @toolbarOptions={{this.toolbarOptions}}
+      @plugins={{this.plugins}}
+    />
+  </div>
+{{/if}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}} 
