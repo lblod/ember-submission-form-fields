@@ -13,6 +13,7 @@
 <RdfaEditorContainer
   @rdfaEditorInit={{this.handleRdfaEditorInit}}
   @onBlur={{this.updateValue}}
+  @show={{@show}}
 />
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
