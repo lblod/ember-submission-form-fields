@@ -11,15 +11,9 @@
 {{/if}}
 {{#if @show}}
   <div style="border: 1px solid black">
-    <div class="say-container">
-      <div class="say-container__main">
-        <div class="say-editor">
-          <div class="say-editor__paper">
-            <div class="say-editor__inner say-content">
-              {{{this.editor.htmlContent}}}
-            </div>
-          </div>
-        </div>
+    <div class="say-editor">
+      <div class="say-editor__paper">
+        {{{this.editor.htmlContent}}}
       </div>
     </div>
   </div>
