@@ -72,6 +72,7 @@
     "ember-cli-release-tag": "^0.1.5",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
+    "ember-cli-string-helpers": "^6.1.0",
     "ember-cli-terser": "^4.0.2",
     "ember-data": "^3.16.0",
     "ember-disable-prototype-extensions": "^1.1.3",
