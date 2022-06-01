@@ -7,13 +7,11 @@ import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { getSubFormsForNode } from '../utils/model-factory';
 
-
 export default class ListingComponent extends Component {
   @tracked subForms = A();
   @tracked creationFormData = null;
-  pathConnection = {};
+  newEntriesPath = {};
   scope = null;
-
 
   get formStore() {
     return this.args.formStore;
@@ -35,7 +33,7 @@ export default class ListingComponent extends Component {
     super(...arguments);
     this.updateScope();
     this.renderSubForms();
-    this.setPathConnection();
+    this.setNewEntriesPath();
   }
 
   @action
@@ -94,10 +92,10 @@ export default class ListingComponent extends Component {
     //  - We need a proper spec in the model on how to define a delete pattern
     //  - We could be more aggressive (i.e. delete all ?s ?p ?o) but might risk deleting too much (and breaking the data)
     const triples = [];
-    if(!this.pathConnection.inverse) {
+    if(!this.newEntriesPath.inverse) {
       triples.push({
         subject: this.sourceNode,
-        predicate: this.pathConnection.pathSegment,
+        predicate: this.newEntriesPath.pathSegment,
         object: entrySourceNode,
         graph: this.graphs.sourceGraph
       });
@@ -105,7 +103,7 @@ export default class ListingComponent extends Component {
     else {
       triples.push({
         subject: entrySourceNode,
-        predicate: this.pathConnection.pathSegment,
+        predicate: this.newEntriesPath.pathSegment,
         object: this.sourceNode,
         graph: this.graphs.sourceGraph
       });
@@ -115,7 +113,7 @@ export default class ListingComponent extends Component {
     this.renderSubForms();
   }
 
-  setPathConnection() {
+  setNewEntriesPath() {
     const path = this.formStore.any(this.listing.rdflibScope, SHACL("path"), undefined, this.graphs.formGraph);
     let pathSegment = path;
     if(pathSegment.termType === "Collection") {
@@ -123,11 +121,11 @@ export default class ListingComponent extends Component {
     }
 
     if (pathSegment.termType == "NamedNode") {
-      this.pathConnection = { pathSegment: pathSegment };
+      this.newEntriesPath = { pathSegment: pathSegment };
     }
     else {
       const inversePath = this.formStore.any(pathSegment, SHACL("inversePath"), undefined, this.graphs.formGraph);
-      this.pathConnection = { pathSegment: inversePath, inverse: true };
+      this.newEntriesPath = { pathSegment: inversePath, inverse: true };
     }
   }
 
@@ -212,7 +210,7 @@ export default class ListingComponent extends Component {
   attachSourceNodes( sourceNodes ) {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allSourceNodes = [];
-    const { pathSegment, inverse }  = this.pathConnection;
+    const { pathSegment, inverse }  = this.newEntriesPath;
     if(inverse){
       for(const targetNode of sourceNodes) {
         allSourceNodes.push({

@@ -1,6 +1,6 @@
 <div class="au-o-grid">
-  {{#if this.creationFormData}}
-    <div class="au-o-grid__item au-u-4-5">
+  <div class="au-o-grid__item au-u-4-5">
+    {{#if this.creationFormData}}
       {{#let this.creationFormData as | formData |}}
         <SubForm
           class={{@groupClass}}
@@ -19,9 +19,7 @@
           @onRemoveEntry={{this.removeEntry}}
         />
       {{/let}}
-    </div>
-  {{/if}}
-  <div class="au-o-grid__item au-u-4-5">
+    {{/if}}    
     {{#each this.subForms as |subForm index|}}
       <SubForm
         class={{@groupClass}}
