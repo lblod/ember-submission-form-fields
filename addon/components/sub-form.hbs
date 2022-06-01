@@ -5,31 +5,75 @@
     </AuHeading>
   </div>
 {{/if}}
-<div class="au-o-grid">
-  <div class="au-o-grid__item au-u-4-5">
-    {{#each this.propertyGroups as |group index|}}
-      <PropertyGroup
-        class={{@groupClass}}
-        @form={{@subForm.uri}}
-        @group={{group}}
-        @formStore={{@formStore}}
-        @graphs={{@graphs}}
-        @sourceNode={{@sourceNode}}
-        @forceShowErrors={{@forceShowErrors}}
-        @cacheConditionals={{@cacheConditionals}}
-        @last={{eq index (sub this.propertyGroups.length 1)}}
-        @show={{@show}}
-        @level={{@level}}/>
-    {{/each}}
+
+{{#unless @createNew}}
+  <div class="au-o-grid">
+    <div class="au-o-grid__item au-u-4-5">
+      {{#each this.propertyGroups as |group index|}}
+        <PropertyGroup
+          class={{@groupClass}}
+          @form={{@subForm.uri}}
+          @group={{group}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{@sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @show={{@show}}
+          @level={{@level}}/>
+      {{/each}}
+    </div>
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @skin="link"
+        @icon="bin"
+        @iconAlignment="left"
+        {{on "click" (fn  @onRemoveEntry @sourceNode)}}
+      >
+        Remove entry
+      </AuButton>
+    </div>
   </div>
-  <div class="au-o-grid__item au-u-1-5">
-    <AuButton
-      @skin="link"
-      @icon="bin"
-      @iconAlignment="left"
-      {{on "click" (fn  @removeEntry @sourceNode)}}
-    >
-      Remove entry
-    </AuButton>
+{{else}}
+  <div class="au-o-grid">
+    <div class="au-o-grid__item au-u-4-5">
+      {{#each this.propertyGroups as |group index|}}
+        <PropertyGroup
+          class={{@groupClass}}
+          @form={{@subForm.uri}}
+          @group={{group}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{@sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @show={{@show}}
+          @level={{@level}}/>
+      {{/each}}
+    </div>
   </div>
-</div>
+  <div>
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @icon="plus"
+        @iconAlignment="left"
+        class="au-u-margin-bottom-tiny"
+        {{on "click" @onSave }}
+      >
+        Save
+      </AuButton>
+      <div class="au-o-grid__item au-u-1-5">
+        <AuButton
+          @icon="plus"
+          @iconAlignment="left"
+          class="au-u-margin-bottom-tiny"
+          {{on "click" @onCancel }}
+        >
+          cancel
+        </AuButton>
+    </div>
+    </div>
+  </div>
+{{/unless}}

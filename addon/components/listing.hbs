@@ -1,4 +1,26 @@
 <div class="au-o-grid">
+  {{#if this.creationFormData}}
+    <div class="au-o-grid__item au-u-4-5">
+      {{#let this.creationFormData as | formData |}}
+        <SubForm
+          class={{@groupClass}}
+          @subForm={{formData.form}}
+          @formStore={{formData.formStore}}
+          @graphs={{formData.graphs}}
+          @sourceNode={{formData.sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{true}}
+          @show={{@show}}
+          @level={{@level}}
+          @createNew={{true}}
+          @onSave={{ (fn this.saveEntry formData) }}
+          @onCancel={{ (fn this.cancelCreateEntry formData) }}
+          @onRemoveEntry={{this.removeEntry}}
+        />
+      {{/let}}
+    </div>
+  {{/if}}
   <div class="au-o-grid__item au-u-4-5">
     {{#each this.subForms as |subForm index|}}
       <SubForm
@@ -12,7 +34,7 @@
         @last={{eq index (sub this.subForms.length 1)}}
         @show={{@show}}
         @level={{@level}}
-        @removeEntry={{this.removeEntry}}
+        @onRemoveEntry={{this.removeEntry}}
       />
     {{/each}}
   </div>
@@ -21,7 +43,8 @@
       @icon="plus"
       @iconAlignment="left"
       class="au-u-margin-bottom-tiny"
-      {{on "click" this.addEntry}}
+      @disabled={{this.creationFormData}}
+      {{on "click" this.createEntry}}
     >
       Add item
     </AuButton>

@@ -2,19 +2,18 @@ import { A } from '@ember/array';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import {
-    generatorsForNode,
-    triplesForGenerator, triplesForScope
-} from '@lblod/submission-form-helpers';
+import { FORM, generatorsForNode, SHACL, triplesForGenerator, triplesForScope } from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
+import { v4 as uuidv4 } from 'uuid';
 import { getSubFormsForNode } from '../utils/model-factory';
 
-const SHACL = new rdflib.Namespace('http://www.w3.org/ns/shacl#');
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
+  @tracked creationFormData = null;
   pathConnection = {};
   scope = null;
+
 
   get formStore() {
     return this.args.formStore;
@@ -40,11 +39,53 @@ export default class ListingComponent extends Component {
   }
 
   @action
-  addEntry() {
-    const triples = this.runGenerator();
-    this.formStore.addAll(triples);
+  createEntry() {
+    //TODO: now only one entry can be created at the same time (complicates a lot)
+    const createGraph = new rdflib.NamedNode(`http://data.lblod.info/createForm/${uuidv4()}`);
+    const dataset = this.runGenerator();
+    dataset.triples = dataset.triples.map(t => { return { ...t, graph: createGraph }; });
+    this.formStore.addAll(dataset.triples);
+
+    const sourceNode = dataset.sourceNodes[0];
+    const creationForm = getSubFormsForNode({
+      store: this.formStore,
+      graphs: this.graphs,
+      node: this.listing.uri,
+      sourceNode
+    }, FORM('new'))[0];
+
+    this.creationFormData =
+      {
+        graphs: {
+          fromGraph: this.graphs.formGraph,
+          sourceGraph: createGraph,
+          metaGraph: this.graphs.metaGraph
+        },
+        sourceNode,
+        formStore: this.formStore,
+        form: creationForm
+      };
+  }
+
+  @action
+  cancelCreateEntry( formData ) {
+    let triples = formData.formStore.match(undefined, undefined, undefined, formData.graphs.sourceGraph);
+    this.creationFormData = null;
+    this.formStore.removeStatements(triples);
+  }
+
+  @action
+  saveEntry( formData ) {
+    let triples = formData.formStore.match(undefined, undefined, undefined, formData.graphs.sourceGraph);
+    const triplesToInsert = [
+      ...this.attachSourceNodes([ formData.sourceNode ]),
+      ...triples.map(t => { return { ...t, graph: this.graphs.sourceGraph }; })
+    ];
+    this.formStore.addAll(triplesToInsert);
     this.updateScope();
     this.renderSubForms();
+    this.creationFormData = null;
+    this.formStore.removeStatements(triples);
   }
 
   @action
@@ -156,26 +197,25 @@ export default class ListingComponent extends Component {
     const generators = generatorsForNode(this.listing.uri,
                                          { store: this.formStore, formGraph: this.graphs.formGraph });
 
-    let allTriples = [];
+    let fullDataset = { sourceNodes: [], triples: [] };
     for(const generator of generators.createGenerators) {
       const dataset = triplesForGenerator(generator,
                                           { store: this.formStore, formGraph: this.graphs.formGraph });
 
-      const triples = this.attachGeneratedTriples(dataset);
-      allTriples = [ ...allTriples, ...triples ];
+      fullDataset.sourceNodes = [ ...fullDataset.sourceNodes, ...dataset.sourceNodes ];
+      fullDataset.triples = [ ...fullDataset.triples, ...dataset.triples ];
     }
 
-    return allTriples;
+    return fullDataset;
   }
 
-  attachGeneratedTriples( dataset ) {
+  attachSourceNodes( sourceNodes ) {
     //TODO: probably this type of boilerplate should be residing elsewhere
-    const allTriples = dataset.triples.map(t => { return {...t, graph: this.graphs.sourceGraph }; });
-
+    const allSourceNodes = [];
     const { pathSegment, inverse }  = this.pathConnection;
     if(inverse){
-      for(const targetNode of dataset.sourceNodes) {
-        allTriples.push({
+      for(const targetNode of sourceNodes) {
+        allSourceNodes.push({
           subject: targetNode,
           predicate: pathSegment,
           object: this.sourceNode,
@@ -184,8 +224,8 @@ export default class ListingComponent extends Component {
       }
     }
     else {
-      for(const targetNode of dataset.sourceNodes) {
-        allTriples.push({
+      for(const targetNode of sourceNodes) {
+        allSourceNodes.push({
           subject: this.sourceNode,
           predicate: pathSegment,
           object: targetNode,
@@ -193,6 +233,6 @@ export default class ListingComponent extends Component {
         });
       }
     }
-    return allTriples;
+    return allSourceNodes;
   }
 }

@@ -98,12 +98,12 @@ export function getRootNodeForm({ store, graphs }){
    || store.any(undefined, RDF('type'), FORM('Form'), graphs.formGraph);
 }
 
-export function getSubFormsForNode({ store, graphs, node, sourceNode }) {
+export function getSubFormsForNode({ store, graphs, node, sourceNode }, formPath = FORM('itemForm')) {
   const subForms = store
         .match(undefined, RDF('type'), FORM('SubForm'), graphs.formGraph)
         .map((t) => t.subject);
   const top = subForms.filter((subForm) =>
-    store.any(node, FORM('itemForm'), subForm, graphs.formGraph) //TODO confusing naming itemform vs formItem
+    store.any(node, formPath, subForm, graphs.formGraph) //TODO confusing naming itemform vs formItem
   );
   return top.map(
     (subform) =>
