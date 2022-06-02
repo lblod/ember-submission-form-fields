@@ -71,7 +71,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
     for(const group of top) {
       const formItems = store.match(undefined, SHACL('group'), group, graphs.formGraph);
 
-      if(formItems.find(item => store.any(form, FORM('formItem'), item.subject, graphs.formGraph))) {
+      if(formItems.find(item => store.any(form, FORM('includes'), item.subject, graphs.formGraph))) {
         toplevelSubFormGroups.push(group);
       }
     }
@@ -81,7 +81,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
     const toplevelFormGroups = [];
     for(const group of top) {
      const formItems = store.match(undefined, SHACL('group'), group, graphs.formGraph);
-      if(formItems.find(item => !store.any(undefined, FORM('formItem'), item.subject, graphs.formGraph))) {
+      if(formItems.find(item => !store.any(undefined, FORM('includes'), item.subject, graphs.formGraph))) {
         toplevelFormGroups.push(group);
       }
     }
@@ -98,12 +98,12 @@ export function getRootNodeForm({ store, graphs }){
    || store.any(undefined, RDF('type'), FORM('Form'), graphs.formGraph);
 }
 
-export function getSubFormsForNode({ store, graphs, node, sourceNode }, formPath = FORM('itemForm')) {
+export function getSubFormsForNode({ store, graphs, node, sourceNode }, formPath = FORM('each')) {
   const subForms = store
         .match(undefined, RDF('type'), FORM('SubForm'), graphs.formGraph)
         .map((t) => t.subject);
   const top = subForms.filter((subForm) =>
-    store.any(node, formPath, subForm, graphs.formGraph) //TODO confusing naming itemform vs formItem
+    store.any(node, formPath, subForm, graphs.formGraph)
   );
   return top.map(
     (subform) =>
