@@ -27,6 +27,10 @@ export default class ListingComponent extends Component {
     return this.args.listing;
   }
 
+  get canAdd() {
+    return this.listing.canAdd && this.listing.maxCount ? this.subForms.length < this.listing.maxCount : true;
+  }
+
   constructor() {
     super(...arguments);
     this.updateScope();

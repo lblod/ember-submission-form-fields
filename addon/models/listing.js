@@ -17,6 +17,7 @@ export default class ListingModel {
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
     this.rdflibCanAdd = store.any(uri, FORM('canAdd'), undefined, formGraph);
+    this.rdflibMaxCount = store.any(uri, SHACL('maxCount'), undefined, formGraph);
     this.rdflibCanRemove = store.any(uri, FORM('canRemove'), undefined, formGraph);
     this.rdflibAddLabel = store.any(uri, FORM('addLabel'), undefined, formGraph);
   }
@@ -38,6 +39,13 @@ export default class ListingModel {
   get canAdd() {
     return this.rdflibCanAdd && this.rdflibCanAdd.value == 1;
   }
+
+  @tracked
+  rdflibMaxCount = null;
+  get maxCount() {
+    return this.rdflibMaxCount && parseInt(this.rdflibMaxCount.value);
+  }
+
 
   @tracked
   rdflibCanRemove = null;
