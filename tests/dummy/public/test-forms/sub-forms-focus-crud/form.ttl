@@ -35,7 +35,6 @@ ext:chapterListingS a form:Scope;
 ext:chaptersL a form:Listing;
   sh:name "[LISTING] Chapters listing";
   form:itemForm ext:chapterFormItem;
-  form:new ext:chapterFormItemNew;
   form:scope ext:chapterListingS;
   form:createGenerator ext:chapterGenerator;
   form:canRemove true;
