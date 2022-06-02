@@ -9,8 +9,6 @@ import { getSubFormsForNode } from '../utils/model-factory';
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
-  @tracked creationFormData = null;
-  newEntriesPath = {};
   scope = null;
 
   get formStore() {
@@ -37,52 +35,14 @@ export default class ListingComponent extends Component {
 
   @action
   createEntry() {
-    //TODO: now only one entry can be created at the same time (complicates a lot)
-    const createGraph = new rdflib.NamedNode(`http://data.lblod.info/createForm/${uuidv4()}`);
     const dataset = this.runGenerator();
-    dataset.triples = dataset.triples.map(t => { return { ...t, graph: createGraph }; });
-    this.formStore.addAll(dataset.triples);
-
-    const sourceNode = dataset.sourceNodes[0];
-    const creationForm = getSubFormsForNode({
-      store: this.formStore,
-      graphs: this.graphs,
-      node: this.listing.uri,
-      sourceNode
-    }, FORM('new'))[0];
-
-    this.creationFormData =
-      {
-        graphs: {
-          fromGraph: this.graphs.formGraph,
-          sourceGraph: createGraph,
-          metaGraph: this.graphs.metaGraph
-        },
-        sourceNode,
-        formStore: this.formStore,
-        form: creationForm
-      };
-  }
-
-  @action
-  cancelCreateEntry( formData ) {
-    let triples = formData.formStore.match(undefined, undefined, undefined, formData.graphs.sourceGraph);
-    this.creationFormData = null;
-    this.formStore.removeStatements(triples);
-  }
-
-  @action
-  saveEntry( formData ) {
-    let triples = formData.formStore.match(undefined, undefined, undefined, formData.graphs.sourceGraph);
     const triplesToInsert = [
-      ...this.attachHasManyNodes([ formData.sourceNode ]),
-      ...triples.map(t => { return { ...t, graph: this.graphs.sourceGraph }; })
+      ...this.attachHasManyNodes(dataset.sourceNodes),
+      ...dataset.triples.map(t => { return { ...t, graph: this.graphs.sourceGraph }; })
     ];
     this.formStore.addAll(triplesToInsert);
     this.updateScope();
     this.renderSubForms();
-    this.creationFormData = null;
-    this.formStore.removeStatements(triples);
   }
 
   @action

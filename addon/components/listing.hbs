@@ -1,25 +1,5 @@
 <div class="au-o-grid">
   <div class="au-o-grid__item au-u-4-5">
-    {{#if this.creationFormData}}
-      {{#let this.creationFormData as | formData |}}
-        <SubForm
-          class={{@groupClass}}
-          @subForm={{formData.form}}
-          @formStore={{formData.formStore}}
-          @graphs={{formData.graphs}}
-          @sourceNode={{formData.sourceNode}}
-          @forceShowErrors={{@forceShowErrors}}
-          @cacheConditionals={{@cacheConditionals}}
-          @last={{true}}
-          @show={{@show}}
-          @level={{@level}}
-          @createNew={{true}}
-          @onSave={{ (fn this.saveEntry formData) }}
-          @onCancel={{ (fn this.cancelCreateEntry formData) }}
-          @onRemoveEntry={{this.removeEntry}}
-        />
-      {{/let}}
-    {{/if}}    
     {{#each this.subForms as |subForm index|}}
       <SubForm
         class={{@groupClass}}
