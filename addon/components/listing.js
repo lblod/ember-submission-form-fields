@@ -33,7 +33,6 @@ export default class ListingComponent extends Component {
     super(...arguments);
     this.updateScope();
     this.renderSubForms();
-    this.setNewEntriesPath();
   }
 
   @action
@@ -76,7 +75,7 @@ export default class ListingComponent extends Component {
   saveEntry( formData ) {
     let triples = formData.formStore.match(undefined, undefined, undefined, formData.graphs.sourceGraph);
     const triplesToInsert = [
-      ...this.attachSourceNodes([ formData.sourceNode ]),
+      ...this.attachHasManyNodes([ formData.sourceNode ]),
       ...triples.map(t => { return { ...t, graph: this.graphs.sourceGraph }; })
     ];
     this.formStore.addAll(triplesToInsert);
@@ -87,46 +86,31 @@ export default class ListingComponent extends Component {
   }
 
   @action
-  removeEntry( entrySourceNode ) {
+  removeEntry( node ) {
     // TODO: this is a simplified version and will result in dangling triples
     //  - We need a proper spec in the model on how to define a delete pattern
     //  - We could be more aggressive (i.e. delete all ?s ?p ?o) but might risk deleting too much (and breaking the data)
     const triples = [];
-    if(!this.newEntriesPath.inverse) {
+    const { sourceNode, pathElement } = this.sourceForHasManyConnection();
+    if(!pathElement.inversePath) {
       triples.push({
-        subject: this.sourceNode,
-        predicate: this.newEntriesPath.pathSegment,
-        object: entrySourceNode,
+        subject: sourceNode,
+        predicate: pathElement.path,
+        object: node,
         graph: this.graphs.sourceGraph
       });
     }
     else {
       triples.push({
-        subject: entrySourceNode,
-        predicate: this.newEntriesPath.pathSegment,
-        object: this.sourceNode,
+        subject: node,
+        predicate: pathElement.inversePath,
+        object: sourceNode,
         graph: this.graphs.sourceGraph
       });
     }
     this.formStore.removeStatements(triples);
     this.updateScope();
     this.renderSubForms();
-  }
-
-  setNewEntriesPath() {
-    const path = this.formStore.any(this.listing.rdflibScope, SHACL("path"), undefined, this.graphs.formGraph);
-    let pathSegment = path;
-    if(pathSegment.termType === "Collection") {
-      pathSegment = pathSegment.elements[0];
-    }
-
-    if (pathSegment.termType == "NamedNode") {
-      this.newEntriesPath = { pathSegment: pathSegment };
-    }
-    else {
-      const inversePath = this.formStore.any(pathSegment, SHACL("inversePath"), undefined, this.graphs.formGraph);
-      this.newEntriesPath = { pathSegment: inversePath, inverse: true };
-    }
   }
 
   updateScope() {
@@ -207,25 +191,25 @@ export default class ListingComponent extends Component {
     return fullDataset;
   }
 
-  attachSourceNodes( sourceNodes ) {
+  attachHasManyNodes( nodes ) {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allSourceNodes = [];
-    const { pathSegment, inverse }  = this.newEntriesPath;
-    if(inverse){
-      for(const targetNode of sourceNodes) {
+    const { sourceNode, pathElement } = this.calcSourceForHasMany();
+    if(pathElement.inversPath){
+      for(const targetNode of nodes) {
         allSourceNodes.push({
           subject: targetNode,
-          predicate: pathSegment,
-          object: this.sourceNode,
+          predicate: pathElement.inversPath,
+          object: sourceNode,
           graph: this.graphs.sourceGraph
         });
       }
     }
     else {
-      for(const targetNode of sourceNodes) {
+      for(const targetNode of nodes) {
         allSourceNodes.push({
-          subject: this.sourceNode,
-          predicate: pathSegment,
+          subject: sourceNode,
+          predicate: pathElement.path,
           object: targetNode,
           graph: this.graphs.sourceGraph
         });
