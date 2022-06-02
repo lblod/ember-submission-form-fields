@@ -233,4 +233,35 @@ export default class ListingComponent extends Component {
     }
     return allSourceNodes;
   }
+
+  sourceForHasManyConnection() {
+    //It assumes >= 1 of ordered segement data.
+    const lastSegementData = this.scope.orderedSegmentData.slice(-1)[0];
+
+    //TODO: this assumes the source of the hasMany relation is singular.
+    // However, it could be that multiple nodes on a path are the source of the hasMany
+    // Let's not support this for now.
+    const sourceData = { sourceNode: {}, ...lastSegementData };
+
+    if(this.scope.orderedSegmentData.length == 1) {
+      sourceData.sourceNode = this.sourceNode;
+    }
+    else {
+      const penUltimatePathElement = this.scope.orderedSegmentData.slice(-2)[0];
+      const values = penUltimatePathElement.values;
+      if(values.length == 0){
+        throw `No penultimate hop found. It is not clear how we should support this.
+               Try form:generator to prepare default data`;
+      }
+      else if(values.length > 1){
+        throw `Many source nodes not supported for a hasMany relation`;
+      }
+      else {
+        sourceData.sourceNode = values[0];
+      }
+    }
+
+    return sourceData;
+  }
+
 }
