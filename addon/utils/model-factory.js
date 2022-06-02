@@ -7,7 +7,7 @@ import {
   FORM,
   RDF,
   fieldsForForm,
-  isFormModelV3
+  getFormModelVersion
 } from '@lblod/submission-form-helpers';
 
 function createPropertyTreeFromFields(
@@ -66,7 +66,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
   let filteredGroups = [];
 
   //TODO: make helpers
-  if(isFormModelV3(form, { store, formGraph: graphs.formGraph })) {
+  if(getFormModelVersion(form, { store, formGraph: graphs.formGraph }).toLowerCase() == 'v4') {
     const toplevelSubFormGroups = [];
     for(const group of top) {
       const formItems = store.match(undefined, SHACL('group'), group, graphs.formGraph);
