@@ -2,7 +2,13 @@ import { A } from '@ember/array';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { FORM, generatorsForNode, SHACL, triplesForGenerator, triplesForScope } from '@lblod/submission-form-helpers';
+import {
+  FORM,
+  generatorsForNode,
+  SHACL,
+  triplesForGenerator,
+  triplesForScope,
+} from '@lblod/submission-form-helpers';
 import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { getSubFormsForNode } from '../utils/model-factory';
@@ -28,7 +34,9 @@ export default class ListingComponent extends Component {
   }
 
   get canAdd() {
-    return this.listing.canAdd && this.listing.maxCount ? this.subForms.length < this.listing.maxCount : true;
+    return this.listing.canAdd && this.listing.maxCount
+      ? this.subForms.length < this.listing.maxCount
+      : true;
   }
 
   constructor() {
@@ -42,7 +50,9 @@ export default class ListingComponent extends Component {
     const dataset = this.runGenerator();
     const triplesToInsert = [
       ...this.attachHasManyNodes(dataset.sourceNodes),
-      ...dataset.triples.map(t => { return { ...t, graph: this.graphs.sourceGraph }; })
+      ...dataset.triples.map((t) => {
+        return { ...t, graph: this.graphs.sourceGraph };
+      }),
     ];
     this.formStore.addAll(triplesToInsert);
     this.updateScope();
@@ -50,26 +60,25 @@ export default class ListingComponent extends Component {
   }
 
   @action
-  removeEntry( node ) {
+  removeEntry(node) {
     // TODO: this is a simplified version and will result in dangling triples
     //  - We need a proper spec in the model on how to define a delete pattern
     //  - We could be more aggressive (i.e. delete all ?s ?p ?o) but might risk deleting too much (and breaking the data)
     const triples = [];
     const { sourceNode, pathElement } = this.sourceForHasManyConnection();
-    if(!pathElement.inversePath) {
+    if (!pathElement.inversePath) {
       triples.push({
         subject: sourceNode,
         predicate: pathElement.path,
         object: node,
-        graph: this.graphs.sourceGraph
+        graph: this.graphs.sourceGraph,
       });
-    }
-    else {
+    } else {
       triples.push({
         subject: node,
         predicate: pathElement.inversePath,
         object: sourceNode,
-        graph: this.graphs.sourceGraph
+        graph: this.graphs.sourceGraph,
       });
     }
     this.formStore.removeStatements(triples);
@@ -78,15 +87,12 @@ export default class ListingComponent extends Component {
   }
 
   updateScope() {
-    this.scope = triplesForScope(
-      this.listing.rdflibScope,
-      {
-        store: this.formStore,
-        formGrah: this.graphs.formGraph,
-        sourceNode: this.sourceNode,
-        sourceGraph: this.graphs.sourceGraph
-      }
-    );
+    this.scope = triplesForScope(this.listing.rdflibScope, {
+      store: this.formStore,
+      formGrah: this.graphs.formGraph,
+      sourceNode: this.sourceNode,
+      sourceGraph: this.graphs.sourceGraph,
+    });
   }
 
   renderSubForms() {
@@ -104,16 +110,16 @@ export default class ListingComponent extends Component {
         store: this.formStore,
         graphs: this.graphs,
         node: this.listing.uri,
-        sourceNode
+        sourceNode,
       })[0];
 
-      if(subForm)
-        subForms.push(subForm);
+      if (subForm) subForms.push(subForm);
     }
 
     // 2) calculate to be removed
     const deletes = this.subForms.filter(
-      (rendered) => !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
+      (rendered) =>
+        !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
     );
 
     // 3) remove the "unwanted" children
@@ -140,42 +146,48 @@ export default class ListingComponent extends Component {
   }
 
   runGenerator() {
-    const generators = generatorsForNode(this.listing.uri,
-                                         { store: this.formStore, formGraph: this.graphs.formGraph });
+    const generators = generatorsForNode(this.listing.uri, {
+      store: this.formStore,
+      formGraph: this.graphs.formGraph,
+    });
 
     let fullDataset = { sourceNodes: [], triples: [] };
-    for(const generator of generators.createGenerators) {
-      const dataset = triplesForGenerator(generator,
-                                          { store: this.formStore, formGraph: this.graphs.formGraph });
+    for (const generator of generators.createGenerators) {
+      const dataset = triplesForGenerator(generator, {
+        store: this.formStore,
+        formGraph: this.graphs.formGraph,
+      });
 
-      fullDataset.sourceNodes = [ ...fullDataset.sourceNodes, ...dataset.sourceNodes ];
-      fullDataset.triples = [ ...fullDataset.triples, ...dataset.triples ];
+      fullDataset.sourceNodes = [
+        ...fullDataset.sourceNodes,
+        ...dataset.sourceNodes,
+      ];
+      fullDataset.triples = [...fullDataset.triples, ...dataset.triples];
     }
 
     return fullDataset;
   }
 
-  attachHasManyNodes( nodes ) {
+  attachHasManyNodes(nodes) {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allSourceNodes = [];
     const { sourceNode, pathElement } = this.sourceForHasManyConnection();
-    if(pathElement.inversPath){
-      for(const targetNode of nodes) {
+    if (pathElement.inversPath) {
+      for (const targetNode of nodes) {
         allSourceNodes.push({
           subject: targetNode,
           predicate: pathElement.inversPath,
           object: sourceNode,
-          graph: this.graphs.sourceGraph
+          graph: this.graphs.sourceGraph,
         });
       }
-    }
-    else {
-      for(const targetNode of nodes) {
+    } else {
+      for (const targetNode of nodes) {
         allSourceNodes.push({
           subject: sourceNode,
           predicate: pathElement.path,
           object: targetNode,
-          graph: this.graphs.sourceGraph
+          graph: this.graphs.sourceGraph,
         });
       }
     }
@@ -191,25 +203,21 @@ export default class ListingComponent extends Component {
     // Let's not support this for now.
     const sourceData = { sourceNode: {}, ...lastSegementData };
 
-    if(this.scope.orderedSegmentData.length == 1) {
+    if (this.scope.orderedSegmentData.length == 1) {
       sourceData.sourceNode = this.sourceNode;
-    }
-    else {
+    } else {
       const penUltimatePathElement = this.scope.orderedSegmentData.slice(-2)[0];
       const values = penUltimatePathElement.values;
-      if(values.length == 0){
+      if (values.length == 0) {
         throw `No penultimate hop found. It is not clear how we should support this.
                Try form:generator to prepare default data`;
-      }
-      else if(values.length > 1){
+      } else if (values.length > 1) {
         throw `Many source nodes not supported for a hasMany relation`;
-      }
-      else {
+      } else {
         sourceData.sourceNode = values[0];
       }
     }
 
     return sourceData;
   }
-
 }

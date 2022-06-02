@@ -17,9 +17,24 @@ export default class ListingModel {
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
     this.rdflibCanAdd = store.any(uri, FORM('canAdd'), undefined, formGraph);
-    this.rdflibMaxCount = store.any(uri, SHACL('maxCount'), undefined, formGraph);
-    this.rdflibCanRemove = store.any(uri, FORM('canRemove'), undefined, formGraph);
-    this.rdflibAddLabel = store.any(uri, FORM('addLabel'), undefined, formGraph);
+    this.rdflibMaxCount = store.any(
+      uri,
+      SHACL('maxCount'),
+      undefined,
+      formGraph
+    );
+    this.rdflibCanRemove = store.any(
+      uri,
+      FORM('canRemove'),
+      undefined,
+      formGraph
+    );
+    this.rdflibAddLabel = store.any(
+      uri,
+      FORM('addLabel'),
+      undefined,
+      formGraph
+    );
   }
 
   @tracked
@@ -46,7 +61,6 @@ export default class ListingModel {
     return this.rdflibMaxCount && parseInt(this.rdflibMaxCount.value);
   }
 
-
   @tracked
   rdflibCanRemove = null;
   get canRemove() {
@@ -56,7 +70,7 @@ export default class ListingModel {
   @tracked
   rdflibAddLabel = null;
   get addLabel() {
-    return this.rdflibAddLabel && this.rdflibAddLabel.value || 'Add item';
+    return (this.rdflibAddLabel && this.rdflibAddLabel.value) || 'Add item';
   }
 
   //TODO: revise the name of property

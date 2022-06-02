@@ -8,8 +8,18 @@ export default class SubFormModel {
     const { store, formGraph } = options;
     this.uri = uri;
     this.sourceNode = options.sourceNode;
-    this.rdfItemLabel = store.any(this.uri, SHACL('name'), undefined, formGraph);
-    this.rdflibRemoveLabel = store.any(uri, FORM('removeLabel'), undefined, formGraph);
+    this.rdfItemLabel = store.any(
+      this.uri,
+      SHACL('name'),
+      undefined,
+      formGraph
+    );
+    this.rdflibRemoveLabel = store.any(
+      uri,
+      FORM('removeLabel'),
+      undefined,
+      formGraph
+    );
   }
 
   @tracked
@@ -21,7 +31,8 @@ export default class SubFormModel {
   @tracked
   rdflibRemoveLabel = null;
   get removeLabel() {
-    return this.rdflibRemoveLabel && this.rdflibRemoveLabel.value || 'Remove item';
+    return (
+      (this.rdflibRemoveLabel && this.rdflibRemoveLabel.value) || 'Remove item'
+    );
   }
-
 }
