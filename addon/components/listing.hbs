@@ -13,18 +13,21 @@
         @show={{@show}}
         @level={{@level}}
         @onRemoveEntry={{this.removeEntry}}
+        @canRemove={{@listing.canRemove}}
       />
     {{/each}}
   </div>
-  <div class="au-o-grid__item au-u-1-5">
-    <AuButton
-      @icon="plus"
-      @iconAlignment="left"
-      class="au-u-margin-bottom-tiny"
-      @disabled={{this.creationFormData}}
-      {{on "click" this.createEntry}}
-    >
-      Add item
-    </AuButton>
-  </div>
+  {{#if @listing.canAdd}}
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @icon="plus"
+        @iconAlignment="left"
+        class="au-u-margin-bottom-tiny"
+        @disabled={{this.creationFormData}}
+        {{on "click" this.createEntry}}
+      >
+        {{@listing.addLabel}}
+      </AuButton>
+    </div>
+  {{/if}}
 </div>

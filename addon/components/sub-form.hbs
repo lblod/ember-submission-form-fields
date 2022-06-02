@@ -23,14 +23,17 @@
         @level={{@level}}/>
     {{/each}}
   </div>
-  <div class="au-o-grid__item au-u-1-5">
-    <AuButton
-      @skin="link"
-      @icon="bin"
-      @iconAlignment="left"
-      {{on "click" (fn  @onRemoveEntry @sourceNode)}}
-    >
-      Remove entry
-    </AuButton>
-  </div>
+
+  {{#if @canRemove}}
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @skin="link"
+        @icon="bin"
+        @iconAlignment="left"
+        {{on "click" (fn  @onRemoveEntry @sourceNode)}}
+      >
+        {{@subForm.removeLabel}}
+      </AuButton>
+    </div>
+  {{/if}}
 </div>
