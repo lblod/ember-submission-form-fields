@@ -1,0 +1,20 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+
+<http://ember-submission-form-fields/source-node> a ext:Book;
+  ext:title "Book 1";
+  ext:chapter <http://chapter/1>;
+  ext:chapter <http://chapter/2>.
+
+<http://chapter/1> a ext:BookChapter;
+  ext:title "Chapter 1".
+
+<http://chapter/2> a ext:BookChapter;
+  ext:title "Chapter 2".
+
+<http://review/1> a ext:Review;
+  ext:reviews <http://ember-submission-form-fields/source-node>;
+  ext:comment "What a great book!".
+
+<http://review/2> a ext:Review;
+  ext:reviews <http://ember-submission-form-fields/source-node>;
+  ext:comment "What a terrible book...".
