@@ -13,11 +13,11 @@
 ext:mainFg a form:FieldGroup.
 
 ext:form a form:Form, form:TopLevelForm ;
-    form:formItem ext:authorNameF;
-    form:formItem ext:bookNameF;
-    form:formItem ext:bookReviewF;
-    form:formItem ext:personRatingF;
-    form:formItem ext:machineRatingF.
+    form:includes ext:authorNameF;
+    form:includes ext:bookNameF;
+    form:includes ext:bookReviewF;
+    form:includes ext:personRatingF;
+    form:includes ext:machineRatingF.
 
 ##########################################################
 #  main property-group

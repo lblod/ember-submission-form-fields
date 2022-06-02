@@ -13,15 +13,15 @@
 ext:mainFg a form:FieldGroup.
 
 ext:form a form:Form, form:TopLevelForm ;
-    form:formItem ext:listing;
-    form:formItem ext:authorName.
+    form:includes ext:listing;
+    form:includes ext:authorName.
 
 ##########################################################
 #  Listing
 ##########################################################
 ext:listing a form:Listing;
   sh:name "[LISTING] book listing";
-  form:itemForm ext:itemForm;
+  form:each ext:itemForm;
   form:scope ext:listingScope;
   sh:group ext:listingPg;
   form:createGenerator ext:bookGenerator;
@@ -38,8 +38,8 @@ ext:listingScope a form:Scope;
 ##########################################################
 ext:itemForm a form:SubForm;
    sh:name "[SUBFORM] book" ;
-   form:formItem ext:field;
-   form:formItem ext:rating;
+   form:includes ext:field;
+   form:includes ext:rating;
    form:hasFieldGroup ext:fieldGroup.
 
 ##########################################################

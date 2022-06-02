@@ -13,8 +13,8 @@
 ext:mainFg a form:FieldGroup.
 
 ext:form a form:Form, form:TopLevelForm ;
-    form:formItem ext:authorNameF;
-    form:formItem ext:bookNameF;
+    form:includes ext:authorNameF;
+    form:includes ext:bookNameF;
     form:initGenerator ext:authorG.
 
 ##########################################################

@@ -849,7 +849,7 @@ fields:335b1a8a-e6d6-11ea-bf88-8b5df92c347a a form:ConditionalFieldGroup ;
 ##########################################################
 ext:listing a form:Listing;
   sh:name "[LISTING] book listing";
-  form:itemForm ext:itemForm;
+  form:each ext:itemForm;
   form:scope ext:listingScope;
   sh:group fields:aDynamicPropertyGroup;
   sh:order 50000 .
@@ -865,7 +865,7 @@ ext:listingScope a form:Scope;
 ##########################################################
 ext:itemForm a form:SubForm;
    sh:name "Agendapunt" ;
-   form:formItem ext:field;
+   form:includes ext:field;
    form:hasFieldGroup fields:aDynamicPropertyGroup.
 
 
