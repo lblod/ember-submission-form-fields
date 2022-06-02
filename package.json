@@ -29,7 +29,7 @@
   "dependencies": {
     "@embroider/macros": "^1.6.0",
     "@embroider/util": "^1.6.0",
-    "@lblod/submission-form-helpers": "^1.3.0",
+    "@lblod/submission-form-helpers": "https://github.com/lblod/submission-form-helpers#46fd7e7e5e901f4ffca398ccef47670c19411481",
     "broccoli-funnel": "^3.0.8",
     "browser-rdflib": "^1.1.0",
     "clipboardy": "^2.3.0",
