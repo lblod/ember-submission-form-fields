@@ -194,7 +194,7 @@ export default class ListingComponent extends Component {
   attachHasManyNodes( nodes ) {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allSourceNodes = [];
-    const { sourceNode, pathElement } = this.calcSourceForHasMany();
+    const { sourceNode, pathElement } = this.sourceForHasManyConnection();
     if(pathElement.inversPath){
       for(const targetNode of nodes) {
         allSourceNodes.push({
