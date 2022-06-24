@@ -34,9 +34,17 @@ export default class ListingComponent extends Component {
   }
 
   get canAdd() {
-    return this.listing.canAdd && this.listing.maxCount
-      ? this.subForms.length < this.listing.maxCount
-      : true;
+    if(this.listing.canAdd) {
+      if(this.listing.maxCount) {
+        return this.subForms.length < this.listing.maxCount;
+      }
+      else {
+        return true;
+      }
+    }
+    else {
+      return false;
+    }
   }
 
   constructor() {
