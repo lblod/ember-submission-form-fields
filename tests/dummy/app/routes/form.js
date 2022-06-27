@@ -54,7 +54,9 @@ export default class FormRoute extends Route {
 
   setupController(controller, model) {
     super.setupController(controller, model);
+    controller.datasetTriples = [];
     controller.registerObserver();
+    controller.setTriplesForTables();
   }
 }
 

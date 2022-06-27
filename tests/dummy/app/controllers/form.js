@@ -8,9 +8,6 @@ import {
 
 export default class FormController extends Controller {
   @tracked datasetTriples = [];
-  @tracked addedTriples = [];
-  @tracked removedTriples = [];
-  @tracked allTriples = [];
 
   constructor() {
     super(...arguments);
@@ -51,18 +48,6 @@ export default class FormController extends Controller {
       undefined,
       undefined,
       this.graphs.sourceGraph
-    );
-    this.addedTriples = this.formStore.match(
-      undefined,
-      undefined,
-      undefined,
-      addGraphFor(this.graphs.sourceGraph)
-    );
-    this.removedTriples = this.formStore.match(
-      undefined,
-      undefined,
-      undefined,
-      delGraphFor(this.graphs.sourceGraph)
     );
   }
 }
