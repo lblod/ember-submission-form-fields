@@ -72,24 +72,24 @@ export default class ListingComponent extends Component {
     // TODO: this is a simplified version and will result in dangling triples
     //  - We need a proper spec in the model on how to define a delete pattern
     //  - We could be more aggressive (i.e. delete all ?s ?p ?o) but might risk deleting too much (and breaking the data)
-    const triples = [];
+    const triplesToRemove = [];
     const { sourceNode, pathElement } = this.sourceForHasManyConnection();
     if (!pathElement.inversePath) {
-      triples.push({
+      triplesToRemove.push({
         subject: sourceNode,
         predicate: pathElement.path,
         object: node,
         graph: this.graphs.sourceGraph,
       });
     } else {
-      triples.push({
+      triplesToRemove.push({
         subject: node,
         predicate: pathElement.inversePath,
         object: sourceNode,
         graph: this.graphs.sourceGraph,
       });
     }
-    this.formStore.removeStatements(triples);
+    this.formStore.removeStatements(triplesToRemove);
     this.updateScope();
     this.renderSubForms();
   }
@@ -203,7 +203,7 @@ export default class ListingComponent extends Component {
   }
 
   sourceForHasManyConnection() {
-    //It assumes >= 1 of ordered segement data.
+    //It assumes >= 1 of ordered segment data.
     const lastSegementData = this.scope.orderedSegmentData.slice(-1)[0];
 
     //TODO: this assumes the source of the hasMany relation is singular.
