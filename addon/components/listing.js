@@ -7,6 +7,7 @@ import {
     triplesForScope
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
+import { next } from '@ember/runloop';
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
@@ -43,7 +44,14 @@ export default class ListingComponent extends Component {
   constructor() {
     super(...arguments);
     this.updateScope();
-    this.renderSubForms();
+    //TODO: perhaps there might be a better solution; feel free to look.
+    // What does this fix?
+    // The infamous:
+    //  'You attempted to update `subForms` on `ListingComponent`, but it had already been used previously in the same computation. '
+    // Why is it triggered? this.subForms is tracked, is rendered before the method below (which has side effects, i.e. updates this.subForms) ran.
+    next(this, () => {
+      this.renderSubForms();
+    });
   }
 
   @action
