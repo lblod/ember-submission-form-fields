@@ -3,14 +3,9 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import {
-  FORM,
-  generatorsForNode,
-  SHACL,
-  triplesForGenerator,
-  triplesForScope,
+    generatorsForNode, triplesForGenerator,
+    triplesForScope
 } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
-import { v4 as uuidv4 } from 'uuid';
 import { getSubFormsForNode } from '../utils/model-factory';
 
 export default class ListingComponent extends Component {
@@ -34,15 +29,13 @@ export default class ListingComponent extends Component {
   }
 
   get canAdd() {
-    if(this.listing.canAdd) {
-      if(this.listing.maxCount) {
+    if (this.listing.canAdd) {
+      if (this.listing.maxCount) {
         return this.subForms.length < this.listing.maxCount;
-      }
-      else {
+      } else {
         return true;
       }
-    }
-    else {
+    } else {
       return false;
     }
   }

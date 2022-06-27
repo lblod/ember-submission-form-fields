@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import {
-  getTopLevelPropertyGroups,
-  getTopLevelListings,
+    getTopLevelPropertyGroups
 } from '../utils/model-factory';
 
 export default class SubFormComponent extends Component {

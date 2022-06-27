@@ -1,9 +1,7 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import {
-  addGraphFor,
-  delGraphFor,
-  importTriplesForForm,
+    importTriplesForForm
 } from '@lblod/ember-submission-form-fields';
 
 export default class FormController extends Controller {
