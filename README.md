@@ -1,7 +1,7 @@
 @lblod/ember-submission-form-fields
 ==============================================================================
 
-This addon provides form and form-fields components to create and edit submissions. 
+This addon provides form and form-fields components to create and edit submissions.
 
 
 Compatibility
@@ -20,6 +20,24 @@ Installation
 ember install ember-submission-form-fields
 ```
 
+Documentation
+------------------------------------------------------------------------------
+## spec
+The spec is in status draft and may be downloaded [here](https://cloud.ruizdearcaute.com/s/dBf36c8XMQJTtrR)
+
+## form model
+### version 1
+The old version of the form model may be downloaded [here](https://cloud.ruizdearcaute.com/s/XJ55FfzkjQdYKJY)
+This is currently still a supported model.
+
+### version 2 (to be)
+The target model may be downloaded [here](https://cloud.ruizdearcaute.com/s/yz4LExENHLRfcFA)
+
+### current implementation
+The supported model is currently in transitory state. Not all new entities are fully implemented.
+Where implementation is lacking, we fall back to the implementation of version 1.
+This fallback is mainly related to the dynamic form fields.
+If you want to have an overview of the blend, see [here](https://cloud.ruizdearcaute.com/s/dmNBPaBbkeFbeZG)
 
 Usage
 ------------------------------------------------------------------------------
