@@ -72,7 +72,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
     getFormModelVersion(form, {
       store,
       formGraph: graphs.formGraph,
-    }).toLowerCase() == 'v4'
+    }).toLowerCase() == 'v2'
   ) {
     const toplevelSubFormGroups = [];
     for (const group of top) {
