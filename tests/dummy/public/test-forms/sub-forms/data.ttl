@@ -1,0 +1,10 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+
+<http://ember-submission-form-fields/source-node> ext:authorName "Felix".
+<http://ember-submission-form-fields/source-node> ext:book <http://book/1>.
+<http://ember-submission-form-fields/source-node> ext:book <http://book/2>.
+
+<http://book/1> ext:prefLabel "Book 1".
+<http://book/2> ext:prefLabel "Book 2".
+
+<http://book/1> ext:moreComment "This book was not as good".

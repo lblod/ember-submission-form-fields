@@ -1,0 +1,32 @@
+<div class="au-o-grid">
+  <div class="au-o-grid__item au-u-4-5">
+    {{#each this.subForms as |subForm index|}}
+      <SubForm
+        @subForm={{subForm}}
+        @formStore={{@formStore}}
+        @graphs={{@graphs}}
+        @sourceNode={{subForm.sourceNode}}
+        @forceShowErrors={{@forceShowErrors}}
+        @cacheConditionals={{@cacheConditionals}}
+        @last={{eq index (sub this.subForms.length 1)}}
+        @show={{@show}}
+        @level={{@level}}
+        @onRemoveEntry={{this.removeEntry}}
+        @canRemove={{@listing.canRemove}}
+      />
+    {{/each}}
+  </div>
+  {{#if this.canAdd}}
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @icon="plus"
+        @iconAlignment="left"
+        class="au-u-margin-bottom-tiny"
+        @disabled={{this.creationFormData}}
+        {{on "click" this.createEntry}}
+      >
+        {{@listing.addLabel}}
+      </AuButton>
+    </div>
+  {{/if}}
+</div>

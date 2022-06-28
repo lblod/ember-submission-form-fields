@@ -26,6 +26,7 @@ export default class FieldModel {
       formGraph
     );
     this.rdflibPath = store.any(uri, SHACL('path'), undefined, formGraph);
+    this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
     this.rdflibDefaultValue = store.any(
       uri,
@@ -72,6 +73,12 @@ export default class FieldModel {
   rdflibPath = null;
   get path() {
     return this.rdflibPath && this.rdflibPath.value;
+  }
+
+  @tracked
+  rdflibScope = null;
+  get scope() {
+    return this.rdflibScope && this.rdflibScope.value;
   }
 
   @tracked

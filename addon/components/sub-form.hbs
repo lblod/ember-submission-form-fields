@@ -1,0 +1,38 @@
+{{#if @subForm.itemLabel}}
+  <div class="au-u-margin-bottom-small">
+    <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+      {{@subForm.itemLabel}}
+    </AuHeading>
+  </div>
+{{/if}}
+
+<div class="au-o-grid">
+  <div class="au-o-grid__item au-u-4-5">
+    {{#each this.propertyGroups as |group index|}}
+      <PropertyGroup
+        @form={{@subForm.uri}}
+        @group={{group}}
+        @formStore={{@formStore}}
+        @graphs={{@graphs}}
+        @sourceNode={{@sourceNode}}
+        @forceShowErrors={{@forceShowErrors}}
+        @cacheConditionals={{@cacheConditionals}}
+        @last={{eq index (sub this.propertyGroups.length 1)}}
+        @show={{@show}}
+        @level={{@level}}/>
+    {{/each}}
+  </div>
+
+  {{#if @canRemove}}
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @skin="link"
+        @icon="bin"
+        @iconAlignment="left"
+        {{on "click" (fn  @onRemoveEntry @sourceNode)}}
+      >
+        {{@subForm.removeLabel}}
+      </AuButton>
+    </div>
+  {{/if}}
+</div>

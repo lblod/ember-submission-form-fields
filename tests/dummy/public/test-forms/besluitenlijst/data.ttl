@@ -1,0 +1,1287 @@
+@prefix besluit: <http://data.vlaanderen.be/ns/besluit#> .
+@prefix besluitdocumenttype: <https://data.vlaanderen.be/id/concept/BesluitDocumentType/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix eli: <http://data.europa.eu/eli/ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mandaat: <http://data.vlaanderen.be/ns/mandaat#> .
+@prefix ns1: <http://www.w3.org/ns/rdfa#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix persoon: <https://data.vlaanderen.be/ns/persoon#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> a besluit:Zitting ;
+    besluit:behandelt <https://data.aalter.be/id/agendapunten/22.0321.1140.1387>,
+        <https://data.aalter.be/id/agendapunten/22.0401.4335.4980>,
+        <https://data.aalter.be/id/agendapunten/22.0401.6501.9051>,
+        <https://data.aalter.be/id/agendapunten/22.0405.8880.2209>,
+        <https://data.aalter.be/id/agendapunten/22.0406.9191.4126>,
+        <https://data.aalter.be/id/agendapunten/22.0408.0739.1356>,
+        <https://data.aalter.be/id/agendapunten/22.0408.2292.7477>,
+        <https://data.aalter.be/id/agendapunten/22.0408.2452.7943>,
+        <https://data.aalter.be/id/agendapunten/22.0408.2803.3852>,
+        <https://data.aalter.be/id/agendapunten/22.0408.4196.4688>,
+        <https://data.aalter.be/id/agendapunten/22.0408.5725.7936>,
+        <https://data.aalter.be/id/agendapunten/22.0408.5810.7589>,
+        <https://data.aalter.be/id/agendapunten/22.0408.9164.7960>,
+        <https://data.aalter.be/id/agendapunten/22.0411.3737.0569>,
+        <https://data.aalter.be/id/agendapunten/22.0411.5157.3200>,
+        <https://data.aalter.be/id/agendapunten/22.0414.4211.2382>,
+        <https://data.aalter.be/id/agendapunten/22.0419.5195.6442>,
+        <https://data.aalter.be/id/agendapunten/22.0419.6749.4696>,
+        <https://data.aalter.be/id/agendapunten/22.0420.5590.1926>,
+        <https://data.aalter.be/id/agendapunten/22.0421.2097.4844>,
+        <https://data.aalter.be/id/agendapunten/22.0421.4280.6135>,
+        <https://data.aalter.be/id/agendapunten/22.0429.0701.8766>,
+        <https://data.aalter.be/id/agendapunten/22.0429.1617.7699>,
+        <https://data.aalter.be/id/agendapunten/22.0429.3831.8066>,
+        <https://data.aalter.be/id/agendapunten/22.0429.4783.9634>,
+        <https://data.aalter.be/id/agendapunten/22.0429.8312.3983>,
+        <https://data.aalter.be/id/agendapunten/22.0429.9885.5904>,
+        <https://data.aalter.be/id/agendapunten/22.0509.0986.2475> ;
+    besluit:geplandeStart "2022-05-09T20:00:00+02:00"^^xsd:dateTime ;
+    besluit:heeftBesluitenlijst <http://ember-submission-form-fields/source-node> ;
+    besluit:isGehoudenDoor <http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> ;
+    dc:title """
+                        Besluitenlijst 
+                        
+                            Gemeenteraad
+                            
+                                
+                            
+                        
+                    """^^xsd:string ;
+    prov:atLocation "Auditorium"^^xsd:string ;
+    prov:endedAtTime "2022-05-09T20:55:00+02:00"^^xsd:dateTime ;
+    prov:startedAtTime "2022-05-09T19:57:00+02:00"^^xsd:dateTime .
+
+<https://raadpleeg-aalter.onlinesmartcities.be/zittingen/22.0321.8176.9703/besluitenlijst> ns1:usesVocabulary besluit: .
+
+<https://raadpleeg-aalter.onlinesmartcities.be/zittingen/22.0321.8176.9703/besluitenlijst#> a foaf:Document .
+
+<http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> a besluit:Bestuursorgaan ;
+    skos:prefLabel "Gemeenteraad"@en .
+
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0429.4783.9634> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "Mededeling toezichthoudende overheid klacht burger"^^xsd:string .
+
+<http://ember-submission-form-fields/source-node> a foaf:Document,
+        <https://data.vlaanderen.be/id/concept/BesluitDocumentType/3fa67785-ffdc-4b30-8880-2b99d97b4dee> ;
+    eli:date_publication "2022-05-19"^^xsd:date ;
+    eli:passed_by <http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> ;
+    prov:value """
+                
+                    
+                        Besluitenlijst 
+                        
+                            Gemeenteraad
+                            
+                                
+                            
+                        
+                    
+                    
+                        ma 09/05/2022 - 20:00
+                        Auditorium
+                        
+                        
+                        
+                    
+                    
+                        
+                            
+                                
+                                
+                                Vastgesteld door voorzitter Kris Ally (CD&V/NVA)
+                                
+                                    Behandeld
+                                
+                                Punt 1 tot en met 22 werd hem bezorgd door het college van burgemeester en schepenen.OPENBARE ZITTINGCoronavirus. Maatregelen. Rapportering. Goedkeuring.Algemeen nood- en interventieplan. Aanpassing. GoedkeuringKerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies. Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.Restauratie Pietendriesmolen. Gunning . Collegebeslissing. Bekrachtiging. Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring. Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring. Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring .Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                
+                            
+                            
+                                
+                                
+                                    1.
+                                
+                                2022_GR_00097 - Coronavirus. Maatregelen. Rapportering. Goedkeuring. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    2.
+                                
+                                2022_GR_00083 - Algemeen nood- en interventieplan. Aanpassing. Goedkeuring
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    3.
+                                
+                                2022_GR_00086 - Kerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    4.
+                                
+                                2022_GR_00088 - Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    5.
+                                
+                                2022_GR_00089 - Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    6.
+                                
+                                2022_GR_00087 - Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    7.
+                                
+                                2022_GR_00090 - Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    8.
+                                
+                                2022_GR_00092 - Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    9.
+                                
+                                2022_GR_00084 - Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    10.
+                                
+                                2022_GR_00085 - Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    11.
+                                
+                                2022_GR_00100 - Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    IR 1.
+                                
+                                Amendement van raadslid Peter Cornelis: Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Amendement.
+                                
+                                    Afgevoerd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    12.
+                                
+                                2022_GR_00075 - Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    13.
+                                
+                                2022_GR_00095 - Restauratie Pietendriesmolen. Gunning. Collegebeslissing. Bekrachtiging.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    14.
+                                
+                                2022_GR_00094 - Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    15.
+                                
+                                2022_GR_00091 - Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    16.
+                                
+                                2022_GR_00096 - Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    17.
+                                
+                                2022_GR_00099 -  Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    18.
+                                
+                                2022_GR_00093 - Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    19.
+                                
+                                2022_GR_00079 - Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    20.
+                                
+                                2022_GR_00077 - Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    21.
+                                
+                                2022_GR_00098 - TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    22.
+                                
+                                2022_GR_00078 - Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    23.
+                                
+                                2022_GR_00101 - IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    24.
+                                
+                                2022_GR_00102 - IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                Vragen en antwoorden
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                Mededeling toezichthoudende overheid klacht burger
+                                
+                                
+                                
+                                
+                            
+                        
+                    
+                
+            """@en .
+
+<http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> a besluit:Bestuursorgaan ;
+    mandaat:isTijdspecialisatieVan <http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> ;
+    skos:prefLabel "Gemeenteraad"@en .
+
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0509.0986.2475> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00075 - Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0421.2097.4844> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00079 - Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0401.4335.4980> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00077 - Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring. "^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0406.9191.4126> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00078 - Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0401.6501.9051> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00098 - TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.5725.7936> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00092 - Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.2452.7943> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00087 - Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.4196.4688> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00089 - Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0419.5195.6442> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00086 - Kerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.2803.3852> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00088 - Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies. "^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.2292.7477> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00090 - Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.9164.7960> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00085 - Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.0739.1356> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00084 - Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0321.1140.1387> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00095 - Restauratie Pietendriesmolen. Gunning. Collegebeslissing. Bekrachtiging."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0414.4211.2382> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00096 - Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0429.3831.8066> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00091 - Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0419.6749.4696> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00083 - Algemeen nood- en interventieplan. Aanpassing. Goedkeuring"^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0429.0701.8766> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00097 - Coronavirus. Maatregelen. Rapportering. Goedkeuring. "^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0408.5810.7589> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00100 - Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0421.4280.6135> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00093 - Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0411.5157.3200> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00099 -  Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> a besluit:Agendapunt ;
+    besluit:geplandOpenbaar true ;
+    dc:description "Punt 1 tot en met 22 werd hem bezorgd door het college van burgemeester en schepenen.OPENBARE ZITTINGCoronavirus. Maatregelen. Rapportering. Goedkeuring.Algemeen nood- en interventieplan. Aanpassing. GoedkeuringKerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies. Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.Restauratie Pietendriesmolen. Gunning . Collegebeslissing. Bekrachtiging. Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring. Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring. Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring .Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring."^^xsd:string ;
+    dc:title "Vastgesteld door voorzitter Kris Ally (CD&V/NVA)"^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0405.8880.2209> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00101 - IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0411.3737.0569> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00094 - Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0429.9885.5904> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "Vragen en antwoorden"^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0429.1617.7699> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "2022_GR_00102 - IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring."^^xsd:string .
+
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> a besluit:Agendapunt ;
+    besluit:aangebrachtNa <https://data.aalter.be/id/agendapunten/22.0420.5590.1926> ;
+    besluit:geplandOpenbaar true ;
+    dc:title "Amendement van raadslid Peter Cornelis: Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Amendement."^^xsd:string .
+
+<http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> a skos:Concept .
+
+<http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> a skos:Concept .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Behandeld"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Afgevoerd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+[] a besluit:Stemming ;
+    besluit:gevolg "Goedgekeurd"@nl .
+
+
+
+<https://raadpleeg-aalter.onlinesmartcities.be/zittingen/22.0321.8176.9703/besluitenlijst#> a <http://xmlns.com/foaf/0.1/Document> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> a <http://xmlns.com/foaf/0.1/Document> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> a <https://data.vlaanderen.be/id/concept/BesluitDocumentType/3fa67785-ffdc-4b30-8880-2b99d97b4dee> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> <http://data.europa.eu/eli/ontology#date_publication> """2022-05-19"""^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> a <http://data.vlaanderen.be/ns/besluit#Zitting> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#heeftBesluitenlijst> <https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> <http://data.europa.eu/eli/ontology#passed_by> <http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> <http://www.w3.org/ns/prov#value> """
+                
+                    
+                        Besluitenlijst 
+                        
+                            Gemeenteraad
+                            
+                                
+                            
+                        
+                    
+                    
+                        ma 09/05/2022 - 20:00
+                        Auditorium
+                        
+                        
+                        
+                    
+                    
+                        
+                            
+                                
+                                
+                                Vastgesteld door voorzitter Kris Ally (CD&V/NVA)
+                                
+                                    Behandeld
+                                
+                                Punt 1 tot en met 22 werd hem bezorgd door het college van burgemeester en schepenen.OPENBARE ZITTINGCoronavirus. Maatregelen. Rapportering. Goedkeuring.Algemeen nood- en interventieplan. Aanpassing. GoedkeuringKerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies. Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.Restauratie Pietendriesmolen. Gunning . Collegebeslissing. Bekrachtiging. Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring. Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring. Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring .Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                
+                            
+                            
+                                
+                                
+                                    1.
+                                
+                                2022_GR_00097 - Coronavirus. Maatregelen. Rapportering. Goedkeuring. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    2.
+                                
+                                2022_GR_00083 - Algemeen nood- en interventieplan. Aanpassing. Goedkeuring
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    3.
+                                
+                                2022_GR_00086 - Kerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    4.
+                                
+                                2022_GR_00088 - Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    5.
+                                
+                                2022_GR_00089 - Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    6.
+                                
+                                2022_GR_00087 - Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    7.
+                                
+                                2022_GR_00090 - Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    8.
+                                
+                                2022_GR_00092 - Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    9.
+                                
+                                2022_GR_00084 - Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    10.
+                                
+                                2022_GR_00085 - Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    11.
+                                
+                                2022_GR_00100 - Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    IR 1.
+                                
+                                Amendement van raadslid Peter Cornelis: Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Amendement.
+                                
+                                    Afgevoerd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    12.
+                                
+                                2022_GR_00075 - Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    13.
+                                
+                                2022_GR_00095 - Restauratie Pietendriesmolen. Gunning. Collegebeslissing. Bekrachtiging.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    14.
+                                
+                                2022_GR_00094 - Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    15.
+                                
+                                2022_GR_00091 - Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    16.
+                                
+                                2022_GR_00096 - Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    17.
+                                
+                                2022_GR_00099 -  Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    18.
+                                
+                                2022_GR_00093 - Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    19.
+                                
+                                2022_GR_00079 - Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    20.
+                                
+                                2022_GR_00077 - Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring. 
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    21.
+                                
+                                2022_GR_00098 - TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    22.
+                                
+                                2022_GR_00078 - Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    23.
+                                
+                                2022_GR_00101 - IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                    24.
+                                
+                                2022_GR_00102 - IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.
+                                
+                                    Goedgekeurd
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                Vragen en antwoorden
+                                
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                Mededeling toezichthoudende overheid klacht burger
+                                
+                                
+                                
+                                
+                            
+                        
+                    
+                
+            """ .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://purl.org/dc/terms/title> """
+                        Besluitenlijst 
+                        
+                            Gemeenteraad
+                            
+                                
+                            
+                        
+                    """^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#isGehoudenDoor> <http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> .
+<http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> a <http://data.vlaanderen.be/ns/besluit#Bestuursorgaan> .
+<http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> <http://www.w3.org/2004/02/skos/core#prefLabel> """Gemeenteraad""" .
+<http://data.lblod.info/id/bestuursorganen/0921318d-c195-4fbf-aadf-2534cdd63c7d> <http://data.vlaanderen.be/ns/mandaat#isTijdspecialisatieVan> <http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> .
+<http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> a <http://data.vlaanderen.be/ns/besluit#Bestuursorgaan> .
+<http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> <http://www.w3.org/2004/02/skos/core#prefLabel> """Gemeenteraad""" .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#geplandeStart> """2022-05-09T20:00:00.000+02:00"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://www.w3.org/ns/prov#atLocation> """Auditorium"""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://www.w3.org/ns/prov#startedAtTime> """2022-05-09T19:57:00.000+02:00"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://www.w3.org/ns/prov#endedAtTime> """2022-05-09T20:55:00.000+02:00"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.0701.8766> .
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> .
+<http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> a <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> <http://purl.org/dc/terms/title> """Vastgesteld door voorzitter Kris Ally (CD&V/NVA)"""^^<http://www.w3.org/2001/XMLSchema#string> .
+
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> <http://data.vlaanderen.be/ns/besluit#gevolg> """Behandeld""" .
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> <http://purl.org/dc/terms/description> """Punt 1 tot en met 22 werd hem bezorgd door het college van burgemeester en schepenen.OPENBARE ZITTINGCoronavirus. Maatregelen. Rapportering. Goedkeuring.Algemeen nood- en interventieplan. Aanpassing. GoedkeuringKerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies.Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies.Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies.Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies.Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies. Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies.Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies.Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring.Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring.Restauratie Pietendriesmolen. Gunning . Collegebeslissing. Bekrachtiging. Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring. Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring. Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring.Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring.Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding.Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring .Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring.TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring.Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring.IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring.IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.0701.8766> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0419.6749.4696> .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> a <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> <http://purl.org/dc/terms/title> """2022_GR_00097 - Coronavirus. Maatregelen. Rapportering. Goedkeuring. """^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0419.6749.4696> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0429.0701.8766> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0419.5195.6442> .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> <http://purl.org/dc/terms/title> """2022_GR_00083 - Algemeen nood- en interventieplan. Aanpassing. Goedkeuring"""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0419.5195.6442> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0419.6749.4696> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.2803.3852> .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> <http://purl.org/dc/terms/title> """2022_GR_00086 - Kerkfabriek Heilig Kruisverheffing (Lotenhulle). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.2803.3852> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0419.5195.6442> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.4196.4688> .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> <http://purl.org/dc/terms/title> """2022_GR_00088 - Kerkfabriek Sint-Cornelius (Aalter-centrum). Jaarrekening 2021. Advies. """^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.4196.4688> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.2803.3852> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.2452.7943> .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> <http://purl.org/dc/terms/title> """2022_GR_00089 - Kerkfabriek O.-L.-V.- Geboorte (Bellem). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.2452.7943> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.4196.4688> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.2292.7477> .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> <http://purl.org/dc/terms/title> """2022_GR_00087 - Kerkfabriek O.-L.-V.- Hulp der Christenen (Sint-Maria-Aalter). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.2292.7477> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.2452.7943> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.5725.7936> .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> <http://purl.org/dc/terms/title> """2022_GR_00090 - Kerkfabriek Sint-Willibrordus (Knesselare). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.5725.7936> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.2292.7477> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.0739.1356> .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> <http://purl.org/dc/terms/title> """2022_GR_00092 - Kerkfabriek Sint-Medardus (Ursel). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.0739.1356> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.5725.7936> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.9164.7960> .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> <http://purl.org/dc/terms/title> """2022_GR_00084 - Kerkfabriek Sint-Lambertus (Poeke). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.9164.7960> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.0739.1356> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0408.5810.7589> .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> <http://purl.org/dc/terms/title> """2022_GR_00085 - Kerkfabriek Sint-Godelieve (Aalter-Brug). Jaarrekening 2021. Advies."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0408.5810.7589> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.9164.7960> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0420.5590.1926> .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> <http://purl.org/dc/terms/title> """2022_GR_00100 - Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0420.5590.1926> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0408.5810.7589> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0509.0986.2475> .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> <http://purl.org/dc/terms/title> """Amendement van raadslid Peter Cornelis: Gemeentelijk politiereglement op het plaatsen van terrassen. Afwijking. Amendement."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> <http://data.vlaanderen.be/ns/besluit#gevolg> """Afgevoerd""" .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0509.0986.2475> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0420.5590.1926> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0321.1140.1387> .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> <http://purl.org/dc/terms/title> """2022_GR_00075 - Afgevoerde werken openbare bibliotheek. Retributiereglement. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0321.1140.1387> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0509.0986.2475> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0411.3737.0569> .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> <http://purl.org/dc/terms/title> """2022_GR_00095 - Restauratie Pietendriesmolen. Gunning. Collegebeslissing. Bekrachtiging."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0411.3737.0569> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0321.1140.1387> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.3831.8066> .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> <http://purl.org/dc/terms/title> """2022_GR_00094 - Site Stationsstraat 137. Metingsplan en toekennen recht van opstal met voorwaarden. Principiële goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0429.3831.8066> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0411.3737.0569> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0414.4211.2382> .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> <http://purl.org/dc/terms/title> """2022_GR_00091 - Wegenis Krakkedreef. Kosteloze grondafstand. Authentieke akte. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0414.4211.2382> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0429.3831.8066> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0411.5157.3200> .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> <http://purl.org/dc/terms/title> """2022_GR_00096 - Riolerings- en herinrichtingsproject Pontweg. Grondinnemingen. Grondverwervingen en erfdienstbaarheden. Ontwerpakten. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0411.5157.3200> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0414.4211.2382> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0421.4280.6135> .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> <http://purl.org/dc/terms/title> """2022_GR_00099 -  Rioleringsproject Schapersbosstraat, Zandekensstraat, Donkerstraat, Keistraat, Knokkebaan. Grondinnemingen. Verkoopbeloftes. Lichten opties. Erfdienstbaarheden en werkzonevergoedingen. Overeenkomsten. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0421.4280.6135> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0411.5157.3200> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0421.2097.4844> .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> <http://purl.org/dc/terms/title> """2022_GR_00093 - Verkaveling Vaart-Zuid. Straatnaamgeving. Definitieve aanvaarding."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0421.2097.4844> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0421.4280.6135> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0401.4335.4980> .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> <http://purl.org/dc/terms/title> """2022_GR_00079 - Woonmaatschappij. Verdeling onderlinge stemverhouding. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0401.4335.4980> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0421.2097.4844> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0401.6501.9051> .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> <http://purl.org/dc/terms/title> """2022_GR_00077 - Veneco. Jaarvergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring. """^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0401.6501.9051> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0401.4335.4980> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0406.9191.4126> .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> <http://purl.org/dc/terms/title> """2022_GR_00098 - TMVS dv. Algemene jaarvergadering 21 juni 2022. Vaststelling mandaat. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0406.9191.4126> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0401.6501.9051> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0405.8880.2209> .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> <http://purl.org/dc/terms/title> """2022_GR_00078 - Imewo ov. Algemene vergadering van 24 juni 2022. Vaststelling mandaat. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0405.8880.2209> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0406.9191.4126> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.1617.7699> .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> <http://purl.org/dc/terms/title> """2022_GR_00101 - IVM ov. Algemene vergadering 8 juni 2022. Vaststelling mandaat. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0429.1617.7699> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0405.8880.2209> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.9885.5904> .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/bdf68a65-ce15-42c8-ae1b-19eeb39e20d0> .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> <http://purl.org/dc/terms/title> """2022_GR_00102 - IGS Westlede. Algemene vergadering 14 juni 2022. Vaststelling mandaat. Goedkeuring."""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> <http://data.vlaanderen.be/ns/besluit#gevolg> """Goedgekeurd""" .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0429.9885.5904> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0429.1617.7699> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.4783.9634> .
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> .
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> <http://purl.org/dc/terms/title> """Vragen en antwoorden"""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0429.4783.9634> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0429.9885.5904> .
+<https://data.aalter.be/id/zittingen/22.0321.8176.9703/besluitenlijst> <http://data.vlaanderen.be/ns/besluit#behandelt> <https://data.aalter.be/id/agendapunten/22.0429.8312.3983> .
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> a <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> <http://data.vlaanderen.be/ns/besluit#Agendapunt.type> <http://lblod.data.gift/concepts/b122db75-fd93-4f03-b57a-2a9269289782> .
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> <http://purl.org/dc/terms/title> """Mededeling toezichthoudende overheid klacht burger"""^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> <http://data.vlaanderen.be/ns/besluit#geplandOpenbaar> """true"""^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://data.aalter.be/id/agendapunten/22.0429.8312.3983> <http://data.vlaanderen.be/ns/besluit#aangebrachtNa> <https://data.aalter.be/id/agendapunten/22.0429.4783.9634> .
+<https://data.aalter.be/id/lblod/besluitenlijst/22.0321.8176.9703> <http://purl.org/dc/terms/hasPart> <http://data.lblod.info/id/remote-data-objects/92b30660-d77e-11ec-8a5b-23e4976ba65f> .
+<http://data.lblod.info/id/remote-data-objects/92b30660-d77e-11ec-8a5b-23e4976ba65f> <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url> """https://raadpleeg-aalter.onlinesmartcities.be/zittingen/22.0321.8176.9703/besluitenlijst""" .
+<http://data.lblod.info/id/remote-data-objects/92b30660-d77e-11ec-8a5b-23e4976ba65f> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject> .
+<share://93b1b1b0-d77e-11ec-9bd5-1bd7705373db.html> <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#dataSource> <http://data.lblod.info/id/remote-data-objects/92b30660-d77e-11ec-8a5b-23e4976ba65f> .
+<http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> <http://data.vlaanderen.be/ns/besluit#bestuurt> <http://data.lblod.info/id/bestuurseenheden/5116efa8-e96e-46a2-aba6-c077e9056a96> .
+<http://data.lblod.info/id/bestuursorganen/a423b2ec-2162-4b06-9260-22ada39a90fd> <http://data.vlaanderen.be/ns/besluit#classificatie> <http://data.vlaanderen.be/id/concept/BestuursorgaanClassificatieCode/5ab0e9b8a3b2ca7c5e000005> .
+<http://data.lblod.info/id/bestuurseenheden/5116efa8-e96e-46a2-aba6-c077e9056a96> <http://data.vlaanderen.be/ns/besluit#classificatie> <http://data.vlaanderen.be/id/concept/BestuurseenheidClassificatieCode/5ab0e9b8a3b2ca7c5e000001> .

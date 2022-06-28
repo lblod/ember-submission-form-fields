@@ -1,0 +1,880 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix fieldGroups: <http://data.lblod.info/field-groups/> .
+@prefix fields: <http://data.lblod.info/fields/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix eli: <http://data.europa.eu/eli/ontology#>.
+@prefix besluit: <http://data.vlaanderen.be/ns/besluit#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/> .
+@prefix besluit: <http://data.vlaanderen.be/ns/besluit#>.
+@prefix mandaat: <http://data.vlaanderen.be/ns/mandaat#>.
+@prefix elod: <http://linkedeconomy.org/ontology#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#> .
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix schema: <http://schema.org/>.
+# conditional fields are dynamic
+# TODO: fix groups (probably) too
+
+# TODO: extra validation: Only specific type of dossier should be availible to specific type of bestuurseenheid.
+# TODO: the list of dossiers to propose should differ from bestuurseenheidType to bestuurseenheidtype
+fields:0827fafe-ad19-49e1-8b2e-105d2c08a54a a form:Field ;
+    mu:uuid "0827fafe-ad19-49e1-8b2e-105d2c08a54a" ;
+    sh:name "Type dossier" ;
+    sh:order 100 ;
+    sh:path rdf:type ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ConceptSchemeConstraint ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/71e6455e-1204-46a6-abf4-87319f58eaa5> ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/71e6455e-1204-46a6-abf4-87319f58eaa5"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:0cdfe85f-ec65-498f-bd26-0ec611967de0 a form:Field ;
+    mu:uuid "0cdfe85f-ec65-498f-bd26-0ec611967de0" ;
+    sh:name "Opmerking" ;
+    sh:order 500 ;
+    sh:path rdfs:comment ;
+    form:displayType displayTypes:textArea ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:bd6ee5ac-22d6-4279-bcba-3ed279021aac a form:Field ;
+    mu:uuid "bd6ee5ac-22d6-4279-bcba-3ed279021aac" ;
+    sh:name "Dossieromschrijving" ;
+    sh:order 600 ;
+    sh:path dct:description ;
+    form:displayType displayTypes:textArea ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:a8f6a6cb-dbb8-488c-878d-05603791a9eb a form:Field ;
+    mu:uuid "a8f6a6cb-dbb8-488c-878d-05603791a9eb" ;
+    sh:name "Gaat het over het origineel document of over een wijziging?" ;
+    sh:order 700 ;
+    sh:path lblodBesluit:authenticityType ;
+    form:validations
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:authenticityType ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/5cecec47-ba66-4d7a-ac9d-a1e7962ca4e2> ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/5cecec47-ba66-4d7a-ac9d-a1e7962ca4e2"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:b9d831c5-da21-40d6-aac8-65feb4783d76 a form:Field ;
+    mu:uuid "b9d831c5-da21-40d6-aac8-65feb4783d76" ;
+    sh:name "Gaat het over een voorlopige of definitieve vaststelling?" ;
+    sh:order 3800 ;
+    sh:path lblodBesluit:AdoptionType ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:AdoptionType ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ConceptSchemeConstraint ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:AdoptionType ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/a995bb71-3c87-4385-a06b-a786f2fa0d16>;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/a995bb71-3c87-4385-a06b-a786f2fa0d16"}""" ;
+    form:displayType displayTypes:conceptSchemeRadioButtons ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:a7073ee1-3717-4798-ae10-fe69b29fabc1 a form:Field ;
+    mu:uuid "a7073ee1-3717-4798-ae10-fe69b29fabc1" ;
+    sh:name "Gaat het over een aanleg/verplaatsing/wijziging of over een opheffing van een gemeenteweg?" ;
+    sh:order 3900 ;
+    sh:path lblodBesluit:MunicipalRoadProcedureType ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:MunicipalRoadProcedureType ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ConceptSchemeConstraint ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:MunicipalRoadProcedureType ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/60d620a5-ec34-4a91-ba84-fff0813d0ccc>;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/60d620a5-ec34-4a91-ba84-fff0813d0ccc"}""" ;
+    form:displayType displayTypes:conceptSchemeRadioButtons ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:6ffb0ed7-769a-41e4-b5a9-f6fb0287b235 a form:Field ;
+    mu:uuid "6ffb0ed7-769a-41e4-b5a9-f6fb0287b235" ;
+    sh:name "Ondernemingsnummer betreffend bedrijf/bestuur" ;
+    sh:order 900 ;
+    sh:path ( eli:is_about dct:identifier) ;
+    form:displayType displayTypes:defaultInput;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:78bfbd91-0778-4573-a52d-4c53b3c512eb a form:Field ;
+    mu:uuid "78bfbd91-0778-4573-a52d-4c53b3c512eb" ;
+    sh:name "Naam betreffend bedrijf/bestuur" ;
+    sh:order 1000 ;
+    sh:path ( eli:is_about skos:prefLabel) ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path ( eli:is_about skos:prefLabel ) ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ];
+    form:displayType displayTypes:defaultInput;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:41737f90-02d6-4036-8d60-5d5b6ccf939c a form:Field ;
+    mu:uuid "41737f90-02d6-4036-8d60-5d5b6ccf939c" ;
+    sh:name "Rapportjaar" ;
+    sh:order 1800 ;
+    sh:path elod:financialYear ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path elod:financialYear ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ValidYear ;
+        form:grouping form:MatchEvery ;
+        sh:path elod:financialYear ;
+        sh:resultMessage "Geef een geldig jaar op."@n ] ;
+    form:displayType displayTypes:defaultInput ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:bffbea8d-e55b-4e3d-86e8-ba7aaee7863d a form:Field ;
+    mu:uuid "bffbea8d-e55b-4e3d-86e8-ba7aaee7863d" ;
+    sh:name "Welk beslissingsorgaan nam het besluit?" ;
+    sh:order 2000 ;
+    sh:path eli:passed_by ;
+    form:validations
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path eli:passed_by ;
+        form:conceptScheme <http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72> ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ],
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path eli:passed_by ] ;
+    form:options  """{"conceptScheme":"http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+# For notulen, we want another path that is semantically correct
+fields:e24d533f-3e63-4b36-a6af-21c65357e258 a form:Field ;
+    mu:uuid "e24d533f-3e63-4b36-a6af-21c65357e258" ;
+    sh:name "Welk beslissingsorgaan nam het besluit?" ;
+    sh:order 2000 ;
+    sh:path ( [ sh:inversePath besluit:heeftNotulen ] besluit:isGehoudenDoor ) ;
+    form:validations
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path ( [ sh:inversePath besluit:heeftNotulen ] besluit:isGehoudenDoor ) ;
+        form:conceptScheme <http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72> ;
+        sh:resultMessage "De waarde komt niet uit de opgegeven codelijst."@nl
+      ],
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ( [ sh:inversePath besluit:heeftNotulen ] besluit:isGehoudenDoor )
+      ] ;
+    form:options  """{"conceptScheme":"http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+# custom bestuursorgaan-selector
+fields:4c7820f0-4011-4ab4-a16a-e128800e11bc a form:Field ;
+    mu:uuid "4c7820f0-4011-4ab4-a16a-e128800e11bc" ;
+    sh:name "Welk beslissingsorgaan nam het besluit?" ;
+    sh:order 2000 ;
+    sh:path eli:passed_by ;
+    form:validations
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path eli:passed_by ;
+        form:conceptScheme <http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72> ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ],
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path eli:passed_by ] ;
+    form:options  """{"conceptScheme":"http://data.lblod.info/concept-schemes/481c03f0-d07f-424e-9c2b-8d4cfb141c72"}""" ;
+    form:displayType displayTypes:bestuursorgaanSelector ; # notice this changed too
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:303545a6-705b-43b3-86b7-b96436524be9 a form:Field ;
+    mu:uuid "303545a6-705b-43b3-86b7-b96436524be9" ;
+    sh:name "Bestuursorgaan classificatie code [hidden input]" ;
+    sh:order 1001 ;
+    sh:path ( eli:passed_by mandaat:isTijdspecialisatieVan besluit:classificatie ) ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:ac32a491-4b5c-4a7e-973f-fad6127c9433 a form:Field ;
+    mu:uuid "ac32a491-4b5c-4a7e-973f-fad6127c9433" ;
+    sh:name "Bestuurseenheid classificatie code [hidden input]" ;
+    sh:order 1001 ;
+    sh:path ( eli:passed_by mandaat:isTijdspecialisatieVan besluit:bestuurt besluit:classificatie ) ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:3dd6ed93-40f7-4d70-a6cb-f4de53dc8bfb a form:Field ;
+    mu:uuid "3dd6ed93-40f7-4d70-a6cb-f4de53dc8bfb" ;
+    sh:name "Datum zitting/besluit" ;
+    sh:order 2600 ;
+    sh:path ( [ sh:inversePath prov:generated ] dct:subject [ sh:inversePath besluit:behandelt ]  prov:startedAtTime ) ;  # see https://www.w3.org/TR/shacl/#property-paths for syntax
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path ( [ sh:inversePath prov:generated ] dct:subject [ sh:inversePath besluit:behandelt ]  prov:startedAtTime ) ],
+      [ a form:ValidDateTime ;
+        form:grouping form:MatchEvery ;
+        sh:path ( [ sh:inversePath prov:generated ] dct:subject [ sh:inversePath besluit:behandelt ]  prov:startedAtTime ) ;
+        sh:resultMessage "Geef een geldige datum en tijd op."] ;
+    form:displayType displayTypes:dateTime ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:ba965704-5a74-4a77-b283-4f97f3b7ddbc a form:Field ;
+    mu:uuid "ba965704-5a74-4a77-b283-4f97f3b7ddbc" ;
+    sh:name "Datum zitting/besluitenlijst" ;
+    sh:order 2600 ;
+    sh:path ( [ sh:inversePath besluit:heeftBesluitenlijst ] prov:startedAtTime ) ;  # see https://www.w3.org/TR/shacl/#property-paths for syntax
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path ( [ sh:inversePath besluit:heeftBesluitenlijst ] prov:startedAtTime ) ],
+      [ a form:ValidDateTime ;
+        form:grouping form:MatchEvery ;
+        sh:path ( [ sh:inversePath besluit:heeftBesluitenlijst ] prov:startedAtTime ) ;
+        sh:resultMessage "Geef een geldige datum en tijd op."] ;
+    form:displayType displayTypes:dateTime ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:857d670f-9a25-4555-bfe5-ecc48c2ffde3 a form:Field ;
+    mu:uuid "857d670f-9a25-4555-bfe5-ecc48c2ffde3" ;
+    sh:name "Datum zitting/notulen" ;
+    sh:order 2600 ;
+    sh:path ( [ sh:inversePath besluit:heeftNotulen ] prov:startedAtTime ) ;  # see https://www.w3.org/TR/shacl/#property-paths for syntax
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path ( [ sh:inversePath besluit:heeftNotulen ] prov:startedAtTime ) ],
+      [ a form:ValidDateTime ;
+        form:grouping form:MatchEvery ;
+        sh:path ( [ sh:inversePath besluit:heeftNotulen ] prov:startedAtTime ) ;
+        sh:resultMessage "Geef een geldige datum en tijd op."] ;
+    form:displayType displayTypes:dateTime ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:720c86f8-4537-44b0-850b-fb3452d8bb2d a form:Field ;
+    mu:uuid "720c86f8-4537-44b0-850b-fb3452d8bb2d" ;
+    sh:name "Datum zitting/agenda" ;
+    sh:order 2600 ;
+    sh:path ( [ sh:inversePath besluit:heeftAgenda ] prov:startedAtTime ) ;  # see https://www.w3.org/TR/shacl/#property-paths for syntax
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path ( [ sh:inversePath besluit:heeftAgenda ] prov:startedAtTime ) ],
+      [ a form:ValidDateTime ;
+        form:grouping form:MatchEvery ;
+        sh:path ( [ sh:inversePath besluit:heeftAgenda ] prov:startedAtTime ) ;
+        sh:resultMessage "Geef een geldige datum en tijd op."] ;
+    form:displayType displayTypes:dateTime ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:ef31b839-c461-4732-b35c-a8b6c7507cf1 a form:Field ;
+    mu:uuid "ef31b839-c461-4732-b35c-a8b6c7507cf1" ;
+    sh:name "MAR-code" ;
+    sh:order 5100 ;
+    sh:path lblodBesluit:chartOfAccount ;
+    form:validations
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:chartOfAccount ;
+        form:conceptScheme  <http://lblod.data.gift/concept-schemes/b65b15ba-6755-4cd2-bd07-2c2cf3c0e4d3>;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/b65b15ba-6755-4cd2-bd07-2c2cf3c0e4d3"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:a1b6c2e1-c1c3-45fb-84e7-cdd241a3130d a form:Field ;
+    mu:uuid "a1b6c2e1-c1c3-45fb-84e7-cdd241a3130d" ;
+    sh:name "MAR-code" ;
+    sh:order 5100 ;
+    sh:path lblodBesluit:chartOfAccount ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path lblodBesluit:chartOfAccount ],
+      [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:chartOfAccount ;
+        form:conceptScheme  <http://lblod.data.gift/concept-schemes/b65b15ba-6755-4cd2-bd07-2c2cf3c0e4d3>;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/b65b15ba-6755-4cd2-bd07-2c2cf3c0e4d3"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:7793c27f-a41b-4665-a876-da9d94075a70 a form:Field ;
+    mu:uuid "7793c27f-a41b-4665-a876-da9d94075a70" ;
+    sh:name "Geldt vanaf" ;
+    sh:order 5101 ;
+    sh:path eli:first_date_entry_in_force ;
+    form:validations
+      [ a form:ValidDate ;
+        form:grouping form:MatchEvery ;
+        sh:path eli:first_date_entry_in_force ;
+        sh:resultMessage "Geef een geldige datum op."] ;
+    form:displayType displayTypes:date ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:4b32c8fb-9725-4f9f-9872-b04198732483 a form:Field ;
+    mu:uuid "4b32c8fb-9725-4f9f-9872-b04198732483" ;
+    sh:name "Geldt vanaf" ;
+    sh:order 5101 ;
+    sh:path eli:first_date_entry_in_force ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path eli:first_date_entry_in_force ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ValidDate ;
+        form:grouping form:MatchEvery ;
+        sh:path eli:first_date_entry_in_force ;
+        sh:resultMessage "Geef een geldige datum op."@nl ] ;
+    form:displayType displayTypes:date ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:eeacea67-d327-4952-bbfa-31207823ba87 a form:Field ;
+    mu:uuid "eeacea67-d327-4952-bbfa-31207823ba87" ;
+    sh:name "Geldt tot" ;
+    sh:order 5102 ;
+    sh:path eli:date_no_longer_in_force ;
+    form:validations
+      [ a form:ValidDate ;
+        form:grouping form:MatchEvery ;
+        sh:path eli:date_no_longer_in_force ;
+        sh:resultMessage "Geef een geldige datum op."@nl ] ;
+    form:displayType displayTypes:date ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:3a9f6f7d-2952-4128-84cc-bc8dc3d1ee44 a form:Field ;
+    mu:uuid "3a9f6f7d-2952-4128-84cc-bc8dc3d1ee44" ;
+    sh:name "Geldt tot" ;
+    sh:order 5102 ;
+    sh:path eli:date_no_longer_in_force ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path eli:date_no_longer_in_force ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+      ],
+      [ a form:ValidDate ;
+        form:grouping form:MatchEvery ;
+        sh:path eli:date_no_longer_in_force ;
+        sh:resultMessage "Geef een geldige datum op."@nl] ;
+    form:displayType displayTypes:date ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:7cd14dfd-81ff-4a5d-8374-5879c5877c4c a form:Field ;
+    mu:uuid "7cd14dfd-81ff-4a5d-8374-5879c5877c4c" ;
+    sh:name "Soort Belasting" ;
+    sh:order 5000 ;
+    sh:path rdf:type ;
+    form:validations
+    [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+    ],
+    [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/3037c4f4-1c63-43ac-bfc4-b41d098b15a6>  ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/3037c4f4-1c63-43ac-bfc4-b41d098b15a6"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:49dbe1be-877a-4890-8465-1510ff18ce18 a form:Field ;
+    mu:uuid "49dbe1be-877a-4890-8465-1510ff18ce18" ;
+    sh:name "Datum van publicatie op webtoepassing" ;
+    sh:order 3700 ;
+    sh:path eli:date_publication ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht.";
+        sh:path eli:date_publication ],
+      [ a form:ValidDate ;
+        form:grouping form:MatchEvery ;
+        sh:path eli:date_publication ;
+        sh:resultMessage "Geef een geldige datum op."@nl ] ;
+    form:displayType displayTypes:date ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:e834ec56-2db3-43d8-8a54-baf6cc0463c6 a form:Field ;
+    mu:uuid "e834ec56-2db3-43d8-8a54-baf6cc0463c6" ;
+    sh:name "Type reglement/verordening" ;
+    sh:order 3800 ;
+    sh:path rdf:type ;
+    form:validations
+    [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        sh:resultMessage "Dit veld is verplicht."@nl
+    ],
+    [ a form:ConceptSchemeConstraint ; #TODO
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/c93ccd41-aee7-488f-86d3-038de890d05a>  ;
+        sh:resultMessage "Selecteer een waarde uit de lijst."@nl
+      ] ;
+    form:options  """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c93ccd41-aee7-488f-86d3-038de890d05a"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+#  Files and links [First version]
+##########################################################
+
+##########################################################
+# Hidden field required for all variations of URL or FILE
+# input field which require validation.
+# It makes sure there is a type attached to hasPart object.
+# This enables correct validation in both front and backend.
+##########################################################
+fields:355fe001-cdca-48cc-8a6e-88b3aab09874 a form:Field ;
+    mu:uuid "355fe001-cdca-48cc-8a6e-88b3aab09874" ;
+    sh:name "Type RemoteDataObject or FileDataObject [hidden input]" ;
+    sh:order 10001 ;
+    sh:path ( dct:hasPart rdf:type );
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# Hidden field required for all variation of URL
+# input field which require validation.
+# This enables correct validation in both front and backend.
+##########################################################
+fields:d0052f0d-90bc-4543-a6b0-e90a1c1117db a form:Field ;
+    mu:uuid "d0052f0d-90bc-4543-a6b0-e90a1c1117db" ;
+    sh:name "RemoteDataObject/url [hidden input]" ;
+    sh:order 10001 ;
+    sh:path ( dct:hasPart nie:url );
+    form:validations
+     [ a form:UriConstraint ;
+        form:grouping form:MatchEvery ;
+        sh:resultMessage "Gelieve een geldige URL op te geven. Zorg dat vooraan in de link altijd http://, https://, ftp:// of sftp:// staat."; # TODO: later custom validator
+        sh:path ( dct:hasPart nie:url )
+     ];
+     sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# Simple field for URL (required & valid URL)
+##########################################################
+fields:1e0f541f-61e9-43a7-bc5f-612eb44f52bb a form:Field ;
+    mu:uuid "1e0f541f-61e9-43a7-bc5f-612eb44f52bb" ;
+    sh:name "Links naar documenten" ;
+    sh:order 10000 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a form:UriConstraint ;
+        form:grouping form:MatchEvery ;
+        sh:resultMessage "Gelieve een geldige URL op te geven. Zorg dat vooraan in de link altijd http://, https://, ftp:// of sftp:// staat."; # TODO: later custom validator
+         sh:path ( dct:hasPart nie:url ) ],
+     [ a form:RequiredConstraint ;
+         form:grouping form:Bag ;
+         sh:path ( dct:hasPart nie:url ) ;
+         sh:resultMessage "Gelieve minstens één URL op te geven."@nl
+     ];
+    form:displayType <http://lblod.data.gift/display-types/remoteUrls/variation/1>;
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# Simple field for File (no validations)
+##########################################################
+fields:c7c5a589-0785-4032-a4bd-ee589add3c39 a form:Field ;
+    mu:uuid "c7c5a589-0785-4032-a4bd-ee589add3c39" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:displayType <http://lblod.data.gift/display-types/files/variation/1> ;
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# Required file
+##########################################################
+fields:cd27f7a0-5e6b-4f76-b55c-a1cb7c4efee6 a form:Field ;
+    mu:uuid "cd27f7a0-5e6b-4f76-b55c-a1cb7c4efee6" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a form:RequiredConstraint ;
+         form:grouping form:Bag ;
+         sh:path dct:hasPart ;
+         sh:resultMessage "Gelieve minstens één bestand op te geven."@nl
+     ];
+    form:displayType <http://lblod.data.gift/display-types/files> ;
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# Custom files and links fields
+# Following fields should be considered as a pair.
+# Their validation is mutually dependent.
+# Either a file or url should be present
+##########################################################
+
+fields:c955d641-b9b3-4ec7-9838-c2a477c7e95b a form:Field ;
+    mu:uuid "c955d641-b9b3-4ec7-9838-c2a477c7e95b" ;
+    sh:name "Links naar documenten" ;
+    sh:order 10000 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a form:UriConstraint ;
+        form:grouping form:MatchEvery ;
+        sh:resultMessage "Gelieve een geldige URL op te geven. Zorg dat vooraan in de link altijd http://, https://, ftp:// of sftp:// staat."; # TODO: later custom validator
+         sh:path ( dct:hasPart nie:url ) ],
+     [ a form:RequiredConstraint ;
+         form:grouping form:Bag ;
+         sh:path dct:hasPart ;
+         sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl
+     ];
+    form:displayType displayTypes:remoteUrls; # consider this v1.0
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:c955d641-b9b3-4ec7-9838-c2a477c7e95a a form:Field ;
+    mu:uuid "c955d641-b9b3-4ec7-9838-c2a477c7e95a" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a  form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:path dct:hasPart;
+          sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl # TODO: later custom validator
+     ];
+    form:displayType displayTypes:files; # consider this v1.0
+    sh:group fields:aDynamicPropertyGroup .
+
+#####################################################################################################
+# File with custom helper text for "voorlopige aanleg, verplaatsing of wijzeging van een gemeenteweg"
+#####################################################################################################
+fields:f1fa5e64-1c68-4355-894a-2e0531f4412f a form:Field ;
+    mu:uuid "f1fa5e64-1c68-4355-894a-2e0531f4412f" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a  form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:path dct:hasPart;
+          sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl # TODO: later custom validator
+     ];
+    form:displayType displayTypes:files; # consider this v1.0
+    form:help """
+    <div class="au-c-content au-c-content--tiny">
+      <p>Volgende documenten moeten bezorgd worden: uittreksel uit de gemeenteraad met de voorlopige beslissing, ontwerp gemeentelijk rooilijnplan, gemeentelijk beleidskader (indien opgemaakt), gemeentelijk actieplan (indien opgemaakt).</p>
+      <p>
+        Het Departement MOW verleent momenteel enkel niet-dossierspecifiek advies. Het decreet Gemeentewegen kent nieuwe taken toe aan het Departement. Gezien de vrij recente goedkeuring van dit decreet en de mogelijke impact op de organisatie loopt de transitie die gepaard gaat met het opnemen van deze taken momenteel nog.
+        We willen benadrukken dat uw beslissing moet voldoen aan de doelstellingen en principes zoals geformuleerd in artikel 3 en 4 van het decreet Gemeentewegen:
+      </p>
+      <ul>
+        <li>het belang van de huidige en toekomstige behoeften van de zachte mobiliteit staat voorop.</li>
+        <li>de noodzaak om een geïntegreerd beleid te voeren, dat leidt tot de uitbouw van veilige wegen op lokaal niveau en op de herwaardering en bescherming van de trage wegen.</li>
+      </ul>
+      <p>
+        Eventuele wijzigingen van het gemeentelijk wegennet moeten dan ook altijd van algemeen belang zijn, waarbij wijzigingen en afschaffingen uitzonderingsmaatregelen zijn. Het is ook van belang om de wijzigingen te bekijken in een ruimere context dan enkel het eigen gemeentelijk niveau. Verder vragen we u de vormvereisten van het decreet Gemeentewegen na te leven, oog te hebben voor de eventuele meer- en minwaarden die het dossier met zich kan meebrengen en het goede huisvader-principe niet te verwaarlozen.
+      </p>
+    </div>""" ;
+    sh:group fields:aDynamicPropertyGroup .
+
+#########################################################
+# File with custom helper text for "voorlopige opheffing"
+#########################################################
+fields:6f7cb360-26df-4233-988a-a11ac9c33ba4 a form:Field ;
+    mu:uuid "6f7cb360-26df-4233-988a-a11ac9c33ba4" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a  form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:path dct:hasPart;
+          sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl # TODO: later custom validator
+     ];
+    form:displayType displayTypes:files; # consider this v1.0
+    form:help """
+    <div class="au-c-content au-c-content--tiny">
+      <p>Volgende documenten moeten bezorgd worden: uittreksel uit de gemeenteraad met de voorlopige beslissing, ontwerp grafisch plan, gemeentelijk beleidskader (indien opgemaakt), gemeentelijk actieplan (indien opgemaakt).</p>
+      <p>
+        Het Departement MOW verleent momenteel enkel niet-dossierspecifiek advies. Het decreet Gemeentewegen kent nieuwe taken toe aan het Departement. Gezien de vrij recente goedkeuring van dit decreet en de mogelijke impact op de organisatie loopt de transitie die gepaard gaat met het opnemen van deze taken momenteel nog.
+        We willen benadrukken dat uw beslissing moet voldoen aan de doelstellingen en principes zoals geformuleerd in artikel 3 en 4 van het decreet Gemeentewegen:
+      </p>
+      <ul>
+        <li>het belang van de huidige en toekomstige behoeften van de zachte mobiliteit staat voorop.</li>
+        <li>de noodzaak om een geïntegreerd beleid te voeren, dat leidt tot de uitbouw van veilige wegen op lokaal niveau en op de herwaardering en bescherming van de trage wegen.</li>
+      </ul>
+      <p>
+        Eventuele wijzigingen van het gemeentelijk wegennet moeten dan ook altijd van algemeen belang zijn, waarbij wijzigingen en afschaffingen uitzonderingsmaatregelen zijn. Het is ook van belang om de wijzigingen te bekijken in een ruimere context dan enkel het eigen gemeentelijk niveau. Verder vragen we u de vormvereisten van het decreet Gemeentewegen na te leven, oog te hebben voor de eventuele meer- en minwaarden die het dossier met zich kan meebrengen en het goede huisvader-principe niet te verwaarlozen.
+      </p>
+    </div>""" ;
+    sh:group fields:aDynamicPropertyGroup .
+
+######################################################################################################
+# File with custom helper text for "definitieve aanleg, verplaatsing of wijzeging van een gemeenteweg"
+######################################################################################################
+fields:43c48290-8cc0-4066-aeee-8545bca7c68d a form:Field ;
+    mu:uuid "43c48290-8cc0-4066-aeee-8545bca7c68d" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a  form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:path dct:hasPart;
+          sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl # TODO: later custom validator
+     ];
+    form:displayType displayTypes:files; # consider this v1.0
+    form:help """Volgende documenten moeten bezorgd worden: uittreksel uit de gemeenteraad met de definitieve beslissing, gemeentelijk rooilijnplan, gemeentelijk beleidskader (indien opgemaakt), gemeentelijk actieplan (indien opgemaakt)""" ;
+    sh:group fields:aDynamicPropertyGroup .
+
+#########################################################
+# File with custom helper text for "definitive opheffing"
+#########################################################
+fields:2aecc67c-687d-448c-be01-94ad42fb51c1 a form:Field ;
+    mu:uuid "2aecc67c-687d-448c-be01-94ad42fb51c1" ;
+    sh:name "Bestanden" ;
+    sh:order 10001 ;
+    sh:path dct:hasPart;
+    form:validations
+     [ a  form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:path dct:hasPart;
+          sh:resultMessage "Gelieve minstens één URL of bestand op te geven."@nl # TODO: later custom validator
+     ];
+    form:displayType displayTypes:files; # consider this v1.0
+    form:help """Volgende documenten moeten bezorgd worden: uittreksel uit de gemeenteraad met de definitieve beslissing, grafisch plan, gemeentelijk beleidskader (indien opgemaakt), gemeentelijk actieplan (indien opgemaakt)""" ;
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+# End Custom files and links fields
+##########################################################
+
+##########################################################
+#  Files and links  [First version]
+##########################################################
+
+##########################################################
+#  VLABEL [First version]
+# It is a bit of the odity this set of fields.
+# There is no 1:1 relation between components in the frontend
+# and the required fields of VLABEL.
+# This is because it is relatively complex from UI-perspective
+# This is why we group all validations under field "Opcentiem"
+# as this will handle and display errors to the user.
+# The hidden input fields are still part of the form and are used
+# to extract information from the form.
+##########################################################
+fields:1ee5132e-28c0-4292-9fe6-24c7be456580 a form:Field ;
+    mu:uuid "1ee5132e-28c0-4292-9fe6-24c7be456580" ;
+    sh:name "Opcentiem" ;
+    sh:order 5001 ;
+    sh:path ( lblodBesluit:taxRate schema:price );
+    form:validations [
+      a form:VlabelExtraTaxRateOrAmountConstraint ;
+      form:grouping form:Bag ;
+      sh:path lblodBesluit:taxRate;
+      sh:resultMessage "Differentiatie en bedrag opcentiem kunnen niet tegelijk ingevuld worden."
+    ],
+    [ a form:ValidBoolean ;
+        form:grouping form:MatchEvery ;
+        sh:path lblodBesluit:hasAdditionalTaxRate ;
+        sh:resultMessage "Geen geldige waarde voor differentiatie."@nl
+    ],
+    [ a form:VlabelSingleInstanceTaxRateOrExtraTaxRate ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:hasAdditionalTaxRate ;
+        sh:resultMessage "Slechts één waarde voor differentiatie wordt aanvaard."@nl
+    ],
+    [ a form:VlabelSingleInstanceTaxRateOrExtraTaxRate ;
+        form:grouping form:Bag ;
+        sh:path lblodBesluit:taxRate ;
+        sh:resultMessage "Slechts één instantie van opcentiem wordt aanvaard"@nl
+    ];
+    form:displayType displayTypes:vLabelOpcentiem ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:f3c1f62e-0fc6-4440-8208-7a0ef49fb28c a form:Field ;
+    mu:uuid "f3c1f62e-0fc6-4440-8208-7a0ef49fb28c" ;
+    sh:name "Differentiatie [hidden input]" ;
+    sh:order 5002 ;
+    sh:path lblodBesluit:hasAdditionalTaxRate ;
+    sh:group fields:aDynamicPropertyGroup .
+
+fields:eaf71eec-6ca8-4f63-b4a6-adfe4f21651b a form:Field ;
+    mu:uuid "eaf71eec-6ca8-4f63-b4a6-adfe4f21651b" ;
+    sh:name "TaxType type [hidden input]" ;
+    sh:order 5003 ;
+    sh:path ( lblodBesluit:taxRate rdf:type );
+    sh:group fields:aDynamicPropertyGroup .
+
+##########################################################
+#  END VLABEL [First version]
+##########################################################
+
+
+
+form:a0a120d2-87a8-4f45-a61b-61654997cf1e a form:Form;
+    mu:uuid "a0a120d2-87a8-4f45-a61b-61654997cf1e" ;
+    form:hasFieldGroup fieldGroups:allForms.
+
+fieldGroups:allForms a form:FieldGroup;
+    mu:uuid "3a60def6-107e-4716-bc5f-2f2e108f7fab" ;
+    form:hasField fields:0827fafe-ad19-49e1-8b2e-105d2c08a54a.
+
+fields:aDynamicPropertyGroup a form:PropertyGroup;
+    mu:uuid "8c71b3db-db4b-45ea-8333-ab000adcca4e";
+    sh:description "A dynamic property group";
+    sh:order 3;
+    sh:name "aDynamicPropertyGroup".
+
+
+
+
+
+###########Besluitenlijst###########
+
+fieldGroups:64b712f3-c061-4368-919e-6ea6afb45192 a form:FieldGroup ;
+    mu:uuid "64b712f3-c061-4368-919e-6ea6afb45192" ; 
+    form:hasField 
+                      ###Welk-beslissingsorgaan-nam-het-besluit?###
+                      fields:4c7820f0-4011-4ab4-a16a-e128800e11bc,
+
+                      ###Datum-zitting/besluitenlijst###
+                      fields:ba965704-5a74-4a77-b283-4f97f3b7ddbc,
+
+                      ###Datum-van-publicatie-op-webtoepassing###
+                      fields:49dbe1be-877a-4890-8465-1510ff18ce18,
+
+                      ###Type RemoteDataObject or FileDataObject###
+                      fields:355fe001-cdca-48cc-8a6e-88b3aab09874,
+
+                      ### RemoteDataObject/url ###
+                      fields:d0052f0d-90bc-4543-a6b0-e90a1c1117db,
+
+                      ### Bestuursorgaan classificatie code [hidden input] ###
+                      fields:303545a6-705b-43b3-86b7-b96436524be9,
+
+                      ### Bestuurseenheid classificatie code [hidden input] ###
+                      fields:ac32a491-4b5c-4a7e-973f-fad6127c9433,
+
+                      ext:listing.
+
+fields:0827fafe-ad19-49e1-8b2e-105d2c08a54a form:hasConditionalFieldGroup fields:d75438e8-a4c5-4b39-a606-e198fdeb7aec.
+
+fields:d75438e8-a4c5-4b39-a606-e198fdeb7aec a form:ConditionalFieldGroup ;
+    mu:uuid "d75438e8-a4c5-4b39-a606-e198fdeb7aec";
+    form:conditions
+      [ a form:SingleCodelistValue ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/71e6455e-1204-46a6-abf4-87319f58eaa5> ;
+        form:customValue <https://data.vlaanderen.be/id/concept/BesluitDocumentType/3fa67785-ffdc-4b30-8880-2b99d97b4dee>
+      ] ;
+    form:hasFieldGroup fieldGroups:64b712f3-c061-4368-919e-6ea6afb45192 .
+
+fieldGroups:7e26db7b-e864-4afe-ad2b-1753434f3e3f a form:FieldGroup ;
+    mu:uuid "7e26db7b-e864-4afe-ad2b-1753434f3e3f" ;
+    form:hasField
+
+                      ###Links-naar-documenten###
+                      fields:1e0f541f-61e9-43a7-bc5f-612eb44f52bb,
+
+                      ###Bestanden###
+                      fields:c7c5a589-0785-4032-a4bd-ee589add3c39.
+
+# this field is the custom bestuursorgaan selector
+fields:4c7820f0-4011-4ab4-a16a-e128800e11bc form:hasConditionalFieldGroup fields:335b1a8a-e6d6-11ea-bf88-8b5df92c347a.
+
+fields:335b1a8a-e6d6-11ea-bf88-8b5df92c347a a form:ConditionalFieldGroup ;
+    mu:uuid "335b1a8a-e6d6-11ea-bf88-8b5df92c347a";
+    form:conditions
+      [ a form:SingleCodelistValue ;
+        form:grouping form:Bag ;
+        sh:path rdf:type ;
+        form:conceptScheme <http://lblod.data.gift/concept-schemes/71e6455e-1204-46a6-abf4-87319f58eaa5> ;
+        form:customValue <https://data.vlaanderen.be/id/concept/BesluitDocumentType/3fa67785-ffdc-4b30-8880-2b99d97b4dee>
+      ],
+      [ a form:SingleCodelistValue ;
+        form:grouping form:Bag ;
+        sh:path ( eli:passed_by mandaat:isTijdspecialisatieVan besluit:classificatie ) ;
+        form:conceptScheme <http://data.vlaanderen.be/id/conceptscheme/BestuursorgaanClassificatieCode> ;
+        form:customValue <http://data.vlaanderen.be/id/concept/BestuursorgaanClassificatieCode/5ab0e9b8a3b2ca7c5e000005> # gemeenteraad
+      ] ;
+    form:hasFieldGroup fieldGroups:7e26db7b-e864-4afe-ad2b-1753434f3e3f .
+
+
+
+##########################################################
+#  Listing
+##########################################################
+ext:listing a form:Listing;
+  sh:name "[LISTING] book listing";
+  form:each ext:itemForm;
+  form:scope ext:listingScope;
+  sh:group fields:aDynamicPropertyGroup;
+  sh:order 50000 .
+
+##########################################################
+#  listing-scope
+##########################################################
+ext:listingScope a form:Scope;
+  sh:path ( [sh:inversePath besluit:heeftBesluitenlijst] besluit:behandelt ).
+
+##########################################################
+#  Subform
+##########################################################
+ext:itemForm a form:SubForm;
+   sh:name "Agendapunt" ;
+   form:includes ext:field;
+   form:hasFieldGroup fields:aDynamicPropertyGroup.
+
+
+##########################################################
+# Field
+##########################################################
+ext:field a form:Field ;
+    sh:name "titel" ;
+    sh:order 1 ;
+    sh:path dct:title ;
+    form:displayType displayTypes:textArea ;
+    sh:group fields:aDynamicPropertyGroup .

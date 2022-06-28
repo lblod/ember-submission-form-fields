@@ -8,6 +8,8 @@ const FORM_GRAPHS = {
   sourceGraph: new rdflib.NamedNode(`http://data.lblod.info/sourcegraph`),
 };
 
+const SOURCE_NODE = new rdflib.NamedNode(`http://data.lblod.info/sourceNode`);
+
 const FORM = new rdflib.Namespace('http://lblod.data.gift/vocabularies/forms/');
 const RDF = new rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 
@@ -15,18 +17,21 @@ const FORM_TITLES = {
   'basic-fields': 'Basic form fields',
   'climate-subsidy-costs-table': 'Climate subsidy costs table',
   'plan-living-together': 'Plan living together table',
+  'scoped-fields': 'Scoped fields',
 };
 
 export default class FormRoute extends Route {
   async model({ formName }) {
-    let [formTtl, metaTtl] = await Promise.all([
+    let [formTtl, metaTtl, dataTtl] = await Promise.all([
       fetchForm(formName),
       fetchFormMeta(formName),
+      fetchFormData(formName),
     ]);
 
     let formStore = new ForkingStore();
     formStore.parse(formTtl, FORM_GRAPHS.formGraph, 'text/turtle');
     formStore.parse(metaTtl, FORM_GRAPHS.metaGraph, 'text/turtle');
+    formStore.parse(dataTtl, FORM_GRAPHS.sourceGraph, 'text/turtle');
 
     let form = formStore.any(
       undefined,
@@ -42,7 +47,16 @@ export default class FormRoute extends Route {
       form,
       formStore,
       title: FORM_TITLES[formName],
+      graphs: FORM_GRAPHS,
+      sourceNode: SOURCE_NODE,
     };
+  }
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+    controller.datasetTriples = [];
+    controller.registerObserver();
+    controller.setTriplesForTables();
   }
 }
 
@@ -55,9 +69,18 @@ async function fetchForm(formName) {
 
 async function fetchFormMeta(formName) {
   let response = await fetch(getFormDataPath(formName, 'meta.ttl'));
-  let ttl = await response.text();
+  if (response.status >= 200 && response.status < 300) {
+    return await response.text();
+  }
+  return '';
+}
 
-  return ttl;
+async function fetchFormData(formName) {
+  let response = await fetch(getFormDataPath(formName, 'data.ttl'));
+  if (response.status >= 200 && response.status < 300) {
+    return await response.text();
+  }
+  return '';
 }
 
 function getFormDataPath(formName, fileName) {
