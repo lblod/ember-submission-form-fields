@@ -7,7 +7,6 @@ export default class FormController extends Controller {
 
   constructor() {
     super(...arguments);
-    //    this.registerObserver();
   }
 
   get formStore() {
@@ -33,7 +32,6 @@ export default class FormController extends Controller {
   }
 
   setTriplesForTables() {
-    //TODO:figure out why it is ot working
     this.datasetTriples = importTriplesForForm(this.form, {
       ...this.graphs,
       sourceNode: this.sourceNode,
