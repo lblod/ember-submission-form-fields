@@ -1,8 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import {
-    importTriplesForForm
-} from '@lblod/ember-submission-form-fields';
+import { importTriplesForForm } from '@lblod/ember-submission-form-fields';
 
 export default class FormController extends Controller {
   @tracked datasetTriples = [];

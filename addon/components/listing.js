@@ -3,8 +3,9 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import {
-    generatorsForNode, triplesForGenerator,
-    triplesForScope
+  generatorsForNode,
+  triplesForGenerator,
+  triplesForScope,
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
 import { next } from '@ember/runloop';
