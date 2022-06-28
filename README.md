@@ -30,7 +30,7 @@ The spec is in status draft and may be downloaded [here](https://cloud.ruizdearc
 The old version of the form model may be downloaded [here](https://cloud.ruizdearcaute.com/s/XJ55FfzkjQdYKJY)
 This is currently still a supported model.
 
-### version 2 (to be)
+### version 2 (TOBE)
 The target model may be downloaded [here](https://cloud.ruizdearcaute.com/s/yz4LExENHLRfcFA)
 
 ### current implementation
