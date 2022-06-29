@@ -28,15 +28,7 @@
     <tr>
       <td>{{triple.subject}}</td>
       <td>{{triple.predicate}}</td>
-      <td>{{triple.object}}
-        {{#if (eq triple.object.datatype.value "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString")}}
-          @{{triple.object.language}}
-        {{else}}
-          {{#if triple.object.datatype.value}}
-            ^^{{triple.object.datatype}}
-          {{/if}}
-        {{/if}}
-      </td>
+      <td>{{triple.object}}</td>
     </tr>
   {{/each}}
   </:body>

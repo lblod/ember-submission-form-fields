@@ -1,5 +1,0 @@
-@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
-
-<http://ember-submission-form-fields/source-node> ext:title "Foo".
-<http://ember-submission-form-fields/source-node> ext:title "Bar"@nl.
-<http://ember-submission-form-fields/source-node> ext:title "Baz"@en.

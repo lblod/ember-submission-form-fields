@@ -34,14 +34,6 @@ export default class FieldModel {
       undefined,
       formGraph
     );
-
-    this.rdflibLanguage = store.any(
-      uri,
-      FORM('language'),
-      undefined,
-      formGraph
-    );
-
     if (this.rdflibPath) {
       // this.rdflibValue = store.any(sourceNode, this.rdflibPath, undefined, sourceGraph);
     }
@@ -107,9 +99,5 @@ export default class FieldModel {
   rdflibDefaultValue = null;
   get defaultValue() {
     return this.rdflibDefaultValue && this.rdflibDefaultValue.value;
-  }
-
-  get language() {
-    return this.rdflibLanguage?.value;
   }
 }
