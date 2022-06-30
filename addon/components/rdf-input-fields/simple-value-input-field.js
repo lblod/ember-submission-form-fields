@@ -59,7 +59,7 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
   updateValue(value) {
     let literalOrValue;
 
-    if (rdflib.isLiteral(value)) {
+    if (value && rdflib.isLiteral(value)) {
       literalOrValue = value;
     } else {
       literalOrValue = this.nodeValue?.copy();
