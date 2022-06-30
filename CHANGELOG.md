@@ -1,3 +1,9 @@
+## 1.8.0 (2022-06-30)
+#### :rocket: Enhancement
+* [#79](https://github.com/lblod/ember-submission-form-fields/pull/79) updated form model
+* [#81](https://github.com/lblod/ember-submission-form-fields/pull/81) lang string support for simple input value fields
+* [#82](https://github.com/lblod/ember-submission-form-fields/pull/82) some improvements lang string support
+
 ## 1.7.2 (2022-05-10)
 
 #### :bug: Bug Fix
