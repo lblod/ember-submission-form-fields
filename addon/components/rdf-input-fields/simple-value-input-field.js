@@ -40,8 +40,11 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
           literal = literals[0];
         }
       }
-      this.nodeValue = literal;
-      this.value = literal.value;
+
+      if(literal) {
+        this.nodeValue = literal;
+        this.value = literal.value;
+      }
     }
 
     if (!this.nodeValue && this.args.field.language) {
