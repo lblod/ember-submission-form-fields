@@ -1,3 +1,5 @@
+## 1.8.1 (2022-06-31)
+* [#83](https://github.com/lblod/ember-submission-form-fields/pull/83) fix bug langstring
 ## 1.8.0 (2022-06-30)
 #### :rocket: Enhancement
 * [#79](https://github.com/lblod/ember-submission-form-fields/pull/79) updated form model
