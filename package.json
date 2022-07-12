@@ -29,9 +29,8 @@
   "dependencies": {
     "@embroider/macros": "^1.6.0",
     "@embroider/util": "^1.6.0",
-    "@lblod/submission-form-helpers": "^1.4.1",
+    "@lblod/submission-form-helpers": "^2.0.1",
     "broccoli-funnel": "^3.0.8",
-    "browser-rdflib": "^1.1.0",
     "clipboardy": "^2.3.0",
     "ember-auto-import": "^2.2.4",
     "ember-cli-babel": "^7.26.11",
@@ -41,7 +40,8 @@
     "ember-named-blocks-polyfill": "^0.2.5",
     "ember-test-selectors": "^5.0.0 || ^6.0.0",
     "ember-truth-helpers": "^3.0.0",
-    "forking-store": "^1.0.0",
+    "forking-store": "^2.0.0",
+    "rdflib": "^2.2.19",
     "uuid": "^7.0.3"
   },
   "peerDependencies": {
