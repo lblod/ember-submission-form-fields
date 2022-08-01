@@ -1,5 +1,16 @@
+## v1.9.0 (2022-08-01)
+
+#### :rocket: Enhancement
+* [#84](https://github.com/lblod/ember-submission-form-fields/pull/84) Replace browser-rdflib with rdflib v2 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#85](https://github.com/lblod/ember-submission-form-fields/pull/85) Resolve the AuToolbarGroup deprecation ([@Windvis](https://github.com/Windvis))
+
 ## 1.8.1 (2022-06-31)
+
+#### :bug: Bug Fix
 * [#83](https://github.com/lblod/ember-submission-form-fields/pull/83) fix bug langstring
+
 ## 1.8.0 (2022-06-30)
 #### :rocket: Enhancement
 * [#79](https://github.com/lblod/ember-submission-form-fields/pull/79) updated form model
