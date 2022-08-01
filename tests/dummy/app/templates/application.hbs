@@ -84,14 +84,14 @@
     </m.sidebar>
     <m.content @scroll={{false}}>
       <AuBodyContainer @scroll={{false}}>
-        <AuToolbar @border="bottom" @size="small" @skin="tint">
-          <AuToolbarGroup>
+        <AuToolbar @border="bottom" @size="small" @skin="tint" as |Group|>
+          <Group>
             <AuToggleSwitch
               @label="Read only mode"
               @checked={{this.formConfig.isReadOnly}}
               @onChange={{fn (mut this.formConfig.isReadOnly)}}
             />
-          </AuToolbarGroup>
+          </Group>
         </AuToolbar>
         <AuBodyContainer @scroll={{true}}>
           <div class="au-o-box au-o-box--large au-u-2-3@medium au-u-1-1">
