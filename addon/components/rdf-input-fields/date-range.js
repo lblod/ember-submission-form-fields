@@ -7,9 +7,9 @@ import {
   BELGIAN_FORMAT_ADAPTER,
 } from '@lblod/ember-submission-form-fields/config/date-picker';
 import { SHACL } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { Namespace } from 'rdflib';
 
-const DATE_RANGE = new rdflib.Namespace(
+const DATE_RANGE = new Namespace(
   'http://data.lblod.info/form-fields/date-range/'
 );
 

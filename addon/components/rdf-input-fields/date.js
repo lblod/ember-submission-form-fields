@@ -6,7 +6,7 @@ import {
   DUTCH_LOCALIZATION,
   BELGIAN_FORMAT_ADAPTER,
 } from '@lblod/ember-submission-form-fields/config/date-picker';
-import rdflib from 'browser-rdflib';
+import { literal } from 'rdflib';
 
 export default class RdfInputFieldsDateComponent extends SimpleInputFieldComponent {
   inputId = 'date-' + guidFor(this);
@@ -15,7 +15,7 @@ export default class RdfInputFieldsDateComponent extends SimpleInputFieldCompone
 
   @action
   updateValue(isoDate) {
-    const newDate = isoDate ? rdflib.literal(isoDate, XSD('date')) : null;
+    const newDate = isoDate ? literal(isoDate, XSD('date')) : null;
     super.updateValue(newDate);
   }
 }
