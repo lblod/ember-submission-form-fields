@@ -38,7 +38,7 @@
     "ember-truth-helpers": "^3.0.0",
     "forking-store": "^2.0.0",
     "rdflib": "^2.2.19",
-    "uuid": "^7.0.3"
+    "uuid": "^8.3.2"
   },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^1.0.9",
