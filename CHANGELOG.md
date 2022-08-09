@@ -1,3 +1,18 @@
+## v2.0.0 (2022-08-09)
+
+#### :boom: Breaking Change
+* [#90](https://github.com/lblod/ember-submission-form-fields/pull/90) Drop node 12 support ([@Windvis](https://github.com/Windvis))
+* [#89](https://github.com/lblod/ember-submission-form-fields/pull/89) Drop ember 3.24 support ([@Windvis](https://github.com/Windvis))
+* [#88](https://github.com/lblod/ember-submission-form-fields/pull/88) "Optional" component changes  ([@Windvis](https://github.com/Windvis))
+* [#87](https://github.com/lblod/ember-submission-form-fields/pull/87) Replace browser-rdfib with rdflib v2 ([@Windvis](https://github.com/Windvis))
+
+#### :rocket: Enhancement
+* [#92](https://github.com/lblod/ember-submission-form-fields/pull/92) Add ember-power-select v6 support ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#93](https://github.com/lblod/ember-submission-form-fields/pull/93) Remove ember-test-selectors ([@Windvis](https://github.com/Windvis))
+* [#91](https://github.com/lblod/ember-submission-form-fields/pull/91) Update to uuid v8 ([@Windvis](https://github.com/Windvis))
+
 ## v1.9.1 (2022-08-09)
 
 #### :bug: Bug Fix
