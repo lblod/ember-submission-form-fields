@@ -12,7 +12,7 @@ import {
   RDF,
   removeDatasetForSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { NamedNode } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 class FileField {
   @tracked errors = [];
@@ -50,7 +50,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
       this.storeOptions.store.match(
         undefined,
         FORM('displayType'),
-        new NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
+        new rdflib.NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
         this.storeOptions.formGraph
       ).length > 0
     );
@@ -78,7 +78,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   }
 
   isFileDataObject(subject) {
-    const fileDataObjectType = new NamedNode(
+    const fileDataObjectType = new rdflib.NamedNode(
       'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
     );
     return (
@@ -114,31 +114,34 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   }
 
   insertFileDataObject(fileUri) {
-    const fileDataObjectType = new NamedNode(
+    const fileDataObjectType = new rdflib.NamedNode(
       'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
     );
     const typeT = {
-      subject: new NamedNode(fileUri),
+      subject: new rdflib.NamedNode(fileUri),
       predicate: RDF('type'),
       object: fileDataObjectType,
       graph: this.storeOptions.sourceGraph,
     };
     this.storeOptions.store.addAll([typeT]);
-    addSimpleFormValue(new NamedNode(fileUri), this.storeOptions);
+    addSimpleFormValue(new rdflib.NamedNode(fileUri), this.storeOptions);
   }
 
   removeFileDataObject(fileUri) {
-    const fileDataObjectType = new NamedNode(
+    const fileDataObjectType = new rdflib.NamedNode(
       'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
     );
     const typeT = {
-      subject: new NamedNode(fileUri),
+      subject: new rdflib.NamedNode(fileUri),
       predicate: RDF('type'),
       object: fileDataObjectType,
       graph: this.storeOptions.sourceGraph,
     };
     this.storeOptions.store.removeStatements([typeT]);
-    removeDatasetForSimpleFormValue(new NamedNode(fileUri), this.storeOptions);
+    removeDatasetForSimpleFormValue(
+      new rdflib.NamedNode(fileUri),
+      this.storeOptions
+    );
   }
 
   @action

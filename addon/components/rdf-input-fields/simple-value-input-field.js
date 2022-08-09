@@ -3,7 +3,7 @@ import InputFieldComponent from './input-field';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
-import { isLiteral, Literal } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 export default class SimpleValueInputFieldComponent extends InputFieldComponent {
   @tracked value = null;
@@ -16,7 +16,7 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const literals = matches.values.filter((value) => isLiteral(value));
+    const literals = matches.values.filter((value) => rdflib.isLiteral(value));
 
     if (literals.length) {
       let literal;
@@ -41,14 +41,14 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
         }
       }
 
-      if (literal) {
+      if(literal) {
         this.nodeValue = literal;
         this.value = literal.value;
       }
     }
 
     if (!this.nodeValue && this.args.field.language) {
-      this.nodeValue = new Literal('', this.args.field.language);
+      this.nodeValue = new rdflib.Literal('', this.args.field.language);
     }
 
     if (this.defaultValue && this.value == null) {
@@ -62,7 +62,7 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
   updateValue(value) {
     let literalOrValue;
 
-    if (value && isLiteral(value)) {
+    if (value && rdflib.isLiteral(value)) {
       literalOrValue = value;
     } else {
       literalOrValue = this.nodeValue?.copy();

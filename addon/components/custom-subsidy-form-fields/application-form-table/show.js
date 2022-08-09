@@ -1,28 +1,30 @@
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
-import { NamedNode, Namespace } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 
-const applicationFormEntryPredicate = new NamedNode(
+const applicationFormEntryPredicate = new rdflib.NamedNode(
   `${extBaseUri}applicationFormEntry`
 );
-const actorNamePredicate = new NamedNode(
+const actorNamePredicate = new rdflib.NamedNode(
   `http://mu.semte.ch/vocabularies/ext/actorName`
 );
-const numberChildrenForFullDayPredicate = new NamedNode(
+const numberChildrenForFullDayPredicate = new rdflib.NamedNode(
   `http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay`
 );
-const numberChildrenForHalfDayPredicate = new NamedNode(
+const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(
   `http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay`
 );
-const numberChildrenPerInfrastructurePredicate = new NamedNode(
+const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(
   `http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure`
 );
-const createdPredicate = new NamedNode('http://purl.org/dc/terms/created');
+const createdPredicate = new rdflib.NamedNode(
+  'http://purl.org/dc/terms/created'
+);
 
-const LBLOD_SUBSIDIE = new Namespace(
+const LBLOD_SUBSIDIE = new rdflib.Namespace(
   'http://lblod.data.gift/vocabularies/subsidie/'
 );
 

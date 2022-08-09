@@ -7,7 +7,7 @@ import {
   BELGIAN_FORMAT_ADAPTER,
 } from '@lblod/ember-submission-form-fields/config/date-picker';
 import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
-import { literal } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldComponent {
   inputId = 'date-time-' + guidFor(this);
@@ -44,7 +44,9 @@ export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldCom
       this.value.setHours(this.hour, this.minutes, null, null);
       updatedValue = this.value.toISOString();
     } */
-    const newValue = date ? literal(date.toISOString(), XSD('dateTime')) : null;
+    const newValue = date
+      ? rdflib.literal(date.toISOString(), XSD('dateTime'))
+      : null;
     super.updateValue(newValue);
     this.loadProvidedValue();
   }

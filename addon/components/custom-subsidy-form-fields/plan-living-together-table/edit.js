@@ -4,32 +4,36 @@ import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { scheduleOnce } from '@ember/runloop';
+import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
-import { NamedNode, Namespace } from 'rdflib';
 
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const planBaseUri =
   'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
 const planTableBaseUri = 'http://data.lblod.info/plan-living-together-tables';
 
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
-const planTableType = new NamedNode(
+const planTableType = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}PlanLivingTogetherTable`
 );
-const planTablePredicate = new NamedNode(
+const planTablePredicate = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}planLivingTogetherTable`
 );
-const plannedRangePredicate = new NamedNode(`${planBaseUri}plannedRange`);
-const contributionPredicate = new NamedNode(`${planBaseUri}contribution`);
-const totalContributionPredicate = new NamedNode(
+const plannedRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}plannedRange`
+);
+const contributionPredicate = new rdflib.NamedNode(
+  `${planBaseUri}contribution`
+);
+const totalContributionPredicate = new rdflib.NamedNode(
   `${planBaseUri}totalContribution`
 );
-const hasInvalidRowPredicate = new NamedNode(
+const hasInvalidRowPredicate = new rdflib.NamedNode(
   `${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`
 );
-const validPlanTable = new NamedNode(
+const validPlanTable = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}validPlanLivingTogetherTable`
 );
 
@@ -77,7 +81,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableEditComponent
 
   createPlanTable() {
     const uuid = uuidv4();
-    this.planTableSubject = new NamedNode(`${planTableBaseUri}/${uuid}`);
+    this.planTableSubject = new rdflib.NamedNode(`${planTableBaseUri}/${uuid}`);
 
     const triples = [
       {

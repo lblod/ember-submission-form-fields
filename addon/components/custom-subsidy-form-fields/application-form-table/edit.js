@@ -2,13 +2,13 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
+import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import { guidFor } from '@ember/object/internals';
-import { literal, NamedNode, Namespace } from 'rdflib';
 
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const applicationFormTableBaseUri =
   'http://data.lblod.info/application-form-tables';
@@ -17,36 +17,38 @@ const applicationFormEntryBaseUri =
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 
-const ApplicationFormTableType = new NamedNode(
+const ApplicationFormTableType = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}ApplicationFormTable`
 );
-const ApplicationFormEntryType = new NamedNode(
+const ApplicationFormEntryType = new rdflib.NamedNode(
   `${extBaseUri}ApplicationFormEntry`
 );
-const applicationFormTablePredicate = new NamedNode(
+const applicationFormTablePredicate = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}applicationFormTable`
 );
-const applicationFormEntryPredicate = new NamedNode(
+const applicationFormEntryPredicate = new rdflib.NamedNode(
   `${extBaseUri}applicationFormEntry`
 );
-const actorNamePredicate = new NamedNode(
+const actorNamePredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/actorName'
 );
-const numberChildrenForFullDayPredicate = new NamedNode(
+const numberChildrenForFullDayPredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/numberChildrenForFullDay'
 );
-const numberChildrenForHalfDayPredicate = new NamedNode(
+const numberChildrenForHalfDayPredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/numberChildrenForHalfDay'
 );
-const numberChildrenPerInfrastructurePredicate = new NamedNode(
+const numberChildrenPerInfrastructurePredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/numberChildrenPerInfrastructure'
 );
-const totalAmountPredicate = new NamedNode(
+const totalAmountPredicate = new rdflib.NamedNode(
   'http://lblod.data.gift/vocabularies/subsidie/totalAmount'
 );
-const createdPredicate = new NamedNode('http://purl.org/dc/terms/created');
+const createdPredicate = new rdflib.NamedNode(
+  'http://purl.org/dc/terms/created'
+);
 
-const LBLOD_SUBSIDIE = new Namespace(
+const LBLOD_SUBSIDIE = new rdflib.Namespace(
   'http://lblod.data.gift/vocabularies/subsidie/'
 );
 
@@ -304,7 +306,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   createApplicationFormTable() {
     const uuid = uuidv4();
-    this.applicationFormTableSubject = new NamedNode(
+    this.applicationFormTableSubject = new rdflib.NamedNode(
       `${applicationFormTableBaseUri}/${uuid}`
     );
     const triples = [
@@ -332,7 +334,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
 
   createApplicationFormEntry() {
     const uuid = uuidv4();
-    const applicationFormEntrySubject = new NamedNode(
+    const applicationFormEntrySubject = new rdflib.NamedNode(
       `${applicationFormEntryBaseUri}/${uuid}`
     );
     const triples = [
@@ -439,7 +441,7 @@ export default class CustomSubsidyFormFieldsApplicationFormTableEditComponent ex
       {
         subject: this.storeOptions.sourceNode,
         predicate: totalAmountPredicate,
-        object: literal(
+        object: rdflib.literal(
           Number.parseFloat(this.totalAmount).toFixed(2),
           XSD('float')
         ),

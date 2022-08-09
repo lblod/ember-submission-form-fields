@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { NamedNode } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 const FORM_GRAPHS = {
-  formGraph: new NamedNode('http://data.lblod.info/form'),
-  metaGraph: new NamedNode('http://data.lblod.info/metagraph'),
-  sourceGraph: new NamedNode(`http://data.lblod.info/sourcegraph`),
+  formGraph: new rdflib.NamedNode('http://data.lblod.info/form'),
+  metaGraph: new rdflib.NamedNode('http://data.lblod.info/metagraph'),
+  sourceGraph: new rdflib.NamedNode(`http://data.lblod.info/sourcegraph`),
 };
 
-const SOURCE_NODE = new NamedNode(
+const SOURCE_NODE = new rdflib.NamedNode(
   'http://ember-submission-form-fields/source-node'
 );
 

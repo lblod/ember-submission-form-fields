@@ -8,17 +8,17 @@ import {
   addSimpleFormValue,
   removeSimpleFormValue,
 } from '@lblod/submission-form-helpers';
+import rdflib from 'browser-rdflib';
 import { RDF, NIE } from '@lblod/submission-form-helpers';
-import { namedNode, NamedNode, Namespace } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { guidFor } from '@ember/object/internals';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
-const REQUEST_HEADER = new namedNode(
+const REQUEST_HEADER = new rdflib.namedNode(
   'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e'
 );
 
-const RPIO_HTTP = new Namespace(
+const RPIO_HTTP = new rdflib.Namespace(
   'http://redpencil.data.gift/vocabularies/http/'
 );
 
@@ -89,7 +89,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   isRemoteDataObject(subject) {
-    const remoteDataObjectType = new NamedNode(
+    const remoteDataObjectType = new rdflib.NamedNode(
       'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
     );
     return (
@@ -139,7 +139,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     if (remoteObjecTs.length) {
       this.storeOptions.store.removeStatements(remoteObjecTs);
     }
-    removeSimpleFormValue(new NamedNode(uri), this.storeOptions); // remove hasPart
+    removeSimpleFormValue(new rdflib.NamedNode(uri), this.storeOptions); // remove hasPart
   }
 
   insertRemoteDataObject({ uri, address }) {
@@ -147,7 +147,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       {
         subject: uri,
         predicate: RDF('type'),
-        object: new NamedNode(
+        object: new rdflib.NamedNode(
           'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
         ),
         graph: this.storeOptions.sourceGraph,
@@ -174,7 +174,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   addUrlField() {
     this.remoteUrls.pushObject(
       new RemoteUrl({
-        uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
+        uri: new rdflib.namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
         address: '',
         errors: [],
       })

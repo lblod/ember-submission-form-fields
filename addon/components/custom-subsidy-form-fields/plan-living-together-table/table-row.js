@@ -2,12 +2,12 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { action } from '@ember/object';
+import rdflib from 'browser-rdflib';
 import { scheduleOnce } from '@ember/runloop';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF, XSD } from '@lblod/submission-form-helpers';
-import { literal, NamedNode, Namespace } from 'rdflib';
 
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const planBaseUri =
   'http://lblod.data.gift/vocabularies/subsidie/plan-samenleven/';
@@ -15,16 +15,24 @@ const planTableBaseUri = 'http://data.lblod.info/plan-living-together-tables';
 
 const tableEntryBaseUri =
   'http://data.lblod.info/id/plan-living-together-table/row-entry';
-const PlanEntryType = new NamedNode(`${planBaseUri}PlanLivingTogetherEntry`);
-const planEntryPredicate = new NamedNode(
+const PlanEntryType = new rdflib.NamedNode(
+  `${planBaseUri}PlanLivingTogetherEntry`
+);
+const planEntryPredicate = new rdflib.NamedNode(
   `${planBaseUri}planLivingTogetherEntry`
 );
-const descriptionPredicate = new NamedNode(`${planBaseUri}description`);
-const currentRangePredicate = new NamedNode(`${planBaseUri}currentRange`);
-const plannedRangePredicate = new NamedNode(`${planBaseUri}plannedRange`);
-const contributionPredicate = new NamedNode(`${planBaseUri}contribution`);
-const priorityPredicate = new NamedNode(`${planBaseUri}priority`);
-const hasInvalidRowPredicate = new NamedNode(
+const descriptionPredicate = new rdflib.NamedNode(`${planBaseUri}description`);
+const currentRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}currentRange`
+);
+const plannedRangePredicate = new rdflib.NamedNode(
+  `${planBaseUri}plannedRange`
+);
+const contributionPredicate = new rdflib.NamedNode(
+  `${planBaseUri}contribution`
+);
+const priorityPredicate = new rdflib.NamedNode(`${planBaseUri}priority`);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
   `${planTableBaseUri}hasInvalidPlanLivingTogetherTableEntry`
 );
 
@@ -47,7 +55,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
   }
 
   get businessRuleUri() {
-    return new NamedNode(this.args.businessRuleUriStr);
+    return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
   get onUpdateRow() {
@@ -131,7 +139,7 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
 
   initializeDefault() {
     const uuid = uuidv4();
-    const tableEntryUri = new NamedNode(`${tableEntryBaseUri}/${uuid}`);
+    const tableEntryUri = new rdflib.NamedNode(`${tableEntryBaseUri}/${uuid}`);
 
     let triples = [
       {
@@ -330,22 +338,22 @@ export default class CustomSubsidyFormFieldsPlanLivingTogetherTableTableRowCompo
     this.updateTripleObject(
       this.tableEntryUri,
       currentRangePredicate,
-      literal(this.currentRange, XSD('integer'))
+      rdflib.literal(this.currentRange, XSD('integer'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       plannedRangePredicate,
-      literal(this.plannedRange, XSD('integer'))
+      rdflib.literal(this.plannedRange, XSD('integer'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       contributionPredicate,
-      literal(this.contribution, XSD('float'))
+      rdflib.literal(this.contribution, XSD('float'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       priorityPredicate,
-      literal(this.priority, XSD('integer'))
+      rdflib.literal(this.priority, XSD('integer'))
     );
     this.setComponentValues(this.tableEntryUri);
 

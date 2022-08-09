@@ -6,7 +6,7 @@ import { guidFor } from '@ember/object/internals';
 import { A } from '@ember/array';
 
 import { RDF } from '@lblod/submission-form-helpers';
-import { NamedNode } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldComponent {
   inputId = 'remote-urls-' + guidFor(this);
@@ -37,7 +37,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldCo
   }
 
   isRemoteDataObject(subject) {
-    const remoteDataObjectType = new NamedNode(
+    const remoteDataObjectType = new rdflib.NamedNode(
       'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
     );
     return (

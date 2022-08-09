@@ -8,7 +8,7 @@ import {
   validationResultsForField,
   validationTypesForField,
 } from '@lblod/submission-form-helpers';
-import { NamedNode } from 'rdflib';
+import rdflib from 'browser-rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
 /**
@@ -67,7 +67,7 @@ export default class InputFieldComponent extends Component {
       store.any(
         constraint,
         RDF('type'),
-        new NamedNode(MAX_LENGTH_URI),
+        new rdflib.NamedNode(MAX_LENGTH_URI),
         formGraph
       )
     );

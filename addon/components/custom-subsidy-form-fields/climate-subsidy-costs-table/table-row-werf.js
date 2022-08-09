@@ -1,35 +1,41 @@
 import Component from '@glimmer/component';
+import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
-import { literal, NamedNode, Namespace } from 'rdflib';
 
 import { RDF, XSD } from '@lblod/submission-form-helpers';
 
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const climateBaseUri = 'http://data.lblod.info/vocabularies/subsidie/climate/';
 const climateTableBaseUri = 'http://data.lblod.info/climate-tables';
 
 const tableEntryBaseUri = 'http://data.lblod.info/id/climate-table/row-entry';
-const ClimateEntryType = new NamedNode(`${climateBaseUri}ClimateEntry`);
-const climateEntryPredicate = new NamedNode(`${climateBaseUri}climateEntry`);
-const actionDescriptionPredicate = new NamedNode(
+const ClimateEntryType = new rdflib.NamedNode(`${climateBaseUri}ClimateEntry`);
+const climateEntryPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}climateEntry`
+);
+const actionDescriptionPredicate = new rdflib.NamedNode(
   `${climateBaseUri}actionDescription`
 );
-const amountPerActionPredicate = new NamedNode(
+const amountPerActionPredicate = new rdflib.NamedNode(
   `${climateBaseUri}amountPerAction`
 );
-const restitutionPredicate = new NamedNode(`${climateBaseUri}restitution`);
-const hasInvalidRowPredicate = new NamedNode(
+const restitutionPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}restitution`
+);
+const hasInvalidRowPredicate = new rdflib.NamedNode(
   `${climateTableBaseUri}/hasInvalidClimateTableEntry`
 );
-const toRealiseUnitsPredicate = new NamedNode(
+const toRealiseUnitsPredicate = new rdflib.NamedNode(
   `${climateBaseUri}toRealiseUnits`
 );
-const costPerUnitPredicate = new NamedNode(`${climateBaseUri}costPerUnit`);
+const costPerUnitPredicate = new rdflib.NamedNode(
+  `${climateBaseUri}costPerUnit`
+);
 
 export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerfComponent extends Component {
   @tracked tableEntryUri = null;
@@ -46,7 +52,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
   }
 
   get businessRuleUri() {
-    return new NamedNode(this.args.businessRuleUriStr);
+    return new rdflib.NamedNode(this.args.businessRuleUriStr);
   }
 
   get climateTableSubject() {
@@ -126,7 +132,7 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
 
   initializeDefault() {
     const uuid = uuidv4();
-    const tableEntryUri = new NamedNode(`${tableEntryBaseUri}/${uuid}`);
+    const tableEntryUri = new rdflib.NamedNode(`${tableEntryBaseUri}/${uuid}`);
 
     let triples = [
       {
@@ -303,22 +309,22 @@ export default class CustomSubsidyFormFieldsClimateSubsidyCostsTableTableRowWerf
     this.updateTripleObject(
       this.tableEntryUri,
       toRealiseUnitsPredicate,
-      literal(this.toRealiseUnits, XSD('integer'))
+      rdflib.literal(this.toRealiseUnits, XSD('integer'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       amountPerActionPredicate,
-      literal(amount, XSD('integer'))
+      rdflib.literal(amount, XSD('integer'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       restitutionPredicate,
-      literal(newRestitution, XSD('float'))
+      rdflib.literal(newRestitution, XSD('float'))
     );
     this.updateTripleObject(
       this.tableEntryUri,
       costPerUnitPredicate,
-      literal(this.costPerUnit, XSD('float'))
+      rdflib.literal(this.costPerUnit, XSD('float'))
     );
     this.setComponentValues(this.tableEntryUri);
 

@@ -2,33 +2,37 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
+import rdflib from 'browser-rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { RDF } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
-import { NamedNode, Namespace } from 'rdflib';
 
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
+const MU = new rdflib.Namespace('http://mu.semte.ch/vocabularies/core/');
 
 const engagementTableBaseUri = 'http://data.lblod.info/engagement-tables';
 const engagementEntryBaseUri = 'http://data.lblod.info/engagement-entries';
 const lblodSubsidieBaseUri = 'http://lblod.data.gift/vocabularies/subsidie/';
 const extBaseUri = 'http://mu.semte.ch/vocabularies/ext/';
 
-const EngagementTableType = new NamedNode(
+const EngagementTableType = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}EngagementTable`
 );
-const EngagementEntryType = new NamedNode(`${extBaseUri}EngagementEntry`);
-const engagementTablePredicate = new NamedNode(
+const EngagementEntryType = new rdflib.NamedNode(
+  `${extBaseUri}EngagementEntry`
+);
+const engagementTablePredicate = new rdflib.NamedNode(
   `${lblodSubsidieBaseUri}engagementTable`
 );
-const engagementEntryPredicate = new NamedNode(`${extBaseUri}engagementEntry`);
-const existingStaffPredicate = new NamedNode(
+const engagementEntryPredicate = new rdflib.NamedNode(
+  `${extBaseUri}engagementEntry`
+);
+const existingStaffPredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/existingStaff'
 );
-const additionalStaffPredicate = new NamedNode(
+const additionalStaffPredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/additionalStaff'
 );
-const volunteersPredicate = new NamedNode(
+const volunteersPredicate = new rdflib.NamedNode(
   'http://mu.semte.ch/vocabularies/ext/volunteers'
 );
 
@@ -174,7 +178,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
 
   createEngagementTable() {
     const uuid = uuidv4();
-    this.engagementTableSubject = new NamedNode(
+    this.engagementTableSubject = new rdflib.NamedNode(
       `${engagementTableBaseUri}/${uuid}`
     );
     const triples = [
@@ -220,7 +224,7 @@ export default class CustomSubsidyFormFieldsEngagementTableEditComponent extends
     let triples = [];
 
     const uuid = uuidv4();
-    const engagementEntrySubject = new NamedNode(
+    const engagementEntrySubject = new rdflib.NamedNode(
       `${engagementEntryBaseUri}/${uuid}`
     );
 
