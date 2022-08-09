@@ -6,22 +6,15 @@ const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 module.exports = async function () {
   return {
     scenarios: [
-      {
-        name: 'ember-lts-3.24',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.24.3',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.28',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.28.0',
-          },
-        },
-      },
+      // We are currently running Ember 3.28 already so we don't need to run this again before updating to v4
+      // {
+      //   name: 'ember-lts-3.28',
+      //   npm: {
+      //     devDependencies: {
+      //       'ember-source': '~3.28.0',
+      //     },
+      //   },
+      // },
       {
         name: 'ember-release',
         npm: {
