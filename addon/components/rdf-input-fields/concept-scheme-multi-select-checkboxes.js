@@ -8,7 +8,7 @@ import {
   SKOS,
   triplesForPath,
 } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { namedNode } from 'rdflib';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   id = 'multi-select-checkboxes-' + guidFor(this);
@@ -53,10 +53,10 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     const { sourceGraph, metaGraph } = this.args.graphs;
     const path = this.args.field.rdflibPath;
     const options = this.args.field.options;
-    const scheme = new rdflib.namedNode(options.conceptScheme);
+    const scheme = new namedNode(options.conceptScheme);
 
     let orderBy;
-    if (options.orderBy) orderBy = new rdflib.namedNode(options.orderBy);
+    if (options.orderBy) orderBy = new namedNode(options.orderBy);
 
     this.options = store
       .match(undefined, SKOS('inScheme'), scheme, metaGraph)

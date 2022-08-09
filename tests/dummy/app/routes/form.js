@@ -1,17 +1,17 @@
 import Route from '@ember/routing/route';
 import { ForkingStore } from '@lblod/ember-submission-form-fields';
-import rdflib from 'browser-rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 
 const FORM_GRAPHS = {
-  formGraph: new rdflib.NamedNode('http://data.lblod.info/form'),
-  metaGraph: new rdflib.NamedNode('http://data.lblod.info/metagraph'),
-  sourceGraph: new rdflib.NamedNode(`http://data.lblod.info/sourcegraph`),
+  formGraph: new NamedNode('http://data.lblod.info/form'),
+  metaGraph: new NamedNode('http://data.lblod.info/metagraph'),
+  sourceGraph: new NamedNode(`http://data.lblod.info/sourcegraph`),
 };
 
-const SOURCE_NODE = new rdflib.NamedNode(`http://data.lblod.info/sourceNode`);
+const SOURCE_NODE = new NamedNode(`http://data.lblod.info/sourceNode`);
 
-const FORM = new rdflib.Namespace('http://lblod.data.gift/vocabularies/forms/');
-const RDF = new rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
+const RDF = new Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 
 const FORM_TITLES = {
   'basic-fields': 'Basic form fields',
