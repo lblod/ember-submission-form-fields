@@ -4,18 +4,18 @@ import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { NamedNode } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 
 const uriTemplate = 'http://data.lblod.info/tax-rates';
 const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
 
-const TaxRateType = new rdflib.NamedNode(`${lblodBesluit}/TaxRate`);
-const hasAdditionalTaxRate = new rdflib.NamedNode(
+const TaxRateType = new NamedNode(`${lblodBesluit}/TaxRate`);
+const hasAdditionalTaxRate = new NamedNode(
   `${lblodBesluit}/hasAdditionalTaxRate`
 );
-const schemaPrice = new rdflib.NamedNode(`http://schema.org/price`);
-const taxRate = new rdflib.NamedNode(`${lblodBesluit}/taxRate`);
+const schemaPrice = new NamedNode(`http://schema.org/price`);
+const taxRate = new NamedNode(`${lblodBesluit}/taxRate`);
 
 class TaxEntry {
   @tracked oldValue;
@@ -136,7 +136,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   }
 
   createTaxRate() {
-    this.taxRateSubject = new rdflib.NamedNode(`${uriTemplate}/${uuidv4()}`);
+    this.taxRateSubject = new NamedNode(`${uriTemplate}/${uuidv4()}`);
     const triples = [
       {
         subject: this.taxRateSubject,

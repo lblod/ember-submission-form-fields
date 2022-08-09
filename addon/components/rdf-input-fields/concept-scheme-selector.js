@@ -7,7 +7,7 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { namedNode } from 'rdflib';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -31,7 +31,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     /**
      * NOTE: Most forms are now implemented to have a default "true" behavior

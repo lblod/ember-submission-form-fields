@@ -7,7 +7,7 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
-import rdflib from 'browser-rdflib';
+import { namedNode, Namespace } from 'rdflib';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -30,7 +30,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    const conceptScheme = new rdflib.namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
@@ -139,12 +139,8 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
   }
 
   getPathToOrgaanClassification(bestuursorgaanInTimeUri, graph) {
-    const MANDAAT = new rdflib.Namespace(
-      'http://data.vlaanderen.be/ns/mandaat#'
-    );
-    const BESLUIT = new rdflib.Namespace(
-      'http://data.vlaanderen.be/ns/besluit#'
-    );
+    const MANDAAT = new Namespace('http://data.vlaanderen.be/ns/mandaat#');
+    const BESLUIT = new Namespace('http://data.vlaanderen.be/ns/besluit#');
 
     const bestuursorgaan = this.args.formStore.match(
       bestuursorgaanInTimeUri,
@@ -167,9 +163,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
   }
 
   getPathToEenheidClassification(bestuursorgaanUri, graph) {
-    const BESLUIT = new rdflib.Namespace(
-      'http://data.vlaanderen.be/ns/besluit#'
-    );
+    const BESLUIT = new Namespace('http://data.vlaanderen.be/ns/besluit#');
 
     const bestuurseenheid = this.args.formStore.match(
       bestuursorgaanUri,
