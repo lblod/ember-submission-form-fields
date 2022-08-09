@@ -7,8 +7,8 @@ This addon provides form and form-fields components to create and edit submissio
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.24 or above
-* Ember CLI v3.24 or above
+* Ember.js v3.28 or above
+* Ember CLI v3.28 or above
 * Node.js v12 or above
 * ember-auto-import v2+
 
