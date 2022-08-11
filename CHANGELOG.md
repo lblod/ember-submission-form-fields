@@ -1,3 +1,8 @@
+## v2.0.1 (2022-08-11)
+
+#### :house: Internal
+* [#86](https://github.com/lblod/ember-submission-form-fields/pull/86) Remove `@renderInPlace` from the ConceptSchemeSelector component ([@Windvis](https://github.com/Windvis))
+
 ## v2.0.0 (2022-08-09)
 
 #### :boom: Breaking Change
