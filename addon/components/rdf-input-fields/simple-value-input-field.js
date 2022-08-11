@@ -67,7 +67,7 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
     } else {
       literalOrValue = this.nodeValue?.copy();
       if (literalOrValue) {
-        literalOrValue.value = value;
+        literalOrValue.value = value || '';
       } else {
         literalOrValue = value;
       }
