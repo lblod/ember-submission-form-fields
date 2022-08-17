@@ -1,3 +1,8 @@
+## v2.0.2 (2022-08-17)
+
+#### :bug: Bug Fix
+* [#95](https://github.com/lblod/ember-submission-form-fields/pull/95) Only use the lang string logic if the predicate is set ([@Windvis](https://github.com/Windvis))
+
 ## v2.0.1 (2022-08-11)
 
 #### :house: Internal
