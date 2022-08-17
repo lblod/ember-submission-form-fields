@@ -14,84 +14,65 @@ export default class SimpleValueInputFieldComponent extends InputFieldComponent 
     this.loadProvidedValue();
   }
 
+  get isLangStringField() {
+    return Boolean(this.args.field.language);
+  }
+
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    const literals = matches.values.filter((value) => rdflib.isLiteral(value));
 
-    if (literals.length) {
-      let literal;
+    if (this.isLangStringField) {
+      let literals = matches.values.filter((value) => rdflib.isLiteral(value));
+      let literal = findLiteralByLanguage(literals, this.args.field.language);
 
-      if (this.args.field.language) {
-        literal = findLiteralByLanguage(literals, this.args.field.language);
-      } else {
-        // First look for the entry with no lang string.
-        // This allows us to still have multiple fields where both form:language is and is not specified
-        literal = literals.find((m) => !isLangString(m.datatype));
-
-        // For reverse compatibility: we fall back first to first matched literal value
-        // i.e. all langStrings are literals, so technically not wrong to display literal
-        //   even if it is a langString.
-        // Note: it uncovers wonky side effects,
-        //  in case we have two different literals for the same predicate.
-        //  Updating one of them might result in strange rendering behaviour.
-        // This was the case in the previous version too, and might need re-thinking. (TODO)
-        // If not clear, try it in the dummy-app
-        if (!literal) {
-          literal = literals[0];
-        }
-      }
-
-      if(literal) {
+      if (literal) {
         this.nodeValue = literal;
         this.value = literal.value;
+      } else {
+        // If no literal exists for the current language, we create a new one
+        let initialValue = this.defaultValue ?? '';
+        this.nodeValue = new rdflib.Literal(
+          initialValue,
+          this.args.field.language
+        );
+        this.value = initialValue;
       }
-    }
-
-    if (!this.nodeValue && this.args.field.language) {
-      this.nodeValue = new rdflib.Literal('', this.args.field.language);
-    }
-
-    if (this.defaultValue && this.value == null) {
-      this.value = this.defaultValue;
-      next(this, () => {
-        this.updateValue();
-      });
+    } else {
+      if (matches.values.length > 0) {
+        this.nodeValue = matches.values[0];
+        this.value = matches.values[0].value;
+      } else if (this.defaultValue && this.value == null) {
+        this.value = this.defaultValue;
+        next(this, () => {
+          this.updateValue();
+        });
+      }
     }
   }
 
   updateValue(value) {
-    let literalOrValue;
+    if (this.isLangStringField) {
+      let literalOrValue;
 
-    if (value && rdflib.isLiteral(value)) {
-      literalOrValue = value;
-    } else {
-      literalOrValue = this.nodeValue?.copy();
-      if (literalOrValue) {
-        literalOrValue.value = value;
-      } else {
+      if (value && rdflib.isLiteral(value)) {
         literalOrValue = value;
+      } else {
+        literalOrValue = this.nodeValue?.copy();
+        if (literalOrValue) {
+          literalOrValue.value = value;
+        } else {
+          literalOrValue = value;
+        }
       }
+      updateSimpleFormValue(this.storeOptions, literalOrValue, this.nodeValue);
+    } else {
+      updateSimpleFormValue(this.storeOptions, value, this.nodeValue);
     }
 
-    updateSimpleFormValue(this.storeOptions, literalOrValue, this.nodeValue);
     this.hasBeenFocused = true;
     this.loadProvidedValue();
     super.updateValidations();
   }
-}
-
-/**
- *
- * @param {Object} Rdflib datatype
- * @returns boolean
- */
-function isLangString(datatype) {
-  if (
-    datatype &&
-    datatype.value === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString'
-  ) {
-    return true;
-  } else return false;
 }
 
 /**
