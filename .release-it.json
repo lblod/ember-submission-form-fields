@@ -2,7 +2,7 @@
   "git": {
     "requireBranch": [
       "master",
-      "development"
+      "v1"
     ]
   },
   "npm": {
