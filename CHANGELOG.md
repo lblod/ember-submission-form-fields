@@ -1,3 +1,13 @@
+## 1.9.2 (2022-08-18)
+
+#### :bug: Bug Fix
+* [#97](https://github.com/lblod/ember-submission-form-fields/pull/97) Only use the lang string logic if the predicate is set ([@Windvis](https://github.com/Windvis))
+
+## v1.9.1 (2022-08-09)
+
+#### :bug: Bug Fix
+* Revert PR [#84](https://github.com/lblod/ember-submission-form-fields/pull/84) since it was actually a breaking change ([@Windvis](https://github.com/Windvis))
+
 ## v1.9.0 (2022-08-01)
 
 #### :rocket: Enhancement
