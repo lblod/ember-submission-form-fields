@@ -17,18 +17,16 @@
     {{/each}}
   </div>
   {{#if this.canAdd}}
-    {{#unless @show}}
-      <div class="au-o-grid__item au-u-1-5">
-        <AuButton
-          @icon="plus"
-          @iconAlignment="left"
-          class="au-u-margin-bottom-tiny"
-          @disabled={{this.creationFormData}}
-          {{on "click" this.createEntry}}
-        >
-          {{@listing.addLabel}}
-        </AuButton>
-      </div>
-    {{/unless}}
+    <div class="au-o-grid__item au-u-1-5">
+      <AuButton
+        @icon="plus"
+        @iconAlignment="left"
+        class="au-u-margin-bottom-tiny"
+        @disabled={{this.creationFormData}}
+        {{on "click" this.createEntry}}
+      >
+        {{@listing.addLabel}}
+      </AuButton>
+    </div>
   {{/if}}
 </div>
