@@ -12,11 +12,10 @@ export default class SubFormComponent extends Component {
       form: this.args.subForm.uri,
     });
   }
-  get canRemove(){
-    if(this.args.show){
+  get canRemove() {
+    if (this.args.show) {
       return false;
-    }
-    else{
+    } else {
       return this.args.canRemove;
     }
   }

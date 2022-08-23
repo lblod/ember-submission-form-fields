@@ -13,9 +13,7 @@ import { next } from '@ember/runloop';
 export default class ListingComponent extends Component {
   @tracked subForms = A();
   scope = null;
-  get canAdd(){
-    return !this.args.show;
-  }
+
   get formStore() {
     return this.args.formStore;
   }
@@ -33,10 +31,9 @@ export default class ListingComponent extends Component {
   }
 
   get canAdd() {
-    if(this.args.show){
+    if (this.args.show) {
       return false;
-    }
-    else if (this.listing.canAdd) {
+    } else if (this.listing.canAdd) {
       if (this.listing.maxCount) {
         return this.subForms.length < this.listing.maxCount;
       } else {
