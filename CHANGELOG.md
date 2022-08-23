@@ -1,3 +1,8 @@
+## v2.0.3 (2022-08-23)
+
+#### :bug: Bug Fix
+* [#98](https://github.com/lblod/ember-submission-form-fields/pull/98) Improve the read-only mode of the Listing and SubForm components ([@Asergey91](https://github.com/Asergey91))
+
 ## v2.0.2 (2022-08-17)
 
 #### :bug: Bug Fix
