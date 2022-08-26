@@ -3,7 +3,12 @@
 <TestForm
   @form={{@model.form}}
   @formStore={{@model.formStore}}
+  @forceShowErrors={{this.forceShowErrors}}
 />
+<AuButton
+  {{on "click" this.validate}}>
+  validate
+</AuButton>
 
 
 <AuHeading
