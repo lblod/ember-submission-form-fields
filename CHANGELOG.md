@@ -28,6 +28,11 @@
 * [#93](https://github.com/lblod/ember-submission-form-fields/pull/93) Remove ember-test-selectors ([@Windvis](https://github.com/Windvis))
 * [#91](https://github.com/lblod/ember-submission-form-fields/pull/91) Update to uuid v8 ([@Windvis](https://github.com/Windvis))
 
+## 1.9.2 (2022-08-18)
+
+#### :bug: Bug Fix
+* [#97](https://github.com/lblod/ember-submission-form-fields/pull/97) Only use the lang string logic if the predicate is set ([@Windvis](https://github.com/Windvis))
+
 ## v1.9.1 (2022-08-09)
 
 #### :bug: Bug Fix
