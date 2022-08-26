@@ -11,7 +11,7 @@ import {
 import { namedNode } from 'rdflib';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
-  id = 'multi-select-checkboxes-' + guidFor(this);
+  inputId = 'multi-select-checkboxes-' + guidFor(this);
 
   @tracked options = [];
 
@@ -68,7 +68,12 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
           undefined,
           metaGraph
         ).value;
-        const provided = !!store.any(undefined, path, subject, sourceGraph);
+        const provided = !!store.any(
+          this.storeOptions.sourceNode,
+          path,
+          subject,
+          sourceGraph
+        );
 
         let order = 0;
         if (orderBy)
