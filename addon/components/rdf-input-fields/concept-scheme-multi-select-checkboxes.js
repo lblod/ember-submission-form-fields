@@ -11,7 +11,7 @@ import {
 import { namedNode } from 'rdflib';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
-  id = 'multi-select-checkboxes-' + guidFor(this);
+  inputId = 'multi-select-checkboxes-' + guidFor(this);
 
   @tracked options = [];
 
