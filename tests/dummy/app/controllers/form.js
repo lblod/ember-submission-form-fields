@@ -1,9 +1,14 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { importTriplesForForm } from '@lblod/ember-submission-form-fields';
+import {
+  importTriplesForForm,
+  validateForm,
+} from '@lblod/ember-submission-form-fields';
+import { action } from '@ember/object';
 
 export default class FormController extends Controller {
   @tracked datasetTriples = [];
+  @tracked forceShowErrors = false;
 
   constructor() {
     super(...arguments);
@@ -43,5 +48,16 @@ export default class FormController extends Controller {
       undefined,
       this.graphs.sourceGraph
     );
+  }
+
+  @action
+  validate() {
+    const result = validateForm(this.form, {
+      ...this.graphs,
+      sourceNode: this.sourceNode,
+      store: this.formStore,
+    });
+
+    this.forceShowErrors = !result;
   }
 }
