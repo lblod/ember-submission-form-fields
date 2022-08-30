@@ -31,7 +31,7 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   get level() {
-    return this.args.level || 1;
+    return this.args.group.options.level || this.args.level || 1;
   }
 
   get titleLevel() {
@@ -39,11 +39,15 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   }
 
   get titleSkin() {
-    return `${this.level + 1}`;
+    return this.args.group.options.skin || `${this.level + 1}`;
   }
 
   get nextLevel() {
     return this.level + 1;
+  }
+
+  get showTitleBlock() {
+    return Boolean(this.args.group.name) || Boolean(this.args.group.help);
   }
 
   get errors() {

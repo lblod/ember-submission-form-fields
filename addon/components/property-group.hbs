@@ -1,13 +1,15 @@
 {{#if this.children}}
   <div ...attributes>
-    {{#if @group.name}}
+    {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
-        <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
-          {{@group.name}}
-        </AuHeading>
+        {{#if @group.name}}
+          <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+            {{@group.name}}
+          </AuHeading>
+        {{/if}}
         {{#if @group.help}}
           {{! template-lint-disable no-triple-curlies}}
-          <p class="au-u-light au-u-margin-top-xsmall">{{{@group.help}}}</p>
+          <p class="au-u-light">{{{@group.help}}}</p>
         {{/if}}
         {{#each this.errors as |error|}}
           <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"

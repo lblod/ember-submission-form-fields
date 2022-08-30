@@ -1,5 +1,4 @@
 import { tracked } from '@glimmer/tracking';
-
 import { FORM, SHACL } from '@lblod/submission-form-helpers';
 
 export const PROPERTY_GROUP_DISPLAY_TYPE =
@@ -25,6 +24,7 @@ export default class PropertyGroupModel {
       formGraph
     );
     this.rdflibHelp = store.any(uri, FORM('help'), undefined, formGraph);
+    this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
   }
 
   @tracked
@@ -56,6 +56,18 @@ export default class PropertyGroupModel {
 
   get sortedFields() {
     return this.fields.sort((a, b) => a.order > b.order);
+  }
+
+  get options() {
+    let options;
+
+    try {
+      options = JSON.parse(this.rdflibOptions?.value);
+    } catch {
+      options = {};
+    }
+
+    return options;
   }
 
   get displayType() {
