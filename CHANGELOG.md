@@ -1,3 +1,11 @@
+## v2.1.0 (2022-08-30)
+
+#### :rocket: Enhancement
+* [#96](https://github.com/lblod/ember-submission-form-fields/pull/96) Make the PropertyGroup title level and skin configurable ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#100](https://github.com/lblod/ember-submission-form-fields/pull/100) Add a button to trigger validations in the test app ([@cecemel](https://github.com/cecemel))
+
 ## v2.0.3 (2022-08-23)
 
 #### :bug: Bug Fix
