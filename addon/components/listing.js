@@ -184,11 +184,11 @@ export default class ListingComponent extends Component {
     //TODO: probably this type of boilerplate should be residing elsewhere
     const allSourceNodes = [];
     const { sourceNode, pathElement } = this.sourceForHasManyConnection();
-    if (pathElement.inversPath) {
+    if (pathElement.inversePath) {
       for (const targetNode of nodes) {
         allSourceNodes.push({
           subject: targetNode,
-          predicate: pathElement.inversPath,
+          predicate: pathElement.inversePath,
           object: sourceNode,
           graph: this.graphs.sourceGraph,
         });
