@@ -1,3 +1,9 @@
+
+## v2.1.1 (2022-10-17)
+
+#### :bug: Bug Fix
+* [#101](https://github.com/lblod/ember-submission-form-fields/pull/101) Fix a bug in the listing creation code ([@Windvis](https://github.com/Windvis))
+
 ## v2.1.0 (2022-08-30)
 
 #### :rocket: Enhancement
