@@ -34,6 +34,20 @@ fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 a form:PropertyGroup;
     sh:name "Overview of all basic form fields" ;
     sh:order 1 .
 
+
+fields:2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e a form:Field;
+    mu:uuid "2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e" ;
+    sh:name "Paragraph";
+    form:help """ This is a 
+    <a href="https://lokaalklimaatpact.be/formulieren.html" target="_blank">link</a>.
+    """ ;
+    sh:order 190;
+    form:options """{ "level": 2, "skin": 6 }""";
+    form:displayType displayTypes:paragraph ;
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e .
+
 ##########################################################
 # Checkbox
 ##########################################################
