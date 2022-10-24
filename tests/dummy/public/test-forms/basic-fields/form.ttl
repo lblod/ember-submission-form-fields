@@ -39,7 +39,12 @@ fields:2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e a form:Field;
     mu:uuid "2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e" ;
     sh:name "Paragraph";
     form:help """ This is a 
-    <a href="https://lokaalklimaatpact.be/formulieren.html" target="_blank">link</a>.
+    <a href="https://lokaalklimaatpact.be/formulieren.html" target="_blank">link</a>. <br><br>
+    <ul  style="list-style-type:disc; margin-left: 35px;">
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>
     """ ;
     sh:order 190;
     form:options """{ "level": 2, "skin": 6 }""";
