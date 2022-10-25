@@ -1,3 +1,7 @@
+## v2.2.0 (2022-10-25)
+
+#### :rocket: Enhancement
+* [#102](https://github.com/lblod/ember-submission-form-fields/pull/102) Add a Heading component ([@FangioD](https://github.com/FangioD)) 
 
 ## v2.1.1 (2022-10-17)
 
