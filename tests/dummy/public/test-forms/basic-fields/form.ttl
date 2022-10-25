@@ -49,7 +49,7 @@ fields:2bb6c63d-2cb7-4e82-839f-5c1e0a4f6a5e a form:Field;
 </ul>
     """ ;
     sh:order 190;
-    form:options """{ "skin": 6 }""";
+    form:options """{ "level": 6, "skin": 3}""";
     form:displayType displayTypes:heading ;
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
