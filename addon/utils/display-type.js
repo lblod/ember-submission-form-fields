@@ -21,7 +21,7 @@ import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/compone
 import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
 import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
 import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
-
+import HeadingComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/heading';
 // Search components
 import SearchPanelFieldsSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
 import SearchPanelFieldsSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
@@ -139,6 +139,10 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/caseNumber',
     edit: CaseNumberComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/heading',
+    edit: HeadingComponent,
   },
   {
     displayType: 'http://lblod.data.gift/display-types/checkbox',
