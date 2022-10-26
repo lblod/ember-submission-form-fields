@@ -50,6 +50,10 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     return this.inputId;
   }
 
+  get requiredLabel(){
+    return this.args.field.options.requiredLabel || "Voorkeur";
+  }
+
   @tracked remoteUrls = A();
 
   observerLabel = `remote-urls-${guidFor(this)}`; // Could have used uuidv4, but more consistent accross components

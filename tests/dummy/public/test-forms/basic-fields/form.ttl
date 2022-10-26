@@ -252,15 +252,37 @@ fieldGroups:main form:hasField fields:797b6eb4-537b-4f6a-88c3-8c5421c589ab .
 ##########################################################
 fields:3fb43220-0cf2-441e-9d7c-c2e10b67c537 a form:Field ;
     mu:uuid "3fb43220-0cf2-441e-9d7c-c2e10b67c537";
-    sh:name "Url selector" ;
+    sh:name "Url selector DEFAULT REQUIREDLABEL" ;
     sh:order 310 ;
     sh:path ext:756ca950-f35b-46c5-ab3d-fd99886e91f7 ;
+    form:validations
+    [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Dit veld is verplicht." ;
+      sh:path ext:756ca950-f35b-46c5-ab3d-fd99886e91f7 ] ;
     form:options """{}""" ;
     form:displayType displayTypes:remoteUrls ;
 
     sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
 
 fieldGroups:main form:hasField fields:3fb43220-0cf2-441e-9d7c-c2e10b67c537 .
+
+fields:3fb43220-0cf2-441e-9d7c-c2e10b67c538 a form:Field ;
+    mu:uuid "3fb43220-0cf2-441e-9d7c-c2e10b67c538";
+    sh:name "Url selector CUSTOM REQUIREDLABEL" ;
+    sh:order 311 ;
+    sh:path ext:756ca950-f35b-46c5-ab3d-fd99886e91f8 ;
+    form:validations
+    [ a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "Dit veld is verplicht." ;
+      sh:path ext:756ca950-f35b-46c5-ab3d-fd99886e91f8 ] ;
+    form:options """{ "requiredLabel": "Custom"}""" ;
+    form:displayType displayTypes:remoteUrls ;
+
+    sh:group fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+
+fieldGroups:main form:hasField fields:3fb43220-0cf2-441e-9d7c-c2e10b67c538 .
 
 ##########################################################
 # Files
