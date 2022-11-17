@@ -1,3 +1,11 @@
+## v2.3.0 (2022-11-17)
+
+#### :rocket: Enhancement
+* [#106](https://github.com/lblod/ember-submission-form-fields/pull/106) Add support for Appuniversum v2 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#105](https://github.com/lblod/ember-submission-form-fields/pull/105) Remove the custom date picker localization ([@Windvis](https://github.com/Windvis))
+
 ## v2.2.0 (2022-10-25)
 
 #### :rocket: Enhancement
