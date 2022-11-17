@@ -2,10 +2,6 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
-import {
-  DUTCH_LOCALIZATION,
-  BELGIAN_FORMAT_ADAPTER,
-} from '@lblod/ember-submission-form-fields/config/date-picker';
 import { SHACL } from '@lblod/submission-form-helpers';
 import { Namespace } from 'rdflib';
 
@@ -16,8 +12,6 @@ const DATE_RANGE = new Namespace(
 export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-from' + guidFor(this);
   inputIdTo = `date-range-to-${guidFor(this)}`;
-  localization = DUTCH_LOCALIZATION;
-  adapter = BELGIAN_FORMAT_ADAPTER;
 
   @tracked from;
   @tracked to;

@@ -5,6 +5,9 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function (defaults) {
   const customBuildConfig = {
     // Add options here
+    '@appuniversum/ember-appuniversum': {
+      dutchDatePickerLocalization: true,
+    },
   };
 
   let app = new EmberAddon(defaults, customBuildConfig);

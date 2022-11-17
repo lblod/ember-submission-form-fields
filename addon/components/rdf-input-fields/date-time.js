@@ -2,10 +2,6 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
-import {
-  DUTCH_LOCALIZATION,
-  BELGIAN_FORMAT_ADAPTER,
-} from '@lblod/ember-submission-form-fields/config/date-picker';
 import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import { literal } from 'rdflib';
 
@@ -15,8 +11,6 @@ export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldCom
   @tracked value = null;
   @tracked hour = null;
   @tracked minutes = null;
-  localization = DUTCH_LOCALIZATION;
-  adapter = BELGIAN_FORMAT_ADAPTER;
 
   constructor() {
     super(...arguments);
