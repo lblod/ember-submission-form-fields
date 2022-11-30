@@ -9,6 +9,8 @@ import {
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
 import { next } from '@ember/runloop';
+import ListingList from '@lblod/ember-submission-form-fields/components/listing/list';
+import ListingTable from '@lblod/ember-submission-form-fields/components/listing/table';
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
@@ -42,6 +44,10 @@ export default class ListingComponent extends Component {
     } else {
       return false;
     }
+  }
+
+  get ListingDisplayMode() {
+    return this.listing.isTable ? ListingTable : ListingList;
   }
 
   constructor() {
