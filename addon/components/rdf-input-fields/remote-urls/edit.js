@@ -1,5 +1,4 @@
 import InputFieldComponent from '../input-field';
-import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import {
@@ -50,7 +49,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     return this.inputId;
   }
 
-  @tracked remoteUrls = A();
+  @tracked remoteUrls = [];
 
   observerLabel = `remote-urls-${guidFor(this)}`; // Could have used uuidv4, but more consistent accross components
 
@@ -74,18 +73,21 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   get hasInvalidRemoteUrl() {
-    return this.remoteUrls.any((url) => url.isInvalid);
+    return this.remoteUrls.some((url) => url.isInvalid);
   }
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
+    let persistedUrls = [];
 
     for (let uri of matches.values) {
       if (this.isRemoteDataObject(uri)) {
         const remoteUrl = this.retrieveRemoteDataObject(uri);
-        this.remoteUrls.pushObject(remoteUrl);
+        persistedUrls.push(remoteUrl);
       }
     }
+
+    this.remoteUrls = persistedUrls;
   }
 
   isRemoteDataObject(subject) {
@@ -172,13 +174,14 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   @action
   addUrlField() {
-    this.remoteUrls.pushObject(
+    this.remoteUrls = [
+      ...this.remoteUrls,
       new RemoteUrl({
         uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
         address: '',
         errors: [],
-      })
-    );
+      }),
+    ];
   }
 
   @action
@@ -195,9 +198,11 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   @action
-  removeRemoteUrl(current) {
-    this.removeRemoteDataObject(current.uri);
-    this.remoteUrls.removeObject(current);
+  removeRemoteUrl(remoteUrlToRemove) {
+    this.removeRemoteDataObject(remoteUrlToRemove.uri);
+    this.remoteUrls = this.remoteUrls.filter(
+      (remoteUrl) => remoteUrl !== remoteUrlToRemove
+    );
     this.hasBeenFocused = true;
     // general validation of the field is handled by onStoreUpdate()
   }

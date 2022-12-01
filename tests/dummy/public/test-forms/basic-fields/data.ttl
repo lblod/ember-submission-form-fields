@@ -1,0 +1,11 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>.
+
+##########################################################
+# Urls
+##########################################################
+<http://ember-submission-form-fields/source-node> ext:remoteUrlsValue <http://data.lblod.info/remote-url/1>.
+<http://data.lblod.info/remote-url/1> a nfo:RemoteDataObject;
+    nie:url "https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur"^^<http://www.w3.org/2001/XMLSchema#string>;
+    <http://redpencil.data.gift/vocabularies/http/requestHeader> <http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e>.
