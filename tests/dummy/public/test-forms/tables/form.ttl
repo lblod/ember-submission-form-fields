@@ -60,6 +60,11 @@ ext:administrativeUnitNameF a form:Field ;
     sh:path ext:name ;
     form:options """{"conceptScheme":"http://example.concept/concept-schemes/administrative-units","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeSelector ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ext:name] ;
     sh:group ext:mainPg .
 
 ##########################################################
@@ -71,6 +76,11 @@ ext:administrativeUnitTypeOfInvolvementF a form:Field ;
     sh:path ext:typeOfInvolvement ;
     form:options """{"conceptScheme":"http://example.concept/concept-schemes/type-of-involvement","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeSelector ;
+    form:validations
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ext:typeOfInvolvement] ;
     sh:group ext:mainPg .
 
 ##########################################################
@@ -83,6 +93,11 @@ ext:administrativeUnitInvolvementPercentageF a form:Field ;
     sh:path ext:involvementPercentage;
     form:options """{}""" ;
     form:displayType displayTypes:numericalInput ;
+    form:validations
+      [ a form:PositiveNumber ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Het percentage moet groter zijn dan 0."@nl;
+        sh:path ext:involvementPercentage] ;
     sh:group ext:mainPg .
 
 ##########################################################
