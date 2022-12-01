@@ -46,6 +46,10 @@ export default class ListingComponent extends Component {
     }
   }
 
+  get canRemove() {
+    return this.listing.canRemove && !this.args.show;
+  }
+
   get ListingDisplayMode() {
     return this.listing.isTable ? ListingTable : ListingList;
   }
