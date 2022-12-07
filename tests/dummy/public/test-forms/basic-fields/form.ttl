@@ -87,7 +87,7 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
         form:grouping form:Bag ;
         sh:resultMessage "Dit veld is verplicht."@nl;
         sh:path ext:conceptSchemeMultiSelectCheckboxesValue] ;
-    form:options  """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
+    form:options  """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
     form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
     sh:group ext:mainPg.
 
@@ -100,7 +100,7 @@ ext:radioButtonsField a form:Field ;
     sh:name "Radio buttons" ;
     sh:order 210 ;
     sh:path ext:radioButtonsValue ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz"}""" ;
     form:displayType displayTypes:conceptSchemeRadioButtons ;
     sh:group ext:mainPg .
 
@@ -192,7 +192,7 @@ ext:conceptSchemeSelectorField a form:Field ;
     sh:name "Select" ;
     sh:order 270 ;
     sh:path ext:conceptSchemeSelectorValue ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeSelector ;
     sh:group ext:mainPg .
 
@@ -205,7 +205,7 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
     sh:name "Multiselect" ;
     sh:order 280 ;
     sh:path ext:conceptSchemeMultiSelectorValue ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     sh:group ext:mainPg .
 
