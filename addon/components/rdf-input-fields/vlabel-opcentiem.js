@@ -1,4 +1,3 @@
-import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
@@ -41,7 +40,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   amountColumnId = 'amount-column-' + guidFor(this);
 
   @tracked taxRateSubject = null;
-  @tracked fields = A();
+  @tracked taxEntries;
   @tracked differentiatie = false;
 
   constructor() {
@@ -50,7 +49,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   }
 
   get isTaxRatesEmpty() {
-    return this.fields.length === 0;
+    return this.taxEntries.length === 0;
   }
 
   get showTable() {
@@ -95,14 +94,12 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.taxRateSubject = triples[0].object; // assuming only one per form
 
       const prices = matches.values;
-      for (let price of prices) {
-        this.fields.pushObject(
-          new TaxEntry({
-            value: price.value,
-            errors: [],
-          })
-        );
-      }
+      this.taxEntries = prices.map((price) => {
+        return new TaxEntry({
+          value: price.value,
+          errors: [],
+        });
+      });
     }
 
     const statements = this.storeOptions.store.match(
@@ -196,7 +193,10 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
 
   @action
   addPrice() {
-    this.fields.pushObject(new TaxEntry({ value: '', errors: [] }));
+    this.taxEntries = [
+      ...this.taxEntries,
+      new TaxEntry({ value: '', errors: [] }),
+    ];
   }
 
   @action
@@ -212,13 +212,15 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   }
 
   @action
-  removePrice(field) {
+  removePrice(taxEntryToRemove) {
     if (this.taxRateSubject) {
-      this.updatePriceTriple(field.value, null);
+      this.updatePriceTriple(taxEntryToRemove.value, null);
 
       if (!this.hasPrices) this.removeTaxRate();
     }
-    this.fields.removeObject(field);
+    this.taxEntries = this.taxEntries.filter(
+      (taxEntry) => taxEntry !== taxEntryToRemove
+    );
 
     this.hasBeenFocused = true;
     super.updateValidations(); // update validation of the general field
