@@ -1,11 +1,9 @@
-@lblod/ember-submission-form-fields
-==============================================================================
+# @lblod/ember-submission-form-fields
 
 This addon provides form and form-fields components to create and edit submissions.
 
 
-Compatibility
-------------------------------------------------------------------------------
+## Compatibility
 
 * Ember.js v3.28 or above
 * Ember CLI v3.28 or above
@@ -13,8 +11,7 @@ Compatibility
 * ember-auto-import v2+
 
 
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-submission-form-fields
@@ -39,8 +36,7 @@ Where implementation is lacking, we fall back to the implementation of version 1
 This fallback is mainly related to the dynamic form fields.
 If you want to have an overview of the blend, see [here](https://cloud.ruizdearcaute.com/s/dmNBPaBbkeFbeZG)
 
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 ### Registering new form field components
 
@@ -73,14 +69,12 @@ registerFormFields([{
 }]);
 ```
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
 
-Releasing a new version
-------------------------------------------------------------------------------
+## Releasing a new version
 We use [`release-it`](https://github.com/release-it/release-it) to handle our release flow and [`lerna-changelog`](https://github.com/lerna/lerna-changelog) to generate the changelog for that release.
 
 ### Prerequisites
@@ -98,7 +92,6 @@ Simply run `GITHUB_AUTH=your-access-token npm run release` and follow the prompt
 After the new tag is created and pushed Drone will take care of publishing the package to npm.
 
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
