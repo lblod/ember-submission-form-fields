@@ -1,3 +1,12 @@
+## v2.4.0 (2022-12-08)
+
+#### :rocket: Enhancement
+* [#104](https://github.com/lblod/ember-submission-form-fields/pull/104) Add a "table-mode" to the listing component ([@Windvis](https://github.com/Windvis))
+* [#107](https://github.com/lblod/ember-submission-form-fields/pull/107) Resolve "mutation after consumption" deprecations ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#108](https://github.com/lblod/ember-submission-form-fields/pull/108) Ember v4.8.0 blueprint update ([@Windvis](https://github.com/Windvis))
+
 ## v2.3.0 (2022-11-17)
 
 #### :rocket: Enhancement
