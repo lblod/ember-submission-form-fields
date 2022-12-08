@@ -12,11 +12,6 @@ export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldCom
   @tracked hour = null;
   @tracked minutes = null;
 
-  constructor() {
-    super(...arguments);
-    this.loadProvidedValue();
-  }
-
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
