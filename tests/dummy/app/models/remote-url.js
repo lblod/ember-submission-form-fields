@@ -5,7 +5,7 @@ export default class RemoteUrlModel extends Model {
   @attr address;
   @attr('date') created;
   @attr('date') modified;
-  @belongsTo('file', { inverse: null }) download;
+  @belongsTo('file', { async: true, inverse: null }) download;
   @attr downloadStatus;
   @attr creator;
 
