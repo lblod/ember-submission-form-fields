@@ -6,15 +6,22 @@ const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 module.exports = async function () {
   return {
     scenarios: [
-      // We are currently running Ember 3.28 already so we don't need to run this again before updating to v4
-      // {
-      //   name: 'ember-lts-3.28',
-      //   npm: {
-      //     devDependencies: {
-      //       'ember-source': '~3.28.0',
-      //     },
-      //   },
-      // },
+      {
+        name: 'ember-lts-3.28',
+        npm: {
+          devDependencies: {
+            'ember-source': '~3.28.0',
+          },
+        },
+      },
+      {
+        name: 'ember-lts-4.4',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.4.0',
+          },
+        },
+      },
       {
         name: 'ember-release',
         npm: {
@@ -36,19 +43,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('canary'),
-          },
-        },
-      },
-      {
-        name: 'ember-default-with-jquery',
-        env: {
-          EMBER_OPTIONAL_FEATURES: JSON.stringify({
-            'jquery-integration': true,
-          }),
-        },
-        npm: {
-          devDependencies: {
-            '@ember/jquery': '^1.1.0',
           },
         },
       },
