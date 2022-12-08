@@ -47,3 +47,8 @@
 .data-table.data-table--zebra tbody tr:nth-child(odd) {
   background-color: #f3f5f6;
 }
+
+/* By default the content of cells is aligned to the baseline which looks strange for most form fields */
+.listing-table td {
+  vertical-align: top;
+}

@@ -1,0 +1,15 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+
+<http://ember-submission-form-fields/source-node> a ext:form;
+  ext:administrativeUnit <http://administrative-unit/1>;
+  ext:administrativeUnit <http://administrative-unit/2>.
+
+<http://administrative-unit/1> a ext:AdministrativeUnit;
+  ext:name <http://example.concept/concepts/brugge>;
+  ext:typeOfInvolvement <http://example.concept/concepts/mede-financierend>;
+  ext:involvementPercentage 2.
+
+<http://administrative-unit/2> a ext:AdministrativeUnit;
+  ext:name <http://example.concept/concepts/antwerpen>;
+  ext:typeOfInvolvement <http://example.concept/concepts/toezichthoudend>;
+  ext:involvementPercentage 0.

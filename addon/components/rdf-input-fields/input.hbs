@@ -1,3 +1,4 @@
+{{#unless @inTable}}
 <AuLabel
   @error={{this.hasErrors}}
   @required={{this.isRequired}}
@@ -11,6 +12,7 @@
     </AuPill>
   {{/if}}
 </AuLabel>
+{{/unless}}
 
 <AuInput
   @error={{this.hasErrors}}

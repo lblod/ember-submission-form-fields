@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { SHACL, FORM } from '@lblod/submission-form-helpers';
+import { SHACL, FORM, RDF } from '@lblod/submission-form-helpers';
 
 export const LISTING_TYPE = 'http://lblod.data.gift/vocabularies/forms/Listing';
 
@@ -35,6 +35,17 @@ export default class ListingModel {
       undefined,
       formGraph
     );
+
+    this.removeLabel =
+      store.any(uri, FORM('removeLabel'), undefined, formGraph)?.value ||
+      'Remove item';
+
+    this.noDataMessage =
+      store.any(uri, FORM('noDataMessage'), undefined, formGraph)?.value ||
+      'No items';
+
+    this.isTable =
+      store.match(uri, RDF('type'), FORM('ListingTable'), formGraph).length > 0;
   }
 
   @tracked
