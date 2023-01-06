@@ -1,3 +1,13 @@
+## v2.4.1 (2023-01-06)
+
+#### :bug: Bug Fix
+* [#113](https://github.com/lblod/ember-submission-form-fields/pull/113) Remove the .data-table styles ([@Windvis](https://github.com/Windvis))
+* [#111](https://github.com/lblod/ember-submission-form-fields/pull/111) ListingTable: hide the delete column if the table is empty ([@Windvis](https://github.com/Windvis))
+* [#110](https://github.com/lblod/ember-submission-form-fields/pull/110) Update the date help text to the correct format ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#112](https://github.com/lblod/ember-submission-form-fields/pull/112) Replace the FileCard component with the AuFileCard component ([@Windvis](https://github.com/Windvis))
+
 ## v2.4.0 (2022-12-08)
 
 #### :rocket: Enhancement
