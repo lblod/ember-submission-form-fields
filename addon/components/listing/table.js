@@ -58,6 +58,10 @@ export default class ListingTableComponent extends Component {
       })
       .sort(sortByOrder);
   }
+
+  get canRemove() {
+    return this.args.canRemove && this.args.subForms.length > 0;
+  }
 }
 
 function sortByOrder(fieldA, fieldB) {
