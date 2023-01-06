@@ -25,7 +25,7 @@
         </th>
       {{/each}}
 
-      {{#if @canRemove}}
+      {{#if this.canRemove}}
         <th>{{! delete }}</th>
       {{/if}}
     </:header>
@@ -39,7 +39,7 @@
           @forceShowErrors={{@forceShowErrors}}
           @show={{@show}}
           @onRemoveEntry={{@removeEntry}}
-          @canRemove={{@canRemove}}
+          @canRemove={{this.canRemove}}
           @removeLabel={{@listing.removeLabel}}
         />
       {{else}}
