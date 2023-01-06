@@ -13,7 +13,7 @@
       {{#if fileField.record}}
         {{#let fileField.record as |file|}}
           <li>
-            <FileCard
+            <AuFileCard
               @filename={{file.filename}}
               @fileSize={{file.humanReadableSize}}
               @downloadLink={{file.downloadLink}}
