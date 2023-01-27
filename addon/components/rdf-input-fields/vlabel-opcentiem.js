@@ -40,7 +40,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   amountColumnId = 'amount-column-' + guidFor(this);
 
   @tracked taxRateSubject = null;
-  @tracked taxEntries;
+  @tracked taxEntries = [];
   @tracked differentiatie = false;
 
   constructor() {
