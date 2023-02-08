@@ -1,3 +1,8 @@
+## v2.6.0 (2023-02-08)
+
+#### :rocket: Enhancement
+* [#117](https://github.com/lblod/ember-submission-form-fields/pull/117) Use the `AuDateInput` component for the dateTime display type ([@Windvis](https://github.com/Windvis))
+
 ## v2.5.0 (2023-02-08)
 
 #### :rocket: Enhancement
