@@ -1,3 +1,9 @@
+## v2.5.0 (2023-02-08)
+
+#### :rocket: Enhancement
+* [#116](https://github.com/lblod/ember-submission-form-fields/pull/116) Update uuid to v9 ([@Windvis](https://github.com/Windvis))
+* [#115](https://github.com/lblod/ember-submission-form-fields/pull/115) Date display type changes ([@Windvis](https://github.com/Windvis))
+
 ## v2.4.2 (2023-01-27)
 #### :bug: Bug Fix
 * [#114](https://github.com/lblod/ember-submission-form-fields/pull/114) Fix an exception in the VlabelOpcentiem component ([@Windvis](https://github.com/Windvis))
