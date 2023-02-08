@@ -153,13 +153,25 @@ ext:mainFg form:hasField ext:textAreaField .
 # Date
 ##########################################################
 ext:dateField a form:Field ;
-    sh:name "Datepicker" ;
+    sh:name "Date" ;
     sh:order 240 ;
     sh:path ext:dateValue ;
     form:displayType displayTypes:date ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:dateField .
+
+##########################################################
+# Date picker
+##########################################################
+ext:datePickerField a form:Field ;
+    sh:name "Datepicker" ;
+    sh:order 241 ;
+    sh:path ext:datePickerValue ;
+    form:displayType displayTypes:datePicker ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:datePickerField .
 
 ##########################################################
 # Date and time

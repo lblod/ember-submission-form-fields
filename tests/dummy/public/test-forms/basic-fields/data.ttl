@@ -30,6 +30,10 @@
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/dateValue>
     "2022-12-06"^^<http://www.w3.org/2001/XMLSchema#date>.
 
+# Date picker
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/datePickerValue>
+    "2022-02-08"^^<http://www.w3.org/2001/XMLSchema#date>.
+
 # Date and time
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/dateTimeValue>
     "2022-12-31T23:00:00.000Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>.

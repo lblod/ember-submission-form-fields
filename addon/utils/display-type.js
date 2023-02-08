@@ -10,6 +10,7 @@ import ConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/
 import ConceptSchemeMultiSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector';
 import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
 import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date';
+import DatePickerComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-picker';
 import DateTimeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time';
 import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
@@ -170,6 +171,10 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/date',
     edit: DateComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/datePicker',
+    edit: DatePickerComponent,
   },
   {
     displayType: 'http://lblod.data.gift/display-types/dateTime',

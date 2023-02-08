@@ -7,13 +7,14 @@
 </AuLabel>
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-3-4">
-    <AuDateInput
+    <AuDatePicker
+      @id={{this.inputId}}
       @error={{this.hasErrors}}
       @value={{this.value}}
       @onChange={{this.updateValue}}
       @disabled={{@show}}
-      id={{this.inputId}}
-      {{on "blur" (fn (mut this.hasBeenFocused) true)}}
+      {{! TODO: This uses "private" apis since AuDatePicker doesn't support a blur event yet }}
+      {{on "duetBlur" (fn (mut this.hasBeenFocused) true)}}
     />
   </div>
 </div>

@@ -7,6 +7,7 @@ module.exports = function (defaults) {
     // Add options here
     '@appuniversum/ember-appuniversum': {
       dutchDatePickerLocalization: true,
+      disableWormholeElement: true,
     },
   };
 
