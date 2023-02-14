@@ -1,3 +1,8 @@
+## 2.6.1 (2023-02-14)
+
+#### :bug: Bug Fix
+* [#118](https://github.com/lblod/ember-submission-form-fields/pull/118) Use `@value` argument for the `<AuInput>` component ([@Windvis](https://github.com/Windvis))
+
 ## v2.6.0 (2023-02-08)
 
 #### :rocket: Enhancement
