@@ -56,7 +56,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends InputFieldCo
       page: { size: 1 },
     });
     if (remoteUrls.length) {
-      return remoteUrls.firstObject;
+      return remoteUrls.slice()[0]; // TODO: remove .slice once we support only Ember Data 4.8+
     } else {
       throw `No remote-url could be found for ${remoteObjectUri}`;
     }
