@@ -1,4 +1,10 @@
-## 2.6.1 (2023-02-14)
+## v2.7.0 (2023-02-27)
+
+#### :rocket: Enhancement
+* [#120](https://github.com/lblod/ember-submission-form-fields/pull/120) Persist the order of listing entries ([@Windvis](https://github.com/Windvis))
+* [#119](https://github.com/lblod/ember-submission-form-fields/pull/119) Resolve `.firstObject` deprecations on newer Ember Data versions ([@Windvis](https://github.com/Windvis))
+
+## v2.6.1 (2023-02-14)
 
 #### :bug: Bug Fix
 * [#118](https://github.com/lblod/ember-submission-form-fields/pull/118) Use `@value` argument for the `<AuInput>` component ([@Windvis](https://github.com/Windvis))
