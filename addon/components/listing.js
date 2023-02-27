@@ -6,11 +6,14 @@ import {
   generatorsForNode,
   triplesForGenerator,
   triplesForScope,
+  SHACL,
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
 import { next } from '@ember/runloop';
 import ListingList from '@lblod/ember-submission-form-fields/components/listing/list';
 import ListingTable from '@lblod/ember-submission-form-fields/components/listing/table';
+
+const ORDER = SHACL('order');
 
 export default class ListingComponent extends Component {
   @tracked subForms = A();
@@ -54,6 +57,23 @@ export default class ListingComponent extends Component {
     return this.listing.isTable ? ListingTable : ListingList;
   }
 
+  get highestOrderValue() {
+    let highestOrderValue = 0;
+
+    if (this.subForms.length) {
+      let lastSubForm = this.subForms[this.subForms.length - 1];
+
+      highestOrderValue =
+        getOrder(
+          lastSubForm.sourceNode,
+          this.formStore,
+          this.graphs.sourceGraph
+        ) || 0;
+    }
+
+    return highestOrderValue;
+  }
+
   constructor() {
     super(...arguments);
     this.updateScope();
@@ -63,7 +83,7 @@ export default class ListingComponent extends Component {
     //  'You attempted to update `subForms` on `ListingComponent`, but it had already been used previously in the same computation. '
     // Why is it triggered? this.subForms is tracked, is rendered before the method below (which has side effects, i.e. updates this.subForms) ran.
     next(this, () => {
-      this.renderSubForms();
+      this.renderSubForms({ orderSubForms: true });
     });
   }
 
@@ -75,6 +95,12 @@ export default class ListingComponent extends Component {
       ...dataset.triples.map((t) => {
         return { ...t, graph: this.graphs.sourceGraph };
       }),
+      {
+        subject: dataset.sourceNodes[0], // We only support 1 source node
+        predicate: ORDER,
+        object: this.highestOrderValue + 1,
+        graph: this.graphs.sourceGraph,
+      },
     ];
     this.formStore.addAll(triplesToInsert);
     this.updateScope();
@@ -117,7 +143,7 @@ export default class ListingComponent extends Component {
     });
   }
 
-  renderSubForms() {
+  renderSubForms({ orderSubForms } = {}) {
     let subForms = [];
 
     //This is a simplified version of rendering the subforms. It misses the following:
@@ -162,6 +188,27 @@ export default class ListingComponent extends Component {
       } else {
         mergedChildren.pushObject(child);
       }
+    }
+
+    if (orderSubForms) {
+      // 5) We add sh:order triples if a subForm doesn't have this yet
+      //    We assume this only happens if we are editing a form that was saved before this order feature
+      let sourceGraph = this.graphs.sourceGraph;
+      let formStore = this.formStore;
+
+      ensureOrderTriplesForExistingData({
+        subForms: mergedChildren,
+        formStore: this.formStore,
+        sourceGraph: this.graphs.sourceGraph,
+      });
+
+      // 6) sort the forms based on their order
+      mergedChildren.sort((subFormA, subFormB) => {
+        return (
+          getOrder(subFormA.sourceNode, formStore, sourceGraph) -
+          getOrder(subFormB.sourceNode, formStore, sourceGraph)
+        );
+      });
     }
 
     this.subForms = mergedChildren;
@@ -242,4 +289,39 @@ export default class ListingComponent extends Component {
 
     return sourceData;
   }
+}
+
+function ensureOrderTriplesForExistingData({
+  subForms,
+  formStore,
+  sourceGraph,
+}) {
+  let shouldAddOrderTriples = subForms.some((subForm) => {
+    return !hasOrder(subForm.sourceNode, formStore, sourceGraph);
+  });
+
+  if (shouldAddOrderTriples) {
+    let orderTriples = subForms.map((subForm, index) => {
+      return {
+        subject: subForm.sourceNode,
+        predicate: ORDER,
+        object: index + 1,
+        graph: sourceGraph,
+      };
+    });
+
+    formStore.addAll(orderTriples);
+  }
+}
+
+function hasOrder(subject, store, graph) {
+  let maybeOrder = store.any(subject, ORDER, undefined, graph);
+
+  return Boolean(maybeOrder);
+}
+
+function getOrder(subject, store, graph) {
+  let order = store.any(subject, ORDER, undefined, graph);
+
+  return parseInt(order.value);
 }
