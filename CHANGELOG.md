@@ -1,3 +1,8 @@
+## v2.7.1 (2023-03-24)
+
+#### :bug: Bug Fix
+* [#121](https://github.com/lblod/ember-submission-form-fields/pull/121) Fix some embroider issues ([@Windvis](https://github.com/Windvis))
+
 ## v2.7.0 (2023-02-27)
 
 #### :rocket: Enhancement
