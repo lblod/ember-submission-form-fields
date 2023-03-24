@@ -64,7 +64,13 @@ module.exports = async function () {
           },
         },
       },
-      embroiderSafe(),
+      embroiderSafe({
+        npm: {
+          devDependencies: {
+            'ember-focus-trap': '1.0.1', // Appuniversum uses this, but there is an Embroider issue that prevents it from building without listing it as a dep ourselves: https://github.com/embroider-build/embroider/issues/1175
+          },
+        },
+      }),
       embroiderOptimized(),
     ],
   };

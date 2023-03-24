@@ -15,6 +15,34 @@ steps:
   image: danlynn/ember-cli:4.2.0-node_16.14
   commands:
   - npm run test:ember
+trigger:
+  event:
+    - pull_request
+---
+kind: pipeline
+type: docker
+name: scenario-embroider-safe
+steps:
+- name: install
+  image: danlynn/ember-cli:4.2.0-node_16.14
+  commands:
+  - npm install
+- name: test-embroider
+  image: danlynn/ember-cli:4.2.0-node_16.14
+  commands:
+  - npx ember try:one embroider-optimized
+trigger:
+  event:
+    - pull_request
+---
+kind: pipeline
+type: docker
+name: scenario-embroider-strict
+steps:
+- name: install
+  image: danlynn/ember-cli:4.2.0-node_16.14
+  commands:
+  - npm install
 - name: test-embroider
   image: danlynn/ember-cli:4.2.0-node_16.14
   commands:
