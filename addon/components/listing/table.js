@@ -30,6 +30,14 @@ export default class ListingTableComponent extends Component {
       sourceNode: listingTableNode,
     });
     this.tableHeaders = this.getTableHeaders(fields);
+
+    this.showRowIndex =
+      store.any(
+        listingTableNode,
+        FORM('showTableRowIndex'),
+        undefined,
+        graphs.formGraph
+      )?.value || false;
   }
 
   getTableTitle(tableForm) {

@@ -9,6 +9,9 @@
     </:title>
     --}}
     <:header>
+      {{#if this.showRowIndex}}
+        <th>{{! index }}</th>
+      {{/if}}
       {{#each this.tableHeaders as |column|}}
         <th>
           {{column.label}}
@@ -30,7 +33,7 @@
       {{/if}}
     </:header>
     <:body>
-      {{#each @subForms as |subForm|}}
+      {{#each @subForms as |subForm index|}}
         <this.ListingTableRow
           @subForm={{subForm}}
           @formStore={{@formStore}}
@@ -41,6 +44,8 @@
           @onRemoveEntry={{@removeEntry}}
           @canRemove={{this.canRemove}}
           @removeLabel={{@listing.removeLabel}}
+          @showIndex={{this.showRowIndex}}
+          @index={{index}}
         />
       {{else}}
         <tr>

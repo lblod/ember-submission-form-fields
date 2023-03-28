@@ -24,4 +24,8 @@ export default class ListingTableRow extends Component {
       node,
     });
   }
+
+  get index() {
+    return this.args.index + 1;
+  }
 }
