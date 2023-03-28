@@ -10,7 +10,7 @@
     --}}
     <:header>
       {{#if this.showRowIndex}}
-        <th>{{! index }}</th>
+        <th>{{if this.indexLabel this.indexLabel}}</th>
       {{/if}}
       {{#each this.tableHeaders as |column|}}
         <th>

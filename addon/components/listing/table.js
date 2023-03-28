@@ -38,6 +38,15 @@ export default class ListingTableComponent extends Component {
         undefined,
         graphs.formGraph
       )?.value || false;
+
+    if (this.showRowIndex) {
+      this.indexLabel = store.any(
+        listingTableNode,
+        FORM('tableIndexLabel'),
+        undefined,
+        graphs.formGraph
+      )?.value;
+    }
   }
 
   getTableTitle(tableForm) {
