@@ -3,12 +3,13 @@
 </AuLabel>
 
 {{#if this.showDifferentiatie}}
-  <AuControlCheckbox
-    @label="Vink aan indien er sprake is van differentiatie"
+  <AuCheckbox
     @onChange={{this.toggleDifferentiatie}}
     @disabled={{@show}}
     @checked={{this.differentiatie}}
-  />
+  >
+    Vink aan indien er sprake is van differentiatie
+  </AuCheckbox>
 {{else}}
   <AuHelpText>
     {{#if @show}}
