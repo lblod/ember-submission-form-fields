@@ -1,5 +1,4 @@
 import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import {
@@ -11,8 +10,6 @@ import {
 import { namedNode } from 'rdflib';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
-  inputId = 'multi-select-checkboxes-' + guidFor(this);
-
   @tracked options = [];
 
   constructor() {

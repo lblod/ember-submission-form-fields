@@ -1,13 +1,10 @@
 import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { SKOS } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
-  inputId = 'concept-scheme-radio-buttons-' + guidFor(this);
-
   @tracked options = [];
 
   constructor() {

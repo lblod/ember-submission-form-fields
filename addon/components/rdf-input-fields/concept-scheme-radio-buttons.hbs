@@ -1,28 +1,23 @@
-{{! TODO Use a <fieldset> and <legend> combo to group radio buttons
-    More information: https://github.com/appuniversum/ember-appuniversum/issues/210
-}}
-<AuLabel
-  @error={{this.hasErrors}}
-  @required={{this.isRequired}}
-  for={{this.inputId}}
->
-  {{@field.label}}
-</AuLabel>
-<ul id={{this.inputId}}>
-  {{#each this.options as |option|}}
-    <li>
-      <AuControlRadio
-        @identifier="{{@field.uri}}/<{{option.value}}"
-        @name={{@field.uri.value}}
-        @label={{option.label}}
-        @value={{option.label}}
-        @onChange={{fn this.updateValue option}}
-        @disabled={{@show}}
-        checked={{eq this.value option.value}}
-      />
-    </li>
-  {{/each}}
-</ul>
+<AuFieldset as |f|>
+  <f.legend @required={{this.isRequired}} @error={{this.hasErrors}}>
+    {{@field.label}}
+  </f.legend>
+  <f.content>
+    <ul>
+      {{#each this.options as |option|}}
+        <li>
+          <AuRadio
+            @name={{@field.uri.value}}
+            @value={{option.label}}
+            @onChange={{fn this.updateValue option}}
+            @disabled={{@show}}
+            @checked={{eq this.value option.value}}
+          >{{option.label}}</AuRadio>
+        </li>
+      {{/each}}
+    </ul>
+  </f.content>
+</AuFieldset>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
