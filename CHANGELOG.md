@@ -1,3 +1,9 @@
+## v2.8.0 (2023-03-30)
+
+#### :rocket: Enhancement
+* [#122](https://github.com/lblod/ember-submission-form-fields/pull/122) Add an option to display the row index in the listing table ([@Windvis](https://github.com/Windvis))
+* [#123](https://github.com/lblod/ember-submission-form-fields/pull/123) Appuniversum "control" component improvements ([@Windvis](https://github.com/Windvis))
+
 ## v2.7.1 (2023-03-24)
 
 #### :bug: Bug Fix
