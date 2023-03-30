@@ -38,6 +38,8 @@ ext:administrativeUnitsL a form:Listing;
   form:addLabel "Voeg nieuw betrokken lokaal bestuur toe";
   form:canRemove true;
   form:removeLabel "Verwijder";
+  form:tableIndexLabel "#";
+  form:showTableRowIndex true;
   sh:group ext:mainPg;
   sh:order 2 .
 
