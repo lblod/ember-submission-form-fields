@@ -69,8 +69,10 @@
               />
             {{/let}}
 
-            {{! template-lint-disable no-triple-curlies}}
-            <AuHelpText>{{{field.help}}}</AuHelpText>
+            {{#if field.help}}
+              {{! template-lint-disable no-triple-curlies}}
+              <AuHelpText>{{{field.help}}}</AuHelpText>
+            {{/if}}
           </div>
         {{/if}}
       {{/if}}
