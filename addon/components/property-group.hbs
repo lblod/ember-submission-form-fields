@@ -53,8 +53,8 @@
             @show={{@show}}/>
         {{else}}
           <div class="au-u-margin-bottom-small">
-            {{#let (ensure-safe-component
-              (component-for-display-type field.displayType show=@show))
+            {{#let
+              (component-for-display-type field.displayType show=@show)
               as |FormField|
             }}
               <FormField
