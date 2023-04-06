@@ -90,10 +90,6 @@
     "sass": "^1.49.8",
     "webpack": "^5.74.0"
   },
-  "overrides": {
-    "@embroider/macros": "^1.6.0",
-    "@embroider/util": "^1.6.0"
-  },
   "engines": {
     "node": "14.* || 16.* || >= 18"
   },
