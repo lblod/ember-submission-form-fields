@@ -47,7 +47,7 @@ ext:administrativeUnitsL a form:Listing;
 #  Subform: administrativeUnit
 ##########################################################
 ext:administrativeUnitFormItem a form:SubForm;
-   # sh:name "Betrokken lokale besturen" ;
+   sh:name "Betrokken lokale besturen" ;
    form:includes ext:administrativeUnitNameF;
    form:includes ext:administrativeUnitTypeOfInvolvementF;
    form:includes ext:administrativeUnitInvolvementPercentageF;

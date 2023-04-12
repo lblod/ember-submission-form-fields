@@ -9,3 +9,7 @@
 .concept-scheme-multi-select-checkboxes__content {
   width: 100%;
 }
+
+.au-c-table__caption:empty {
+  display: none;
+}
