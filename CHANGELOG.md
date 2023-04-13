@@ -1,3 +1,8 @@
+## v2.9.1 (2023-04-13)
+
+#### :bug: Bug Fix
+* [8e6b25f](https://github.com/lblod/ember-submission-form-fields/commit/8e6b25fa8dd6b3c8bb7fb77f3728a512e2388ca4) Allow users to set attributes on the RdfForm component ([@Windvis](https://github.com/Windvis))
+
 ## v2.9.0 (2023-04-13)
 
 #### :rocket: Enhancement
