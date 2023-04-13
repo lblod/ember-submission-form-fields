@@ -1,38 +1,86 @@
-{{#if @subForm.itemLabel}}
-  <div class="au-u-margin-bottom-small">
-    <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
-      {{@subForm.itemLabel}}
-    </AuHeading>
-  </div>
-{{/if}}
+{{#if @useNewListingLayout}}
+  <div class="sf-listing-sub-form au-o-box">
+    {{#if (or @subForm.itemLabel @canRemove)}}
+      <AuToolbar @size={{this.size}} as |Group|>
+        <Group>
+          {{#if @subForm.itemLabel}}
+            {{! TODO: The args are undefined so the heading always defaults to a h1 }}
+            <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+              {{@subForm.itemLabel}}
+            </AuHeading>
+          {{/if}}
+        </Group>
+        {{#if @canRemove}}
+          <Group>
+            <AuButton
+              @skin="naked"
+              @icon="bin"
+              @iconAlignment="left"
+              @alert={{true}}
+              {{on "click" (fn @onRemoveEntry @sourceNode)}}
+            >
+              {{@subForm.removeLabel}}
+            </AuButton>
+          </Group>
+        {{/if}}
+      </AuToolbar>
+    {{/if}}
 
-<div class="au-o-grid">
-  <div class="au-o-grid__item au-u-4-5">
-    {{#each this.propertyGroups as |group index|}}
-      <PropertyGroup
-        @form={{@subForm.uri}}
-        @group={{group}}
-        @formStore={{@formStore}}
-        @graphs={{@graphs}}
-        @sourceNode={{@sourceNode}}
-        @forceShowErrors={{@forceShowErrors}}
-        @cacheConditionals={{@cacheConditionals}}
-        @last={{eq index (sub this.propertyGroups.length 1)}}
-        @show={{@show}}
-        @level={{@level}}/>
-    {{/each}}
+    <div class="au-o-flow">
+      {{#each this.propertyGroups as |group index|}}
+        <PropertyGroup
+          @form={{@subForm.uri}}
+          @group={{group}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{@sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @show={{@show}}
+          @level={{@level}}
+        />
+      {{/each}}
+    </div>
   </div>
-
-  {{#if @canRemove}}
-    <div class="au-o-grid__item au-u-1-5">
-      <AuButton
-        @skin="link"
-        @icon="bin"
-        @iconAlignment="left"
-        {{on "click" (fn  @onRemoveEntry @sourceNode)}}
-      >
-        {{@subForm.removeLabel}}
-      </AuButton>
+{{else}}
+  {{#if @subForm.itemLabel}}
+    <div class="au-u-margin-bottom-small">
+      <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+        {{@subForm.itemLabel}}
+      </AuHeading>
     </div>
   {{/if}}
-</div>
+
+  <div class="au-o-grid">
+    <div class="au-o-flow au-o-grid__item au-u-4-5">
+      {{#each this.propertyGroups as |group index|}}
+        <PropertyGroup
+          @form={{@subForm.uri}}
+          @group={{group}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{@sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @show={{@show}}
+          @level={{@level}}
+        />
+      {{/each}}
+    </div>
+
+    {{#if @canRemove}}
+      <div class="au-o-grid__item au-u-1-5">
+        <AuButton
+          @skin="link"
+          @icon="bin"
+          @iconAlignment="left"
+          {{on "click" (fn @onRemoveEntry @sourceNode)}}
+        >
+          {{@subForm.removeLabel}}
+        </AuButton>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

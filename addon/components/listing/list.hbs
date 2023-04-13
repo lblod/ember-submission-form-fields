@@ -1,5 +1,5 @@
-<div class="au-o-grid">
-  <div class="au-o-grid__item au-u-4-5">
+{{#if @useNewListingLayout}}
+  <div class="au-o-flow" ...attributes>
     {{#each @subForms as |subForm index|}}
       <SubForm
         @subForm={{subForm}}
@@ -13,20 +13,54 @@
         @level={{@level}}
         @onRemoveEntry={{@removeEntry}}
         @canRemove={{@canRemove}}
+        @useNewListingLayout={{true}}
       />
     {{/each}}
-  </div>
-  {{#if @canAdd}}
-    <div class="au-o-grid__item au-u-1-5">
+
+    {{#if @canAdd}}
       <AuButton
         @icon="plus"
+        @skin="secondary"
+        @width="block"
         @iconAlignment="left"
-        class="au-u-margin-bottom-tiny"
         @disabled={{@creationFormData}}
         {{on "click" @createEntry}}
       >
         {{@listing.addLabel}}
       </AuButton>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="au-o-grid">
+    <div class="au-o-grid__item au-u-4-5">
+      {{#each @subForms as |subForm index|}}
+        <SubForm
+          @subForm={{subForm}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{subForm.sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{eq index (sub @subForms.length 1)}}
+          @show={{@show}}
+          @level={{@level}}
+          @onRemoveEntry={{@removeEntry}}
+          @canRemove={{@canRemove}}
+        />
+      {{/each}}
     </div>
-  {{/if}}
-</div>
+    {{#if @canAdd}}
+      <div class="au-o-grid__item au-u-1-5">
+        <AuButton
+          @icon="plus"
+          @iconAlignment="left"
+          class="au-u-margin-bottom-tiny"
+          @disabled={{@creationFormData}}
+          {{on "click" @createEntry}}
+        >
+          {{@listing.addLabel}}
+        </AuButton>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

@@ -11,6 +11,8 @@
       @cacheConditionals={{@cacheConditionals}}
       @last={{eq index (sub this.propertyGroups.length 1)}}
       @show={{@show}}
-      @level={{@level}}/>
+      @level={{@level}}
+      @useNewListingLayout={{@useNewListingLayout}} {{!Temporary argument so we don't break the css hacks in the LPDC module}}
+    />
   {{/each}}
 </div>

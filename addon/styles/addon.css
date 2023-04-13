@@ -11,6 +11,11 @@
   margin: 0; /* browsers add a 1px margin which looks strange when it's displayed next to other inputs */
 }
 
+.sf-listing-sub-form {
+  border: .1rem solid var(--au-gray-200);
+  border-radius: var(--au-radius);
+}
+
 /* Can be removed once Appuniversum adds this by default, or removes the flex from the default version:
    https://github.com/appuniversum/ember-appuniversum/blob/8793c19fbd69e9a1cec2ed5c670efef4bd77b21d/app/styles/ember-appuniversum/_c-fieldset.scss#L49-L52C23
 */
