@@ -4,7 +4,6 @@
       <AuToolbar @size={{this.size}} as |Group|>
         <Group>
           {{#if @subForm.itemLabel}}
-            {{! TODO: The args are undefined so the heading always defaults to a h1 }}
             <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
               {{@subForm.itemLabel}}
             </AuHeading>
@@ -38,7 +37,7 @@
           @cacheConditionals={{@cacheConditionals}}
           @last={{eq index (sub this.propertyGroups.length 1)}}
           @show={{@show}}
-          @level={{@level}}
+          @level={{this.nextLevel}}
         />
       {{/each}}
     </div>

@@ -12,4 +12,21 @@ export default class SubFormComponent extends Component {
       form: this.args.subForm.uri,
     });
   }
+
+  get level() {
+    return this.args.level || 2;
+  }
+
+  get nextLevel() {
+    // We only want to increase the level of the nested titles if we display a title ourselves
+    return this.args.subForm.itemLabel ? this.level + 1 : this.level;
+  }
+
+  get titleLevel() {
+    return `${this.level}`;
+  }
+
+  get titleSkin() {
+    return `${this.level + 1}`;
+  }
 }
