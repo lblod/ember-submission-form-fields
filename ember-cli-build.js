@@ -37,7 +37,22 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
     ],
-    packageRules: [{ '@ember-data/store': null }],
+    packageRules: [
+      {
+        package: '@ember-data/store',
+        addonModules: {
+          '-private.js': {
+            dependsOnModules: [],
+          },
+          '-private/system/core-store.js': {
+            dependsOnModules: [],
+          },
+          '-private/system/model/internal-model.js': {
+            dependsOnModules: [],
+          },
+        },
+      },
+    ],
     compatAdapters,
   });
 };
