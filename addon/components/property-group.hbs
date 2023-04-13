@@ -1,5 +1,5 @@
 {{#if this.children}}
-  <div ...attributes>
+  <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
     {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
         {{#if @group.name}}
@@ -33,7 +33,9 @@
             @sourceNode={{@sourceNode}}
             @forceShowErrors={{@forceShowErrors}}
             @cacheConditionals={{@cacheConditionals}}
-            @show={{@show}}/>
+            @show={{@show}}
+            @useNewListingLayout={{@useNewListingLayout}}
+          />
           {{#if @last}}
             {{#if (not-eq index (sub this.children.length 1))}}
               <AuHr @size="large"/>
@@ -50,7 +52,9 @@
             @sourceNode={{@sourceNode}}
             @forceShowErrors={{@forceShowErrors}}
             @cacheConditionals={{@cacheConditionals}}
-            @show={{@show}}/>
+            @show={{@show}}
+            @useNewListingLayout={{@useNewListingLayout}}
+          />
         {{else}}
           <div class="au-u-margin-bottom-small">
             {{#let
