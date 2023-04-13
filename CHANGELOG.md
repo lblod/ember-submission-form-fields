@@ -1,3 +1,18 @@
+## v2.9.0 (2023-04-13)
+
+#### :rocket: Enhancement
+* [#130](https://github.com/lblod/ember-submission-form-fields/pull/130) Table field improvements ([@Windvis](https://github.com/Windvis))
+* [#128](https://github.com/lblod/ember-submission-form-fields/pull/128) Listing layout improvements ([@Windvis](https://github.com/Windvis))
+* [#126](https://github.com/lblod/ember-submission-form-fields/pull/126) Hide the label and description when the textarea field is used in a table ([@Windvis](https://github.com/Windvis))
+* [#124](https://github.com/lblod/ember-submission-form-fields/pull/124) Hide the label and helptext when the date field is used in a table ([@Windvis](https://github.com/Windvis))
+
+#### :bug: Bug Fix
+* [#129](https://github.com/lblod/ember-submission-form-fields/pull/129) Fix the subform title levels ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#127](https://github.com/lblod/ember-submission-form-fields/pull/127) Update Ember Data to 4.12.0 ([@Windvis](https://github.com/Windvis))
+
+
 ## v2.8.0 (2023-03-30)
 
 #### :rocket: Enhancement
