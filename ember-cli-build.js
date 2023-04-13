@@ -20,6 +20,16 @@ module.exports = function (defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
+  // The built-in compat adapters for Ember Data shouldn't be needed anymore.
+  // This code can be removed once https://github.com/embroider-build/embroider/pull/1369 is released.
+  const compatAdapters = new Map();
+  compatAdapters.set('ember-data', null);
+  compatAdapters.set('@ember-data/adapter', null);
+  compatAdapters.set('@ember-data/model', null);
+  compatAdapters.set('@ember-data/record-data', null);
+  compatAdapters.set('@ember-data/serializer', null);
+  compatAdapters.set('@ember-data/store', null);
+
   const { maybeEmbroider } = require('@embroider/test-setup');
   return maybeEmbroider(app, {
     skipBabel: [
@@ -27,5 +37,7 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
     ],
+    packageRules: [{ '@ember-data/store': null }],
+    compatAdapters,
   });
 };
