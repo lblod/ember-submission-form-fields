@@ -51,6 +51,7 @@ ext:administrativeUnitFormItem a form:SubForm;
    form:includes ext:administrativeUnitNameF;
    form:includes ext:administrativeUnitTypeOfInvolvementF;
    form:includes ext:administrativeUnitInvolvementPercentageF;
+   form:includes ext:administrativeUnitDescriptionF;
    form:hasFieldGroup ext:mainPg.
 
 ##########################################################
@@ -100,6 +101,16 @@ ext:administrativeUnitInvolvementPercentageF a form:Field ;
         form:grouping form:Bag ;
         sh:resultMessage "Het percentage moet groter zijn dan 0."@nl;
         sh:path ext:involvementPercentage] ;
+    sh:group ext:mainPg .
+
+##########################################################
+# Field: description
+##########################################################
+ext:administrativeUnitDescriptionF a form:Field ;
+    sh:name "Beschrijving" ;
+    sh:order 4;
+    sh:path ext:description;
+    form:displayType displayTypes:textArea ;
     sh:group ext:mainPg .
 
 ##########################################################
