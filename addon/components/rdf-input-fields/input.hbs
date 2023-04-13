@@ -18,6 +18,7 @@
   @error={{this.hasErrors}}
   @value={{this.value}}
   @disabled={{@show}}
+  @width={{if @inTable "block"}}
   id={{this.inputId}}
   {{on "blur" this.updateValue}}
 />

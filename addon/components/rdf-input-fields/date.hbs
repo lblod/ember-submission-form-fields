@@ -7,13 +7,14 @@
     {{@field.label}}
   </AuLabel>
 {{/unless}}
-<div class="au-o-grid au-o-grid--flush">
-  <div class="au-o-grid__item au-u-3-4">
+<div class={{unless @inTable "au-o-grid au-o-grid--flush"}}>
+  <div class={{unless @inTable "au-o-grid__item au-u-3-4"}}>
     <AuDateInput
       @error={{this.hasErrors}}
       @value={{this.value}}
       @onChange={{this.updateValue}}
       @disabled={{@show}}
+      @width={{if @inTable "block"}}
       id={{this.inputId}}
       {{on "blur" (fn (mut this.hasBeenFocused) true)}}
     />
