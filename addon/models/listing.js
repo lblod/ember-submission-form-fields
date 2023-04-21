@@ -1,5 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { SHACL, FORM, RDF } from '@lblod/submission-form-helpers';
+import { Literal } from 'rdflib';
 
 export const LISTING_TYPE = 'http://lblod.data.gift/vocabularies/forms/Listing';
 
@@ -17,6 +18,15 @@ export default class ListingModel {
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
     this.rdflibCanAdd = store.any(uri, FORM('canAdd'), undefined, formGraph);
+    let rdflibMinCount = store.any(
+      uri,
+      SHACL('minCount'),
+      undefined,
+      formGraph
+    );
+    if (rdflibMinCount) {
+      this.minCount = Literal.toJS(rdflibMinCount);
+    }
     this.rdflibMaxCount = store.any(
       uri,
       SHACL('maxCount'),

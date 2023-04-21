@@ -1,4 +1,3 @@
-import { A } from '@ember/array';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -16,7 +15,7 @@ import ListingTable from '@lblod/ember-submission-form-fields/components/listing
 const ORDER = SHACL('order');
 
 export default class ListingComponent extends Component {
-  @tracked subForms = A();
+  @tracked subForms = [];
   scope = null;
 
   get formStore() {
@@ -50,7 +49,11 @@ export default class ListingComponent extends Component {
   }
 
   get canRemove() {
-    return this.listing.canRemove && !this.args.show;
+    const hasMinimumItems = this.listing.minCount
+      ? this.listing.minCount < this.subForms.length
+      : true;
+
+    return this.listing.canRemove && !this.args.show && hasMinimumItems;
   }
 
   get ListingDisplayMode() {
@@ -80,10 +83,9 @@ export default class ListingComponent extends Component {
     //TODO: perhaps there might be a better solution; feel free to look.
     // What does this fix?
     // The infamous:
-    //  'You attempted to update `subForms` on `ListingComponent`, but it had already been used previously in the same computation. '
-    // Why is it triggered? this.subForms is tracked, is rendered before the method below (which has side effects, i.e. updates this.subForms) ran.
+    //  'You attempted to update `children` on `SubmissionFormPropertyGroupComponent`, but it had already been used previously in the same computation. '
     next(this, () => {
-      this.renderSubForms({ orderSubForms: true });
+      this.loadSubForms();
     });
   }
 
@@ -102,6 +104,7 @@ export default class ListingComponent extends Component {
         graph: this.graphs.sourceGraph,
       },
     ];
+
     this.formStore.addAll(triplesToInsert);
     this.updateScope();
     this.renderSubForms();
@@ -143,11 +146,61 @@ export default class ListingComponent extends Component {
     });
   }
 
-  renderSubForms({ orderSubForms } = {}) {
+  loadSubForms() {
     let subForms = [];
 
+    for (const sourceNode of this.scope.values) {
+      const subForm = getSubFormsForNode({
+        store: this.formStore,
+        graphs: this.graphs,
+        node: this.listing.uri,
+        sourceNode,
+      })[0];
+
+      if (subForm) subForms.push(subForm);
+    }
+
+    // We add sh:order triples if a subForm doesn't have this yet
+    // We assume this only happens if we are editing a form that was saved before this order feature
+    let sourceGraph = this.graphs.sourceGraph;
+    let formStore = this.formStore;
+
+    ensureOrderTriplesForExistingData({
+      subForms,
+      formStore: this.formStore,
+      sourceGraph: this.graphs.sourceGraph,
+    });
+
+    // sort the forms based on their order
+    subForms.sort((subFormA, subFormB) => {
+      return (
+        getOrder(subFormA.sourceNode, formStore, sourceGraph) -
+        getOrder(subFormB.sourceNode, formStore, sourceGraph)
+      );
+    });
+
+    this.subForms = subForms;
+
+    if (this.listing.minCount && this.subForms.length < this.listing.minCount) {
+      const amountMissing = this.listing.minCount - this.subForms.length;
+
+      // TODO: without next an error is thrown because the `children` prop of a parent PropertyGroup component is modified somewhere in the chain.
+      // We need to spend some time to untangle this observer update hell.
+      next(this, () => {
+        Array(amountMissing)
+          .fill()
+          .forEach(() => {
+            this.createEntry();
+          });
+      });
+    }
+  }
+
+  renderSubForms() {
+    let subForms = [];
+    let currentSubForms = this.subForms;
+
     //This is a simplified version of rendering the subforms. It misses the following:
-    // - TODO: ordering of hasMany
     // - TODO: a listing might have multiple subforms; where different info can be respresented
     // - TODO: there is currently no specific 'create' form
     // Note further:
@@ -165,50 +218,31 @@ export default class ListingComponent extends Component {
     }
 
     // 2) calculate to be removed
-    const deletes = this.subForms.filter(
+    const deletes = currentSubForms.filter(
       (rendered) =>
         !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
     );
 
     // 3) remove the "unwanted" children
     if (deletes.length) {
-      this.subForms.removeObjects(deletes);
+      currentSubForms = currentSubForms.filter((subform) => {
+        return !deletes.includes(subform);
+      });
     }
 
     // 4) create a new list to render, merging already (rendered) children, with new children.
     // We don't want to re-render components, to avoid flickering behaviour and state loss.
-    const mergedChildren = A();
+    const mergedChildren = [];
 
     for (const child of subForms) {
-      const existingField = this.subForms.find((eField) =>
+      const existingField = currentSubForms.find((eField) =>
         eField.sourceNode.equals(child.sourceNode)
       );
       if (existingField) {
-        mergedChildren.pushObject(existingField);
+        mergedChildren.push(existingField);
       } else {
-        mergedChildren.pushObject(child);
+        mergedChildren.push(child);
       }
-    }
-
-    if (orderSubForms) {
-      // 5) We add sh:order triples if a subForm doesn't have this yet
-      //    We assume this only happens if we are editing a form that was saved before this order feature
-      let sourceGraph = this.graphs.sourceGraph;
-      let formStore = this.formStore;
-
-      ensureOrderTriplesForExistingData({
-        subForms: mergedChildren,
-        formStore: this.formStore,
-        sourceGraph: this.graphs.sourceGraph,
-      });
-
-      // 6) sort the forms based on their order
-      mergedChildren.sort((subFormA, subFormB) => {
-        return (
-          getOrder(subFormA.sourceNode, formStore, sourceGraph) -
-          getOrder(subFormB.sourceNode, formStore, sourceGraph)
-        );
-      });
     }
 
     this.subForms = mergedChildren;
