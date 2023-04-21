@@ -100,7 +100,7 @@ ext:administrativeUnitInvolvementPercentageF a form:Field ;
     form:displayType displayTypes:numericalInput ;
     form:validations
       [ a form:PositiveNumber ;
-        form:grouping form:Bag ;
+        form:grouping form:MatchEvery ;
         sh:resultMessage "Het percentage moet groter zijn dan 0."@nl;
         sh:path ext:involvementPercentage] ;
     sh:group ext:mainPg .
