@@ -1,3 +1,8 @@
+## v2.10.0 (2023-04-21)
+
+#### :rocket: Enhancement
+* [#131](https://github.com/lblod/ember-submission-form-fields/pull/131) Add `sh:minCount` support to the listing component ([@Windvis](https://github.com/Windvis))
+
 ## v2.9.1 (2023-04-13)
 
 #### :bug: Bug Fix
