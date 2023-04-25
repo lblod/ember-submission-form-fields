@@ -8,7 +8,9 @@ const FORM_GRAPHS = {
   sourceGraph: new NamedNode(`http://data.lblod.info/sourcegraph`),
 };
 
-const SOURCE_NODE = new NamedNode(`http://data.lblod.info/sourceNode`);
+const SOURCE_NODE = new NamedNode(
+  'http://ember-submission-form-fields/source-node'
+);
 
 const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
 const RDF = new Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
