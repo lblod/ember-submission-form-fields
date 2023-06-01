@@ -64,5 +64,4 @@ ext:formNodesGenerator a form:Generator;
       form:displayType displayTypes:defaultInput;
       sh:group ext:mainPg
     ]
-  ];
-  form:dataGenerator form:addMuUuid.
+  ].
