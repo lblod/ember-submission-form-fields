@@ -15,6 +15,10 @@
   validate
 </AuButton>
 
+<AuButton
+  {{on "click" this.serializeSourceToTtl}}>
+  Serialize source to TTL
+</AuButton>
 
 <AuHeading
   @level={{1}}
@@ -51,3 +55,11 @@
   {{/each}}
   </:body>
 </AuTable>
+
+<AuHeading
+  @level={{1}}
+  @skin={{3}}
+>
+  Source TTL
+</AuHeading> 
+<AuTextarea id={{this.form}} @width="block" @value={{this.sourceTtl}}/>

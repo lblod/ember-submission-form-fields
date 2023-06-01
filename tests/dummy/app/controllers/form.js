@@ -5,11 +5,12 @@ import {
   validateForm,
 } from '@lblod/ember-submission-form-fields';
 import { action } from '@ember/object';
+import { NamedNode, Namespace } from 'rdflib';
 
 export default class FormController extends Controller {
   @tracked datasetTriples = [];
   @tracked forceShowErrors = false;
-
+  @tracked sourceTtl = '';
   constructor() {
     super(...arguments);
   }
@@ -59,5 +60,10 @@ export default class FormController extends Controller {
     });
 
     this.forceShowErrors = !result;
+  }
+
+  @action
+  serializeSourceToTtl() {
+    this.sourceTtl = this.formStore.serializeDataMergedGraph(new NamedNode(`http://data.lblod.info/sourcegraph`));
   }
 }
