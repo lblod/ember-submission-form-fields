@@ -43,12 +43,20 @@ ext:formNodesL a form:Listing;
 ##########################################################
 ext:formNodesFormItem a form:SubForm;
   form:includes ext:formNodesNameF;
+  form:includes ext:formNodesOrderF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formNodesNameF a form:Field ;
   sh:name "Name of the field" ;
   sh:order 1 ;
   sh:path sh:name ;
+  form:displayType displayTypes:defaultInput;
+  sh:group ext:mainPg .
+
+ext:formNodesOrderF a form:Field ;
+  sh:name "Order of the field" ;
+  sh:order 2 ;
+  sh:path sh:order ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
 
@@ -100,6 +108,7 @@ ext:formListingL a form:Listing;
 ##########################################################
 ext:formListingFormItem a form:SubForm;
   form:includes ext:formListingF;
+  form:includes ext:subFormTitleF;
   form:includes ext:subformNodesL;
   form:hasFieldGroup ext:mainPg.
 
@@ -111,6 +120,12 @@ ext:formListingF a form:Field ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
 
+ext:subFormTitleF a form:Field ;
+  sh:name "Edit the title of the subform" ;
+  sh:order 2 ;
+  sh:path (form:each sh:name) ;
+  form:displayType displayTypes:defaultInput;
+  sh:group ext:mainPg .
 
 ext:formListingGenerator a form:Generator;
   form:prototype [
@@ -118,6 +133,7 @@ ext:formListingGenerator a form:Generator;
       a form:Listing;
       form:each [
         a form:SubForm;
+        sh:name "The subform title";
         form:includes [
           a form:Field ;
           sh:name "The Nested Field" ;
@@ -164,4 +180,4 @@ ext:subformNodesL a form:Listing;
   form:canRemove true;
   form:removeLabel "Remove Field";
   sh:group ext:mainPg;
-  sh:order 2 .
+  sh:order 3 .

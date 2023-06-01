@@ -17,15 +17,15 @@
 #  property-group
 ##########################################################
 ext:mainPg a form:PropertyGroup;
-    sh:description "[PROPERTY GROUP] book title";
-    sh:name "[PROPERTY GROUP] book title" ;
+    sh:description "Questions about author and books";
+    sh:name "Questions about author and books" ;
     sh:order 1 .
 
 ##########################################################
 # Field
 ##########################################################
 ext:authorName a form:Field ;
-    sh:name "[FIELD] author name" ;
+    sh:name "First name author" ;
     sh:order 10 ;
     sh:path ext:authorName ;
     form:displayType displayTypes:defaultInput ;
