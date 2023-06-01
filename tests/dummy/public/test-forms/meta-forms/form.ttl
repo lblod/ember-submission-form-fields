@@ -28,7 +28,7 @@ ext:formNodesS a form:Scope;
 
 ext:formNodesL a form:Listing;
   form:each ext:formNodesFormItem;
-  form:scope ext:formNodesListingS;
+  form:scope ext:formNodesS;
   form:createGenerator ext:formNodesGenerator;
   form:canAdd true;
   form:addLabel "Add new field";
