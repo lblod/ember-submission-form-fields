@@ -1,0 +1,68 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+
+##########################################################
+# form
+##########################################################
+ext:form a form:Form, form:TopLevelForm ;
+  form:includes ext:formNodesL.
+
+##########################################################
+#  property-group
+##########################################################
+ext:mainPg a form:PropertyGroup;
+    sh:name "Edit Form Fields" ;
+    sh:order 1 .
+
+##########################################################
+#  listing-scope:
+##########################################################
+ext:formNodesS a form:Scope;
+  sh:path form:includes.
+
+ext:formNodesL a form:Listing;
+  form:each ext:formNodesFormItem;
+  form:scope ext:formNodesListingS;
+  form:createGenerator ext:formNodesGenerator;
+  form:canAdd true;
+  form:addLabel "Add new field";
+  form:canRemove true;
+  form:removeLabel "RemoveField";
+  sh:group ext:mainPg;
+  sh:order 2 .
+
+##########################################################
+#  Subform: formNodesFormItem
+##########################################################
+ext:formNodesFormItem a form:SubForm;
+  form:includes ext:formNodesNameF;
+  form:hasFieldGroup ext:mainPg.
+
+ext:formNodesNameF a form:Field ;
+  sh:name "Name of the field" ;
+  sh:order 1 ;
+  sh:path sh:name ;
+  form:displayType displayTypes:defaultInput;
+  sh:group ext:mainPg .
+
+##########################################################
+#  Generator: formNodesForm
+##########################################################
+ext:formNodesGenerator a form:Generator;
+  form:prototype [
+    form:shape [
+      a form:Field ;
+      sh:name "Provide Name of Field";
+      sh:order 0;
+      sh:path <http://a/path>;
+      form:displayType displayTypes:defaultInput;
+      sh:group ext:mainPg
+    ]
+  ];
+  form:dataGenerator form:addMuUuid.
