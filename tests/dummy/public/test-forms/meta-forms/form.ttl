@@ -44,6 +44,7 @@ ext:formNodesL a form:Listing;
 ext:formNodesFormItem a form:SubForm;
   form:includes ext:formNodesNameF;
   form:includes ext:formNodesOrderF;
+  form:includes ext:formNodesTypeF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formNodesNameF a form:Field ;
@@ -57,7 +58,15 @@ ext:formNodesOrderF a form:Field ;
   sh:name "Order of the field" ;
   sh:order 2 ;
   sh:path sh:order ;
-  form:displayType displayTypes:defaultInput;
+  form:displayType displayTypes:numericalInput;
+  sh:group ext:mainPg .
+
+ext:formNodesTypeF a form:Field ;
+  sh:name "Display type" ;
+  sh:order 3 ;
+  sh:path form:displayType ;
+  form:displayType displayTypes:conceptSchemeSelector ;
+  form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":false}""" ;
   sh:group ext:mainPg .
 
 ##########################################################
@@ -99,7 +108,6 @@ ext:formListingL a form:Listing;
   form:canAdd true;
   form:addLabel "Add new Listing";
   form:canRemove true;
-  form:removeLabel "Remove Listing";
   sh:group ext:mainPg;
   sh:order 3 .
 
@@ -107,22 +115,29 @@ ext:formListingL a form:Listing;
 #  Subform: ext:formListingFormItem
 ##########################################################
 ext:formListingFormItem a form:SubForm;
-  form:includes ext:formListingF;
+  form:includes ext:formListingAddF;
+  form:includes ext:formListingRemoveF;
   form:includes ext:subFormTitleF;
   form:includes ext:subformNodesL;
   form:hasFieldGroup ext:mainPg.
 
-
-ext:formListingF a form:Field ;
+ext:formListingAddF a form:Field ;
   sh:name "Edit the add label" ;
-  sh:order 1 ;
+  sh:order 10 ;
   sh:path form:addLabel ;
+  form:displayType displayTypes:defaultInput;
+  sh:group ext:mainPg .
+
+ext:formListingRemoveF a form:Field ;
+  sh:name "Edit the remove field" ;
+  sh:order 20 ;
+  sh:path ( form:each form:removeLabel ) ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
 
 ext:subFormTitleF a form:Field ;
   sh:name "Edit the title of the subform" ;
-  sh:order 2 ;
+  sh:order 30 ;
   sh:path (form:each sh:name) ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
@@ -142,6 +157,7 @@ ext:formListingGenerator a form:Generator;
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
+        form:removeLabel "Verwijder";
         form:hasFieldGroup ext:mainPg
       ];
       form:scope [
@@ -159,7 +175,6 @@ ext:formListingGenerator a form:Generator;
       form:canAdd true;
       form:addLabel "Voeg toe";
       form:canRemove true;
-      form:removeLabel "Verwijder";
       sh:group ext:mainPg;
       sh:order 3
     ]
@@ -180,4 +195,4 @@ ext:subformNodesL a form:Listing;
   form:canRemove true;
   form:removeLabel "Remove Field";
   sh:group ext:mainPg;
-  sh:order 3 .
+  sh:order 40 .

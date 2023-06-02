@@ -1,0 +1,125 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns1:  <http://lblod.data.gift/concept-schemes/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+ns1:c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6  rdf:type  skos:ConceptScheme .
+@prefix ns3:  <http://mu.semte.ch/vocabularies/core/> .
+ns1:c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6  ns3:uuid  "c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6" ;
+  skos:prefLabel  "Form input types"@en .
+
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<http://lblod.data.gift/display-types/defaultInput>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "defaultInput" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> , <http://lblod.data.gift/concepts/c09902d3-9421-49e9-a2e6-d3ac42abbca2> , <http://lblod.data.gift/concepts/82d71dd7-8be2-4886-acb0-5d04a31c53e9> , <http://lblod.data.gift/concepts/26a91f04-58af-480f-b25f-19c48432a0a3> , <http://lblod.data.gift/concepts/1bc4475c-7df0-46e7-9ede-a91a9bd93bd4> , <http://lblod.data.gift/concepts/60873518-5423-4121-ba6a-9635b18242a0> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "68ccebe5-84fb-4976-a9b1-28b1d3ef3687" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Input"@en .
+<http://lblod.data.gift/display-types/numericalInput>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "numericalInput" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> , <http://lblod.data.gift/concepts/d19cf942-98be-4369-a883-b607d3330c5f> , <http://lblod.data.gift/concepts/50edc60f-3df1-4d49-b5e1-d86b65e8f8ec> , <http://lblod.data.gift/concepts/60873518-5423-4121-ba6a-9635b18242a0> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "c1be61dc-4ad1-4d21-a847-17c61d64c733" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Numerical input"@en .
+<http://lblod.data.gift/display-types/date>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "date" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> , <http://lblod.data.gift/concepts/4a1eb2d0-22d7-4a66-a8ca-fb54e3cfda37> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "4f1569e8-6ebc-4c61-9c3a-9affe7c38f28" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Date"@en .
+<http://lblod.data.gift/display-types/dateTime>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "dateTime" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> , <http://lblod.data.gift/concepts/3630e744-760a-494f-95aa-130c09649af6> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "3b2016b4-566e-47ab-83ff-46fe643b08ac" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Date and time"@en .
+<http://lblod.data.gift/display-types/dateRange>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "dateRange" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "bcb0457e-425b-4a39-8213-1ce84b781688" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Date range"@en .
+<http://lblod.data.gift/display-types/textArea>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "textArea" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> , <http://lblod.data.gift/concepts/60873518-5423-4121-ba6a-9635b18242a0> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "2e114946-3f3e-43ee-af16-d7c7255977e3" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Text area"@en .
+<http://lblod.data.gift/display-types/conceptSchemeSelector>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "conceptSchemeSelector" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "true"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/2bf94470-a6d8-40c2-8295-707cc0922f1b> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "8ad9281f-fd76-4d99-b84c-9b7ae434fb2d" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Dropdown"@en .
+<http://lblod.data.gift/display-types/files>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "files" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "be1e99bd-8c4c-4b9c-bc88-732c692ee069" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Files"@en .
+<http://lblod.data.gift/display-types/remoteUrls>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "remoteUrls" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/0bded4ae-c4dd-42ee-a9b0-f2232f48b2e8> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "e322303f-bace-4279-9267-ce8c7780dc97" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Urls"@en .
+<http://lblod.data.gift/display-types/switch>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "switch" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "eabf6541-6fc3-4ac1-95b7-c9fab5f5a366" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Switch"@en .
+<http://lblod.data.gift/display-types/checkbox>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "checkbox" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/3555ddd7-2565-4700-957d-719e84f5b002> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "32b6f216-6420-4fe5-94e9-37f0c5186550" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Checkbox"@en .
+<http://lblod.data.gift/display-types/conceptSchemeRadioButtons>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "conceptSchemeRadioButtons" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "true"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/2bf94470-a6d8-40c2-8295-707cc0922f1b> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "9ec72078-c1ef-4126-b635-d426847af8e9" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Radio buttons"@en .
+<http://lblod.data.gift/display-types/conceptSchemeMultiSelector>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "conceptSchemeMultiSelector" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "true"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> , <http://lblod.data.gift/concepts/b06cd462-ea9e-4273-9e7a-6d5b93a43f5f> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "ce803ee6-fb61-43f6-a2f7-22968ca9a7e6" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Multi selector"@en .
+<http://lblod.data.gift/display-types/search>
+  rdf:type  rdfs:Class , skos:Concept ;
+  <http://mu.semte.ch/vocabularies/ext/displayType>   "search" ;
+  <http://mu.semte.ch/vocabularies/ext/usesConceptScheme>   "false"^^xsd:boolean ;
+  <http://mu.semte.ch/vocabularies/ext/canHaveValidation>   <http://lblod.data.gift/concepts/629bddbb-bf30-48d6-95af-c2f406bd9e8c> ;
+  <http://mu.semte.ch/vocabularies/core/uuid>   "ec03d1ee-8542-48d8-b75a-0597080b5aa6" ;
+  skos:inScheme   <http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6> ;
+  skos:prefLabel  "Search"@en .
