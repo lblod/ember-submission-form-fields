@@ -12,7 +12,8 @@
 ##########################################################
 ext:form a form:Form, form:TopLevelForm ;
   form:includes ext:formNodesL;
-  form:includes ext:formListingL.
+  form:includes ext:formListingL;
+  form:includes ext:formListingTableL.
 
 ##########################################################
 #  property-group
@@ -84,7 +85,6 @@ ext:formNodesGenerator a form:Generator;
     ]
   ].
 
-
 ##########################################################
 #  listing-scope:
 ##########################################################
@@ -110,6 +110,19 @@ ext:formListingL a form:Listing;
   form:canRemove true;
   sh:group ext:mainPg;
   sh:order 3 .
+
+##########################################################
+#  listing: formListingL (as table)
+##########################################################
+ext:formListingTableL a form:Listing;
+  form:each ext:formListingFormItem;
+  form:scope ext:formListingS;
+  form:createGenerator ext:formListingTableGenerator;
+  form:canAdd true;
+  form:addLabel "Add new Listing (as table)";
+  form:canRemove true;
+  sh:group ext:mainPg;
+  sh:order 4 .
 
 ##########################################################
 #  Subform: ext:formListingFormItem
@@ -157,7 +170,7 @@ ext:formListingGenerator a form:Generator;
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
-        form:removeLabel "Verwijder";
+        form:removeLabel "Remove entry text";
         form:hasFieldGroup ext:mainPg
       ];
       form:scope [
@@ -173,7 +186,45 @@ ext:formListingGenerator a form:Generator;
        ]
       ];
       form:canAdd true;
-      form:addLabel "Voeg toe";
+      form:addLabel "Add entry text";
+      form:canRemove true;
+      sh:group ext:mainPg;
+      sh:order 3
+    ]
+  ].
+
+ext:formListingTableGenerator a form:Generator;
+  form:prototype [
+    form:shape [
+      a form:Listing, form:ListingTable;
+      form:each [
+        a form:SubForm;
+        sh:name "The subform title";
+        form:includes [
+          a form:Field ;
+          sh:name "The Nested Field" ;
+          sh:order 1 ;
+          sh:path [] ;
+          form:displayType displayTypes:defaultInput;
+          sh:group ext:mainPg
+        ];
+        form:removeLabel "Remove row text";
+        form:hasFieldGroup ext:mainPg
+      ];
+      form:scope [
+        a form:Scope;
+        sh:path [];
+      ];
+      form:createGenerator [
+        a form:Generator;
+        form:prototype [
+          form:shape [
+            a form:Field
+          ]
+       ]
+      ];
+      form:canAdd true;
+      form:addLabel "Add row text";
       form:canRemove true;
       sh:group ext:mainPg;
       sh:order 3
