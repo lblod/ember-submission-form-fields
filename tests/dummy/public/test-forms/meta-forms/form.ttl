@@ -46,6 +46,7 @@ ext:formNodesFormItem a form:SubForm;
   form:includes ext:formNodesNameF;
   form:includes ext:formNodesOrderF;
   form:includes ext:formNodesTypeF;
+  form:includes ext:formNodeHelpTextF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formNodesNameF a form:Field ;
@@ -70,6 +71,13 @@ ext:formNodesTypeF a form:Field ;
   form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":false}""" ;
   sh:group ext:mainPg .
 
+ext:formNodeHelpTextF a form:Field;
+  sh:name "Help text of the field" ;
+  sh:order 4 ;
+  sh:path form:help ;
+  form:displayType displayTypes:textArea;
+  sh:group ext:mainPg .
+
 ##########################################################
 #  Generator: formNodesForm
 ##########################################################
@@ -78,6 +86,7 @@ ext:formNodesGenerator a form:Generator;
     form:shape [
       a form:Field ;
       sh:name "Provide Name of Field";
+      form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
       sh:order 0;
       sh:path [];
       form:displayType displayTypes:defaultInput;
@@ -155,6 +164,10 @@ ext:subFormTitleF a form:Field ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
 
+##########################################################
+#  Generators for listing (both table and non-table)
+##########################################################
+# Non Table
 ext:formListingGenerator a form:Generator;
   form:prototype [
     form:shape [
@@ -167,6 +180,7 @@ ext:formListingGenerator a form:Generator;
           sh:name "The Nested Field" ;
           sh:order 1 ;
           sh:path [] ;
+          form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
@@ -193,6 +207,7 @@ ext:formListingGenerator a form:Generator;
     ]
   ].
 
+# Table
 ext:formListingTableGenerator a form:Generator;
   form:prototype [
     form:shape [
@@ -205,6 +220,7 @@ ext:formListingTableGenerator a form:Generator;
           sh:name "The Nested Field" ;
           sh:order 1 ;
           sh:path [] ;
+          form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
