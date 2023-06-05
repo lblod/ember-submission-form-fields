@@ -53,6 +53,9 @@ ext:formNodesFormItem a form:SubForm;
 ext:formNodesNameF a form:Field ;
   sh:name "Name of the field" ;
   sh:order 1 ;
+  form:help """
+    Help the user to figure out what is asked? E.g. "First name"; "Book ISBN".
+   """;
   sh:path sh:name ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
@@ -61,6 +64,9 @@ ext:formNodesOrderF a form:Field ;
   sh:name "Order of the field" ;
   sh:order 2 ;
   sh:path sh:order ;
+  form:help """
+    Order of the field, calculated from top to bottom. The bigger the number, the lower it will render.
+   """;
   form:displayType displayTypes:numericalInput;
   sh:group ext:mainPg .
 
@@ -68,6 +74,9 @@ ext:formNodesTypeF a form:Field ;
   sh:name "Display type" ;
   sh:order 3 ;
   sh:path form:displayType ;
+  form:help """
+    Provide the type of field.
+   """;
   form:displayType displayTypes:conceptSchemeSelector ;
   form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":true}""" ;
   sh:group ext:mainPg .
@@ -76,13 +85,20 @@ ext:formNodeHelpTextF a form:Field;
   sh:name "Help text of the field" ;
   sh:order 4 ;
   sh:path form:help ;
+  form:help """
+    The helptext of the field. \n
+    Note: it won't work in all fields. \n
+    Accepts HTML e.g.: <a href="https://example.com">example<a/>
+  """;
   form:displayType displayTypes:textArea;
   sh:group ext:mainPg .
 
 ext:formNodeOptionsF a form:Field;
   sh:name "Extra configuration options as JSON" ;
   form:help """
-    For some fields (e.g. selectbox) we need to provide extra configuration parameters through JSON. E.g.: \n
+    For some fields (e.g. selectbox) we need to provide extra configuration parameters through JSON. <br>
+    Note: this might be a bit technical 🤓.
+    <br> E.g.: <br>
     {"conceptScheme":"https://data.vlaanderen.be/id/conceptscheme/BesluitType","searchEnabled":false}
    """;
   sh:order 5 ;
@@ -98,7 +114,6 @@ ext:formNodesGenerator a form:Generator;
     form:shape [
       a form:Field ;
       sh:name "Provide Name of Field";
-      form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
       sh:order 0;
       sh:path [];
       form:displayType displayTypes:defaultInput;
@@ -153,18 +168,23 @@ ext:formListingFormItem a form:SubForm;
   form:includes ext:formListingRemoveF;
   form:includes ext:subFormTitleF;
   form:includes ext:subformNodesL;
-  form:includes ext:formNodeOptionsF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formListingAddF a form:Field ;
   sh:name "Edit the add label" ;
+  form:help """
+  The add label helps the user to figure out what needs to be added. 'Add Book', 'Add Subsidy Measure', etc..
+  """;
   sh:order 10 ;
   sh:path form:addLabel ;
   form:displayType displayTypes:defaultInput;
   sh:group ext:mainPg .
 
 ext:formListingRemoveF a form:Field ;
-  sh:name "Edit the remove field" ;
+  sh:name "Edit the remove label" ;
+  form:help """
+  The remove label helps the user to figure out what needs to be removed. 'Remove Book', 'Remove Subsidy Measure', etc..
+  """;
   sh:order 20 ;
   sh:path ( form:each form:removeLabel ) ;
   form:displayType displayTypes:defaultInput;
@@ -172,6 +192,9 @@ ext:formListingRemoveF a form:Field ;
 
 ext:subFormTitleF a form:Field ;
   sh:name "Edit the title of the subform" ;
+  form:help """
+  This field gives an overview of what the next sub form will be about. 'Overview Books', 'Overview Subsidy Measures', etc..
+  """;
   sh:order 30 ;
   sh:path (form:each sh:name) ;
   form:displayType displayTypes:defaultInput;
@@ -193,7 +216,6 @@ ext:formListingGenerator a form:Generator;
           sh:name "The Nested Field" ;
           sh:order 1 ;
           sh:path [] ;
-          form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
@@ -233,7 +255,6 @@ ext:formListingTableGenerator a form:Generator;
           sh:name "The Nested Field" ;
           sh:order 1 ;
           sh:path [] ;
-          form:help """The helptext of the field. \n Note: it won't work in all fields. \n Accepts HTML e.g.: <a href="https://example.com">example<a/>""";
           form:displayType displayTypes:defaultInput;
           sh:group ext:mainPg
         ];
