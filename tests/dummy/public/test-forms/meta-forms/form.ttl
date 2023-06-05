@@ -47,6 +47,7 @@ ext:formNodesFormItem a form:SubForm;
   form:includes ext:formNodesOrderF;
   form:includes ext:formNodesTypeF;
   form:includes ext:formNodeHelpTextF;
+  form:includes ext:formNodeOptionsF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formNodesNameF a form:Field ;
@@ -68,13 +69,24 @@ ext:formNodesTypeF a form:Field ;
   sh:order 3 ;
   sh:path form:displayType ;
   form:displayType displayTypes:conceptSchemeSelector ;
-  form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":false}""" ;
+  form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":true}""" ;
   sh:group ext:mainPg .
 
 ext:formNodeHelpTextF a form:Field;
   sh:name "Help text of the field" ;
   sh:order 4 ;
   sh:path form:help ;
+  form:displayType displayTypes:textArea;
+  sh:group ext:mainPg .
+
+ext:formNodeOptionsF a form:Field;
+  sh:name "Extra configuration options as JSON" ;
+  form:help """
+    For some fields (e.g. selectbox) we need to provide extra configuration parameters through JSON. E.g.: \n
+    {"conceptScheme":"https://data.vlaanderen.be/id/conceptscheme/BesluitType","searchEnabled":false}
+   """;
+  sh:order 5 ;
+  sh:path form:options ;
   form:displayType displayTypes:textArea;
   sh:group ext:mainPg .
 
@@ -141,6 +153,7 @@ ext:formListingFormItem a form:SubForm;
   form:includes ext:formListingRemoveF;
   form:includes ext:subFormTitleF;
   form:includes ext:subformNodesL;
+  form:includes ext:formNodeOptionsF;
   form:hasFieldGroup ext:mainPg.
 
 ext:formListingAddF a form:Field ;
