@@ -28,7 +28,7 @@ ext:mainPg a form:PropertyGroup;
 #  TODO: allow finding triples for a "form:Scope"
 #    with no "sh:path" provided.
 #    We now revert to attaching the propertyGroups to
-#    the form directly.
+#    the "form:Form" directly.
 #    Which is suboptimal, cause not really in the defined
 #    model. (It's not forbidden though)
 ##########################################################
