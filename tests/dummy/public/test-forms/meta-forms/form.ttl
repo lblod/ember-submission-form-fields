@@ -11,6 +11,7 @@
 # form
 ##########################################################
 ext:form a form:Form, form:TopLevelForm ;
+  form:includes ext:propertyGroupL;
   form:includes ext:formNodesL;
   form:includes ext:formListingL;
   form:includes ext:formListingTableL.
@@ -21,6 +22,74 @@ ext:form a form:Form, form:TopLevelForm ;
 ext:mainPg a form:PropertyGroup;
     sh:name "Edit Form Fields" ;
     sh:order 1 .
+
+##########################################################
+#  PropertyGroup Scope
+#  Note: consider this a bit of an extension of the model
+#  The property groups will be tied to the toplevel form
+##########################################################
+ext:propertyGroupS a form:Scope;
+  sh:path sh:group ;
+  form:constraint [
+     a sh:NodeShape ;
+     sh:targetNode form:PropertyGroup
+  ].
+
+##########################################################
+#  PropertyGroup Listing
+##########################################################
+ext:propertyGroupL a form:Listing;
+  form:each ext:propertyGroupItem;
+  form:scope ext:propertyGroupS;
+  form:createGenerator ext:propertyGroupGenerator;
+  form:canAdd true;
+  form:addLabel "Add new Property Group";
+  form:canRemove true;
+  form:removeLabel "Remove Property Group";
+  sh:group ext:mainPg;
+  sh:order 1 .
+
+##########################################################
+#  Generator: propertyGroup
+##########################################################
+ext:propertyGroupGenerator a form:Generator;
+  form:prototype [
+    form:shape [
+      a form:PropertyGroup ;
+      sh:name "Provide the a title to the property group";
+      sh:order 0;
+      sh:path [];
+      form:displayType displayTypes:defaultInput
+    ]
+  ].
+
+##########################################################
+#  Subform: propertyGroup
+##########################################################
+ext:propertyGroupItem a form:SubForm;
+  form:includes ext:propertyGroupNameF;
+  form:includes ext:propertyGroupOrderF;
+  form:hasFieldGroup ext:mainPg.
+
+ext:propertyGroupNameF a form:Field ;
+  sh:name "Title of the property group" ;
+  sh:order 1 ;
+  form:help """
+    A Property group helps to add sections to the form.
+   """;
+  sh:path sh:name ;
+  form:displayType displayTypes:textArea  ;
+  sh:group ext:mainPg .
+
+ext:propertyGroupOrderF a form:Field ;
+  sh:name "The order the property group should appear" ;
+  sh:order 2 ;
+  sh:path sh:order ;
+  form:help """
+    Order of the section, calculated from top to bottom. The bigger the number, the lower it will render.
+   """;
+  form:displayType displayTypes:numericalInput;
+  sh:group ext:mainPg .
 
 ##########################################################
 #  listing-scope:

@@ -11,7 +11,8 @@
 # form
 ##########################################################
 <http://ember-submission-form-fields/source-node> a form:Form, form:TopLevelForm ;
-    form:includes ext:authorName.
+    form:includes ext:authorName;
+    sh:group ext:mainPg.
 
 ##########################################################
 #  property-group
