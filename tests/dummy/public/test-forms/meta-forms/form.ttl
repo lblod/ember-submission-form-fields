@@ -25,8 +25,12 @@ ext:mainPg a form:PropertyGroup;
 
 ##########################################################
 #  PropertyGroup Scope
-#  Note: consider this a bit of an extension of the model
-#  The property groups will be tied to the toplevel form
+#  TODO: allow finding triples for a "form:Scope"
+#    with no "sh:path" provided.
+#    We now revert to attaching the propertyGroups to
+#    the form directly.
+#    Which is suboptimal, cause not really in the defined
+#    model. (It's not forbidden though)
 ##########################################################
 ext:propertyGroupS a form:Scope;
   sh:path sh:group ;
