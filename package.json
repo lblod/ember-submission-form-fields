@@ -26,6 +26,14 @@
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
   },
+  "overrides": {
+    "n3": {
+      "readable-stream": "4.3.0"
+    }
+  },
+  "overridesNotes": {
+    "readable-stream": "it accidentally required node's stream in the most recent release: https://github.com/nodejs/readable-stream/issues/516"
+  },
   "dependencies": {
     "@lblod/submission-form-helpers": "^2.0.1",
     "clipboardy": "^2.3.0",
