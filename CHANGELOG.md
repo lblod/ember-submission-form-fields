@@ -1,3 +1,8 @@
+## v2.11.0 (2023-06-21)
+
+#### :rocket: Enhancement
+* [#133](https://github.com/lblod/ember-submission-form-fields/pull/133) Add a new alert field ([@Windvis](https://github.com/Windvis))
+
 ## v2.10.0 (2023-04-21)
 
 #### :rocket: Enhancement
