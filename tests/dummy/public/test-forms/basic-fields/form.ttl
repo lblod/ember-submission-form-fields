@@ -30,6 +30,19 @@ ext:mainPg a form:PropertyGroup;
     sh:order 1 .
 
 ##########################################################
+# Alert
+##########################################################
+ext:alertField a form:Field;
+    sh:name "Alert message";
+    sh:order 10;
+    form:options """{ "title": "Alert title", "skin": "warning", "icon": "alert-triangle", "size": "small", "closable": true }""";
+    form:displayType displayTypes:alert ;
+    form:help """This is a wrapper around the <a class="au-c-link" href="https://appuniversum.github.io/ember-appuniversum/?path=/story/components-notifications-aualert--component">AuAlert component</a> with similar configuration options""" ;
+    sh:group ext:mainPg.
+
+ext:mainFg form:hasField ext:alertField .
+
+##########################################################
 # Heading
 ##########################################################
 ext:headerField a form:Field;
@@ -48,7 +61,6 @@ ext:headerField a form:Field;
     sh:group ext:mainPg.
 
 ext:mainFg form:hasField ext:headerField .
-
 
 ##########################################################
 # Checkbox
