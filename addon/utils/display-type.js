@@ -1,6 +1,7 @@
 import { assert } from '@ember/debug';
 
 // Basic fields
+import AlertComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/alert';
 import BestuursorgaanSelectorEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/edit';
 import BestuursorgaanSelectorShowComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/bestuursorgaan-selector/show';
 import CaseNumberComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/case-number';
@@ -13,6 +14,7 @@ import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-in
 import DatePickerComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-picker';
 import DateTimeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-time';
 import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files';
+import HeadingComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/heading';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
 import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
 import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
@@ -22,7 +24,7 @@ import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/compone
 import SwitchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/switch';
 import TextAreaComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/text-area';
 import VlabelOpcentiemComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/vlabel-opcentiem';
-import HeadingComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/heading';
+
 // Search components
 import SearchPanelFieldsSearchEditComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/edit';
 import SearchPanelFieldsSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
@@ -132,6 +134,10 @@ export function getComponentForDisplayType(displayType, show) {
 // Register all the built-in components
 registerComponentsForDisplayType([
   // Basic fields
+  {
+    displayType: 'http://lblod.data.gift/display-types/alert',
+    edit: AlertComponent,
+  },
   {
     displayType: 'http://lblod.data.gift/display-types/bestuursorgaanSelector',
     edit: BestuursorgaanSelectorEditComponent,
