@@ -64,6 +64,8 @@ export default class FormController extends Controller {
 
   @action
   serializeSourceToTtl() {
-    this.sourceTtl = this.formStore.serializeDataMergedGraph(new NamedNode(`http://data.lblod.info/sourcegraph`));
+    this.sourceTtl = this.formStore.serializeDataMergedGraph(
+      new NamedNode(`http://data.lblod.info/sourcegraph`)
+    );
   }
 }
