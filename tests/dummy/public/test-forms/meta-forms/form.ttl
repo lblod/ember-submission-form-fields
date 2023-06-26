@@ -20,8 +20,20 @@ ext:form a form:Form, form:TopLevelForm ;
 #  property-group
 ##########################################################
 ext:mainPg a form:PropertyGroup;
-    sh:name "Edit Form Fields" ;
+    sh:name "Form Builder" ;
+    sh:order 0 .
+
+ext:propertyGroupPg a form:PropertyGroup;
+    sh:name "Edit property group" ;
     sh:order 1 .
+
+ext:listingPg a form:PropertyGroup;
+    sh:name "Edit listing" ;
+    sh:order 2 .
+
+ext:formFieldPg a form:PropertyGroup;
+    sh:name "Edit form field" ;
+    sh:order 3 .
 
 ##########################################################
 #  PropertyGroup Scope
@@ -60,10 +72,7 @@ ext:propertyGroupGenerator a form:Generator;
   form:prototype [
     form:shape [
       a form:PropertyGroup ;
-      sh:name "Provide the a title to the property group";
-      sh:order 0;
-      sh:path [];
-      form:displayType displayTypes:defaultInput
+      sh:name "Provide the a title to the property group"
     ]
   ].
 
@@ -73,7 +82,7 @@ ext:propertyGroupGenerator a form:Generator;
 ext:propertyGroupItem a form:SubForm;
   form:includes ext:propertyGroupNameF;
   form:includes ext:propertyGroupOrderF;
-  form:hasFieldGroup ext:mainPg.
+  form:hasFieldGroup ext:propertyGroupPg.
 
 ext:propertyGroupNameF a form:Field ;
   sh:name "Title of the property group" ;
@@ -83,7 +92,7 @@ ext:propertyGroupNameF a form:Field ;
    """;
   sh:path sh:name ;
   form:displayType displayTypes:textArea  ;
-  sh:group ext:mainPg .
+  sh:group ext:propertyGroupPg .
 
 ext:propertyGroupOrderF a form:Field ;
   sh:name "The order the property group should appear" ;
@@ -93,7 +102,7 @@ ext:propertyGroupOrderF a form:Field ;
     Order of the section, calculated from top to bottom. The bigger the number, the lower it will render.
    """;
   form:displayType displayTypes:numericalInput;
-  sh:group ext:mainPg .
+  sh:group ext:propertyGroupPg .
 
 ##########################################################
 #  listing-scope:
@@ -108,7 +117,7 @@ ext:formNodesL a form:Listing;
   form:canAdd true;
   form:addLabel "Add new field";
   form:canRemove true;
-  form:removeLabel "RemoveField";
+  form:removeLabel "Remove field";
   sh:group ext:mainPg;
   sh:order 2 .
 
@@ -121,7 +130,8 @@ ext:formNodesFormItem a form:SubForm;
   form:includes ext:formNodesTypeF;
   form:includes ext:formNodeHelpTextF;
   form:includes ext:formNodeOptionsF;
-  form:hasFieldGroup ext:mainPg.
+  form:includes ext:formNodePropertyGroupF;
+  form:hasFieldGroup ext:formFieldPg.
 
 ext:formNodesNameF a form:Field ;
   sh:name "Name of the field" ;
@@ -131,7 +141,7 @@ ext:formNodesNameF a form:Field ;
    """;
   sh:path sh:name ;
   form:displayType displayTypes:defaultInput;
-  sh:group ext:mainPg .
+  sh:group ext:formFieldPg .
 
 ext:formNodesOrderF a form:Field ;
   sh:name "Order of the field" ;
@@ -141,7 +151,7 @@ ext:formNodesOrderF a form:Field ;
     Order of the field, calculated from top to bottom. The bigger the number, the lower it will render.
    """;
   form:displayType displayTypes:numericalInput;
-  sh:group ext:mainPg .
+  sh:group ext:formFieldPg .
 
 ext:formNodesTypeF a form:Field ;
   sh:name "Display type" ;
@@ -152,7 +162,7 @@ ext:formNodesTypeF a form:Field ;
    """;
   form:displayType displayTypes:conceptSchemeSelector ;
   form:options """{"conceptScheme":"http://lblod.data.gift/concept-schemes/c5a91bd7-3eb5-4d69-a51b-9bac6bf345f6","searchEnabled":true}""" ;
-  sh:group ext:mainPg .
+  sh:group ext:formFieldPg .
 
 ext:formNodeHelpTextF a form:Field;
   sh:name "Help text of the field" ;
@@ -164,7 +174,7 @@ ext:formNodeHelpTextF a form:Field;
     Accepts HTML e.g.: <a href="https://example.com">example<a/>
   """;
   form:displayType displayTypes:textArea;
-  sh:group ext:mainPg .
+  sh:group ext:formFieldPg .
 
 ext:formNodeOptionsF a form:Field;
   sh:name "Extra configuration options as JSON" ;
@@ -177,7 +187,18 @@ ext:formNodeOptionsF a form:Field;
   sh:order 5 ;
   sh:path form:options ;
   form:displayType displayTypes:textArea;
-  sh:group ext:mainPg .
+  sh:group ext:formFieldPg .
+
+ext:formNodePropertyGroupF a form:Field;
+  sh:name "Link field to property group." ;
+  form:help """
+   Here, you'll define what 'section' the field will belong to. <br>
+   The property groups should have been defined earlier.
+   """;
+  sh:order 6 ;
+  sh:path sh:group ;
+  form:displayType displayTypes:propertyGroupSelector;
+  sh:group ext:formFieldPg .
 
 ##########################################################
 #  Generator: formNodesForm
@@ -187,10 +208,8 @@ ext:formNodesGenerator a form:Generator;
     form:shape [
       a form:Field ;
       sh:name "Provide Name of Field";
-      sh:order 0;
       sh:path [];
-      form:displayType displayTypes:defaultInput;
-      sh:group ext:mainPg
+      form:displayType displayTypes:defaultInput
     ]
   ].
 
@@ -239,9 +258,9 @@ ext:formListingTableL a form:Listing;
 ext:formListingFormItem a form:SubForm;
   form:includes ext:formListingAddF;
   form:includes ext:formListingRemoveF;
-  form:includes ext:subFormTitleF;
   form:includes ext:subformNodesL;
-  form:hasFieldGroup ext:mainPg.
+  form:includes ext:subFormPropertyGroupF;
+  form:hasFieldGroup ext:listingPg.
 
 ext:formListingAddF a form:Field ;
   sh:name "Edit the add label" ;
@@ -251,7 +270,7 @@ ext:formListingAddF a form:Field ;
   sh:order 10 ;
   sh:path form:addLabel ;
   form:displayType displayTypes:defaultInput;
-  sh:group ext:mainPg .
+  sh:group ext:listingPg .
 
 ext:formListingRemoveF a form:Field ;
   sh:name "Edit the remove label" ;
@@ -261,17 +280,18 @@ ext:formListingRemoveF a form:Field ;
   sh:order 20 ;
   sh:path ( form:each form:removeLabel ) ;
   form:displayType displayTypes:defaultInput;
-  sh:group ext:mainPg .
+  sh:group ext:listingPg .
 
-ext:subFormTitleF a form:Field ;
-  sh:name "Edit the title of the subform" ;
+ext:subFormPropertyGroupF a form:Field ;
+  sh:name "Edit the property group of the subform" ;
   form:help """
-  This field gives an overview of what the next sub form will be about. 'Overview Books', 'Overview Subsidy Measures', etc..
+  It creates sections in the form. <br>
+  Typical examples are 'Overview Books', 'Overview Subsidy Measures', etc..
   """;
-  sh:order 30 ;
-  sh:path (form:each sh:name) ;
-  form:displayType displayTypes:defaultInput;
-  sh:group ext:mainPg .
+  sh:order 50 ;
+  sh:path sh:group ;
+  form:displayType displayTypes:propertyGroupSelector;
+  sh:group ext:listingPg .
 
 ##########################################################
 #  Generators for listing (both table and non-table)
@@ -283,17 +303,13 @@ ext:formListingGenerator a form:Generator;
       a form:Listing;
       form:each [
         a form:SubForm;
-        sh:name "The subform title";
         form:includes [
           a form:Field ;
           sh:name "The Nested Field" ;
-          sh:order 1 ;
           sh:path [] ;
-          form:displayType displayTypes:defaultInput;
-          sh:group ext:mainPg
+          form:displayType displayTypes:defaultInput
         ];
-        form:removeLabel "Remove entry text";
-        form:hasFieldGroup ext:mainPg
+        form:removeLabel "Remove entry text"
       ];
       form:scope [
         a form:Scope;
@@ -310,8 +326,6 @@ ext:formListingGenerator a form:Generator;
       form:canAdd true;
       form:addLabel "Add entry text";
       form:canRemove true;
-      sh:group ext:mainPg;
-      sh:order 3
     ]
   ].
 
@@ -326,13 +340,10 @@ ext:formListingTableGenerator a form:Generator;
         form:includes [
           a form:Field ;
           sh:name "The Nested Field" ;
-          sh:order 1 ;
           sh:path [] ;
-          form:displayType displayTypes:defaultInput;
-          sh:group ext:mainPg
+          form:displayType displayTypes:defaultInput
         ];
-        form:removeLabel "Remove row text";
-        form:hasFieldGroup ext:mainPg
+        form:removeLabel "Remove row text"
       ];
       form:scope [
         a form:Scope;
@@ -349,8 +360,6 @@ ext:formListingTableGenerator a form:Generator;
       form:canAdd true;
       form:addLabel "Add row text";
       form:canRemove true;
-      sh:group ext:mainPg;
-      sh:order 3
     ]
   ].
 
@@ -368,5 +377,5 @@ ext:subformNodesL a form:Listing;
   form:addLabel "Add new field";
   form:canRemove true;
   form:removeLabel "Remove Field";
-  sh:group ext:mainPg;
-  sh:order 40 .
+  sh:group ext:listingPg;
+  sh:order 60 .
