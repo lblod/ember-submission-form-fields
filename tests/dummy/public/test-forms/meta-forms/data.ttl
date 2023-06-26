@@ -10,24 +10,28 @@
 ##########################################################
 # form
 ##########################################################
-<http://ember-submission-form-fields/source-node> a form:Form, form:TopLevelForm ;
-    form:includes ext:authorName;
-    sh:group ext:mainPg.
+<http://ember-submission-form-fields/source-node> a form:Form, form:TopLevelForm.
 
-##########################################################
-#  property-group
-##########################################################
-ext:mainPg a form:PropertyGroup;
-    sh:description "Questions about author and books";
-    sh:name "Questions about author and books" ;
-    sh:order 1 .
 
-##########################################################
-# Field
-##########################################################
-ext:authorName a form:Field ;
-    sh:name "First name author" ;
-    sh:order 10 ;
-    sh:path ext:authorName ;
-    form:displayType displayTypes:defaultInput ;
-    sh:group ext:mainPg .
+# Uncomment the following lines if you want a sample to get started
+
+# <http://ember-submission-form-fields/source-node> form:includes ext:authorName;
+#     sh:group ext:mainPg.
+
+# ##########################################################
+# #  property-group
+# ##########################################################
+# ext:mainPg a form:PropertyGroup;
+#     sh:description "Questions about author and books";
+#     sh:name "Questions about author and books" ;
+#     sh:order 1 .
+
+# ##########################################################
+# # Field
+# ##########################################################
+# ext:authorName a form:Field ;
+#     sh:name "First name author" ;
+#     sh:order 10 ;
+#     sh:path ext:authorName ;
+#     form:displayType displayTypes:defaultInput ;
+#     sh:group ext:mainPg .
