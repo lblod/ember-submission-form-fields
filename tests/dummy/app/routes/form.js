@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { ForkingStore } from '@lblod/ember-submission-form-fields';
 import { NamedNode, Namespace } from 'rdflib';
+import { registerFormFields } from '@lblod/ember-submission-form-fields';
+import PropertyGroupSelector from '../components/meta-form/property-group-selector';
 
 const FORM_GRAPHS = {
   formGraph: new NamedNode('http://data.lblod.info/form'),
@@ -23,6 +25,12 @@ const FORM_TITLES = {
 };
 
 export default class FormRoute extends Route {
+
+  constructor() {
+    super(...arguments);
+    this.registerTableFields();
+  }
+
   async model({ formName }) {
     let [formTtl, metaTtl, dataTtl] = await Promise.all([
       fetchForm(formName),
@@ -59,6 +67,15 @@ export default class FormRoute extends Route {
     controller.datasetTriples = [];
     controller.registerObserver();
     controller.setTriplesForTables();
+  }
+
+  registerTableFields() {
+    registerFormFields([
+      {
+        displayType: 'http://lblod.data.gift/display-types/propertyGroupSelector',
+        edit: PropertyGroupSelector,
+      },
+    ]);
   }
 }
 
