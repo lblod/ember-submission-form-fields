@@ -21,7 +21,6 @@ export default class PropertyGroupSelector extends InputFieldComponent {
 
   @tracked selected = null;
   @tracked options = [];
-  @tracked searchEnabled = true;
 
   constructor() {
     super(...arguments);
