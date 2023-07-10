@@ -17,24 +17,29 @@ This addon provides form and form-fields components to create and edit submissio
 ember install ember-submission-form-fields
 ```
 
-Documentation
-------------------------------------------------------------------------------
-## spec
+## Documentation
+### spec
 The spec is in status draft and may be downloaded [here](https://cloud.ruizdearcaute.com/s/dBf36c8XMQJTtrR)
 
-## form model
-### version 1
+### form model
+#### version 1
 The old version of the form model may be downloaded [here](https://cloud.ruizdearcaute.com/s/XJ55FfzkjQdYKJY)
 This is currently still a supported model.
 
-### version 2 (TOBE)
+#### version 2 (TOBE)
 The target model may be downloaded [here](https://cloud.ruizdearcaute.com/s/yz4LExENHLRfcFA)
 
-### current implementation
+#### current implementation
 The supported model is currently in transitory state. Not all new entities are fully implemented.
 Where implementation is lacking, we fall back to the implementation of version 1.
 This fallback is mainly related to the dynamic form fields.
 If you want to have an overview of the blend, see [here](https://cloud.ruizdearcaute.com/s/dmNBPaBbkeFbeZG)
+
+### Example forms
+The addon contains a test app that includes some example forms which can provide a lot of insights in to how to use the form configs.
+To start the test app simply run `npm run start`.
+
+The example form config files can be found [here](https://github.com/lblod/ember-submission-form-fields/tree/3ed7941cb2ac392e866de8d593d965bdedaf6210/tests/dummy/public/test-forms).
 
 ## Usage
 
