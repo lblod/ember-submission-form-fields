@@ -1,6 +1,6 @@
 {{#if @useNewListingLayout}}
   <div class="au-o-flow" ...attributes>
-    {{#each @subForms as |subForm index|}}
+    {{#each @subForms as |subForm|}}
       <SubForm
         @subForm={{subForm}}
         @formStore={{@formStore}}
@@ -8,7 +8,7 @@
         @sourceNode={{subForm.sourceNode}}
         @forceShowErrors={{@forceShowErrors}}
         @cacheConditionals={{@cacheConditionals}}
-        @last={{eq index (sub @subForms.length 1)}}
+        @last={{this.isLast @subForms subForm}}
         @show={{@show}}
         @level={{@level}}
         @onRemoveEntry={{@removeEntry}}
@@ -33,7 +33,7 @@
 {{else}}
   <div class="au-o-grid">
     <div class="au-o-grid__item au-u-4-5">
-      {{#each @subForms as |subForm index|}}
+      {{#each @subForms as |subForm|}}
         <SubForm
           @subForm={{subForm}}
           @formStore={{@formStore}}
@@ -41,7 +41,7 @@
           @sourceNode={{subForm.sourceNode}}
           @forceShowErrors={{@forceShowErrors}}
           @cacheConditionals={{@cacheConditionals}}
-          @last={{eq index (sub @subForms.length 1)}}
+          @last={{this.isLast @subForms subForm}}
           @show={{@show}}
           @level={{@level}}
           @onRemoveEntry={{@removeEntry}}

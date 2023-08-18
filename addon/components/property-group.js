@@ -5,10 +5,12 @@ import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
 import { validationResultsForField } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
+import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
 
 export default class SubmissionFormPropertyGroupComponent extends Component {
   @tracked children = A();
   @tracked validations = [];
+  isLast = isLast;
 
   observerLabel = `property-group-${guidFor(this)}`;
 

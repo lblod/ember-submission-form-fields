@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
 import { getTopLevelPropertyGroups } from '../utils/model-factory';
+import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
 
 export default class SubFormComponent extends Component {
   propertyGroups = []; // NOTE don't think this needs to be an ember array as it will never change
+  isLast = isLast;
 
   constructor() {
     super(...arguments);

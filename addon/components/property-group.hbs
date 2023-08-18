@@ -21,7 +21,7 @@
         {{/each}}
       </div>
     {{/if}}
-    {{#each this.children as |field index|}}
+    {{#each this.children as |field|}}
       {{#if field.displayType}}
         {{#if (is-property-group field.displayType)}}
           <PropertyGroup
@@ -37,7 +37,7 @@
             @useNewListingLayout={{@useNewListingLayout}}
           />
           {{#if @last}}
-            {{#if (not-eq index (sub this.children.length 1))}}
+            {{#if (not (this.isLast this.children field))}}
               <AuHr @size="large"/>
             {{/if}}
           {{else}}
