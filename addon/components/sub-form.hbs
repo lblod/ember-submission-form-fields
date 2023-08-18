@@ -26,7 +26,7 @@
     {{/if}}
 
     <div class="au-o-flow">
-      {{#each this.propertyGroups as |group index|}}
+      {{#each this.propertyGroups as |group|}}
         <PropertyGroup
           @form={{@subForm.uri}}
           @group={{group}}
@@ -35,7 +35,7 @@
           @sourceNode={{@sourceNode}}
           @forceShowErrors={{@forceShowErrors}}
           @cacheConditionals={{@cacheConditionals}}
-          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @last={{this.isLast this.propertyGroups group}}
           @show={{@show}}
           @level={{this.nextLevel}}
           @useNewListingLayout={{true}}
@@ -54,7 +54,7 @@
 
   <div class="au-o-grid">
     <div class="au-o-flow au-o-grid__item au-u-4-5">
-      {{#each this.propertyGroups as |group index|}}
+      {{#each this.propertyGroups as |group|}}
         <PropertyGroup
           @form={{@subForm.uri}}
           @group={{group}}
@@ -63,7 +63,7 @@
           @sourceNode={{@sourceNode}}
           @forceShowErrors={{@forceShowErrors}}
           @cacheConditionals={{@cacheConditionals}}
-          @last={{eq index (sub this.propertyGroups.length 1)}}
+          @last={{this.isLast this.propertyGroups group}}
           @show={{@show}}
           @level={{@level}}
         />

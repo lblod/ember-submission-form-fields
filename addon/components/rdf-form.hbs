@@ -2,7 +2,7 @@
   class="au-o-grid au-o-grid--small"
   ...attributes
 >
-  {{#each this.propertyGroups as |group index|}}
+  {{#each this.propertyGroups as |group|}}
     <PropertyGroup
       class={{@groupClass}}
       @form={{@form}}
@@ -12,7 +12,7 @@
       @sourceNode={{@sourceNode}}
       @forceShowErrors={{@forceShowErrors}}
       @cacheConditionals={{@cacheConditionals}}
-      @last={{eq index (sub this.propertyGroups.length 1)}}
+      @last={{this.isLast this.propertyGroups group}}
       @show={{@show}}
       @level={{@level}}
       @useNewListingLayout={{@useNewListingLayout}} {{!Temporary argument so we don't break the css hacks in the LPDC module}}
