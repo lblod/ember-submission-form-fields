@@ -5,9 +5,8 @@ import { restartableTask, timeout } from 'ember-concurrency';
 export default class RdfInputFieldsSearchComponent extends SimpleInputFieldComponent {
   inputId = 'search-' + guidFor(this);
 
-  @restartableTask
-  *search(event) {
-    yield timeout(250);
+  search = restartableTask(async (event) => {
+    await timeout(250);
     this.updateValue(event.target.value.trim());
-  }
+  });
 }

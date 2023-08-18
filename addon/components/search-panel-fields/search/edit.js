@@ -20,10 +20,9 @@ export default class FormSearchPanelFieldsSearchEditComponent extends SimpleInpu
     }
   }
 
-  @restartableTask
-  *updateValue() {
-    yield timeout(250);
+  updateValue = restartableTask(async () => {
+    await timeout(250);
     this.value = this._freeTextSearch && this._freeTextSearch.trim();
     super.updateValue(this.value);
-  }
+  });
 }
