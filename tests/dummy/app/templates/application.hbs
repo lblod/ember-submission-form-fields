@@ -67,10 +67,9 @@
         <AuToolbar @border="bottom" @size="small" @skin="tint" as |Group|>
           <Group>
             <AuToggleSwitch
-              @label="Read only mode"
               @checked={{this.formConfig.isReadOnly}}
               @onChange={{fn (mut this.formConfig.isReadOnly)}}
-            />
+            >Read-only mode</AuToggleSwitch>
           </Group>
         </AuToolbar>
         <AuBodyContainer @scroll={{true}}>
