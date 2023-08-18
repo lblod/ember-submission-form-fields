@@ -75,7 +75,7 @@
     "ember-load-initializers": "^2.1.2",
     "ember-mu-transform-helpers": "^2.1.2",
     "ember-page-title": "^7.0.0",
-    "ember-power-select": "^6.0.0",
+    "ember-power-select": "^7.0.0",
     "ember-qunit": "^6.0.0",
     "ember-resolver": "^8.0.3",
     "ember-source": "~4.8.0",
