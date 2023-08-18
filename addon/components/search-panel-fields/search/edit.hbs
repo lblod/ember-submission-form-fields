@@ -5,7 +5,7 @@
          id="{{this.inputId}}"
          @width="block"
          @value={{this._freeTextSearch}}
-  {{on "input" (perform this.updateValue)}}/>
+  {{on "input" (perform this.search)}}/>
 {{!-- for now this is hardcoded --}}
 <a href="/help#help-zoekresultaten" class="au-c-link" target="_blank" rel="noopener noreferrer">
   <AuIcon @icon="info-circle" @alignment="left"/>

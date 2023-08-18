@@ -20,9 +20,9 @@ export default class FormSearchPanelFieldsSearchEditComponent extends SimpleInpu
     }
   }
 
-  updateValue = restartableTask(async () => {
+  search = restartableTask(async () => {
     await timeout(250);
     this.value = this._freeTextSearch && this._freeTextSearch.trim();
-    super.updateValue(this.value);
+    this.updateValue(this.value);
   });
 }
