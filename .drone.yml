@@ -30,7 +30,7 @@ steps:
 - name: test-embroider
   image: danlynn/ember-cli:4.2.0-node_16.14
   commands:
-  - npx ember try:one embroider-optimized
+  - npx ember try:one embroider-safe
 trigger:
   event:
     - pull_request
