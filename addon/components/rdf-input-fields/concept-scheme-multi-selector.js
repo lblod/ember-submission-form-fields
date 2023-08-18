@@ -94,11 +94,10 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     super.updateValidations();
   }
 
-  @restartableTask
-  *search(term) {
-    yield timeout(600);
+  search = restartableTask(async (term) => {
+    await timeout(600);
     return this.options.filter((value) =>
       value.label.toLowerCase().includes(term.toLowerCase())
     );
-  }
+  });
 }
