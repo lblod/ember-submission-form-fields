@@ -14,7 +14,7 @@ This addon provides form and form-fields components to create and edit submissio
 ## Installation
 
 ```
-ember install ember-submission-form-fields
+ember install @lblod/ember-submission-form-fields
 ```
 
 ## Documentation
