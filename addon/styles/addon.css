@@ -12,7 +12,7 @@
 }
 
 .sf-listing-sub-form {
-  border: .1rem solid var(--au-gray-200);
+  border: 0.1rem solid var(--au-gray-200);
   border-radius: var(--au-radius);
 }
 
