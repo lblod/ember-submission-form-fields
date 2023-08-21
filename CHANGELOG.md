@@ -1,3 +1,8 @@
+## v2.12.1 (2023-08-21)
+
+#### :bug: Bug Fix
+* [#141](https://github.com/lblod/ember-submission-form-fields/pull/141) Allow ember-source v3 ([@Windvis](https://github.com/Windvis))
+
 ## v2.12.0 (2023-08-21)
 
 #### :rocket: Enhancement
