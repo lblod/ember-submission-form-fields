@@ -1,3 +1,16 @@
+## v2.12.0 (2023-08-21)
+
+#### :rocket: Enhancement
+* [#136](https://github.com/lblod/ember-submission-form-fields/pull/136) Resolve `AuToggleSwitch` deprecations ([@Windvis](https://github.com/Windvis))
+* [#135](https://github.com/lblod/ember-submission-form-fields/pull/135) Widen dependency version ranges ([@Windvis](https://github.com/Windvis))
+
+#### :bug: Bug Fix
+* [#140](https://github.com/lblod/ember-submission-form-fields/pull/140) Remove the `convert-to-currency` helper ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#138](https://github.com/lblod/ember-submission-form-fields/pull/138) Remove ember-math-helpers ([@Windvis](https://github.com/Windvis))
+* [#137](https://github.com/lblod/ember-submission-form-fields/pull/137) Update to the new `ember-concurrency` task syntax ([@Windvis](https://github.com/Windvis))
+
 ## v2.11.0 (2023-06-21)
 
 #### :rocket: Enhancement
