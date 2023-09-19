@@ -85,6 +85,12 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
   update(group, { form, store, graphs, node }) {
     this.deregister(); // NOTE: to prevent calling ourself up again with changes
 
+    // If the component is being destroyed we don't need to update our children since those are being destroyed as well
+    // This prevents an observer loop where children remove triples which causes all observers to get notified.
+    if (this.isDestroying) {
+      return;
+    }
+
     // 1) retrieve the to be rendered children (!!could be nested property-groups or fields) for this property-group
     const children = getChildrenForPropertyGroup(group, {
       form,
