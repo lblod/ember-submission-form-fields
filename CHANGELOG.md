@@ -1,3 +1,8 @@
+## v2.12.2 (2023-09-19)
+
+#### :bug: Bug Fix
+* [#142](https://github.com/lblod/ember-submission-form-fields/pull/142) Stop the `PropertyGroup` observer when it's being destroyed ([@Windvis](https://github.com/Windvis))
+
 ## v2.12.1 (2023-08-21)
 
 #### :bug: Bug Fix
