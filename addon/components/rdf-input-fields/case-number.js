@@ -3,7 +3,6 @@ import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import clipboardy from 'clipboardy';
-import fetch from 'fetch';
 
 /**
  *
