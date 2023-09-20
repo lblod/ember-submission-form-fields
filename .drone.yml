@@ -4,15 +4,15 @@ type: docker
 name: verify
 steps:
 - name: install
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
-  - npm install
+  - npm ci
 - name: lint
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
   - npm run lint
 - name: test
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
   - npm run test:ember
 trigger:
@@ -24,11 +24,11 @@ type: docker
 name: scenario-embroider-safe
 steps:
 - name: install
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
-  - npm install
+  - npm ci
 - name: test-embroider
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
   - npx ember try:one embroider-safe
 trigger:
@@ -40,11 +40,11 @@ type: docker
 name: scenario-embroider-strict
 steps:
 - name: install
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
-  - npm install
+  - npm ci
 - name: test-embroider
-  image: danlynn/ember-cli:4.2.0-node_16.14
+  image: danlynn/ember-cli:5.2.1-node_18.17
   commands:
   - npx ember try:one embroider-optimized
 trigger:
