@@ -1,3 +1,9 @@
+## v2.13.0 (2023-09-20)
+
+#### :rocket: Enhancement
+* [#147](https://github.com/lblod/ember-submission-form-fields/pull/147) Resolve Appuniversum deprecations ([@Windvis](https://github.com/Windvis))
+* [#143](https://github.com/lblod/ember-submission-form-fields/pull/143) Remove ember-fetch ([@Windvis](https://github.com/Windvis))
+
 ## v2.12.2 (2023-09-19)
 
 #### :bug: Bug Fix
