@@ -9,12 +9,12 @@
 {{/unless}}
 <AuInput
   @error={{this.hasErrors}}
-  @value={{this.value}}
   @disabled={{@show}}
-  @type="number"
   @width={{if @inTable "block"}}
   id={{this.inputId}}
   lang="nl-BE"
+  type="number"
+  value={{this.value}}
   {{on "change" this.updateValue}}
 />
 

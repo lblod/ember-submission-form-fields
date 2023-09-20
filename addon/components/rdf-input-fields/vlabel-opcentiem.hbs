@@ -41,8 +41,8 @@
               <AuInput
                 @error={{field.isInvalid}}
                 @width="block"
-                @value={{field.value}}
                 @disabled={{@show}}
+                value={{field.value}}
                 aria-labelledby={{this.amountColumnId}}
                 {{auto-focus}}
                 {{on "blur" (fn this.updatePrice field)}}

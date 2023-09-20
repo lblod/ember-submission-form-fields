@@ -185,8 +185,9 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   @action
-  updateRemoteUrl(remoteUrl) {
-    const address = remoteUrl.address.trim();
+  updateRemoteUrl(remoteUrl, event) {
+    remoteUrl.address = event.target.value.trim();
+    const address = remoteUrl.address;
     this.removeRemoteDataObject(remoteUrl.uri);
     this.insertRemoteDataObject({ uri: remoteUrl.uri, address });
     this.hasBeenFocused = true;

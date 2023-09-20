@@ -10,6 +10,7 @@ export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFi
   @action
   updateValue(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    this.value = e.target.value;
     const number = literal(Number(this.value), this.datatype);
     super.updateValue(number);
   }
