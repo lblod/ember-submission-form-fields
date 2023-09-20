@@ -80,21 +80,26 @@ See the [Contributing](CONTRIBUTING.md) guide for details.
 
 
 ## Releasing a new version
-We use [`release-it`](https://github.com/release-it/release-it) to handle our release flow and [`lerna-changelog`](https://github.com/lerna/lerna-changelog) to generate the changelog for that release.
+We use [`release-it`](https://github.com/release-it/release-it) to handle our release flow 
 
 ### Prerequisites
-- Both `release-it` and `lerna-changelog` require a Github [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to work properly.
-- All PRs that need to show up in the changelog need a descriptive title and [correct label](https://github.com/lerna/lerna-changelog).
+- All PRs that need to show up in the changelog need a descriptive title and [correct label].
 
-### Previewing the changelog (optional)
-If you want to preview the changelog that will be generated before starting the release flow you can run the following command:
+### Generating the changelog (optional)
+At the moment the changelog is updated manually. To make this a bit easier you can generate a basic changelog based on the merged PRs with [`lerna-changelog`](https://github.com/lerna/lerna-changelog).
+
+> `lerna-changelog` requires a Github [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to work properly.
+
+The following command can  be used to generate the changelog:
 
 `GITHUB_AUTH=your-access-token npx lerna-changelog`
 
 ### Creating a new release
-Simply run `GITHUB_AUTH=your-access-token npm run release` and follow the prompts.
+Simply run `npm run release` and follow the prompts.
 
-After the new tag is created and pushed Drone will take care of publishing the package to npm.
+> If you generated the changelog using lerna-changelog you can add it to the changelog file and add it to the staged changes when release-it asks if you want to commit the changes. This will ensure that the changelog change is part of the release commit.
+
+After the new tag is created and pushed CI will take care of publishing the package to npm.
 
 
 ## License
