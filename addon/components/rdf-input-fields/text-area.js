@@ -8,6 +8,7 @@ export default class RdfInputFieldsTextAreaComponent extends SimpleInputFieldCom
   @action
   updateValue(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    super.updateValue(this.value && this.value.trim());
+    this.value = e.target.value.trim();
+    super.updateValue(this.value);
   }
 }

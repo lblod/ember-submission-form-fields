@@ -5,7 +5,7 @@
 <ul class="au-o-flow au-o-flow--tiny">
   {{#each this.remoteUrls as |remoteUrl|}}
     <li class="au-c-card au-o-box au-o-box--small">
-      <AuInput @disabled={{true}} @width="block" @value={{remoteUrl.address}} />
+      <AuInput @disabled={{true}} @width="block" value={{remoteUrl.address}} />
       <div class="au-u-margin-top-tiny">
         <AuLinkExternal
           @icon="external-link"

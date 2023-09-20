@@ -1,25 +1,25 @@
 {{#unless @inTable}}
-<AuLabel
-  @error={{this.hasErrors}}
-  @required={{this.isRequired}}
-  for={{this.inputId}}
->
-  {{@field.label}}
-  {{#if this.maxLength}}
-    <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
-      Resterende karakters:
-      {{this.remainingCharacters}}
-    </AuPill>
-  {{/if}}
-</AuLabel>
+  <AuLabel
+    @error={{this.hasErrors}}
+    @required={{this.isRequired}}
+    for={{this.inputId}}
+  >
+    {{@field.label}}
+    {{#if this.maxLength}}
+      <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
+        Resterende karakters:
+        {{this.remainingCharacters}}
+      </AuPill>
+    {{/if}}
+  </AuLabel>
 {{/unless}}
 
 <AuInput
   @error={{this.hasErrors}}
-  @value={{this.value}}
   @disabled={{@show}}
   @width={{if @inTable "block"}}
   id={{this.inputId}}
+  value={{this.value}}
   {{on "blur" this.updateValue}}
 />
 

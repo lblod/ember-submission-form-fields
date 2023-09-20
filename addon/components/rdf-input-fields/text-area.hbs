@@ -14,11 +14,11 @@
 
 <AuTextarea
   @width="block"
-  @value={{this.value}}
   @error={{this.hasErrors}}
   @disabled={{@show}}
   id={{this.inputId}}
   rows="5"
+  value={{this.value}}
   {{on "blur" this.updateValue}}
 />
 {{#unless @show}}

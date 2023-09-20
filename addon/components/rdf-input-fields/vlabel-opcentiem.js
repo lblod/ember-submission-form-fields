@@ -200,10 +200,10 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
   }
 
   @action
-  updatePrice(field) {
+  updatePrice(field, event) {
     if (!this.hasTaxRate) this.createTaxRate();
 
-    field.value = field.value.trim();
+    field.value = event.target.value.trim();
     this.updatePriceTriple(field.oldValue, field.value);
     field.oldValue = field.value;
 

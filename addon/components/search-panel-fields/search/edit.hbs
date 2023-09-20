@@ -1,11 +1,13 @@
 <AuLabel for={{this.inputId}}>
   {{@field.label}}
 </AuLabel>
-<AuInput class="au-u-margin-bottom-tiny"
-         id="{{this.inputId}}"
-         @width="block"
-         @value={{this._freeTextSearch}}
-  {{on "input" (perform this.search)}}/>
+<AuInput
+  @width="block"
+  class="au-u-margin-bottom-tiny"
+  id="{{this.inputId}}"
+  value={{this.value}}
+  {{on "input" (perform this.search)}}
+/>
 {{!-- for now this is hardcoded --}}
 <a href="/help#help-zoekresultaten" class="au-c-link" target="_blank" rel="noopener noreferrer">
   <AuIcon @icon="info-circle" @alignment="left"/>
