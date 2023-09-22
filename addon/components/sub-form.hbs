@@ -35,20 +35,41 @@
     {{/if}}
 
     <div class="au-o-flow">
-      {{#each this.propertyGroups as |group|}}
-        <PropertyGroup
-          @form={{@subForm.uri}}
-          @group={{group}}
-          @formStore={{@formStore}}
-          @graphs={{@graphs}}
-          @sourceNode={{@sourceNode}}
-          @forceShowErrors={{@forceShowErrors}}
-          @cacheConditionals={{@cacheConditionals}}
-          @last={{this.isLast this.propertyGroups group}}
-          @show={{@show}}
-          @level={{this.nextLevel}}
-          @useNewListingLayout={{true}}
-        />
+      {{#each this.propertyGroups as |group index|}}
+        {{#if this.collapsible}}
+          <AuAccordion
+              @buttonLabel={{this.name}}
+              @reverse={{true}}
+          >
+            <PropertyGroup
+              @form={{@subForm.uri}}
+              @group={{group}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @last={{eq index (sub this.propertyGroups.length 1)}}
+              @show={{@show}}
+              @level={{this.nextLevel}}
+              @useNewListingLayout={{true}}
+            />
+          </AuAccordion>
+        {{else}}
+          <PropertyGroup
+              @form={{@subForm.uri}}
+              @group={{group}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @last={{eq index (sub this.propertyGroups.length 1)}}
+              @show={{@show}}
+              @level={{this.nextLevel}}
+              @useNewListingLayout={{true}}
+            />
+        {{/if}}
       {{/each}}
     </div>
   </div>
