@@ -77,6 +77,15 @@ export default class ListingComponent extends Component {
     return highestOrderValue;
   }
 
+  get orderedSubForms() {
+    return [...this.subForms].sort((subFormA, subFormB) => {
+      return (
+        getOrder(subFormA.sourceNode, this.formStore, this.graphs.sourceGraph) -
+        getOrder(subFormB.sourceNode, this.formStore, this.graphs.sourceGraph)
+      );
+    });
+  }
+
   constructor() {
     super(...arguments);
     this.updateScope();
@@ -162,21 +171,10 @@ export default class ListingComponent extends Component {
 
     // We add sh:order triples if a subForm doesn't have this yet
     // We assume this only happens if we are editing a form that was saved before this order feature
-    let sourceGraph = this.graphs.sourceGraph;
-    let formStore = this.formStore;
-
     ensureOrderTriplesForExistingData({
       subForms,
       formStore: this.formStore,
       sourceGraph: this.graphs.sourceGraph,
-    });
-
-    // sort the forms based on their order
-    subForms.sort((subFormA, subFormB) => {
-      return (
-        getOrder(subFormA.sourceNode, formStore, sourceGraph) -
-        getOrder(subFormB.sourceNode, formStore, sourceGraph)
-      );
     });
 
     this.subForms = subForms;
