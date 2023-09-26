@@ -1,0 +1,120 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix eli: <http://data.europa.eu/eli/ontology#>.
+
+
+##########################################################
+# form
+##########################################################
+ext:form a form:Form, form:TopLevelForm ;
+  form:includes ext:propertyGroupL;
+  form:includes ext:formNodesL;
+  form:includes ext:formListingL;
+  form:includes ext:formListingTableL.
+
+##########################################################
+#  property-group
+##########################################################
+ext:mainPg a form:PropertyGroup;
+    sh:name "Form Builder" ;
+    sh:order 0 .
+
+ext:propertyGroupPg a form:PropertyGroup;
+    sh:name "Section" ;
+    sh:order 1 .
+
+# ext:listingPg a form:PropertyGroup;
+#     sh:name "Listing" ;
+#     sh:order 2 .
+
+# ext:formFieldPg a form:PropertyGroup;
+#     sh:name "Field" ;
+#     sh:order 3 .
+
+##########################################################
+#  PropertyGroup Scope
+#  TODO: allow finding triples for a "form:Scope"
+#    with no "sh:path" provided.
+#    We now revert to attaching the propertyGroups to
+#    the "form:Form" directly.
+#    Which is suboptimal, cause not really in the defined
+#    model. (It's not forbidden though)
+##########################################################
+ext:propertyGroupS a form:Scope;
+  sh:path sh:group ;
+  form:constraint [
+     a sh:NodeShape ;
+     sh:targetNode form:PropertyGroup
+  ].
+
+##########################################################
+#  PropertyGroup Listing
+##########################################################
+ext:propertyGroupL a form:Listing;
+  form:each ext:propertyGroupItem;
+  form:scope ext:propertyGroupS;
+  form:createGenerator ext:propertyGroupGenerator;
+  form:canAdd true;
+  form:addLabel "New section";
+  form:canRemove true;
+  form:canCollapse true;
+  form:removeLabel "Remove section";
+  sh:group ext:mainPg;
+  sh:order 1 .
+
+##########################################################
+#  Generator: propertyGroup
+##########################################################
+ext:propertyGroupGenerator a form:Generator;
+ 
+  form:prototype [
+    form:shape [
+      a form:PropertyGroup ;
+      sh:name "Title"
+    ]
+  ].
+
+##########################################################
+#  Subform: propertyGroup
+##########################################################
+ext:propertyGroupItem a form:SubForm;
+  form:includes ext:propertyGroupNameF;
+  form:includes ext:propertyGroupDescriptionF;
+  form:includes ext:propertyGroupOrderF;
+
+  form:hasFieldGroup ext:propertyGroupPg.
+
+ext:propertyGroupNameF a form:Field ;
+  form:canCollapse false;
+  sh:name "Section title" ;
+  form:help """
+    E.g. Contact informatie, Aanvraag ...,
+   """;
+  sh:order 1 ;
+  sh:path sh:name ;
+  form:displayType displayTypes:textArea  ;
+  sh:group ext:propertyGroupPg .
+
+ext:propertyGroupDescriptionF a form:Field ;
+  sh:name "Section description" ;
+  sh:order 1 ;
+  sh:path form:help ;
+  form:displayType displayTypes:textArea  ;
+  sh:group ext:propertyGroupPg .
+  
+ext:propertyGroupOrderF a form:Field ;
+  sh:name "Order" ;
+  sh:order 2 ;
+  sh:path sh:order ;
+  form:help """
+    Order of the section, calculated from top to bottom. The bigger the number, the lower it will render.
+   """;
+  form:displayType displayTypes:numericalInput;
+  sh:group ext:propertyGroupPg .
+

@@ -1,0 +1,24 @@
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+
+
+
+
+<http://ember-submission-form-fields/source-node>
+  sh:group <http://dropdown1>;
+  sh:group <http://dropdown2>;
+  sh:group <http://dropdown3>.
+
+
+
+<http://dropdown1> a form:PropertyGroup;
+  sh:name "dropdown 1";
+  sh:order 1.
+
+<http://dropdown2> a form:PropertyGroup;
+  sh:name "dropdown 2";
+  sh:order 2.
+
+<http://dropdown3> a form:PropertyGroup;
+  sh:name "dropdown 3";
+  sh:order 3.
