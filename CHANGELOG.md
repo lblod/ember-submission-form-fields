@@ -1,3 +1,8 @@
+## v2.13.1 (2023-09-26)
+
+#### :bug: Bug Fix
+* [#149](https://github.com/lblod/ember-submission-form-fields/pull/149) Fix an issue with listing ordering after adding or removing items ([@Windvis](https://github.com/Windvis))
+
 ## v2.13.0 (2023-09-20)
 
 #### :rocket: Enhancement
