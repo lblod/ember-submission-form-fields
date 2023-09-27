@@ -3,7 +3,11 @@ import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
-import { validationResultsForField, FORM, SHACL } from '@lblod/submission-form-helpers';
+import {
+  validationResultsForField,
+  FORM,
+  SHACL,
+} from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
 
@@ -74,8 +78,6 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       this.args.form,
       this.args.graphs.formGraph
     );
-
-    console.log(this.args.form.uri);
 
     let canCollapse = this.args.formStore.any(
       propertyGroup,
