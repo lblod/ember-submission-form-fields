@@ -19,43 +19,6 @@ export default class SubFormComponent extends Component {
     });
   }
 
-  get name() {
-    let name = this.args.formStore.any(
-      this.args.sourceNode,
-      SHACL('name'),
-      undefined,
-      this.args.graphs.sourceGraph
-    );
-
-    return name;
-  }
-
-  get collapsible() {
-    let propertyGroup = this.args.formStore.any(
-      undefined,
-      FORM('each'),
-      this.args.subForm.uri,
-      this.args.graphs.formGraph
-    );
-
-    let canCollapse = this.args.formStore.any(
-      propertyGroup,
-      FORM('canCollapse'),
-      undefined,
-      this.args.graphs.formGraph
-    );
-
-    if (!canCollapse) {
-      return false;
-    }
-
-    if (canCollapse.value === '1') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   get level() {
     return this.args.level || 2;
   }

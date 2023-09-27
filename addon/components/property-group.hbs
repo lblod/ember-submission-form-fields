@@ -1,6 +1,11 @@
 {{#if this.children}}
-  <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
-    {{#if this.showTitleBlock}}
+  {{#if this.collapsible}}
+    <AuAccordion
+      @buttonLabel={{this.name}}
+      @reverse={{true}}
+      ...attributes
+    >
+      {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
         {{#if @group.name}}
           <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
@@ -81,5 +86,90 @@
         {{/if}}
       {{/if}}
     {{/each}}
-  </div>
+    </AuAccordion>
+  {{else}}
+    <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
+      {{#if this.showTitleBlock}}
+        <div class="au-u-margin-bottom-small">
+          {{#if @group.name}}
+            <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+              {{@group.name}}
+            </AuHeading>
+          {{/if}}
+          {{#if @group.help}}
+            {{! template-lint-disable no-triple-curlies}}
+            <p class="au-u-light">{{{@group.help}}}</p>
+          {{/if}}
+          {{#each this.errors as |error|}}
+            <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"
+              @icon="alert-triangle"
+              @title={{error.resultMessage}}
+              @skin="error"
+              @size="small">
+            </AuAlert>
+          {{/each}}
+        </div>
+      {{/if}}
+      {{#each this.children as |field|}}
+        {{#if field.displayType}}
+          {{#if (is-property-group field.displayType)}}
+            <PropertyGroup
+              @level={{this.nextLevel}}
+              @form={{@form}}
+              @group={{field}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @show={{@show}}
+              @useNewListingLayout={{@useNewListingLayout}}
+            />
+            {{#if @last}}
+              {{#if (not (this.isLast this.children field))}}
+                <AuHr @size="large"/>
+              {{/if}}
+            {{else}}
+              <AuHr @size="large"/>
+            {{/if }}
+          {{else if (is-listing field.displayType)}}
+            <Listing
+              @level={{this.nextLevel}}
+              @listing={{field}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @show={{@show}}
+              @useNewListingLayout={{@useNewListingLayout}}
+            />
+          {{else}}
+            <div class="au-u-margin-bottom-small">
+              {{#let
+                (component-for-display-type field.displayType show=@show)
+                as |FormField|
+              }}
+                <FormField
+                  @field={{field}}
+                  @form={{@form}}
+                  @formStore={{@formStore}}
+                  @graphs={{@graphs}}
+                  @sourceNode={{@sourceNode}}
+                  @forceShowErrors={{@forceShowErrors}}
+                  @cacheConditionals={{@cacheConditionals}}
+                  @show={{@show}}
+                />
+              {{/let}}
+
+              {{#if field.help}}
+                {{! template-lint-disable no-triple-curlies}}
+                <AuHelpText>{{{field.help}}}</AuHelpText>
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    </div>
+  {{/if}}
 {{/if}}

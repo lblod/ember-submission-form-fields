@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { getChildrenForPropertyGroup } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
-import { validationResultsForField } from '@lblod/submission-form-helpers';
+import { validationResultsForField, FORM, SHACL } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
 
@@ -65,6 +65,45 @@ export default class SubmissionFormPropertyGroupComponent extends Component {
       store: this.args.formStore,
       path: this.args.group.rdflibPath,
     };
+  }
+
+  get collapsible() {
+    let propertyGroup = this.args.formStore.any(
+      undefined,
+      FORM('each'),
+      this.args.form,
+      this.args.graphs.formGraph
+    );
+
+    console.log(this.args.form.uri);
+
+    let canCollapse = this.args.formStore.any(
+      propertyGroup,
+      FORM('canCollapse'),
+      undefined,
+      this.args.graphs.formGraph
+    );
+
+    if (!canCollapse) {
+      return false;
+    }
+
+    if (canCollapse.value === '1') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  get name() {
+    let name = this.args.formStore.any(
+      this.args.sourceNode,
+      SHACL('name'),
+      undefined,
+      this.args.graphs.sourceGraph
+    );
+
+    return name;
   }
 
   register() {
