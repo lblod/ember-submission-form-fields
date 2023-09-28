@@ -1,10 +1,6 @@
 {{#if this.children}}
   {{#if this.collapsible}}
-    <AuAccordion
-      @buttonLabel={{this.name}}
-      @reverse={{true}}
-      ...attributes
-    >
+    {{#custom-accordion as |accordion|}}
       {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
         {{#if @group.name}}
@@ -86,7 +82,9 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    </AuAccordion>
+  {{/custom-accordion}}
+
+
   {{else}}
     <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
       {{#if this.showTitleBlock}}

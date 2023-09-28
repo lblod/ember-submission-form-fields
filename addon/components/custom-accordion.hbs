@@ -1,0 +1,6 @@
+<div class="custom-accordion">
+  <button class="custom-accordion-toggle" {{on "click" this.toggleAccordion}}>Toggle</button>
+  <div class="custom-accordion-content" style="{{if this.isAccordionVisible 'display:block;' 'display:none;'}}">
+    {{yield}}
+  </div>
+</div>

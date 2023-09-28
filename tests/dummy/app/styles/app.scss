@@ -36,3 +36,14 @@
   font-style: italic;
 }
 
+.custom-accordion-content {
+  display: none; /* Initially hide the content */
+}
+
+.custom-accordion-content.visible {
+  display: block; /* Display when isAccordionVisible is true */
+}
+
+.custom-accordion-content.hidden {
+  display: none; /* Hide when isAccordionVisible is false */
+}
