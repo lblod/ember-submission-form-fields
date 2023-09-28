@@ -39,6 +39,7 @@ ext:chaptersL a form:Listing;
   form:createGenerator ext:chapterGenerator;
   form:canRemove true;
   form:canAdd true;
+  form:canChangeOrder true;
   form:addLabel "Add chapter";
   sh:group ext:mainPg;
   sh:order 2 .

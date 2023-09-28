@@ -1,8 +1,17 @@
 {{#if @useNewListingLayout}}
   <div class="sf-listing-sub-form au-o-box">
-    {{#if (or @subForm.itemLabel @canRemove)}}
+    {{#if (or @subForm.itemLabel @canMoveUp @canMoveDown @canRemove)}}
       <AuToolbar @size={{this.size}} as |Group|>
         <Group>
+          {{#if (or @canMoveUp @canMoveDown)}}
+            <this.OrderButtonGroup
+              @canMoveUp={{@canMoveUp}}
+              @canMoveDown={{@canMoveDown}}
+              @moveUp={{@moveUp}}
+              @moveDown={{@moveDown}}
+              class="au-u-flex-self-start"
+            />
+          {{/if}}
           {{#if @subForm.itemLabel}}
             <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
               {{@subForm.itemLabel}}
@@ -45,7 +54,19 @@
   </div>
 {{else}}
   {{#if @subForm.itemLabel}}
-    <div class="au-u-margin-bottom-small">
+    <div
+      class="au-u-margin-bottom-small
+        {{if (or @canMoveUp @canMoveDown) 'au-u-flex'}}"
+    >
+      {{#if (or @canMoveUp @canMoveDown)}}
+        <this.OrderButtonGroup
+          @canMoveUp={{@canMoveUp}}
+          @canMoveDown={{@canMoveDown}}
+          @moveUp={{@moveUp}}
+          @moveDown={{@moveDown}}
+          class="au-u-flex-self-start au-u-margin-right-small"
+        />
+      {{/if}}
       <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
         {{@subForm.itemLabel}}
       </AuHeading>

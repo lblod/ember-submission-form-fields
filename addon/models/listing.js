@@ -12,12 +12,16 @@ export default class ListingModel {
     const { store, formGraph } = options;
 
     this.uri = uri;
+    this.store = store;
+    this.formGraph = formGraph;
+
     this.rdflibLabel = store.any(uri, SHACL('name'), undefined, formGraph);
     this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
     this.rdflibPath = store.any(uri, SHACL('path'), undefined, formGraph);
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
     this.rdflibCanAdd = store.any(uri, FORM('canAdd'), undefined, formGraph);
+
     let rdflibMinCount = store.any(
       uri,
       SHACL('minCount'),
@@ -86,6 +90,17 @@ export default class ListingModel {
   rdflibCanRemove = null;
   get canRemove() {
     return this.rdflibCanRemove && this.rdflibCanRemove.value == 1;
+  }
+
+  get canChangeOrder() {
+    let literal = this.store.any(
+      this.uri,
+      FORM('canChangeOrder'),
+      undefined,
+      this.formGraph
+    );
+
+    return literal ? Literal.toJS(literal) : false;
   }
 
   @tracked

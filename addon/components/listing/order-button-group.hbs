@@ -1,0 +1,22 @@
+<div class="sf-listing-order-button-group au-u-flex au-u-flex--column" ...attributes>
+  <AuButton
+    @skin="naked"
+    @icon="nav-up"
+    @hideText={{true}}
+    @disabled={{not @canMoveUp}}
+    class="sf-listing-order-button-group__button"
+    {{on "click" @moveUp}}
+  >
+    Naar boven verplaatsen
+  </AuButton>
+  <AuButton
+    @skin="naked"
+    @icon="nav-down"
+    @hideText={{true}}
+    @disabled={{not @canMoveDown}}
+    class="sf-listing-order-button-group__button"
+    {{on "click" @moveDown}}
+  >
+    Naar onder verplaatsen
+  </AuButton>
+</div>

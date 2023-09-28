@@ -3,8 +3,11 @@ import {
   getChildrenForPropertyGroup,
   getTopLevelPropertyGroups,
 } from '@lblod/ember-submission-form-fields/utils/model-factory';
+import OrderButtonGroup from '@lblod/ember-submission-form-fields/components/listing/order-button-group';
 
 export default class ListingTableRow extends Component {
+  OrderButtonGroup = OrderButtonGroup;
+
   constructor() {
     super(...arguments);
 

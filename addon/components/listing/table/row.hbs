@@ -1,4 +1,14 @@
 <tr ...attributes>
+  {{#if (or @canMoveUp @canMoveDown)}}
+    <td>
+      <this.OrderButtonGroup
+        @canMoveUp={{@canMoveUp}}
+        @canMoveDown={{@canMoveDown}}
+        @moveUp={{@moveUp}}
+        @moveDown={{@moveDown}}
+      />
+    </td>
+  {{/if}}
   {{#if @showIndex}}
     <td>
       {{this.index}}
