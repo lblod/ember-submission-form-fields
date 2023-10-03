@@ -1,20 +1,26 @@
 {{#if @useNewListingLayout}}
   <div class="au-o-flow" ...attributes>
-    {{#each @subForms as |subForm|}}
-      <SubForm
-        @subForm={{subForm}}
-        @formStore={{@formStore}}
-        @graphs={{@graphs}}
-        @sourceNode={{subForm.sourceNode}}
-        @forceShowErrors={{@forceShowErrors}}
-        @cacheConditionals={{@cacheConditionals}}
-        @last={{this.isLast @subForms subForm}}
-        @show={{@show}}
-        @level={{@level}}
-        @onRemoveEntry={{@removeEntry}}
-        @canRemove={{@canRemove}}
-        @useNewListingLayout={{true}}
-      />
+    {{#each @subForms as |subForm index|}}
+      {{#let (eq index 0) (this.isLast @subForms subForm) as |isFirst isLast|}}
+        <SubForm
+          @subForm={{subForm}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{subForm.sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{isLast}}
+          @show={{@show}}
+          @level={{@level}}
+          @onRemoveEntry={{@removeEntry}}
+          @canRemove={{@canRemove}}
+          @canMoveUp={{(and @canChangeOrder (not isFirst))}}
+          @canMoveDown={{(and @canChangeOrder (not isLast))}}
+          @moveUp={{fn @moveUp subForm}}
+          @moveDown={{fn @moveDown subForm}}
+          @useNewListingLayout={{true}}
+        />
+      {{/let}}
     {{/each}}
 
     {{#if @canAdd}}
@@ -33,20 +39,29 @@
 {{else}}
   <div class="au-o-grid">
     <div class="au-o-grid__item au-u-4-5">
-      {{#each @subForms as |subForm|}}
-        <SubForm
-          @subForm={{subForm}}
-          @formStore={{@formStore}}
-          @graphs={{@graphs}}
-          @sourceNode={{subForm.sourceNode}}
-          @forceShowErrors={{@forceShowErrors}}
-          @cacheConditionals={{@cacheConditionals}}
-          @last={{this.isLast @subForms subForm}}
-          @show={{@show}}
-          @level={{@level}}
-          @onRemoveEntry={{@removeEntry}}
-          @canRemove={{@canRemove}}
-        />
+      {{#each @subForms as |subForm index|}}
+        {{#let
+          (eq index 0) (this.isLast @subForms subForm)
+          as |isFirst isLast|
+        }}
+          <SubForm
+            @subForm={{subForm}}
+            @formStore={{@formStore}}
+            @graphs={{@graphs}}
+            @sourceNode={{subForm.sourceNode}}
+            @forceShowErrors={{@forceShowErrors}}
+            @cacheConditionals={{@cacheConditionals}}
+            @last={{this.isLast @subForms subForm}}
+            @show={{@show}}
+            @level={{@level}}
+            @onRemoveEntry={{@removeEntry}}
+            @canRemove={{@canRemove}}
+            @canMoveUp={{(and @canChangeOrder (not isFirst))}}
+            @canMoveDown={{(and @canChangeOrder (not isLast))}}
+            @moveUp={{fn @moveUp subForm}}
+            @moveDown={{fn @moveDown subForm}}
+          />
+        {{/let}}
       {{/each}}
     </div>
     {{#if @canAdd}}

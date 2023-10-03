@@ -13,6 +13,10 @@ import ListingList from '@lblod/ember-submission-form-fields/components/listing/
 import ListingTable from '@lblod/ember-submission-form-fields/components/listing/table';
 
 const ORDER = SHACL('order');
+const DIRECTION = {
+  UP: 'up',
+  DOWN: 'down',
+};
 
 export default class ListingComponent extends Component {
   @tracked subForms = [];
@@ -54,6 +58,12 @@ export default class ListingComponent extends Component {
       : true;
 
     return this.listing.canRemove && !this.args.show && hasMinimumItems;
+  }
+
+  get canChangeOrder() {
+    return (
+      this.listing.canChangeOrder && !this.args.show && this.subForms.length > 1
+    );
   }
 
   get ListingDisplayMode() {
@@ -144,6 +154,78 @@ export default class ListingComponent extends Component {
     this.formStore.removeStatements(triplesToRemove);
     this.updateScope();
     this.renderSubForms();
+  }
+
+  @action moveUp(subForm) {
+    this.changeItemOrder(subForm, DIRECTION.UP);
+  }
+
+  @action moveDown(subForm) {
+    this.changeItemOrder(subForm, DIRECTION.DOWN);
+  }
+
+  changeItemOrder(subform, direction) {
+    const orderedSubForms = this.orderedSubForms;
+    const index = this.orderedSubForms.indexOf(subform);
+    const shouldMoveUp = direction === DIRECTION.UP;
+
+    if (
+      (shouldMoveUp && index === 0) ||
+      (!shouldMoveUp && index === orderedSubForms.length)
+    ) {
+      return;
+    }
+
+    const otherSubform = shouldMoveUp
+      ? orderedSubForms.at(index - 1)
+      : orderedSubForms.at(index + 1);
+
+    const currentOrder = getOrder(
+      subform.sourceNode,
+      this.formStore,
+      this.graphs.sourceGraph
+    );
+    const otherOrder = getOrder(
+      otherSubform.sourceNode,
+      this.formStore,
+      this.graphs.sourceGraph
+    );
+
+    // TODO: Both removeStatements and addAll will trigger the observer system
+    // We should add a new method to the forking store that can both add and remove statements
+    // and only trigger a single observer callback.
+    this.formStore.removeStatements([
+      {
+        subject: subform.sourceNode,
+        predicate: ORDER,
+        object: currentOrder,
+        graph: this.graphs.sourceGraph,
+      },
+      {
+        subject: otherSubform.sourceNode,
+        predicate: ORDER,
+        object: otherOrder,
+        graph: this.graphs.sourceGraph,
+      },
+    ]);
+
+    this.formStore.addAll([
+      {
+        subject: subform.sourceNode,
+        predicate: ORDER,
+        object: otherOrder,
+        graph: this.graphs.sourceGraph,
+      },
+      {
+        subject: otherSubform.sourceNode,
+        predicate: ORDER,
+        object: currentOrder,
+        graph: this.graphs.sourceGraph,
+      },
+    ]);
+
+    // eslint-disable-next-line no-self-assign
+    this.subForms = this.subForms; // Force a rerender with the new ordering
   }
 
   updateScope() {
