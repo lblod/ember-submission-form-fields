@@ -1,0 +1,34 @@
+{{#unless @inTable}}
+  <AuLabel
+    @error={{this.hasErrors}}
+    @required={{this.isRequired}}
+    for={{this.inputId}}
+  >
+    {{@field.label}}
+  </AuLabel>
+{{/unless}}
+<div class={{if this.hasErrors "ember-power-select--error"}}>
+  <PowerSelect
+    @triggerId={{this.inputId}}
+    @searchField="label"
+    @searchEnabled={{this.searchEnabled}}
+    @selected={{this.selected}}
+    @options={{this.options}}
+    @onClose={{fn (mut this.hasBeenFocused) true}}
+    @onChange={{this.updateSelection}}
+    @allowClear={{true}}
+    @loadingMessage="Aan het laden..."
+    @noMatchesMessage="Geen resultaten gevonden"
+    @disabled={{@show}}
+    data-test-field-uri={{@field.uri.value}}
+    as |concept|
+  >
+    <span data-test-field-uri={{concept.subject.value}}>
+      {{concept.label}}
+    </span>
+  </PowerSelect>
+</div>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}

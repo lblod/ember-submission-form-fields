@@ -9,6 +9,7 @@ import CheckboxComponent from '@lblod/ember-submission-form-fields/components/rd
 import ConceptSchemeRadioButtonsComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-radio-buttons';
 import ConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-selector';
 import ConceptSchemeMultiSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-selector';
+import ValidationConceptSchemeSelectorComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/validation-concept-scheme-selector';
 import ConceptSchemeMultiSelectCheckboxesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/concept-scheme-multi-select-checkboxes';
 import DateComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date';
 import DatePickerComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-picker';
@@ -173,6 +174,10 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/conceptSchemeSelector',
     edit: ConceptSchemeSelectorComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/validationConceptSchemeSelector',
+    edit: ValidationConceptSchemeSelectorComponent,
   },
   {
     displayType: 'http://lblod.data.gift/display-types/date',
