@@ -1,3 +1,8 @@
+## v2.14.1 (2023-10-04)
+
+#### :bug: Bug Fix
+* [#152](https://github.com/lblod/ember-submission-form-fields/pull/152) Fix an issue where new listing order values aren't the highest value ([@Windvis](https://github.com/Windvis))
+
 ## v2.14.0 (2023-10-04)
 #### :rocket: Enhancement
 * [#150](https://github.com/lblod/ember-submission-form-fields/pull/150) Add a new reordering option to the listings ([@Windvis](https://github.com/Windvis))
