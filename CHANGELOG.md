@@ -1,3 +1,7 @@
+## v2.14.0 (2023-10-04)
+#### :rocket: Enhancement
+* [#150](https://github.com/lblod/ember-submission-form-fields/pull/150) Add a new reordering option to the listings ([@Windvis](https://github.com/Windvis))
+
 ## v2.13.1 (2023-09-26)
 
 #### :bug: Bug Fix
