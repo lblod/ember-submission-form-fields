@@ -74,7 +74,7 @@ export default class ListingComponent extends Component {
     let highestOrderValue = 0;
 
     if (this.subForms.length) {
-      let lastSubForm = this.subForms[this.subForms.length - 1];
+      let lastSubForm = this.orderedSubForms.at(-1);
 
       highestOrderValue =
         getOrder(
