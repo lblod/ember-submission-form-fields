@@ -9,4 +9,8 @@ export default class CustomAccordionComponent extends Component {
   toggleAccordion() {
     this.isAccordionVisible = !this.isAccordionVisible;
   }
+
+  get visible() {
+    return this.isAccordionVisible;
+  }
 }

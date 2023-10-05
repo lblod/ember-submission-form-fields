@@ -1,6 +1,9 @@
 {{#if this.children}}
   {{#if this.collapsible}}
-    {{#custom-accordion as |accordion|}}
+    <CustomAccordion
+      @name={{this.name}}
+    >
+    <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
       {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
         {{#if @group.name}}
@@ -82,8 +85,8 @@
         {{/if}}
       {{/if}}
     {{/each}}
-  {{/custom-accordion}}
-
+  </div>
+  </CustomAccordion>
 
   {{else}}
     <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
