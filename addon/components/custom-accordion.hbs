@@ -1,6 +1,6 @@
 <div class="custom-accordion" ...attributes>
   {{#if this.visible}}
-    <AuButton class="custom-accordion-toggle" 
+    <AuButton 
       @skin="naked"
       @icon="nav-down"
       @iconAlignment="right"
@@ -8,8 +8,11 @@
     >
       {{@name}}
     </AuButton>
+    <div>
+    {{yield}}
+    </div>
   {{else}}
-    <AuButton class="custom-accordion-toggle" 
+    <AuButton
       @skin="naked"
       @icon="nav-right"
       @iconAlignment="right"
@@ -17,8 +20,8 @@
     >
       {{@name}}
     </AuButton>
-  {{/if}}
-  <div class="custom-accordion-content" style="{{if this.isAccordionVisible 'display:block;' 'display:none;'}}">
+    <div class="au-u-hidden">
     {{yield}}
-  </div>
+    </div>
+  {{/if}}
 </div>
