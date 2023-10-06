@@ -13,4 +13,8 @@ export default class CustomAccordionComponent extends Component {
   get visible() {
     return this.isAccordionVisible;
   }
+
+  get content() {
+    return this.isAccordionVisible ? '' : 'au-u-hidden-visually';
+  }
 }
