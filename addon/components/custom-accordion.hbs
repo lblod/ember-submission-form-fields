@@ -1,22 +1,24 @@
-{{#if this.visible}}
-  <AuButton class="custom-accordion-toggle" 
-    @skin="naked"
-    @icon="nav-down"
-    @iconAlignment="right"
-    {{on "click" this.toggleAccordion}}
-  >
-    {{@name}}
-  </AuButton>
-{{else}}
-  <AuButton class="custom-accordion-toggle" 
-    @skin="naked"
-    @icon="nav-right"
-    @iconAlignment="right"
-    {{on "click" this.toggleAccordion}}
-  >
-    {{@name}}
-  </AuButton>
-{{/if}}
-<div class={{this.content}}>
-  {{yield}}
+<div class="custom-accordion" ...attributes>
+  {{#if this.visible}}
+    <AuButton class="custom-accordion-toggle" 
+      @skin="naked"
+      @icon="nav-down"
+      @iconAlignment="right"
+      {{on "click" this.toggleAccordion}}
+    >
+      {{@name}}
+    </AuButton>
+  {{else}}
+    <AuButton class="custom-accordion-toggle" 
+      @skin="naked"
+      @icon="nav-right"
+      @iconAlignment="right"
+      {{on "click" this.toggleAccordion}}
+    >
+      {{@name}}
+    </AuButton>
+  {{/if}}
+  <div class={{this.content}}>
+    {{yield}}
+  </div>
 </div>
