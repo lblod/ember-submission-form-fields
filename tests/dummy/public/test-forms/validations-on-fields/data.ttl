@@ -1,0 +1,57 @@
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>.
+
+# Checkbox
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/checkboxValue> "1"^^<http://www.w3.org/2001/XMLSchema#boolean>.
+
+# Switch
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/switchValue> "1"^^<http://www.w3.org/2001/XMLSchema#boolean>.
+
+# ConceptSchemeMultiSelectCheckboxes
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectCheckboxesValue>
+    <http://example-concept-schemes/concepts/foo>, <http://example-concept-schemes/concepts/bar>, <http://example-concept-schemes/concepts/corge>.
+
+# Radio buttons
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/radioButtonsValue>
+    <http://example-concept-schemes/concepts/qux>.
+
+# Input
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/inputValue> "Simple value".
+
+# Numerical input
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/numericalInputValue> 42.
+
+# Text area
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/textAreaValue>
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem sapien, pretium id nunc eu.".
+
+# Date
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/dateValue>
+    "2022-12-06"^^<http://www.w3.org/2001/XMLSchema#date>.
+
+# Date picker
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/datePickerValue>
+    "2022-02-08"^^<http://www.w3.org/2001/XMLSchema#date>.
+
+# Date and time
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/dateTimeValue>
+    "2022-12-31T23:00:00.000Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>.
+
+# Dropdown
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/conceptSchemeSelectorValue>
+    <http://example-concept-schemes/concepts/corge>.
+
+# Multi selector
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/conceptSchemeMultiSelectorValue>
+    <http://example-concept-schemes/concepts/bar>, <http://example-concept-schemes/concepts/quux>.
+
+# Urls
+<http://ember-submission-form-fields/source-node> ext:remoteUrlsValue <http://data.lblod.info/remote-url/1>.
+<http://data.lblod.info/remote-url/1> a nfo:RemoteDataObject;
+    nie:url "https://lokaalbestuur.vlaanderen.be/loket-lokaal-bestuur"^^<http://www.w3.org/2001/XMLSchema#string>;
+    <http://redpencil.data.gift/vocabularies/http/requestHeader> <http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e>.
+
+# Vlabel opcentiem
+<http://ember-submission-form-fields/source-node> <http://lblod.data.gift/vocabularies/besluit/taxRate> <http://data.lblod.info/tax-rates/1>.
+<http://data.lblod.info/tax-rates/1> <http://schema.org/price> 123, 456.
