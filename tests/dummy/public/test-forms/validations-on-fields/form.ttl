@@ -30,21 +30,63 @@ ext:mainPg a form:PropertyGroup;
     sh:order 1 .
 
 ##########################################################
+# Input
+##########################################################
+ext:inputField a form:Field ;
+    sh:name "Simple required input" ;
+    sh:order 220 ;
+    sh:path ext:inputValue ;
+    form:options """{}""" ;
+    form:displayType displayTypes:defaultInput ;
+    form:validations
+        [ a form:RequiredConstraint ;
+            form:grouping form:Bag ;
+            sh:resultMessage "Dit veld is verplicht." ;
+            sh:path ext:inputValue
+        ] ;
+    form:help """
+    <br>
+    <pre style="background-color: #EFEFEF; border-radius: 5px;">
+
+    [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht." ;
+        sh:path ext:inputValue
+    ] ;
+    </pre>
+    """ ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:inputField .
+
+##########################################################
 # Numerical input
 ##########################################################
 ext:numericalInputField a form:Field ;
-    sh:name "Numerical input that needs to be positive" ;
+    sh:name "Positive numerical input" ;
     sh:order 221 ;
-    sh:path ext:numericalInputValue;
+    sh:path ext:numericalInputValue ;
     form:displayType displayTypes:numericalInput ;
     form:validations 
         [
-            a form:PositiveNumber;
-            form:grouping form:MatchEvery;
-            sh:path ext:numericalInputValue;
-            sh:order 1;
+            a form:PositiveNumber ;
+            form:grouping form:MatchEvery ;
+            sh:path ext:numericalInputValue ;
+            sh:order 1 ;
             sh:resultMessage "Needs to be positive"
         ] ;
+    form:help """
+    <br>
+    <pre style="background-color: #EFEFEF; border-radius: 5px;">
+
+    [ a form:PositiveNumber ;
+        form:grouping form:MatchEvery ;
+        sh:path ext:numericalInputValue ;
+        sh:order 1 ;
+        sh:resultMessage "Needs to be positive"
+    ] ;
+    </pre>
+    """ ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:numericalInputField .
