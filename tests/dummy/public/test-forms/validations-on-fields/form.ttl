@@ -122,6 +122,35 @@ ext:inputFieldThatIsAPhoneNumber a form:Field ;
 ext:mainFg form:hasField ext:inputFieldThatIsAPhoneNumber .
 
 ##########################################################
+# Input: email
+##########################################################
+ext:inputFieldThatIsAnEmail a form:Field ;
+    sh:name "Email" ;
+    sh:order 222 ;
+    sh:path form:emailValue ;
+    form:displayType displayTypes:defaultInput ;
+    form:validations
+        [ a form:ValidEmail ;
+            form:grouping form:MatchEvery ;
+            sh:resultMessage "person@test.com" ;
+            sh:path form:emailValue ;
+        ] ;
+    form:help """
+    <br>
+    <pre style="background-color: #EFEFEF; border-radius: 5px;">
+
+    [ a form:ValidEmail ;
+        form:grouping form:MatchEvery ;
+        sh:resultMessage "person@test.com" ;
+        sh:path form:emailValue ;
+    ] ;
+    </pre>
+    """ ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:inputFieldThatIsAnEmail .
+
+##########################################################
 # Numerical input: Positive number
 ##########################################################
 ext:numericalInputField a form:Field ;
