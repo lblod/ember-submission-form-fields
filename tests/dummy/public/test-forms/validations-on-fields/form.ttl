@@ -30,9 +30,9 @@ ext:mainPg a form:PropertyGroup;
     sh:order 1 .
 
 ##########################################################
-# Input
+# Input: Required
 ##########################################################
-ext:inputField a form:Field ;
+ext:inputFieldWithIsRequired a form:Field ;
     sh:name "Simple required input" ;
     sh:order 220 ;
     sh:path ext:inputValue ;
@@ -57,10 +57,41 @@ ext:inputField a form:Field ;
     """ ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:inputField .
+ext:mainFg form:hasField ext:inputFieldWithIsRequired .
 
 ##########################################################
-# Numerical input
+# Input: Exact value
+##########################################################
+ext:inputFieldWithExactValue a form:Field ;
+    sh:name "Simple input with exact value `DELETE`" ;
+    sh:order 220 ;
+    sh:path form:customValue ;
+    form:displayType displayTypes:defaultInput ;
+    form:validations
+        [ a form:ExactValueConstraint ;
+            form:grouping form:MatchSome ;
+            sh:resultMessage "Type `DELETE`" ;
+            sh:path form:customValue ;
+            form:customValue "DELETE"
+        ] ;
+    form:help """
+    <br>
+    <pre style="background-color: #EFEFEF; border-radius: 5px;">
+
+    [ a form:ExactValueConstraint ;
+        form:grouping form:MatchSome ;
+        sh:resultMessage "Type `DELETE`" ;
+        sh:path form:customValue ;
+        form:customValue "DELETE"
+    ] ;
+    </pre>
+    """ ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:inputFieldWithExactValue .
+
+##########################################################
+# Numerical input: Positive number
 ##########################################################
 ext:numericalInputField a form:Field ;
     sh:name "Positive numerical input" ;
