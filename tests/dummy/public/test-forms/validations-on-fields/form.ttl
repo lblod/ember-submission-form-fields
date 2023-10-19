@@ -64,7 +64,7 @@ ext:mainFg form:hasField ext:inputFieldWithIsRequired .
 ##########################################################
 ext:inputFieldWithExactValue a form:Field ;
     sh:name "Simple input with exact value `DELETE`" ;
-    sh:order 220 ;
+    sh:order 221 ;
     sh:path form:customValue ;
     form:displayType displayTypes:defaultInput ;
     form:validations
@@ -89,6 +89,37 @@ ext:inputFieldWithExactValue a form:Field ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:inputFieldWithExactValue .
+
+##########################################################
+# Input: Phone number
+##########################################################
+ext:inputFieldThatIsAPhoneNumber a form:Field ;
+    sh:name "Phone number" ;
+    sh:order 222 ;
+    sh:path form:defaultCountry ;
+    form:displayType displayTypes:defaultInput ;
+    form:validations
+        [ a form:ValidPhoneNumber ;
+            form:grouping form:MatchEvery ;
+            sh:resultMessage "e.g. 04 89 13 056" ;
+            sh:path form:defaultCountry ;
+            form:defaultCountry "BE"
+        ] ;
+    form:help """
+    <br>
+    <pre style="background-color: #EFEFEF; border-radius: 5px;">
+
+    [ a form:ValidPhoneNumber ;
+        form:grouping form:MatchEvery ;
+        sh:resultMessage "e.g. 04 89 13 056" ;
+        sh:path form:defaultCountry ;
+        form:defaultCountry "BE"
+    ] ;
+    </pre>
+    """ ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:inputFieldThatIsAPhoneNumber .
 
 ##########################################################
 # Numerical input: Positive number
