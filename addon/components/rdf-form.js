@@ -15,12 +15,15 @@ export default class RdfForm extends Component {
 
   constructor() {
     super(...arguments);
+    console.log(`construct RDF form`);
 
     this.runGenerator({
       store: this.args.formStore,
       graphs: this.args.graphs,
       sourceNode: this.args.sourceNode,
     });
+
+    console.log(`generator ran`);
 
     this.propertyGroups = getTopLevelPropertyGroups({
       store: this.args.formStore,
