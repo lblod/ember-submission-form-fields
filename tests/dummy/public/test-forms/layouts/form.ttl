@@ -6,7 +6,6 @@
 @prefix displayTypes: <http://lblod.data.gift/display-types/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 @prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
-@prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/>.
 @prefix schema: <http://schema.org/>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
@@ -19,25 +18,38 @@
 ext:mainFg a form:FieldGroup.
 
 ext:form a form:Form;
-    form:hasFieldGroup ext:mainFg.
+    form:hasFieldGroup ext:columnSectionPG.
 
 ##########################################################
-#  property-group
+# Section that holds a column layout
 ##########################################################
-ext:mainPg a form:PropertyGroup;
-    sh:description "parent property-group, used to group fields and property-groups together";
-    sh:name "Overview of all basic form fields" ;
-    sh:order 1 .
+ext:columnSectionPG a form:PropertyGroup;
+    sh:description "Property group that will have two input fields as columns";
+    sh:name "Column section" ;
+    sh:order 2 .
+
+ext:columnSectionPG form:hasField ext:inputFieldColumnLeft ;
+                    form:hasField ext:inputFieldColumnRight .
 
 ##########################################################
-# Input
+# Input column left
 ##########################################################
-ext:inputField a form:Field ;
-    sh:name "Simple input" ;
-    sh:order 220 ;
+ext:inputFieldColumnLeft a form:Field ;
+    sh:name "Simple left" ;
+    sh:order 3 ;
     sh:path ext:inputValue ;
     form:options """{}""" ;
     form:displayType displayTypes:defaultInput ;
-    sh:group ext:mainPg .
+    sh:group ext:columnSectionPG .
 
-ext:mainFg form:hasField ext:inputField .
+##########################################################
+# Input column right
+##########################################################
+ext:inputFieldColumnRight a form:Field ;
+    sh:name "Simple right" ;
+    sh:order 4 ;
+    sh:path ext:inputValue ;
+    form:options """{}""" ;
+    form:displayType displayTypes:defaultInput ;
+    sh:group ext:columnSectionPG .
+
