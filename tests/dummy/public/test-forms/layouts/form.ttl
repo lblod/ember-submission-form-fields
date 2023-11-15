@@ -10,8 +10,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 
-
-
 ##########################################################
 # form
 ##########################################################
@@ -28,8 +26,29 @@ ext:columnSectionPG a form:PropertyGroup;
     sh:name "Column section" ;
     sh:order 2 .
 
-ext:columnSectionPG form:hasField ext:inputFieldColumnLeft ;
-                    form:hasField ext:inputFieldColumnRight .
+ext:columnSectionPG form:hasField ext:columnLayout .
+
+##########################################################
+# Layout column
+##########################################################
+ext:columnLayout a form:Layout;
+  sh:group ext:columnSectionPG ;
+  schema:size 2;
+  ext:columns """
+  [
+    {
+      item: "ext:inputFieldColumnLeft",
+      column: 1,
+    },
+    {
+      item: "ext:inputFieldColumnRight",
+      column: 2,
+    }
+  ]
+  """ ;
+
+ext:columnLayout form:hasField ext:inputFieldColumnLeft ;
+                 form:hasField ext:inputFieldColumnRight .
 
 ##########################################################
 # Input column left
