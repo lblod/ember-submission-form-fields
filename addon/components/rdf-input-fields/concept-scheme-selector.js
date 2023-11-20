@@ -24,13 +24,21 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
   constructor() {
     super(...arguments);
+
     this.loadOptions();
-    this.loadProvidedValue();
+    // this.loadProvidedValue();
   }
 
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = this.args.field.options;
+    const fieldOptions = this.getFieldOptionsAsObject(this.args.field.options);
+
+    if (!this.isValidFieldOptions(fieldOptions)) {
+      console.error(`Options are invalid.`);
+
+      return;
+    }
+
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     /**
@@ -87,5 +95,44 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
     this.hasBeenFocused = true;
     super.updateValidations();
+  }
+
+  getFieldOptionsAsObject(fieldOptions) {
+    if (typeof fieldOptions == 'string') {
+      try {
+        return JSON.parse(fieldOptions.trim());
+      } catch (error) {
+        console.error(` | Could not parse string options to json object`);
+        console.error(` | `, error);
+
+        return {};
+      }
+    }
+
+    return fieldOptions;
+  }
+
+  isValidFieldOptions(fieldOptions) {
+    let config = this.getFieldOptionsAsObject(fieldOptions);
+
+    if (!config) {
+      return false;
+    }
+
+    const requiredProperties = ['conceptScheme'];
+    const missingProperties = [];
+    for (const required of requiredProperties) {
+      if (!Object.keys(config).includes(required)) {
+        missingProperties.push(required);
+      }
+    }
+
+    if (missingProperties.length !== 0) {
+      console.warn(`Object is missing keys: `, missingProperties.join(', '));
+
+      return false;
+    }
+
+    return true;
   }
 }
