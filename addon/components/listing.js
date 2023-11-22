@@ -437,5 +437,5 @@ function hasOrder(subject, store, graph) {
 function getOrder(subject, store, graph) {
   let order = store.any(subject, ORDER, undefined, graph);
 
-  return parseInt(order.value);
+  return parseInt(order?.value) || 1;
 }
