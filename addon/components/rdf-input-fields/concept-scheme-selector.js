@@ -24,6 +24,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
   constructor() {
     super(...arguments);
+
     this.loadOptions();
     this.loadProvidedValue();
   }
@@ -31,6 +32,11 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+
+    if (!this.hasValidFieldOptions()) {
+      return;
+    }
+
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     /**
@@ -87,5 +93,34 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
     this.hasBeenFocused = true;
     super.updateValidations();
+  }
+
+  hasValidFieldOptions() {
+    if (!this.args.field.options) {
+      console.error(
+        `Options are invalid. For field Field "${this.args.field.label}" (${this.args.field.displayType})`
+      );
+
+      return false;
+    }
+
+    const requiredProperties = ['conceptScheme'];
+    const missingProperties = [];
+    for (const required of requiredProperties) {
+      if (!Object.keys(this.args.field.options).includes(required)) {
+        missingProperties.push(required);
+      }
+    }
+
+    if (missingProperties.length !== 0) {
+      console.warn(
+        `Field "${this.args.field.label}" (${this.args.field.displayType}) is missing keys: `,
+        missingProperties.join(', ')
+      );
+
+      return false;
+    }
+
+    return true;
   }
 }
