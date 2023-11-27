@@ -26,7 +26,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     super(...arguments);
 
     this.loadOptions();
-    // this.loadProvidedValue();
+    this.loadProvidedValue();
   }
 
   loadOptions() {
