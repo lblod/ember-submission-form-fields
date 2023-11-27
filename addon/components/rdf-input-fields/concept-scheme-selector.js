@@ -33,7 +33,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
 
-    if (!this.hasValidFieldOptions(fieldOptions)) {
+    if (!this.hasValidFieldOptions()) {
       return;
     }
 
