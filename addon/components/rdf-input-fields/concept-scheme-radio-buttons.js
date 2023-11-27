@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { SKOS } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
+import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
@@ -15,6 +16,11 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+
+    if (!hasValidFieldOptions(this.args.field)) {
+      return;
+    }
+
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
