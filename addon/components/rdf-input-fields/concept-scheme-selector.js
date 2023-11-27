@@ -31,11 +31,9 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = this.getFieldOptionsAsObject(this.args.field.options);
+    const fieldOptions = this.args.field.options;
 
-    if (!this.isValidFieldOptions(fieldOptions)) {
-      console.error(`Options are invalid.`);
-
+    if (!this.hasValidFieldOptions(fieldOptions)) {
       return;
     }
 
@@ -97,38 +95,28 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     super.updateValidations();
   }
 
-  getFieldOptionsAsObject(fieldOptions) {
-    if (typeof fieldOptions == 'string') {
-      try {
-        return JSON.parse(fieldOptions.trim());
-      } catch (error) {
-        console.error(` | Could not parse string options to json object`);
-        console.error(` | `, error);
+  hasValidFieldOptions() {
+    if (!this.args.field.options) {
+      console.error(
+        `Options are invalid. For field Field "${this.args.field.label}" (${this.args.field.displayType})`
+      );
 
-        return {};
-      }
-    }
-
-    return fieldOptions;
-  }
-
-  isValidFieldOptions(fieldOptions) {
-    let config = this.getFieldOptionsAsObject(fieldOptions);
-
-    if (!config) {
       return false;
     }
 
     const requiredProperties = ['conceptScheme'];
     const missingProperties = [];
     for (const required of requiredProperties) {
-      if (!Object.keys(config).includes(required)) {
+      if (!Object.keys(this.args.field.options).includes(required)) {
         missingProperties.push(required);
       }
     }
 
     if (missingProperties.length !== 0) {
-      console.warn(`Object is missing keys: `, missingProperties.join(', '));
+      console.warn(
+        `Field "${this.args.field.label}" (${this.args.field.displayType}) is missing keys: `,
+        missingProperties.join(', ')
+      );
 
       return false;
     }
