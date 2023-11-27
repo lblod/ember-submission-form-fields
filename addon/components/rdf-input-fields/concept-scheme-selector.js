@@ -8,6 +8,7 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
+import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -33,7 +34,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
 
-    if (!this.hasValidFieldOptions()) {
+    if (!hasValidFieldOptions(this.args.field)) {
       return;
     }
 
@@ -93,34 +94,5 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
     this.hasBeenFocused = true;
     super.updateValidations();
-  }
-
-  hasValidFieldOptions() {
-    if (!this.args.field.options) {
-      console.error(
-        `Options are invalid. For field Field "${this.args.field.label}" (${this.args.field.displayType})`
-      );
-
-      return false;
-    }
-
-    const requiredProperties = ['conceptScheme'];
-    const missingProperties = [];
-    for (const required of requiredProperties) {
-      if (!Object.keys(this.args.field.options).includes(required)) {
-        missingProperties.push(required);
-      }
-    }
-
-    if (missingProperties.length !== 0) {
-      console.warn(
-        `Field "${this.args.field.label}" (${this.args.field.displayType}) is missing keys: `,
-        missingProperties.join(', ')
-      );
-
-      return false;
-    }
-
-    return true;
   }
 }
