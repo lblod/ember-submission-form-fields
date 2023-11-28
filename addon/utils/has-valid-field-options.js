@@ -1,7 +1,4 @@
-export function hasValidFieldOptions(
-  fieldModel,
-  requiredProperties = ['conceptScheme']
-) {
+export function hasValidFieldOptions(fieldModel, requiredProperties = []) {
   if (!fieldModel.options) {
     console.error(
       `Options are invalid. For field Field "${fieldModel.label}" (${fieldModel.displayType})`

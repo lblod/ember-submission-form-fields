@@ -17,7 +17,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
 
-    if (!hasValidFieldOptions(this.args.field)) {
+    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
       return;
     }
 

@@ -52,7 +52,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     const path = this.args.field.rdflibPath;
     const options = this.args.field.options;
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme', 'orderBy'])) {
+    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
       return;
     }
 
