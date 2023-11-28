@@ -9,7 +9,7 @@ const FORM_GRAPHS = {
 };
 
 const SOURCE_NODE = new NamedNode(
-  'https://ternat-echo.cipalschaubroeck.be/id/besluiten/cd96a927-216c-4b75-963c-2f9a792ee1e9'
+  'https://ternat-echo.cipalschaubroeck.be/id/besluiten/a625a75d-de79-495c-bec4-911fcfaa0e78'
 );
 
 const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
