@@ -1,6 +1,9 @@
 ## v2.14.2 (2023-11-27)
 
 #### :bug: Bug Fix
+* [#160](https://github.com/lblod/ember-submission-form-fields/pull/160) Show a warning when the `conceptScheme` option is missing for the fields with options that require this property to be set. (concept-scheme-multi-select-checkboxes, concept-scheme-radio-buttons, concept-scheme-multi-selector) ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
+#### :bug: Bug Fix
 * [#156](https://github.com/lblod/ember-submission-form-fields/pull/156) Show a warning when the `conceptScheme` option is missing for the concept-scheme-selector field ([@JonasVanHoof](https://github.com/JonasVanHoof))
 
 ## v2.14.1 (2023-10-04)
