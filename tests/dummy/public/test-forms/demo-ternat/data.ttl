@@ -1,0 +1,7 @@
+###########################################################################################################################
+# Sources found here
+# https://lokaalbeslist.vlaanderen.be/agendapunten/66d5bb40-7274-11ee-8a90-d5580e7744db
+# source https://ternat-echo.cipalschaubroeck.be/raadpleegomgeving/zittingen/11457923-1238-4800-90dd-e0034ec4daad/notulen
+# used https://rdfa.info/play/ to extract knowledge
+# (some postprocessing was needed; output from rdfa play not ideal)
+###########################################################################################################################
