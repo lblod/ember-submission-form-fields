@@ -5393,7 +5393,7 @@
    rdf:type <http://data.vlaanderen.be/ns/besluit#Agendapunt> .
 <https://ternat-echo.cipalschaubroeck.be/id/behandelingen-van-agendapunten/a625a75d-de79-495c-bec4-911fcfaa0e78>
    rdf:type <http://data.vlaanderen.be/ns/besluit#BehandelingVanAgendapunt>;
-   <http://data.vlaanderen.be/ns/besluit#openbaar> "true"^^xsd:boolean;
+   <http://data.vlaanderen.be/ns/besluit#openbaar> "1"^^xsd:boolean;
    dc:subject <https://ternat-echo.cipalschaubroeck.be/id/agendapunten/a625a75d-de79-495c-bec4-911fcfaa0e78>;
    <http://data.vlaanderen.be/ns/besluit#gebeurtNa> <https://ternat-echo.cipalschaubroeck.be/id/behandelingen-van-agendapunten/f1e547ed-c921-421c-8727-64bebbf14e91>;
    <http://data.vlaanderen.be/ns/besluit#heeftAanwezigeBijStart> <http://data.lblod.info/id/mandatarissen/faf78107-d4a3-4bb6-b16e-d499d3572916>;
