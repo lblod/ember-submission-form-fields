@@ -9,6 +9,7 @@ import {
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { namedNode } from 'rdflib';
+import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -36,6 +37,11 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+
+    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+      return;
+    }
+
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     /**

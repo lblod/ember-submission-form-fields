@@ -8,6 +8,7 @@ import {
   triplesForPath,
 } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
+import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -50,6 +51,11 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     const { sourceGraph, metaGraph } = this.args.graphs;
     const path = this.args.field.rdflibPath;
     const options = this.args.field.options;
+
+    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+      return;
+    }
+
     const scheme = new namedNode(options.conceptScheme);
 
     let orderBy;
