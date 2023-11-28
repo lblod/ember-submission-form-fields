@@ -9,7 +9,7 @@ const FORM_GRAPHS = {
 };
 
 const SOURCE_NODE = new NamedNode(
-  'http://ember-submission-form-fields/source-node'
+  'https://ternat-echo.cipalschaubroeck.be/id/besluiten/cd96a927-216c-4b75-963c-2f9a792ee1e9'
 );
 
 const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
