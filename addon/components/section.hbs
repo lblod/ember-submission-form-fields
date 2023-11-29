@@ -12,19 +12,20 @@
           <p class="au-u-light">{{{@group.help}}}</p>
         {{/if}}
         {{#each this.errors as |error|}}
-          <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"
+          <AuAlert
+            class="au-u-margin-bottom-small au-u-margin-top-small"
             @icon="alert-triangle"
             @title={{error.resultMessage}}
             @skin="error"
-            @size="small">
-          </AuAlert>
+            @size="small"
+          />
         {{/each}}
       </div>
     {{/if}}
     {{#each this.children as |field|}}
       {{#if field.displayType}}
-        {{#if (is-property-group field.displayType)}}
-          <PropertyGroup
+        {{#if (is-section field.displayType)}}
+          <Section
             @level={{this.nextLevel}}
             @form={{@form}}
             @group={{field}}
@@ -38,11 +39,11 @@
           />
           {{#if @last}}
             {{#if (not (this.isLast this.children field))}}
-              <AuHr @size="large"/>
+              <AuHr @size="large" />
             {{/if}}
           {{else}}
-            <AuHr @size="large"/>
-          {{/if }}
+            <AuHr @size="large" />
+          {{/if}}
         {{else if (is-listing field.displayType)}}
           <Listing
             @level={{this.nextLevel}}

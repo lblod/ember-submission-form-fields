@@ -14,7 +14,7 @@ export default class SubmissionFormComponent extends Component {
   constructor() {
     super(...arguments);
     this.args.formStore.registerObserver(() => {
-      this.getPropertyGroups(
+      this.getSections(
         this.args.formStore,
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
@@ -24,7 +24,7 @@ export default class SubmissionFormComponent extends Component {
     }, this.observerLabel);
 
     next(this, () => {
-      this.getPropertyGroups(
+      this.getSections(
         this.args.formStore,
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
@@ -39,7 +39,7 @@ export default class SubmissionFormComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  getPropertyGroups(store, formGraph, sourceGraph, sourceNode, metaGraph) {
+  getSections(store, formGraph, sourceGraph, sourceNode, metaGraph) {
     let fieldUris = fieldsForForm(this.args.form, {
       store,
       formGraph,
@@ -48,7 +48,7 @@ export default class SubmissionFormComponent extends Component {
       metaGraph,
     });
 
-    const propertyGroups = createPropertyTreeFromFields(fieldUris, {
+    const sections = createPropertyTreeFromFields(fieldUris, {
       store,
       formGraph,
       sourceGraph,
@@ -57,9 +57,7 @@ export default class SubmissionFormComponent extends Component {
     // NOTE: these are not updated fields, this contains all the fields
     // Regardless if there where updated or not.
     let updatedFields = [];
-    propertyGroups.forEach(
-      (p) => (updatedFields = [...updatedFields, ...p.fields])
-    );
+    sections.forEach((p) => (updatedFields = [...updatedFields, ...p.fields]));
 
     //Procedure to render only new fields. So we don't rerender the full form.
 

@@ -4,14 +4,11 @@ import {
   SECTION_DISPLAY_TYPE,
 } from '../models/section';
 
-/**
- * @deprecated use isSection instead
- */
-export function isPropertyGroup([displayType]) {
+export function isSection([displayType]) {
   return (
     displayType === SECTION_DISPLAY_TYPE ||
     displayType === PROPERTY_GROUP_DISPLAY_TYPE
   );
 }
 
-export default helper(isPropertyGroup);
+export default helper(isSection);
