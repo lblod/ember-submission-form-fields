@@ -41,7 +41,8 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    // Needed for gh-pages deploy
+    ENV.rootURL = '/ember-submission-form-fields'
   }
 
   return ENV;
