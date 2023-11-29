@@ -2,7 +2,7 @@ import { RDF, FORM, SHACL } from '@lblod/submission-form-helpers';
 /**
  * sh:group was replaced by form:partOf and form:PropertyGroup was replaced by form:Section
  */
-export const Section = {
+export const sectionHelpers = {
   forItem: (formItem, { store, formGraph }) => {
     const section = store.any(formItem, FORM('partOf'), undefined, formGraph);
     if (section) {
@@ -30,14 +30,14 @@ export const Section = {
     return store.match(
       undefined,
       RDF('type'),
-      SHACL('PropertyGroup'),
+      FORM('PropertyGroup'),
       formGraph
     );
   },
   itemIsSection: (item, { store, formGraph }) => {
     return (
       store.any(item, RDF('type'), FORM('Section'), formGraph) ||
-      store.any(item, RDF('type'), SHACL('PropertyGroup'), formGraph)
+      store.any(item, RDF('type'), FORM('PropertyGroup'), formGraph)
     );
   },
 };
