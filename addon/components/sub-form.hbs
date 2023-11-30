@@ -10,7 +10,7 @@
       )
     }}
       <AuToolbar @size={{this.size}} as |Group|>
-        <Group>
+        <Group class="au-u-flex--vertical-center">
           {{#if (or @canMoveUp @canMoveDown)}}
             <this.OrderButtonGroup
               @canMoveUp={{@canMoveUp}}
@@ -37,6 +37,14 @@
               @icon={{if this.collapsed "chevron-right" "chevron-down"}}
               {{on "click" this.toggleCollapsed}}
             />
+          {{/if}}
+          {{#if (and @subForm.isCollapsible this.collapsed)}}
+            {{! for non screenreader users, we still want the muted text to be clickable too}}
+            {{! template-lint-disable no-invalid-interactive  }}
+            <div
+              class="au-u-muted"
+              {{on "click" this.toggleCollapsed}}
+            >{{this.collapsedLabel}}</div>
           {{/if}}
         </Group>
         {{#if @canRemove}}

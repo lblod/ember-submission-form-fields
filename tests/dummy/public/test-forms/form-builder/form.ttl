@@ -81,6 +81,7 @@ ext:propertyGroupGenerator a form:Generator;
 ext:propertyGroupItem a form:SubForm;
   sh:name "Section" ;
   form:isCollapsible true;
+  form:collapsedLabelPath ( sh:name ) ;
   form:includes ext:propertyGroupNameF;
   form:includes ext:propertyGroupDescriptionF;
   form:hasFieldGroup ext:propertyGroupPg.
