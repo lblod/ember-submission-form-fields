@@ -42,7 +42,7 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     // Needed for gh-pages deploy
-    ENV.rootURL = '/ember-submission-form-fields'
+    ENV.rootURL = '/ember-submission-form-fields';
   }
 
   return ENV;
