@@ -237,7 +237,7 @@ ext:formListingTableL a form:Listing;
 ##########################################################
 ext:formListingFormItem a form:SubForm;
   sh:name "Listing";
-  form:isCollapsible true;
+  form:isCollapsible false;
   form:includes ext:formListingAddF;
   form:includes ext:formListingRemoveF;
   form:includes ext:subformNodesL;
@@ -246,7 +246,7 @@ ext:formListingFormItem a form:SubForm;
 
 ext:formTableListingFormItem a form:SubForm;
   sh:name "Table Listing";
-  form:isCollapsible true;
+  form:isCollapsible false;
   form:includes ext:formListingAddF;
   form:includes ext:formListingRemoveF;
   form:includes ext:subformNodesL;
