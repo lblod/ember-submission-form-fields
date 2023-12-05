@@ -86,5 +86,5 @@ async function fetchFormData(formName) {
 }
 
 function getFormDataPath(formName, fileName) {
-  return `test-forms/${formName}/${fileName}`;
+  return `/test-forms/${formName}/${fileName}`;
 }
