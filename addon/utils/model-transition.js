@@ -3,7 +3,7 @@ import { RDF, FORM, SHACL } from '@lblod/submission-form-helpers';
  * sh:group was replaced by form:partOf and form:PropertyGroup was replaced by form:Section
  */
 export const sectionHelpers = {
-  forItem: (formItem, { store, formGraph }) => {
+  containingItem: (formItem, { store, formGraph }) => {
     const section = store.any(formItem, FORM('partOf'), undefined, formGraph);
     if (section) {
       return section;
