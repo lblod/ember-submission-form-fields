@@ -15,7 +15,7 @@ function createPropertyTreeFromFields(
   { store, formGraph, sourceGraph, sourceNode }
 ) {
   let mappedFields = fields.map((field) =>
-    sectionHelpers.forItem(field, { store, formGraph })
+    sectionHelpers.containingItem(field, { store, formGraph })
   );
 
   const sections = mappedFields
@@ -33,7 +33,10 @@ function createPropertyTreeFromFields(
       sourceGraph,
       sourceNode,
     });
-    let sectionUri = sectionHelpers.forItem(fieldUri, { store, formGraph });
+    let sectionUri = sectionHelpers.containingItem(fieldUri, {
+      store,
+      formGraph,
+    });
     const group = sections[sectionUri.value];
     group.fields.push(field);
   }
@@ -75,7 +78,7 @@ export function getTopLevelSections({ store, graphs, form }) {
 
   //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
   const top = sections.filter(
-    (section) => !sectionHelpers.forItem(section, { store, formGraph })
+    (section) => !sectionHelpers.containingItem(section, { store, formGraph })
   );
 
   let filteredGroups = [];
@@ -190,7 +193,7 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
       .filter(
         (section) =>
           conditionals.filter((field) => {
-            const fieldSection = sectionHelpers.forItem(field, {
+            const fieldSection = sectionHelpers.containingItem(field, {
               store,
               formGraph,
             });
