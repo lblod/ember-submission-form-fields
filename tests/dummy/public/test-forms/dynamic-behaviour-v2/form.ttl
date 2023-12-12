@@ -15,13 +15,6 @@
 ##########################################################
 # form
 ##########################################################
-fieldGroups:main a form:FieldGroup.
-
-fieldGroups:result-from-star-1 a form:FieldGroup .
-
-fieldGroups:result-from-star-2 a form:FieldGroup .
-
-fieldGroups:result-from-subset a form:FieldGroup .
 
 form:6b70a6f0-cce2-4afe-81f5-5911f45b0b27 a form:Form, form:TopLevelForm ;
     mu:uuid "6b70a6f0-cce2-4afe-81f5-5911f45b0b27" ;
