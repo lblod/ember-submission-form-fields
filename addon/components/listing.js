@@ -339,6 +339,7 @@ export default class ListingComponent extends Component {
       const dataset = triplesForGenerator(generator, {
         store: this.formStore,
         formGraph: this.graphs.formGraph,
+        sourceGraph: this.graphs.sourceGraph,
       });
 
       fullDataset.sourceNodes = [

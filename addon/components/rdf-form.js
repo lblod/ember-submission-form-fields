@@ -43,7 +43,9 @@ export default class RdfForm extends Component {
     if (generators.initGenerators.length) {
       const dataset = triplesForGenerator(generators.initGenerators[0], {
         store,
+        sourceNode,
         formGraph: graphs.formGraph,
+        sourceGraph: graphs.sourceGraph,
       });
 
       store.addAll(
