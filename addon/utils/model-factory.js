@@ -8,23 +8,21 @@ import {
   fieldsForForm,
   getFormModelVersion,
 } from '@lblod/submission-form-helpers';
-import { sectionHelpers } from './model-transition';
+import { SectionHelpers } from './model-transition';
+import { V2 } from './constants';
 
 function createPropertyTreeFromFields(
   fields,
   { store, formGraph, sourceGraph, sourceNode }
 ) {
   let mappedFields = fields.map((field) =>
-    sectionHelpers.containingItem(field, { store, formGraph })
+    SectionHelpers.containingItem(field, { store, formGraph })
   );
 
-  const sections = mappedFields
-    // .filter( (fieldGroup) => fieldGroup )
-    .reduce((acc, item) => {
-      const pg = new Section(item, { store, formGraph });
-      acc[item.value] = pg;
-      return acc;
-    }, {});
+  const sections = mappedFields.reduce((acc, item) => {
+    acc[item.value] = new Section(item, { store, formGraph });
+    return acc;
+  }, {});
 
   for (let fieldUri of fields) {
     const field = new Field(fieldUri, {
@@ -33,7 +31,7 @@ function createPropertyTreeFromFields(
       sourceGraph,
       sourceNode,
     });
-    let sectionUri = sectionHelpers.containingItem(fieldUri, {
+    let sectionUri = SectionHelpers.containingItem(fieldUri, {
       store,
       formGraph,
     });
@@ -51,7 +49,6 @@ function createPropertyTreeFromFields(
     sortedFields[i].fields = e.fields.sort((a, b) => a.order - b.order);
   });
 
-  //return Object.values(groups);
   return sortedFields;
 }
 
@@ -72,13 +69,13 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
  */
 export function getTopLevelSections({ store, graphs, form }) {
   const formGraph = graphs.formGraph;
-  const sections = sectionHelpers
-    .all({ store, formGraph })
-    .map((t) => t.subject);
+  const sections = SectionHelpers.all({ store, formGraph }).map(
+    (t) => t.subject
+  );
 
   //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
   const top = sections.filter(
-    (section) => !sectionHelpers.containingItem(section, { store, formGraph })
+    (section) => !SectionHelpers.containingItem(section, { store, formGraph })
   );
 
   let filteredGroups = [];
@@ -88,11 +85,11 @@ export function getTopLevelSections({ store, graphs, form }) {
     getFormModelVersion(form, {
       store,
       formGraph: formGraph,
-    }).toLowerCase() == 'v2'
+    }).toLowerCase() == V2
   ) {
     const toplevelSubFormGroups = [];
     for (const group of top) {
-      const formItems = sectionHelpers.getItems(group, {
+      const formItems = SectionHelpers.getChildren(group, {
         store,
         formGraph,
       });
@@ -109,7 +106,7 @@ export function getTopLevelSections({ store, graphs, form }) {
   } else {
     const toplevelFormGroups = [];
     for (const group of top) {
-      const formItems = sectionHelpers.getItems(group, { store, formGraph });
+      const formItems = SectionHelpers.getChildren(group, { store, formGraph });
       if (
         formItems.find(
           (item) =>
@@ -179,13 +176,14 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
   });
 
   // NOTE: contains all children for a section (this can include other nested sections)
-  const children = sectionHelpers
-    .getItems(section.uri, { store, formGraph })
-    .map((t) => t.subject);
+  const children = SectionHelpers.getChildren(section.uri, {
+    store,
+    formGraph,
+  }).map((t) => t.subject);
 
   // NOTE: retrieve the sections from the children and process them
   let sections = children.filter(
-    (child) => !!sectionHelpers.itemIsSection(child, { store, formGraph })
+    (child) => !!SectionHelpers.itemIsSection(child, { store, formGraph })
   );
   if (sections.length) {
     sections = sections
@@ -193,7 +191,7 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
       .filter(
         (section) =>
           conditionals.filter((field) => {
-            const fieldSection = sectionHelpers.containingItem(field, {
+            const fieldSection = SectionHelpers.containingItem(field, {
               store,
               formGraph,
             });

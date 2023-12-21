@@ -11,26 +11,27 @@
 @prefix lblodBesluit: <http://lblod.data.gift/vocabularies/besluit/>.
 @prefix schema: <http://schema.org/>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix sections: <http://data.lblod.info/fields/sections/> .
 
 ##########################################################
 # form
 ##########################################################
 
-form:6b70a6f0-cce2-4afe-81f5-5911f45b0b27 a form:Form, form:TopLevelForm ;
+form:main a form:Form, form:TopLevelForm ;
     mu:uuid "6b70a6f0-cce2-4afe-81f5-5911f45b0b27" ;
-    form:includes fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 ;
+    form:includes sections:main ;
     form:includes fields:subset-property-group ;
     # these feel redundant because they are form:partOf the sections
-    form:includes fields:fd40cdcf-d085-4b71-930f-0b1c05e021d9 ;
-    form:includes fields:43dd5003-c9a4-48c6-b650-b90f2bce8c7d ;
-    form:includes fields:6fda9f15-6f5c-4174-bb28-3fac0804cefa ;
+    form:includes fields:main-star ;
+    form:includes fields:comment-one-star ;
+    form:includes fields:comment-two-stars ;
     form:includes fields:star-rating-subset ;
     form:includes fields:more-comment-subset .
 
 ##########################################################
 #  property-group
 ##########################################################
-fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 a form:Section;
+sections:main a form:Section;
     mu:uuid "8e24d707-0e29-45b5-9bbf-a39e4fdb2c11";
     sh:description "parent property-group, used to group fields and property-groups together";
     sh:name "Single code list value" ;
@@ -39,29 +40,29 @@ fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 a form:Section;
 ##########################################################
 # Dropdown
 ##########################################################
-fields:fd40cdcf-d085-4b71-930f-0b1c05e021d9 a form:Field ;
+fields:main-star a form:Field ;
     mu:uuid "fd40cdcf-d085-4b71-930f-0b1c05e021d9";
     sh:name "Select: 1 star => more comment star 1; 2 stars, more comment star 2 " ;
     sh:order 100 ;
-    sh:path ext:5cf85d01-a4d2-46a2-810f-130012881936 ;
+    sh:path ext:rating ;
     form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeSelector ;
 
-    form:partOf fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 .
+    form:partOf sections:main .
 
 
 ##########################################################
 # More comment 1 star rating
 ##########################################################
-fields:43dd5003-c9a4-48c6-b650-b90f2bce8c7d a form:Field ;
+fields:comment-one-star a form:Field ;
     mu:uuid "43dd5003-c9a4-48c6-b650-b90f2bce8c7d";
     sh:name "More comment 1 star rating" ;
     sh:order 220 ;
-    sh:path ext:b805ac8a-86dc-4a3e-aecd-81d2bcd46fc9 ;
+    sh:path ext:ratingComment ;
     form:options """{}""" ;
     form:displayType displayTypes:textArea ;
 
-    form:partOf fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 ;
+    form:partOf sections:main ;
 
     ##########################################################
     # Condition to trigger 1 star field
@@ -69,7 +70,7 @@ fields:43dd5003-c9a4-48c6-b650-b90f2bce8c7d a form:Field ;
     form:rendersWhen
       [ a form:SingleCodelistValue ;
         form:grouping form:Bag ;
-        sh:path ext:5cf85d01-a4d2-46a2-810f-130012881936 ;
+        sh:path ext:rating ;
         form:conceptScheme <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a> ;
         form:customValue <http://redpencil.data.gift/concepts/1770b75a-95d7-4087-93d6-2c9322b7dfee>
       ] .
@@ -77,22 +78,22 @@ fields:43dd5003-c9a4-48c6-b650-b90f2bce8c7d a form:Field ;
 ##########################################################
 # More comment 2 stars rating
 ##########################################################
-fields:6fda9f15-6f5c-4174-bb28-3fac0804cefa a form:Field ;
+fields:comment-two-stars a form:Field ;
     mu:uuid "43dd5003-c9a4-48c6-b650-b90f2bce8c7d";
     sh:name "More comment 2 stars rating" ;
     sh:order 220 ;
-    sh:path ext:b805ac8a-86dc-4a3e-aecd-81d2bcd46fc9 ;
+    sh:path ext:ratingComment ;
     form:options """{}""" ;
     form:displayType displayTypes:textArea   ;
 
-    form:partOf fields:8e24d707-0e29-45b5-9bbf-a39e4fdb2c11 ;
+    form:partOf sections:main ;
     ##########################################################
     # Condition to trigger 2 star field
     ##########################################################
     form:rendersWhen
       [ a form:SingleCodelistValue ;
         form:grouping form:Bag ;
-        sh:path ext:5cf85d01-a4d2-46a2-810f-130012881936 ;
+        sh:path ext:rating ;
         form:conceptScheme <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a> ;
         form:customValue <http://redpencil.data.gift/concepts/0d5b3b23-c055-4d56-83d0-b65d28050315>
       ] .
@@ -125,7 +126,7 @@ fields:star-rating-subset a form:Field ;
 fields:more-comment-subset a form:Field ;
     sh:name "More comments about star ratings 3,4" ;
     sh:order 220 ;
-    sh:path ext:b805ac8a-86dc-4a3e-aecd-81d2bcd46fc9 ;
+    sh:path ext:ratingComment ;
     form:displayType displayTypes:textArea   ;
     form:partOf fields:subset-property-group ;
     ##########################################################

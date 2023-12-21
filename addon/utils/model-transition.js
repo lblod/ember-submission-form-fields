@@ -2,7 +2,7 @@ import { RDF, FORM, SHACL } from '@lblod/submission-form-helpers';
 /**
  * sh:group was replaced by form:partOf and form:PropertyGroup was replaced by form:Section
  */
-export const sectionHelpers = {
+export const SectionHelpers = {
   containingItem: (formItem, { store, formGraph }) => {
     const section = store.any(formItem, FORM('partOf'), undefined, formGraph);
     if (section) {
@@ -10,7 +10,7 @@ export const sectionHelpers = {
     }
     return store.any(formItem, SHACL('group'), undefined, formGraph);
   },
-  getItems: (section, { store, formGraph }) => {
+  getChildren: (section, { store, formGraph }) => {
     const items = store.match(undefined, FORM('partOf'), section, formGraph);
     if (items.length) {
       return items;
