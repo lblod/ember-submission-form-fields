@@ -44,9 +44,23 @@ export default class InputFieldComponent extends Component {
 
   get validationConstraints() {
     const { store, formGraph } = this.storeOptions;
-    return store
-      .match(this.args.field.uri, FORM('validations'), undefined, formGraph)
-      .map((t) => t.object);
+    let constraints = store.match(
+      this.args.field.uri,
+      FORM('validatedBy'),
+      undefined,
+      formGraph
+    );
+    if (constraints.length === 0) {
+      // fall back to old model:
+      constraints = store.match(
+        this.args.field.uri,
+        FORM('validations'),
+        undefined,
+        formGraph
+      );
+    }
+
+    return constraints.map((t) => t.object);
   }
 
   get isRequired() {
