@@ -1,3 +1,8 @@
+## 2.15.1 (2024-01-10)
+
+#### :bug: Bug Fix
+* [#168](https://github.com/lblod/ember-submission-form-fields/pull/168) Make sure the remote url preview link is displayed when available ([@Windvis](https://github.com/Windvis))
+
 ## v2.14.2 (2023-11-27)
 
 #### :bug: Bug Fix
