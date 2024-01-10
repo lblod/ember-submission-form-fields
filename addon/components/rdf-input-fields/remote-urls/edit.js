@@ -23,6 +23,7 @@ const RPIO_HTTP = new Namespace(
 
 class RemoteUrl {
   @tracked errors = [];
+  @tracked address;
 
   constructor({ uri, address, errors }) {
     this.uri = uri;
