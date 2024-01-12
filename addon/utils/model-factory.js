@@ -151,19 +151,6 @@ export function getSubFormsForNode(
 }
 
 /**
- * Returns all the children (fields & property-groups) for the given property-group, in order.
- * @deprecated use #getChildrenForSection instead
- *
- * @returns list of children for the given property-group, in order.
- */
-export function getChildrenForPropertyGroup(
-  group,
-  { form, store, graphs, node }
-) {
-  return getChildrenForSection(group, { form, store, graphs, node });
-}
-
-/**
  * Returns all the children (fields & sections) for the given section, in order.
  *
  * @returns list of children for the given section, in order.
