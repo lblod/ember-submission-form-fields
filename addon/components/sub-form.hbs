@@ -36,7 +36,7 @@
 
     <div class="au-o-flow">
       {{#each this.sections as |section|}}
-        <Section
+        <FormSection
           @form={{@subForm.uri}}
           @section={{section}}
           @formStore={{@formStore}}
@@ -76,7 +76,7 @@
   <div class="au-o-grid">
     <div class="au-o-flow au-o-grid__item au-u-4-5">
       {{#each this.sections as |section|}}
-        <Section
+        <FormSection
           @form={{@subForm.uri}}
           @section={{section}}
           @formStore={{@formStore}}

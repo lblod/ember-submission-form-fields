@@ -25,7 +25,7 @@
     {{#each this.children as |field|}}
       {{#if field.displayType}}
         {{#if (is-section field.displayType)}}
-          <Section
+          <FormSection
             @level={{this.nextLevel}}
             @form={{@form}}
             @section={{field}}
