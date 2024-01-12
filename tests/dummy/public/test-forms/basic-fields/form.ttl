@@ -94,7 +94,7 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
     sh:name "Concept scheme multi select checkbox" ;
     sh:order 192 ;
     sh:path ext:conceptSchemeMultiSelectCheckboxesValue ;
-    form:validations
+    form:validatedBy
       [ a form:RequiredConstraint ;
         form:grouping form:Bag ;
         sh:resultMessage "Dit veld is verplicht."@nl;
@@ -151,7 +151,7 @@ ext:textAreaField a form:Field ;
     sh:order 230 ;
     sh:path ext:textAreaValue ;
     form:displayType displayTypes:textArea ;
-    form:validations
+    form:validatedBy
     [ a form:MaxLength ;
       form:grouping form:MatchEvery ;
       form:max "100" ;
@@ -269,7 +269,7 @@ ext:searchField a form:Field ;
     sh:order 330;
     sh:path ext:searchValue;
     form:displayType displayTypes:search ;
-    form:validations
+    form:validatedBy
     [ a form:RequiredConstraint ;
       form:grouping form:Bag ;
       sh:resultMessage "Dit veld is verplicht." ;
@@ -285,7 +285,7 @@ ext:vLabelOpcentiemField a form:Field ;
     sh:name "Opcentiem" ;
     sh:order 340;
     sh:path ( lblodBesluit:taxRate schema:price );
-    form:validations [
+    form:validatedBy [
       a form:VlabelExtraTaxRateOrAmountConstraint ;
       form:grouping form:Bag ;
       sh:path lblodBesluit:taxRate;
@@ -335,7 +335,7 @@ ext:caseNumberField a form:Field ;
     sh:name "Case number" ;
     sh:order 350 ;
     sh:path nie:identifier ;
-    form:validations
+    form:validatedBy
       [ a form:RequiredConstraint ;
       form:grouping form:Bag ;
       sh:resultMessage "Dit veld is verplicht."@nl;
