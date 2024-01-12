@@ -8,7 +8,12 @@ import {
   fieldsForForm,
   getFormModelVersion,
 } from '@lblod/submission-form-helpers';
-import { SectionHelpers } from './model-transition';
+import {
+  sectionContainingItem,
+  allSections,
+  itemIsSection,
+  getChildrenOfSection,
+} from './model-transition';
 import { V2 } from './constants';
 
 function createPropertyTreeFromFields(
@@ -16,7 +21,7 @@ function createPropertyTreeFromFields(
   { store, formGraph, sourceGraph, sourceNode }
 ) {
   let mappedFields = fields.map((field) =>
-    SectionHelpers.containingItem(field, { store, formGraph })
+    sectionContainingItem(field, { store, formGraph })
   );
 
   const sections = mappedFields.reduce((acc, item) => {
@@ -31,7 +36,7 @@ function createPropertyTreeFromFields(
       sourceGraph,
       sourceNode,
     });
-    let sectionUri = SectionHelpers.containingItem(fieldUri, {
+    let sectionUri = sectionContainingItem(fieldUri, {
       store,
       formGraph,
     });
@@ -69,13 +74,11 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
  */
 export function getTopLevelSections({ store, graphs, form }) {
   const formGraph = graphs.formGraph;
-  const sections = SectionHelpers.all({ store, formGraph }).map(
-    (t) => t.subject
-  );
+  const sections = allSections({ store, formGraph }).map((t) => t.subject);
 
   //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
   const top = sections.filter(
-    (section) => !SectionHelpers.containingItem(section, { store, formGraph })
+    (section) => !sectionContainingItem(section, { store, formGraph })
   );
 
   let filteredGroups = [];
@@ -89,7 +92,7 @@ export function getTopLevelSections({ store, graphs, form }) {
   ) {
     const toplevelSubFormGroups = [];
     for (const group of top) {
-      const formItems = SectionHelpers.getChildren(group, {
+      const formItems = getChildrenOfSection(group, {
         store,
         formGraph,
       });
@@ -106,7 +109,7 @@ export function getTopLevelSections({ store, graphs, form }) {
   } else {
     const toplevelFormGroups = [];
     for (const group of top) {
-      const formItems = SectionHelpers.getChildren(group, { store, formGraph });
+      const formItems = getChildrenOfSection(group, { store, formGraph });
       if (
         formItems.find(
           (item) =>
@@ -176,14 +179,14 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
   });
 
   // NOTE: contains all children for a section (this can include other nested sections)
-  const children = SectionHelpers.getChildren(section.uri, {
+  const children = getChildrenOfSection(section.uri, {
     store,
     formGraph,
   }).map((t) => t.subject);
 
   // NOTE: retrieve the sections from the children and process them
   let sections = children.filter(
-    (child) => !!SectionHelpers.itemIsSection(child, { store, formGraph })
+    (child) => !!itemIsSection(child, { store, formGraph })
   );
   if (sections.length) {
     sections = sections
@@ -191,7 +194,7 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
       .filter(
         (section) =>
           conditionals.filter((field) => {
-            const fieldSection = SectionHelpers.containingItem(field, {
+            const fieldSection = sectionContainingItem(field, {
               store,
               formGraph,
             });
