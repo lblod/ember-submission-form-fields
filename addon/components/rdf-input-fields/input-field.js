@@ -2,13 +2,11 @@ import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import {
-  RDF,
   FORM,
   removeTriples,
   validationResultsForField,
-  validationTypesForField,
+  validationsForFieldWithType,
 } from '@lblod/submission-form-helpers';
-import { NamedNode } from 'rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
 /**
@@ -42,52 +40,28 @@ export default class InputFieldComponent extends Component {
     return this.validations.filter((r) => !r.valid).length === 0;
   }
 
-  get validationConstraints() {
-    const { store, formGraph } = this.storeOptions;
-    let constraints = store.match(
-      this.args.field.uri,
-      FORM('validatedBy'),
-      undefined,
-      formGraph
-    );
-    if (constraints.length === 0) {
-      // fall back to old model:
-      constraints = store.match(
-        this.args.field.uri,
-        FORM('validations'),
-        undefined,
-        formGraph
-      );
-    }
-
-    return constraints.map((t) => t.object);
+  get constraints() {
+    return validationsForFieldWithType(this.args.field.uri, this.storeOptions);
   }
 
   get isRequired() {
-    const validationTypes = validationTypesForField(
-      this.args.field.uri,
-      this.storeOptions
-    );
-    return validationTypes.some(
-      (v) =>
-        v.value ===
+    return this.constraints.some(
+      (constraint) =>
+        constraint.type.value ===
         'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
     );
   }
 
   get maxLength() {
     const { store, formGraph } = this.storeOptions;
-    const constraint = this.validationConstraints.find((constraint) =>
-      store.any(
-        constraint,
-        RDF('type'),
-        new NamedNode(MAX_LENGTH_URI),
-        formGraph
-      )
+
+    const constraint = this.constraints.find(
+      (constraint) => constraint.type.value === MAX_LENGTH_URI
     );
     if (constraint) {
       return Number(
-        store.any(constraint, FORM('max'), undefined, formGraph).value
+        store.any(constraint.constraintUri, FORM('max'), undefined, formGraph)
+          .value
       );
     }
     return constraint;
