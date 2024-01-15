@@ -2,14 +2,14 @@
   <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
     {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
-        {{#if this.section.name}}
+        {{#if @section.name}}
           <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
-            {{this.section.name}}
+            {{@section.name}}
           </AuHeading>
         {{/if}}
-        {{#if this.section.help}}
+        {{#if @section.help}}
           {{! template-lint-disable no-triple-curlies}}
-          <p class="au-u-light">{{{this.section.help}}}</p>
+          <p class="au-u-light">{{{@section.help}}}</p>
         {{/if}}
         {{#each this.errors as |error|}}
           <AuAlert

@@ -40,7 +40,7 @@ export default class SubmissionFormSectionComponent extends Component {
     super(...arguments);
 
     next(this, () => {
-      this.update(this.section, {
+      this.update(this.args.section, {
         form: this.args.form,
         store: this.args.formStore,
         graphs: this.args.graphs,
@@ -49,17 +49,13 @@ export default class SubmissionFormSectionComponent extends Component {
     });
   }
 
-  get section() {
-    return this.args.section || this.args.group;
-  }
-
   willDestroy() {
     super.willDestroy(...arguments);
     this.deregister();
   }
 
   get level() {
-    return this.section.options.level || this.args.level || 1;
+    return this.args.section.options.level || this.args.level || 1;
   }
 
   get titleLevel() {
@@ -67,7 +63,7 @@ export default class SubmissionFormSectionComponent extends Component {
   }
 
   get titleSkin() {
-    return this.section.options.skin || `${this.level + 1}`;
+    return this.args.section.options.skin || `${this.level + 1}`;
   }
 
   get nextLevel() {
@@ -75,7 +71,7 @@ export default class SubmissionFormSectionComponent extends Component {
   }
 
   get showTitleBlock() {
-    return Boolean(this.section.name) || Boolean(this.section.help);
+    return Boolean(this.args.section.name) || Boolean(this.args.section.help);
   }
 
   get errors() {
@@ -89,13 +85,13 @@ export default class SubmissionFormSectionComponent extends Component {
       metaGraph: this.args.graphs.metaGraph,
       sourceNode: this.args.sourceNode,
       store: this.args.formStore,
-      path: this.section.rdflibPath,
+      path: this.args.section.rdflibPath,
     };
   }
 
   register() {
     this.args.formStore.registerObserver(() => {
-      this.update(this.section, {
+      this.update(this.args.section, {
         form: this.args.form,
         store: this.args.formStore,
         graphs: this.args.graphs,
