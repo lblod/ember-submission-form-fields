@@ -1,8 +1,16 @@
 {{#if @useNewListingLayout}}
   <div class="sf-listing-sub-form au-o-box">
-    {{#if (or @subForm.itemLabel @canMoveUp @canMoveDown @canRemove)}}
+    {{#if
+      (or
+        @subForm.itemLabel
+        @canMoveUp
+        @canMoveDown
+        @canRemove
+        @subForm.isCollapsible
+      )
+    }}
       <AuToolbar @size={{this.size}} as |Group|>
-        <Group>
+        <Group class="au-u-flex--vertical-center">
           {{#if (or @canMoveUp @canMoveDown)}}
             <this.OrderButtonGroup
               @canMoveUp={{@canMoveUp}}
@@ -13,9 +21,30 @@
             />
           {{/if}}
           {{#if @subForm.itemLabel}}
-            <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
+            <AuHeading
+              @level={{this.titleLevel}}
+              @skin={{this.titleSkin}}
+              {{on "click" this.toggleCollapsed}}
+            >
               {{@subForm.itemLabel}}
             </AuHeading>
+          {{/if}}
+          {{#if @subForm.isCollapsible}}
+            <AuButton
+              @skin="naked"
+              @text={{if this.collapsed "Show" "Hide"}}
+              @hideText={{true}}
+              @icon={{if this.collapsed "chevron-right" "chevron-down"}}
+              {{on "click" this.toggleCollapsed}}
+            />
+          {{/if}}
+          {{#if (and @subForm.isCollapsible this.collapsed)}}
+            {{! for non screenreader users, we still want the muted text to be clickable too}}
+            {{! template-lint-disable no-invalid-interactive  }}
+            <div
+              class="au-u-muted"
+              {{on "click" this.toggleCollapsed}}
+            >{{this.collapsedLabel}}</div>
           {{/if}}
         </Group>
         {{#if @canRemove}}
@@ -34,7 +63,7 @@
       </AuToolbar>
     {{/if}}
 
-    <div class="au-o-flow">
+    <div class="au-o-flow {{if this.collapsed 'au-u-hidden'}}">
       {{#each this.propertyGroups as |group|}}
         <PropertyGroup
           @form={{@subForm.uri}}

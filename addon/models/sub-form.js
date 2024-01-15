@@ -20,6 +20,9 @@ export default class SubFormModel {
       undefined,
       formGraph
     );
+    this.isCollapsible =
+      store.any(uri, FORM('isCollapsible'), undefined, formGraph)?.value ===
+      '1';
   }
 
   @tracked
