@@ -6,6 +6,11 @@ import { guidFor } from '@ember/object/internals';
 import { validationResultsForField } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
+import {
+  PROPERTY_GROUP_DISPLAY_TYPE,
+  SECTION_DISPLAY_TYPE,
+} from '../models/section';
+import { LISTING_TYPE } from '../models/listing';
 
 export default class SubmissionFormSectionComponent extends Component {
   @tracked children = A();
@@ -69,6 +74,19 @@ export default class SubmissionFormSectionComponent extends Component {
       store: this.args.formStore,
       path: this.section.rdflibPath,
     };
+  }
+
+  childIsSection(child) {
+    return (
+      child &&
+      [SECTION_DISPLAY_TYPE, PROPERTY_GROUP_DISPLAY_TYPE].includes(
+        child.displayType
+      )
+    );
+  }
+
+  childIsListing(child) {
+    return child && child.displayType === LISTING_TYPE;
   }
 
   register() {

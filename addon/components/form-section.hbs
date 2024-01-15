@@ -24,7 +24,7 @@
     {{/if}}
     {{#each this.children as |field|}}
       {{#if field.displayType}}
-        {{#if (is-section field.displayType)}}
+        {{#if (this.childIsSection field)}}
           <FormSection
             @level={{this.nextLevel}}
             @form={{@form}}
@@ -44,7 +44,7 @@
           {{else}}
             <AuHr @size="large" />
           {{/if}}
-        {{else if (is-listing field.displayType)}}
+        {{else if (this.childIsListing field)}}
           <Listing
             @level={{this.nextLevel}}
             @listing={{field}}
