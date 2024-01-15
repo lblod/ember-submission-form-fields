@@ -11,6 +11,20 @@ import {
   SECTION_DISPLAY_TYPE,
 } from '../models/section';
 import { LISTING_TYPE } from '../models/listing';
+import { helper } from '@ember/component/helper';
+
+const childIsSection = helper(function ([child]) {
+  return (
+    child &&
+    [SECTION_DISPLAY_TYPE, PROPERTY_GROUP_DISPLAY_TYPE].includes(
+      child.displayType
+    )
+  );
+});
+
+const childIsListing = helper(function ([child]) {
+  return child && child.displayType === LISTING_TYPE;
+});
 
 export default class SubmissionFormSectionComponent extends Component {
   @tracked children = A();
@@ -18,6 +32,9 @@ export default class SubmissionFormSectionComponent extends Component {
   isLast = isLast;
 
   observerLabel = `section-${guidFor(this)}`;
+
+  childIsSection = childIsSection;
+  childIsListing = childIsListing;
 
   constructor() {
     super(...arguments);
@@ -74,19 +91,6 @@ export default class SubmissionFormSectionComponent extends Component {
       store: this.args.formStore,
       path: this.section.rdflibPath,
     };
-  }
-
-  childIsSection(child) {
-    return (
-      child &&
-      [SECTION_DISPLAY_TYPE, PROPERTY_GROUP_DISPLAY_TYPE].includes(
-        child.displayType
-      )
-    );
-  }
-
-  childIsListing(child) {
-    return child && child.displayType === LISTING_TYPE;
   }
 
   register() {
