@@ -17,7 +17,6 @@ import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-i
 import HeadingComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/heading';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
 import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
-import PropertyGroupComponent from '@lblod/ember-submission-form-fields/components/property-group';
 import RemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/edit';
 import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/remote-urls/edit';
 import RemoteUrlsShowComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/show';
@@ -201,10 +200,6 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/numericalInput',
     edit: NumericalInputComponent,
-  },
-  {
-    displayType: 'http://lblod.data.gift/display-types/property-group',
-    edit: PropertyGroupComponent,
   },
   {
     displayType: 'http://lblod.data.gift/display-types/remoteUrls',

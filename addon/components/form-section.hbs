@@ -2,32 +2,33 @@
   <div class={{if @useNewListingLayout "au-o-flow"}} ...attributes>
     {{#if this.showTitleBlock}}
       <div class="au-u-margin-bottom-small">
-        {{#if @group.name}}
+        {{#if @section.name}}
           <AuHeading @level={{this.titleLevel}} @skin={{this.titleSkin}}>
-            {{@group.name}}
+            {{@section.name}}
           </AuHeading>
         {{/if}}
-        {{#if @group.help}}
+        {{#if @section.help}}
           {{! template-lint-disable no-triple-curlies}}
-          <p class="au-u-light">{{{@group.help}}}</p>
+          <p class="au-u-light">{{{@section.help}}}</p>
         {{/if}}
         {{#each this.errors as |error|}}
-          <AuAlert class="au-u-margin-bottom-small au-u-margin-top-small"
+          <AuAlert
+            class="au-u-margin-bottom-small au-u-margin-top-small"
             @icon="alert-triangle"
             @title={{error.resultMessage}}
             @skin="error"
-            @size="small">
-          </AuAlert>
+            @size="small"
+          />
         {{/each}}
       </div>
     {{/if}}
     {{#each this.children as |field|}}
       {{#if field.displayType}}
-        {{#if (is-property-group field.displayType)}}
-          <PropertyGroup
+        {{#if (this.childIsSection field)}}
+          <FormSection
             @level={{this.nextLevel}}
             @form={{@form}}
-            @group={{field}}
+            @section={{field}}
             @formStore={{@formStore}}
             @graphs={{@graphs}}
             @sourceNode={{@sourceNode}}
@@ -38,12 +39,12 @@
           />
           {{#if @last}}
             {{#if (not (this.isLast this.children field))}}
-              <AuHr @size="large"/>
+              <AuHr @size="large" />
             {{/if}}
           {{else}}
-            <AuHr @size="large"/>
-          {{/if }}
-        {{else if (is-listing field.displayType)}}
+            <AuHr @size="large" />
+          {{/if}}
+        {{else if (this.childIsListing field)}}
           <Listing
             @level={{this.nextLevel}}
             @listing={{field}}

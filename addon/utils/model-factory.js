@@ -1,30 +1,33 @@
 import Field from '@lblod/ember-submission-form-fields/models/field';
-import PropertyGroup from '@lblod/ember-submission-form-fields/models/property-group';
+import Section from '@lblod/ember-submission-form-fields/models/section';
 import Listing from '@lblod/ember-submission-form-fields/models/listing';
 import SubForm from '@lblod/ember-submission-form-fields/models/sub-form';
 import {
-  SHACL,
   FORM,
   RDF,
   fieldsForForm,
   getFormModelVersion,
 } from '@lblod/submission-form-helpers';
+import {
+  sectionContainingItem,
+  allSections,
+  itemIsSection,
+  getChildrenOfSection,
+} from './model-transition';
+import { V2 } from './constants';
 
 function createPropertyTreeFromFields(
   fields,
   { store, formGraph, sourceGraph, sourceNode }
 ) {
   let mappedFields = fields.map((field) =>
-    store.any(field, SHACL('group'), undefined, formGraph)
+    sectionContainingItem(field, { store, formGraph })
   );
 
-  const groups = mappedFields
-    // .filter( (fieldGroup) => fieldGroup )
-    .reduce((acc, item) => {
-      const pg = new PropertyGroup(item, { store, formGraph });
-      acc[item.value] = pg;
-      return acc;
-    }, {});
+  const sections = mappedFields.reduce((acc, item) => {
+    acc[item.value] = new Section(item, { store, formGraph });
+    return acc;
+  }, {});
 
   for (let fieldUri of fields) {
     const field = new Field(fieldUri, {
@@ -33,36 +36,49 @@ function createPropertyTreeFromFields(
       sourceGraph,
       sourceNode,
     });
-    let groupUri = store.any(fieldUri, SHACL('group'), undefined, formGraph);
-    const group = groups[groupUri.value];
+    let sectionUri = sectionContainingItem(fieldUri, {
+      store,
+      formGraph,
+    });
+    const group = sections[sectionUri.value];
     group.fields.push(field);
   }
 
-  const sortedGroups = Object.values(groups).sort((a, b) => a.order - b.order);
+  const sortedSections = Object.values(sections).sort(
+    (a, b) => a.order - b.order
+  );
 
-  let sortedFields = sortedGroups;
+  let sortedFields = sortedSections;
 
-  sortedGroups.forEach(function (e, i) {
+  sortedSections.forEach(function (e, i) {
     sortedFields[i].fields = e.fields.sort((a, b) => a.order - b.order);
   });
 
-  //return Object.values(groups);
   return sortedFields;
 }
 
 /**
  * Returns the top-level property-groups that are defined within the form, in order.
+ * @deprecated use getTopLevelSections instead
  *
  * @returns list of top-level property-groups, in order.
  */
 export function getTopLevelPropertyGroups({ store, graphs, form }) {
-  const groups = store
-    .match(undefined, RDF('type'), FORM('PropertyGroup'), graphs.formGraph)
-    .map((t) => t.subject);
+  return getTopLevelSections({ store, graphs, form });
+}
+
+/**
+ * Returns the top-level sections that are defined within the form, in order.
+ *
+ * @returns list of top-level sections, in order.
+ */
+export function getTopLevelSections({ store, graphs, form }) {
+  const formGraph = graphs.formGraph;
+  const sections = allSections({ store, formGraph }).map((t) => t.subject);
 
   //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
-  const top = groups.filter(
-    (group) => !store.any(group, SHACL('group'), undefined, graphs.formGraph)
+  const top = sections.filter(
+    (section) => !sectionContainingItem(section, { store, formGraph })
   );
 
   let filteredGroups = [];
@@ -71,21 +87,19 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
   if (
     getFormModelVersion(form, {
       store,
-      formGraph: graphs.formGraph,
-    }).toLowerCase() == 'v2'
+      formGraph: formGraph,
+    }).toLowerCase() == V2
   ) {
     const toplevelSubFormGroups = [];
     for (const group of top) {
-      const formItems = store.match(
-        undefined,
-        SHACL('group'),
-        group,
-        graphs.formGraph
-      );
+      const formItems = getChildrenOfSection(group, {
+        store,
+        formGraph,
+      });
 
       if (
         formItems.find((item) =>
-          store.any(form, FORM('includes'), item.subject, graphs.formGraph)
+          store.any(form, FORM('includes'), item.subject, formGraph)
         )
       ) {
         toplevelSubFormGroups.push(group);
@@ -95,21 +109,11 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
   } else {
     const toplevelFormGroups = [];
     for (const group of top) {
-      const formItems = store.match(
-        undefined,
-        SHACL('group'),
-        group,
-        graphs.formGraph
-      );
+      const formItems = getChildrenOfSection(group, { store, formGraph });
       if (
         formItems.find(
           (item) =>
-            !store.any(
-              undefined,
-              FORM('includes'),
-              item.subject,
-              graphs.formGraph
-            )
+            !store.any(undefined, FORM('includes'), item.subject, formGraph)
         )
       ) {
         toplevelFormGroups.push(group);
@@ -119,10 +123,7 @@ export function getTopLevelPropertyGroups({ store, graphs, form }) {
   }
 
   return filteredGroups
-    .map(
-      (group) =>
-        new PropertyGroup(group, { store, formGraph: graphs.formGraph })
-    )
+    .map((group) => new Section(group, { store, formGraph: formGraph }))
     .sort((a, b) => a.order - b.order);
 }
 
@@ -150,46 +151,44 @@ export function getSubFormsForNode(
 }
 
 /**
- * Returns all the children (fields & property-groups) for the given property-group, in order.
+ * Returns all the children (fields & sections) for the given section, in order.
  *
- * @returns list of children for the given property-group, in order.
+ * @returns list of children for the given section, in order.
  */
-export function getChildrenForPropertyGroup(
-  group,
-  { form, store, graphs, node }
-) {
+export function getChildrenForSection(section, { form, store, graphs, node }) {
+  const formGraph = graphs.formGraph;
   const conditionals = fieldsForForm(form, {
     store,
-    formGraph: graphs.formGraph,
+    formGraph,
     sourceGraph: graphs.sourceGraph,
     metaGraph: graphs.metaGraph,
     sourceNode: node,
   });
 
-  // NOTE: contains all children for a property-group (this can include other nested property-groups)
-  const children = store
-    .match(undefined, SHACL('group'), group.uri, graphs.formGraph)
-    .map((t) => t.subject);
+  // NOTE: contains all children for a section (this can include other nested sections)
+  const children = getChildrenOfSection(section.uri, {
+    store,
+    formGraph,
+  }).map((t) => t.subject);
 
-  // NOTE: retrieve the property-groups from the children and process them
-  let groups = children.filter(
-    (child) =>
-      !!store.any(child, RDF('type'), FORM('PropertyGroup'), graphs.formGraph)
+  // NOTE: retrieve the sections from the children and process them
+  let sections = children.filter(
+    (child) => !!itemIsSection(child, { store, formGraph })
   );
-  if (groups.length) {
-    groups = groups
-      // NOTE: filter out property-groups that do not contain any fields (conditional)
+  if (sections.length) {
+    sections = sections
+      // NOTE: filter out sections that do not contain any fields (conditional)
       .filter(
-        (group) =>
+        (section) =>
           conditionals.filter((field) => {
-            const fg = store.any(field, SHACL('group'), undefined);
-            return fg.value === group.value;
+            const fieldSection = sectionContainingItem(field, {
+              store,
+              formGraph,
+            });
+            return fieldSection.value === section.value;
           }).length !== 0
       )
-      .map(
-        (group) =>
-          new PropertyGroup(group, { store, formGraph: graphs.formGraph })
-      );
+      .map((section) => new Section(section, { store, formGraph }));
   }
 
   const listings = children
@@ -206,7 +205,9 @@ export function getChildrenForPropertyGroup(
     .filter((child) => conditionals.map((t) => t.value).includes(child.value))
     .map((child) => new Field(child, { store, formGraph: graphs.formGraph }));
 
-  return [...groups, ...listings, ...fields].sort((a, b) => a.order - b.order);
+  return [...sections, ...listings, ...fields].sort(
+    (a, b) => a.order - b.order
+  );
 }
 
 export { createPropertyTreeFromFields };

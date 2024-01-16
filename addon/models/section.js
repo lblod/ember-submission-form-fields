@@ -4,7 +4,10 @@ import { FORM, SHACL } from '@lblod/submission-form-helpers';
 export const PROPERTY_GROUP_DISPLAY_TYPE =
   'http://lblod.data.gift/display-types/property-group';
 
-export default class PropertyGroupModel {
+export const SECTION_DISPLAY_TYPE =
+  'http://lblod.data.gift/display-types/section';
+
+export default class SectionModel {
   @tracked
   uri = '';
   @tracked
