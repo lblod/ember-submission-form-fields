@@ -20,6 +20,7 @@ const FORM_TITLES = {
   'climate-subsidy-costs-table': 'Climate subsidy costs table',
   'plan-living-together': 'Plan living together table',
   'scoped-fields': 'Scoped fields',
+  validations: 'Validation examples',
 };
 
 export default class FormRoute extends Route {

@@ -1,0 +1,48 @@
+# Foo bar baz example concept scheme
+# foo, bar, baz, qux, quux, corge, grault // garply, waldo, fred, plugh, xyzzy, nacho, and thud;
+
+<http://example-concept-schemes/concept-schemes/foo-bar-baz>
+    a <http://www.w3.org/2004/02/skos/core#ConceptScheme>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Metasyntactic variables"@en.
+
+<http://example-concept-schemes/concepts/foo>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Foo"@en;
+    <http://purl.org/linked-data/cube#order> 1.
+
+<http://example-concept-schemes/concepts/bar>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Bar"@en;
+    <http://purl.org/linked-data/cube#order> 2.
+
+<http://example-concept-schemes/concepts/baz>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Baz"@en;
+    <http://purl.org/linked-data/cube#order> 3.
+
+<http://example-concept-schemes/concepts/qux>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Qux"@en;
+    <http://purl.org/linked-data/cube#order> 4.
+
+<http://example-concept-schemes/concepts/quux>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Quux"@en;
+    <http://purl.org/linked-data/cube#order> 5.
+
+<http://example-concept-schemes/concepts/corge>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Corge"@en;
+    <http://purl.org/linked-data/cube#order> 6.
+
+<http://example-concept-schemes/concepts/grault>
+    a <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#Class>;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <http://example-concept-schemes/concept-schemes/foo-bar-baz>;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Grault"@en;
+    <http://purl.org/linked-data/cube#order> 7.

@@ -1,0 +1,147 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+ext:mainForm a form:Form, form:TopLevelForm ;
+    # Error fields
+    form:includes ext:errorInput ;
+    form:includes ext:errorNumericalInput ;
+    form:includes ext:errorTextArea ;
+    form:includes ext:errorSelect ;
+
+    # Warning fields
+    form:includes ext:warningInput ;
+    form:includes ext:warningNumericalInput ;
+    form:includes ext:warningTextArea ;
+    form:includes ext:warningSelect .
+
+##########################################################
+# Validation error examples
+##########################################################
+ext:errorSection a form:Section ;
+    sh:name "Validation error examples" ;
+    form:help """Field values can be validated by adding <a class="au-c-link" href="https://github.com/lblod/ember-submission-form-fields/wiki/Validation-on-fields">validation constraints</a> to the form config. By default invalid values will be considered errors.""" ;
+    sh:order 1 .
+
+ext:errorInput a form:Field ;
+    sh:name "Inputfield" ;
+    sh:order 10 ;
+    sh:path ext:errorInputValue;
+    form:displayType displayTypes:defaultInput ;
+    form:validatedBy [
+      a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "This field is required" ;
+      sh:path ext:errorInputValue ;
+    ] ;
+    form:partOf ext:errorSection .
+
+ext:errorNumericalInput a form:Field ;
+    sh:name "Numerical inputfield" ;
+    sh:order 20 ;
+    sh:path ext:errorNumericalInputValue;
+    form:displayType displayTypes:numericalInput ;
+    form:validatedBy [
+      a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "This field is required" ;
+      sh:path ext:errorNumericalInputValue ;
+    ] ;
+    form:partOf ext:errorSection .
+
+ext:errorTextArea a form:Field ;
+    sh:name "Text area" ;
+    sh:order 30 ;
+    sh:path ext:errorTextAreaValue ;
+    form:displayType displayTypes:textArea ;
+    form:validatedBy [
+      a form:MaxLength ;
+      form:grouping form:MatchEvery ;
+      form:max 10 ;
+      sh:resultMessage "Max. karakters overschreden." ;
+      sh:path ext:errorTextAreaValue ;
+    ] ;
+    form:partOf ext:errorSection .
+
+ext:errorSelect a form:Field ;
+    sh:name "Select" ;
+    sh:order 40 ;
+    sh:path ext:errorSelectValue ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:validatedBy [
+      a form:ExactValueConstraint ;
+      form:grouping form:MatchEvery ;
+      form:customValue <http://example-concept-schemes/concepts/grault> ;
+      sh:resultMessage "Wrong choice!" ;
+      sh:path ext:errorSelectValue ;
+    ] ;
+    form:partOf ext:errorSection .
+
+##########################################################
+# Validation Warning Examples
+##########################################################
+ext:warningSection a form:Section ;
+    sh:name "Validation warning examples" ;
+    form:help """It is also possible to display warnings instead of errors by configuring the severity.""" ;
+    sh:order 2 .
+
+ext:warningInput a form:Field ;
+    sh:name "Inputfield" ;
+    sh:order 10 ;
+    sh:path ext:warningInputValue;
+    form:displayType displayTypes:defaultInput ;
+    form:validatedBy [
+      a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "This field is empty, please double check if that was intended" ;
+      sh:path ext:warningInputValue ;
+      sh:severity sh:Warning ;
+    ] ;
+    form:partOf ext:warningSection .
+
+ext:warningNumericalInput a form:Field ;
+    sh:name "Numerical inputfield" ;
+    sh:order 20 ;
+    sh:path ext:warningNumericalInputValue;
+    form:displayType displayTypes:numericalInput ;
+    form:validatedBy [
+      a form:PositiveNumber ;
+      form:grouping form:MatchEvery ;
+      sh:resultMessage "The value is negative, please double check it" ;
+      sh:path ext:warningNumericalInputValue ;
+      sh:severity sh:Warning ;
+    ] ;
+    form:partOf ext:warningSection .
+
+ext:warningTextArea a form:Field ;
+    sh:name "Text area" ;
+    sh:order 30 ;
+    sh:path ext:warningTextAreaValue ;
+    form:displayType displayTypes:textArea ;
+    form:validatedBy [
+      a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "It's recommended to fill in an alt text to support screenreaders" ;
+      sh:path ext:warningTextAreaValue ;
+      sh:severity sh:Warning ;
+    ] ;
+    form:partOf ext:warningSection .
+
+ext:warningSelect a form:Field ;
+    sh:name "Select" ;
+    sh:order 40 ;
+    sh:path ext:warningSelectValue ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:validatedBy [
+      a form:ExactValueConstraint ;
+      form:grouping form:MatchEvery ;
+      form:customValue <http://example-concept-schemes/concepts/baz> ;
+      sh:resultMessage "Suggested choice: \"Baz\"" ;
+      sh:path ext:warningSelectValue ;
+      sh:severity sh:Warning ;
+    ] ;
+    form:partOf ext:warningSection .

@@ -3,6 +3,7 @@
     @required={{this.isRequired}}
     @requiredLabel={{this.requiredLabel}}
     @error={{this.hasErrors}}
+    @warning={{this.hasWarnings}}
   >
     {{@field.label}}
   </f.legend>
@@ -31,4 +32,8 @@
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
 {{/each}}

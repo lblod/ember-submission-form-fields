@@ -1,20 +1,23 @@
-import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import {
   FORM,
   removeTriples,
+  SHACL,
   validationResultsForField,
   validationsForFieldWithType,
 } from '@lblod/submission-form-helpers';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
+const SH_WARNING = SHACL('Warning');
+
 /**
  * Abstract input-field component providing a base class
  * for the custom input-fields
  */
 export default class InputFieldComponent extends Component {
-  @tracked validations = [];
+  @tracked errorValidations = [];
+  @tracked warningValidations = [];
 
   @tracked hasBeenFocused = false;
 
@@ -23,21 +26,28 @@ export default class InputFieldComponent extends Component {
     this.updateValidations();
   }
 
-  get canShowErrors() {
+  get canShowValidationMessages() {
     return this.hasBeenFocused || this.args.forceShowErrors;
   }
 
   get errors() {
-    if (this.canShowErrors) return A(this.validations.filter((r) => !r.valid));
-    else return A();
+    return this.canShowValidationMessages ? this.errorValidations : [];
   }
 
   get hasErrors() {
     return this.errors.length > 0;
   }
 
+  get warnings() {
+    return this.canShowValidationMessages ? this.warningValidations : [];
+  }
+
+  get hasWarnings() {
+    return this.warnings.length > 0;
+  }
+
   get isValid() {
-    return this.validations.filter((r) => !r.valid).length === 0;
+    return this.hasErrors;
   }
 
   get constraints() {
@@ -102,9 +112,19 @@ export default class InputFieldComponent extends Component {
   }
 
   updateValidations() {
-    this.validations = validationResultsForField(
-      this.args.field.uri,
-      this.storeOptions
+    this.errorValidations = invalidResults(
+      validationResultsForField(this.args.field.uri, this.storeOptions)
+    );
+
+    this.warningValidations = invalidResults(
+      validationResultsForField(this.args.field.uri, {
+        ...this.storeOptions,
+        severity: SH_WARNING,
+      })
     );
   }
+}
+
+function invalidResults(validationResults) {
+  return validationResults.filter((result) => !result.valid);
 }

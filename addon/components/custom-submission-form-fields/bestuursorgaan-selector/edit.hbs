@@ -1,5 +1,6 @@
 <AuLabel
   @error={{this.hasErrors}}
+  @warning={{this.hasWarnings}}
   @required={{this.isRequired}}
   for={{this.inputId}}
 >
@@ -24,5 +25,9 @@
 </div>
 
 {{#each this.errors as |error|}}
-  <AuHelpText @error={{"error"}}>{{error.resultMessage}}</AuHelpText>
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
 {{/each}}
