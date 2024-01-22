@@ -1,3 +1,9 @@
+## v2.16.0 (2024-01-16)
+
+#### :rocket: Enhancement
+* [#162](https://github.com/lblod/ember-submission-form-fields/pull/162) [LMB-34] Fully support v2 of the form data model ([@Rahien](https://github.com/Rahien))
+* [#169](https://github.com/lblod/ember-submission-form-fields/pull/169) Add support for Appuniversum v3 ([@Windvis](https://github.com/Windvis))
+
 ## 2.15.1 (2024-01-10)
 
 #### :bug: Bug Fix
