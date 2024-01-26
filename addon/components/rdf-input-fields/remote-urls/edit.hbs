@@ -2,6 +2,7 @@
   @error={{this.hasErrors}}
   @required={{this.isRequired}}
   @requiredLabel={{@requiredLabel}}
+  @warning={{this.hasWarnings}}
   for={{this.inputFor}}
 >
   {{@field.label}}
@@ -72,5 +73,9 @@
 {{#unless this.hasInvalidRemoteUrl}}
   {{#each this.errors as |error|}}
     <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+  {{/each}}
+
+  {{#each this.warnings as |warning|}}
+    <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
   {{/each}}
 {{/unless}}

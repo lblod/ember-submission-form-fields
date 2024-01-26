@@ -1,5 +1,9 @@
 <AuFieldset as |f|>
-  <f.legend @required={{this.isRequired}} @error={{this.hasErrors}}>
+  <f.legend
+    @required={{this.isRequired}}
+    @error={{this.hasErrors}}
+    @warning={{this.hasWarnings}}
+  >
     {{@field.label}}
   </f.legend>
   <f.content>
@@ -21,4 +25,8 @@
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
 {{/each}}

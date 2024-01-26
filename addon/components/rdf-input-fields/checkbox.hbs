@@ -1,7 +1,10 @@
-{{#if (or this.hasErrors this.isRequired)}}
+{{#if (or this.hasErrors this.hasWarnings this.isRequired)}}
   <div class="au-u-margin-bottom-small">
     {{#if this.hasErrors}}
       <AuBadge @icon="cross" @skin="error" @size="small" />
+    {{/if}}
+    {{#if this.hasWarnings}}
+      <AuBadge @icon="alert-triangle" @skin="warning" @size="small" />
     {{/if}}
     {{#if this.isRequired}}
       <AuPill>Verplicht</AuPill>
@@ -17,4 +20,7 @@
 </AuCheckbox>
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
 {{/each}}

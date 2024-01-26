@@ -1,6 +1,7 @@
 {{#unless @inTable}}
   <AuLabel
     @error={{this.hasErrors}}
+    @warning={{this.hasWarnings}}
     @required={{this.isRequired}}
     for={{this.inputId}}
   >
@@ -18,6 +19,7 @@
   @error={{this.hasErrors}}
   @disabled={{@show}}
   @width={{if @inTable "block"}}
+  @warning={{this.hasWarnings}}
   id={{this.inputId}}
   value={{this.value}}
   {{on "blur" this.updateValue}}
@@ -25,4 +27,8 @@
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
 {{/each}}
