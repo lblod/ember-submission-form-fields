@@ -1,3 +1,8 @@
+## v2.17.1 (2024-01-29)
+
+#### :bug: Bug Fix
+* Update the form helpers package for warning validation support([@Windvis](https://github.com/Windvis))
+
 ## v2.17.0 (2024-01-29)
 
 #### :rocket: Enhancement
