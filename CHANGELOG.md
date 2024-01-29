@@ -1,3 +1,8 @@
+## v2.17.0 (2024-01-29)
+
+#### :rocket: Enhancement
+* [#171](https://github.com/lblod/ember-submission-form-fields/pull/171) [DL-5622] Add support for validation "warnings" ([@Windvis](https://github.com/Windvis))
+
 ## v2.16.0 (2024-01-16)
 
 #### :rocket: Enhancement
