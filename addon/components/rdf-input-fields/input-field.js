@@ -47,7 +47,7 @@ export default class InputFieldComponent extends Component {
   }
 
   get isValid() {
-    return this.hasErrors;
+    return !this.hasErrors;
   }
 
   get constraints() {
