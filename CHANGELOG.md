@@ -1,3 +1,8 @@
+## v2.17.2 (2024-01-30)
+
+#### :bug: Bug Fix
+* [#172](https://github.com/lblod/ember-submission-form-fields/pull/172) Fix `isValid` logic to prevent false positives ([@ZijneDwaasheid](https://github.com/ZijneDwaasheid))
+
 ## v2.17.1 (2024-01-29)
 
 #### :bug: Bug Fix
