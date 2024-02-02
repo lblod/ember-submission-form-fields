@@ -6,14 +6,34 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
   inputId = 'input-' + guidFor(this);
 
   currencySymbol = '€';
-  thousandSeparator = '.';
+  thousandSeparator = ' ';
   decimalSeparator = ',';
   showSymbolAtStart = true;
 
   @action
   updateValue(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    this.value = e.target.value.trim();
+    const inputAmount = e.target.value.trim();
+    this.value = this.formatAmount(inputAmount);
     super.updateValue(this.value);
+  }
+
+  formatAmount(amount) {
+    const beforeDecimalSeparator = this.getValueBeforeDecimalSeperator(amount);
+    const afterDecimalSeparator = this.getValueAfterDecimalSeperator(amount);
+
+    return (
+      beforeDecimalSeparator + this.decimalSeparator + afterDecimalSeparator
+    );
+  }
+
+  getValueBeforeDecimalSeperator(amount) {
+    return amount.slice(0, amount.lastIndexOf(this.decimalSeparator));
+  }
+  getValueAfterDecimalSeperator(amount) {
+    return amount.slice(
+      amount.lastIndexOf(this.decimalSeparator) + 1,
+      amount.length
+    );
   }
 }
