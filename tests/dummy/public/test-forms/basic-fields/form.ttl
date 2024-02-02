@@ -137,7 +137,7 @@ ext:mainFg form:hasField ext:inputField .
 ext:currencyInputField a form:Field ;
     sh:name "Currency input" ;
     sh:order 221 ;
-    sh:path ext:inputValue ;
+    sh:path ext:currencyInputValue ;
     form:options """{}""" ;
     form:displayType displayTypes:currencyInput ;
     sh:group ext:mainPg .

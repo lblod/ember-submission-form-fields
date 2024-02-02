@@ -19,6 +19,9 @@
 # Input
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/inputValue> "Simple value".
 
+# Currency Input
+<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/currencyInputValue> "1000000".
+
 # Numerical input
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/numericalInputValue> 42.
 
