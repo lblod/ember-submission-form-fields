@@ -132,11 +132,24 @@ ext:inputField a form:Field ;
 ext:mainFg form:hasField ext:inputField .
 
 ##########################################################
+# Currency input
+##########################################################
+ext:currencyInputField a form:Field ;
+    sh:name "Currency input" ;
+    sh:order 221 ;
+    sh:path ext:inputValue ;
+    form:options """{}""" ;
+    form:displayType displayTypes:currencyInput ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:currencyInputField .
+
+##########################################################
 # Numerical input
 ##########################################################
 ext:numericalInputField a form:Field ;
     sh:name "Numerical input" ;
-    sh:order 221 ;
+    sh:order 222 ;
     sh:path ext:numericalInputValue;
     form:displayType displayTypes:numericalInput ;
     sh:group ext:mainPg .
