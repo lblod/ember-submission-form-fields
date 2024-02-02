@@ -16,6 +16,7 @@ import DateTimeComponent from '@lblod/ember-submission-form-fields/components/rd
 import FilesComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/files';
 import HeadingComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/heading';
 import InputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input';
+import CurrencyInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/currency-input';
 import NumericalInputComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/numerical-input';
 import RemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/remote-urls/edit';
 import CustomRemoteUrlsEditComponent from '@lblod/ember-submission-form-fields/components/custom-submission-form-fields/remote-urls/edit';
@@ -29,6 +30,7 @@ import SearchPanelFieldsSearchEditComponent from '@lblod/ember-submission-form-f
 import SearchPanelFieldsSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
 import DateRangeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range';
 import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
+import RdfInputFieldsCurrencyInputComponent from '../components/rdf-input-fields/currency-input';
 
 const BUILT_IN_EDIT_COMPONENTS = new Map();
 const BUILT_IN_SHOW_COMPONENTS = new Map();
@@ -188,6 +190,10 @@ registerComponentsForDisplayType([
   {
     displayType: 'http://lblod.data.gift/display-types/defaultInput',
     edit: InputComponent,
+  },
+  {
+    displayType: 'http://lblod.data.gift/display-types/currencyInput',
+    edit: CurrencyInputComponent,
   },
   {
     displayType: 'http://lblod.data.gift/display-types/files',
