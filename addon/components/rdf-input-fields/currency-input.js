@@ -8,6 +8,7 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
   currencySymbol = '€';
   thousandSeparator = '.';
   decimalSeparator = ',';
+  showSymbolAtStart = true;
 
   @action
   updateValue(e) {
