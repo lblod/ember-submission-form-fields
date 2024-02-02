@@ -5,6 +5,10 @@ import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/compo
 export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFieldComponent {
   inputId = 'input-' + guidFor(this);
 
+  currencySymbol = '€';
+  thousandSeparator = '.';
+  decimalSeparator = ',';
+
   @action
   updateValue(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();

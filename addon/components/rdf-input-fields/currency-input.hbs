@@ -15,15 +15,21 @@
   </AuLabel>
 {{/unless}}
 
-<AuInput
-  @error={{this.hasErrors}}
-  @disabled={{@show}}
-  @width={{if @inTable "block"}}
-  @warning={{this.hasWarnings}}
-  id={{this.inputId}}
-  value={{this.value}}
-  {{on "blur" this.updateValue}}
-/>
+<AuButtonGroup @inline={{true}}>
+  <AuButton
+    @skin="secondary"
+    @disabled={{true}}
+  >{{this.currencySymbol}}</AuButton>
+  <AuInput
+    @error={{this.hasErrors}}
+    @disabled={{@show}}
+    @width={{if @inTable "block"}}
+    @warning={{this.hasWarnings}}
+    id={{this.inputId}}
+    value={{this.value}}
+    {{on "blur" this.updateValue}}
+  />
+</AuButtonGroup>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
