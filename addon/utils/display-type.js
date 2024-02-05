@@ -30,7 +30,6 @@ import SearchPanelFieldsSearchEditComponent from '@lblod/ember-submission-form-f
 import SearchPanelFieldsSearchShowComponent from '@lblod/ember-submission-form-fields/components/search-panel-fields/search/show';
 import DateRangeComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/date-range';
 import SearchComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/search';
-import RdfInputFieldsCurrencyInputComponent from '../components/rdf-input-fields/currency-input';
 
 const BUILT_IN_EDIT_COMPONENTS = new Map();
 const BUILT_IN_SHOW_COMPONENTS = new Map();
