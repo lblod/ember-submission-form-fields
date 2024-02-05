@@ -9,11 +9,8 @@
   </AuLabel>
 {{/unless}}
 
-<AuButtonGroup @inline={{true}}>
-  <AuButton
-    @skin="primary"
-    @disabled={{true}}
-  >{{this.currencySymbol}}</AuButton>
+<div class="CurrencyInput">
+  <div class="currencySymbolButton">{{this.currencySymbol}}</div>
   <AuInput
     @error={{this.hasErrors}}
     @disabled={{@show}}
@@ -32,7 +29,7 @@
       )
     }}
   />
-</AuButtonGroup>
+</div>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>

@@ -38,3 +38,33 @@
 .concept-scheme-multi-select-checkboxes__content {
   width: 100%;
 }
+
+/* SFB-115 */
+.CurrencyInput {
+  display: flex;
+  flex-direction: row nowrap;
+  gap: 0;
+  align-items: center;
+
+  .currencySymbolButton {
+    height: 100%;
+    padding: 0.6rem 1rem;
+    pointer-events: none;
+    cursor: pointer;
+    background-color: var(--au-gray-200);
+    border: 0.1rem;
+    border-radius: var(--au-radius);
+    border-style: var(--au-outline-border-style);
+    border-color: var(--au-gray-300);
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: -0.5px;
+  }
+
+  input {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-left: none !important;
+  }
+}
