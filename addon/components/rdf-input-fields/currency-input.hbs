@@ -10,7 +10,6 @@
 {{/unless}}
 
 <div class="CurrencyInput">
-  <div class="currencySymbolButton">{{this.currencySymbol}}</div>
   <AuInput
     @error={{this.hasErrors}}
     @disabled={{@show}}
@@ -29,6 +28,7 @@
       )
     }}
   />
+  <div class="currencyIsoCode">{{this.currencyIsocode}}</div>
 </div>
 
 {{#each this.errors as |error|}}

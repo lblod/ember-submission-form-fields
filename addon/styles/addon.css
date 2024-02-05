@@ -46,7 +46,7 @@
   gap: 0;
   align-items: center;
 
-  .currencySymbolButton {
+  .currencyIsoCode {
     height: 100%;
     padding: 0.6rem 1rem;
     pointer-events: none;
@@ -56,15 +56,14 @@
     border-radius: var(--au-radius);
     border-style: var(--au-outline-border-style);
     border-color: var(--au-gray-300);
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-right: -0.5px;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   input {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-left: none !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
   }
 }
