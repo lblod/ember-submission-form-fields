@@ -16,12 +16,10 @@
 {{/unless}}
 
 <AuButtonGroup @inline={{true}}>
-  {{#if this.showSymbolAtStart}}
-    <AuButton
-      @skin="primary"
-      @disabled={{true}}
-    >{{this.currencySymbol}}</AuButton>
-  {{/if}}
+  <AuButton
+    @skin="primary"
+    @disabled={{true}}
+  >{{this.currencySymbol}}</AuButton>
   <AuInput
     @error={{this.hasErrors}}
     @disabled={{@show}}
@@ -30,13 +28,16 @@
     id={{this.inputId}}
     value={{this.value}}
     {{on "blur" this.updateValue}}
+    {{au-inputmask
+      options=(hash
+        alias="currency"
+        radixPoint=","
+        groupSeparator="."
+        allowMinus=true
+        inputmode="decimal"
+      )
+    }}
   />
-  {{#unless this.showSymbolAtStart}}
-    <AuButton
-      @skin="primary"
-      @disabled={{true}}
-    >{{this.currencySymbol}}</AuButton>
-  {{/unless}}
 </AuButtonGroup>
 
 {{#each this.errors as |error|}}
