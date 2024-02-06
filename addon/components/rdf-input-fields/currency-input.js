@@ -7,20 +7,34 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
   inputId = 'input-' + guidFor(this);
 
   currencyIsocode = 'EUR';
-  decimalSeparator = '.';
-  thousandSeparator = ' ';
+  decimalSeparator = ',';
+  thousandSeparator = '.';
 
   @action
   updateValue(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
     if (e.target && e.target.value) {
-      this.value = stringAmountToNumber(e.target.value, {
+      const amount = stringAmountToNumber(e.target.value, {
         decimalSeparator: this.decimalSeparator,
         thousandSeparator: this.thousandSeparator,
       });
-    }
+      this.value = this.numberStringToFormattedString(amount);
 
-    super.updateValue(this.value);
+      super.updateValue(amount);
+    }
+  }
+
+  numberStringToFormattedString(numberString) {
+    const fromDecimalSeparator = '.';
+
+    return `${numberString}`.replace(
+      fromDecimalSeparator,
+      this.decimalSeparator
+    );
+  }
+
+  get formattedValue() {
+    return this.numberStringToFormattedString(this.value);
   }
 }
