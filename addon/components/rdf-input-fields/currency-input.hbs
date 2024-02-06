@@ -9,7 +9,7 @@
   </AuLabel>
 {{/unless}}
 
-<div class="CurrencyInput">
+<div class="currency-input">
   <AuInput
     @error={{this.hasErrors}}
     @disabled={{@show}}
@@ -24,7 +24,7 @@
       )
     }}
   />
-  <div class="currencyIsoCode">{{this.currencyIsocode}}</div>
+  <div class="currency-input__iso-code">{{this.currencyIsocode}}</div>
 </div>
 
 {{#each this.errors as |error|}}
