@@ -54,4 +54,17 @@ module('Unit | Utility | string amount to number', function () {
       999999.99
     );
   });
+  test('string number to number', function (assert) {
+    const decimalSeparator = '.';
+    const thousandSeparator = ' ';
+    const stringAmountAsNumber = '999999.99';
+
+    assert.deepEqual(
+      stringAmountToNumber(stringAmountAsNumber, {
+        decimalSeparator,
+        thousandSeparator,
+      }),
+      999999.99
+    );
+  });
 });
