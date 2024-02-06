@@ -20,7 +20,12 @@
     {{on "blur" this.updateValue}}
     {{au-inputmask
       options=(hash
-        alias="currency" radixPoint="," groupSeparator="." allowMinus=true
+        alias="currency"
+        inputType="number"
+        radixPoint="."
+        groupSeparator=" "
+        allowMinus=true
+        unmaskAsNumber="true"
       )
     }}
   />
