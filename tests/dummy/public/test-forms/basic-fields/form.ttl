@@ -10,6 +10,7 @@
 @prefix schema: <http://schema.org/>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix eurio: <http://data.europa.eu/s66#> .
 
 
 
@@ -137,7 +138,7 @@ ext:mainFg form:hasField ext:inputField .
 ext:currencyInputField a form:Field ;
     sh:name "Currency input" ;
     sh:order 221 ;
-    sh:path ext:currencyInputValue ;
+    sh:path (ext:currencyInputValue eurio:value) ;
     form:options """{}""" ;
     form:displayType displayTypes:currencyInput ;
     sh:group ext:mainPg .

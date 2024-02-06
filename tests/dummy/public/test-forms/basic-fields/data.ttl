@@ -1,6 +1,9 @@
 @prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 @prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>.
+@prefix eurio: <http://data.europa.eu/s66#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix esff: <http://ember-submission-form-fields/> .
 
 # Checkbox
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/checkboxValue> "1"^^<http://www.w3.org/2001/XMLSchema#boolean>.
@@ -20,7 +23,11 @@
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/inputValue> "Simple value".
 
 # Currency Input
-<http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/currencyInputValue> "0,0".
+esff:source-node ext:currencyInputValue eurio:currencyInput.
+
+eurio:currencyInput a eurio:MonetaryAmount ;
+    eurio:value "10000.00"^^xsd:decimal ;
+    eurio:currency "EUR" .
 
 # Numerical input
 <http://ember-submission-form-fields/source-node> <http://mu.semte.ch/vocabularies/ext/numericalInputValue> 42.
