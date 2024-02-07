@@ -1,3 +1,10 @@
+## v2.18.0 (2024-02-07)
+
+#### :rocket: Enhancement
+* [#173](https://github.com/lblod/ember-submission-form-fields/pull/173) Switch to Woodpecker CI ([@Windvis](https://github.com/Windvis))
+* [#174](https://github.com/lblod/ember-submission-form-fields/pull/174) Create EURO currency input component ([@JonasVanHoof](https://github.com/JonasVanHoof))
+* [#175](https://github.com/lblod/ember-submission-form-fields/pull/175) Hide labels in show mode ([@Windvis](https://github.com/Windvis))
+
 ## v2.17.2 (2024-01-30)
 
 #### :bug: Bug Fix
