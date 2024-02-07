@@ -1,0 +1,42 @@
+{{#unless @inTable}}
+  <AuLabel
+    @error={{this.hasErrors}}
+    @warning={{this.hasWarnings}}
+    @required={{this.isRequired}}
+    for={{this.inputId}}
+  >
+    {{@field.label}}
+  </AuLabel>
+{{/unless}}
+
+<div class="currency-input">
+  <AuInput
+    @error={{this.hasErrors}}
+    @disabled={{@show}}
+    @width={{if @inTable "block"}}
+    @warning={{this.hasWarnings}}
+    id={{this.inputId}}
+    value={{this.value}}
+    {{on "blur" this.updateValue}}
+    {{au-inputmask
+      options=(hash
+        alias="numeric"
+        digits=2
+        radixPoint=","
+        groupSeparator="."
+        allowMinus=true
+        unmaskAsNumber=true
+        inputType="number"
+      )
+    }}
+  />
+  <div class="currency-input__iso-code">{{this.currencyIsocode}}</div>
+</div>
+
+{{#each this.errors as |error|}}
+  <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
+{{/each}}
+
+{{#each this.warnings as |warning|}}
+  <AuHelpText @warning={{true}}>{{warning.resultMessage}}</AuHelpText>
+{{/each}}

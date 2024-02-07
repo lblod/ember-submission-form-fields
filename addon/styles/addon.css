@@ -38,3 +38,31 @@
 .concept-scheme-multi-select-checkboxes__content {
   width: 100%;
 }
+
+.currency-input {
+  display: flex;
+  flex-direction: row nowrap;
+  gap: 0;
+  align-items: center;
+
+  input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
+  }
+}
+
+.currency-input__iso-code {
+  height: 100%;
+  padding: 0.6rem 1rem;
+  pointer-events: none;
+  cursor: pointer;
+  background-color: var(--au-gray-200);
+  border: 0.1rem;
+  border-radius: var(--au-radius);
+  border-style: var(--au-outline-border-style);
+  border-color: var(--au-gray-300);
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
