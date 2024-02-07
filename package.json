@@ -28,6 +28,9 @@
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
   },
+  "overrides": {
+    "inputmask": "5.0.9-beta.45"
+  },
   "dependencies": {
     "@lblod/submission-form-helpers": "^2.9.0",
     "clipboardy": "^3.0.0",
