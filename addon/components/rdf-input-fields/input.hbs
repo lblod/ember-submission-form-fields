@@ -6,12 +6,14 @@
     for={{this.inputId}}
   >
     {{@field.label}}
-    {{#if this.maxLength}}
-      <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
-        Resterende karakters:
-        {{this.remainingCharacters}}
-      </AuPill>
-    {{/if}}
+    {{#unless @show}}
+      {{#if this.maxLength}}
+        <AuPill @skin={{unless this.hasRemainingCharacters "error"}}>
+          Resterende karakters:
+          {{this.remainingCharacters}}
+        </AuPill>
+      {{/if}}
+    {{/unless}}
   </AuLabel>
 {{/unless}}
 
