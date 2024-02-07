@@ -16,15 +16,17 @@
     @width={{if @inTable "block"}}
     @warning={{this.hasWarnings}}
     id={{this.inputId}}
-    value={{this.formattedValue}}
+    value={{this.value}}
     {{on "blur" this.updateValue}}
     {{au-inputmask
       options=(hash
-        alias="currency"
+        alias="numeric"
+        digits=2
         radixPoint=","
         groupSeparator="."
         allowMinus=true
-        unmaskAsNumber="true"
+        unmaskAsNumber=true
+        inputType="number"
       )
     }}
   />
