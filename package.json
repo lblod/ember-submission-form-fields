@@ -109,5 +109,8 @@
   },
   "volta": {
     "node": "18.18.2"
+  },
+  "overrides": {
+    "inputmask": "5.0.9-beta.45"
   }
 }

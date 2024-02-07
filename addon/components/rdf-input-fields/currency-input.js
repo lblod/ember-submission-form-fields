@@ -1,7 +1,8 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
-import { stringAmountToNumber } from '../../utils/string-amount-to-number';
+import Inputmask from 'inputmask';
 
 export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFieldComponent {
   inputId = 'input-' + guidFor(this);
@@ -10,15 +11,32 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
   decimalSeparator = ',';
   thousandSeparator = '.';
 
+  @tracked inputElement;
+
   @action
-  updateValue(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  maskInput() {
+    Inputmask({
+      alias: 'numeric',
+      radixPoint: this.decimalSeparator,
+      groupSeparator: this.thousandSeparator,
+      digits: 3,
+      digitsOptional: false,
+      prefix: '',
+      placeholer: '0,00',
+      oncomplete: (event) => {
+        if (event.target && event.target.inputmask) {
+          this.value = event.target.inputmask.unmaskedvalue();
 
-    if (e.target && e.target.value) {
-      this.value = e.target.inputmask.unmaskedvalue();
+          super.updateValue(this.value.replace(this.decimalSeparator, '.'));
+        }
+      },
+    }).mask(this.element);
+  }
 
-      super.updateValue(this.value);
-    }
+  @action
+  setInput(element) {
+    this.element = element;
+    this.maskInput();
   }
 
   numberStringToFormattedString(numberString) {
@@ -28,9 +46,5 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
       fromDecimalSeparator,
       this.decimalSeparator
     );
-  }
-
-  get formattedValue() {
-    return this.numberStringToFormattedString(this.value);
   }
 }

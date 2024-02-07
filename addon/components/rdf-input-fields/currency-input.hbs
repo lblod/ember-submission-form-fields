@@ -10,25 +10,8 @@
 {{/unless}}
 
 <div class="currency-input">
-  <AuInput
-    @error={{this.hasErrors}}
-    @disabled={{@show}}
-    @width={{if @inTable "block"}}
-    @warning={{this.hasWarnings}}
-    id={{this.inputId}}
-    value={{this.formattedValue}}
-    {{on "blur" this.updateValue}}
-    {{au-inputmask
-      options=(hash
-        alias="currency"
-        radixPoint=","
-        groupSeparator="."
-        allowMinus=true
-        inputType="number"
-        unmaskAsNumber=true
-      )
-    }}
-  />
+  {{! template-lint-disable require-input-label }}
+  <input {{did-insert this.setInput}} />
   <div class="currency-input__iso-code">{{this.currencyIsocode}}</div>
 </div>
 
