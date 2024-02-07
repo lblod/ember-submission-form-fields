@@ -55,10 +55,13 @@ export default class InputFieldComponent extends Component {
   }
 
   get isRequired() {
-    return this.constraints.some(
-      (constraint) =>
-        constraint.type.value ===
-        'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
+    return (
+      !this.args.show &&
+      this.constraints.some(
+        (constraint) =>
+          constraint.type.value ===
+          'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
+      )
     );
   }
 
