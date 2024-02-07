@@ -15,13 +15,9 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
     if (e.target && e.target.value) {
-      const amount = stringAmountToNumber(e.target.value, {
-        decimalSeparator: this.decimalSeparator,
-        thousandSeparator: this.thousandSeparator,
-      });
-      this.value = this.numberStringToFormattedString(amount);
+      this.value = e.target.inputmask.unmaskedvalue();
 
-      super.updateValue(amount);
+      super.updateValue(this.value);
     }
   }
 
