@@ -31,7 +31,7 @@
   "dependencies": {
     "@lblod/submission-form-helpers": "^2.9.0",
     "clipboardy": "^3.0.0",
-    "ember-auto-import": "^2.6.3",
+    "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-concurrency": "^2.3.2 || ^3.0.0",
@@ -83,7 +83,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
-    "msw": "^0.39.2",
+    "msw": "^2.2.0",
     "prettier": "^2.8.7",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",

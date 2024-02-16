@@ -1,9 +1,10 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  rest.post('/case-number-generator/generate', (req, res, ctx) => {
-    const prefix = req.url.searchParams.get('prefix');
+  http.post('/case-number-generator/generate', ({ request }) => {
+    const url = new URL(request.url);
+    const prefix = url.searchParams.get('prefix') || '';
 
-    return res(ctx.status(200), ctx.json([`${prefix}1234`]));
+    return HttpResponse.json([`${prefix}1234`]);
   }),
 ];
