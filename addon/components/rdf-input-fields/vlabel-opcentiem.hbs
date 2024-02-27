@@ -44,8 +44,10 @@
                 @disabled={{@show}}
                 value={{field.value}}
                 aria-labelledby={{this.amountColumnId}}
-                {{auto-focus}}
                 {{on "blur" (fn this.updatePrice field)}}
+                {{(if
+                  (eq field this.taxEntryToFocus) (modifier this.autofocus)
+                )}}
               />
               {{#each field.errors as |error|}}
                 <AuHelpText @error={{true}}>
