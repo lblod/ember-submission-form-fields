@@ -2,53 +2,55 @@
   {{@field.label}}
 </AuLabel>
 
-<ul class="au-o-flow au-o-flow--tiny">
-  {{#each this.remoteUrls as |remoteUrl|}}
-    <li class="au-c-card au-o-box au-o-box--small">
-      <AuInput @disabled={{true}} @width="block" value={{remoteUrl.address}} />
-      <div class="au-u-margin-top-tiny">
-        <AuLinkExternal
-          @icon="external-link"
-          @iconAlignment="left"
-          href={{remoteUrl.address}}
-        >
-          Bekijk link
-        </AuLinkExternal>
+{{#if this.remoteUrls}}
+  <ul class="au-o-flow au-o-flow--tiny">
+    {{#each this.remoteUrls as |remoteUrl|}}
+      <li class="au-c-card au-o-box au-o-box--small">
+        <AuInput
+          @disabled={{true}}
+          @width="block"
+          value={{remoteUrl.address}}
+        />
+        <div class="au-u-margin-top-tiny">
+          <AuLinkExternal
+            @icon="external-link"
+            @iconAlignment="left"
+            href={{remoteUrl.address}}
+          >
+            Bekijk link
+          </AuLinkExternal>
 
-        {{! NOTE TO THE DESIGNER:
+          {{! NOTE TO THE DESIGNER:
           if you wish to provide more information to designer about the status, you could use
           remoteUrl.downloadOngoing or remoteUrl.downloadFailed
         }}
-        {{#if remoteUrl.downloadSuccess}}
-          <a
-            href={{remoteUrl.downloadLink}}
-            class="au-c-link au-u-margin-left-small"
-            download
-          >
-            <AuIcon @icon="file" @alignment="left" />
-            Download opgeslagen pagina*
-          </a>
-        {{/if}}
-      </div>
-    </li>
-  {{/each}}
-</ul>
+          {{#if remoteUrl.downloadSuccess}}
+            <a
+              href={{remoteUrl.downloadLink}}
+              class="au-c-link au-u-margin-left-small"
+              download
+            >
+              <AuIcon @icon="file" @alignment="left" />
+              Download opgeslagen pagina*
+            </a>
+          {{/if}}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
 
 <AuHelpText class="au-u-margin-bottom-tiny">
   {{#if this.remoteUrls}}
     <sup>*</sup>Op het moment van versturen, wordt er een versie gedownload van
     de pagina die op de link te vinden is.
-  {{else}}
+  {{else if (not this.hasRemoteUrlErrors)}}
     Er werden geen links toegevoegd.
   {{/if}}
 </AuHelpText>
 
 {{#if this.hasRemoteUrlErrors}}
-  <AuAlert
-    @skin="error"
-    @icon="info-circle"
-    @size="small"
-  >
+  <AuAlert @skin="error" @icon="info-circle" @size="small">
     Er ging iets fout bij het ophalen van de addressen.
   </AuAlert>
 {{/if}}
