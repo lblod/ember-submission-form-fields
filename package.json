@@ -29,7 +29,9 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
+    "@embroider/macros": "^1.13.5",
     "@lblod/submission-form-helpers": "^2.9.0",
+    "client-zip": "^2.4.4",
     "clipboardy": "^3.0.0",
     "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^7.26.11",
@@ -48,7 +50,7 @@
     "ember-source": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
-    "@appuniversum/ember-appuniversum": "^3.0.0",
+    "@appuniversum/ember-appuniversum": "^3.2.0",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@ember/optional-features": "^2.0.0",

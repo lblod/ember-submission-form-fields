@@ -66,3 +66,15 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+/* remote-url field */
+.remote-url-list-card {
+  background-color: var(--au-white);
+  border: 0.1rem solid var(--au-gray-300);
+  border-radius: var(--au-radius);
+}
+
+.remote-url-list-card .au-c-icon {
+  /* This prevents the icon from shrinking if the container is too small. It should probably be moved to Appuniversum */
+  flex-shrink: 0;
+}
