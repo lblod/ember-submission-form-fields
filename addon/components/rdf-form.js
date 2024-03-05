@@ -12,6 +12,7 @@ import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last
 import { A } from '@ember/array';
 import { restartableTask } from 'ember-concurrency';
 import Section from '@lblod/ember-submission-form-fields/models/section';
+import Field from '@lblod/ember-submission-form-fields/models/field';
 import { action } from '@ember/object';
 
 export default class RdfForm extends Component {
@@ -95,11 +96,16 @@ export default class RdfForm extends Component {
   }
 
   get topLevelModels() {
-    return this.topLevelElements;
+    return this.topLevelElements.sort((a, b) => a.order - b.order);
   }
 
   @action
   isSectionModel(model) {
     return model instanceof Section;
+  }
+
+  @action
+  isFieldModel(model) {
+    return model instanceof Field;
   }
 }

@@ -20,6 +20,30 @@
           {{!Temporary argument so we don't break the css hacks in the LPDC module}}
         />
       {{/if}}
+      {{#if (this.isFieldModel model)}}
+        <div class="au-u-margin-left">
+          {{#let
+            (component-for-display-type model.displayType show=@show)
+            as |FormField|
+          }}
+            <FormField
+              @field={{model}}
+              @form={{@form}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @show={{@show}}
+            />
+          {{/let}}
+
+          {{#if model.help}}
+            {{! template-lint-disable no-triple-curlies}}
+            <AuHelpText>{{{model.help}}}</AuHelpText>
+          {{/if}}
+        </div>
+      {{/if}}
     {{/each}}
   {{/if}}
 </div>
