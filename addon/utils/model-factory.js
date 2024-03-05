@@ -210,4 +210,43 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
   );
 }
 
+export function getTopLevelFields({ store, graphs }) {
+  const rootNode = getRootNodeForm({ store, graphs });
+
+  const includedIn = store
+    .match(rootNode, FORM('includes'), undefined, graphs.formGraph)
+    .map((triple) => triple.object);
+
+  const unlinkedSubjects = includedIn.map((includedItem) => {
+    const isOfTypeField = store.any(
+      includedItem,
+      RDF('type'),
+      FORM('Field'),
+      graphs.formGraph
+    );
+
+    if (!isOfTypeField) {
+      return;
+    }
+
+    // sectionContainingItem => rename to subjectContainingItem?
+    const linkedTo = sectionContainingItem(includedItem, {
+      store: store,
+      formGraph: graphs.formGraph,
+    });
+
+    if (!linkedTo) {
+      return includedItem;
+    }
+  });
+
+  const unlinkedFields = unlinkedSubjects.filter((item) => item);
+
+  return unlinkedFields
+    .map(
+      (subject) => new Field(subject, { store, formGraph: graphs.formGraph })
+    )
+    .sort((a, b) => a.order - b.order);
+}
+
 export { createPropertyTreeFromFields };
