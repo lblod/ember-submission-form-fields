@@ -18,8 +18,10 @@
           value={{remoteUrl.address}}
           id="{{this.inputId}}-{{index}}"
           placeholder="http://www.uw-bestuur.be/specifiek-document"
-          {{auto-focus}}
           {{on "blur" (fn this.updateRemoteUrl remoteUrl)}}
+          {{(if
+            (eq remoteUrl this.remoteUrlToFocus) (modifier this.autofocus)
+          )}}
         />
         {{#if remoteUrl.isInvalid}}
           {{#each remoteUrl.errors as |error|}}

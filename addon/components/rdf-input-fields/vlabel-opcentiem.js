@@ -5,6 +5,7 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
+import { autofocus } from '../../-private/modifiers/autofocus';
 
 const uriTemplate = 'http://data.lblod.info/tax-rates';
 const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
@@ -38,9 +39,11 @@ class TaxEntry {
 
 export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldComponent {
   amountColumnId = 'amount-column-' + guidFor(this);
+  autofocus = autofocus;
 
   @tracked taxRateSubject = null;
   @tracked taxEntries = [];
+  @tracked taxEntryToFocus = null;
   @tracked differentiatie = false;
 
   constructor() {
@@ -193,10 +196,9 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
 
   @action
   addPrice() {
-    this.taxEntries = [
-      ...this.taxEntries,
-      new TaxEntry({ value: '', errors: [] }),
-    ];
+    const taxEntry = new TaxEntry({ value: '', errors: [] });
+    this.taxEntryToFocus = taxEntry;
+    this.taxEntries = [...this.taxEntries, taxEntry];
   }
 
   @action

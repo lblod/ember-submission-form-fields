@@ -11,6 +11,7 @@ import { RDF, NIE } from '@lblod/submission-form-helpers';
 import { namedNode, NamedNode, Namespace } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { guidFor } from '@ember/object/internals';
+import { autofocus } from '../../../-private/modifiers/autofocus';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
 const REQUEST_HEADER = new namedNode(
@@ -42,6 +43,7 @@ class RemoteUrl {
 
 export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
   inputId = `remote-urls-${guidFor(this)}`;
+  autofocus = autofocus;
 
   get inputFor() {
     if (this.remoteUrls.length) {
@@ -51,6 +53,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   @tracked remoteUrls = [];
+  @tracked remoteUrlToFocus = null;
 
   observerLabel = `remote-urls-${guidFor(this)}`; // Could have used uuidv4, but more consistent accross components
 
@@ -175,14 +178,14 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   @action
   addUrlField() {
-    this.remoteUrls = [
-      ...this.remoteUrls,
-      new RemoteUrl({
-        uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
-        address: '',
-        errors: [],
-      }),
-    ];
+    const remoteUrl = new RemoteUrl({
+      uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
+      address: '',
+      errors: [],
+    });
+
+    this.remoteUrlToFocus = remoteUrl;
+    this.remoteUrls = [...this.remoteUrls, remoteUrl];
   }
 
   @action
