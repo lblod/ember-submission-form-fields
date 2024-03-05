@@ -213,36 +213,35 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
 export function getTopLevelFields({ store, graphs }) {
   const rootNode = getRootNodeForm({ store, graphs });
 
-  const includedIn = store
+  const includedSubjects = store
     .match(rootNode, FORM('includes'), undefined, graphs.formGraph)
     .map((triple) => triple.object);
 
-  const unlinkedSubjects = includedIn.map((includedItem) => {
+  const unlinkedFieldSubjects = [];
+  for (const subject of includedSubjects) {
     const isOfTypeField = store.any(
-      includedItem,
+      subject,
       RDF('type'),
       FORM('Field'),
       graphs.formGraph
     );
 
     if (!isOfTypeField) {
-      return;
+      continue;
     }
 
-    // sectionContainingItem => rename to subjectContainingItem?
-    const linkedTo = sectionContainingItem(includedItem, {
+    //sectionContainingItem => rename to subjectContainingItem?
+    const linkedTo = sectionContainingItem(subject, {
       store: store,
       formGraph: graphs.formGraph,
     });
 
     if (!linkedTo) {
-      return includedItem;
+      unlinkedFieldSubjects.push(subject);
     }
-  });
+  }
 
-  const unlinkedFields = unlinkedSubjects.filter((item) => item);
-
-  return unlinkedFields
+  return unlinkedFieldSubjects
     .map(
       (subject) => new Field(subject, { store, formGraph: graphs.formGraph })
     )
