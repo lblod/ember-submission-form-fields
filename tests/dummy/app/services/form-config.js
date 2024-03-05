@@ -1,6 +1,9 @@
-import Service from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import Service, { service } from '@ember/service';
 
 export default class FormConfigService extends Service {
-  @tracked isReadOnly = false;
+  @service router;
+
+  get isReadOnly() {
+    return this.router.currentRoute.queryParams.readOnly === 'true';
+  }
 }
