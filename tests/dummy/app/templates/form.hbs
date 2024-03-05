@@ -1,53 +1,53 @@
 {{page-title @model.title}}
 
-<TestForm
-  @form={{@model.form}}
-  @formStore={{@model.formStore}}
-  @graphs={{@model.graphs}}
-  @sourceNode={{@model.sourceNode}}
-  @forceShowErrors={{this.forceShowErrors}}
-/>
+<div class="au-o-box au-o-box--large au-u-2-3@medium au-u-1-1">
+  <TestForm
+    @form={{@model.form}}
+    @formStore={{@model.formStore}}
+    @graphs={{@model.graphs}}
+    @sourceNode={{@model.sourceNode}}
+    @forceShowErrors={{this.forceShowErrors}}
+  />
+
+  {{! TODO: Move this to the top bar, as a 'force validation errors' toggle, similar to the read-only one? }}
+  <AuButton class="au-u-margin-top" {{on "click" this.validate}}>
+    validate
+  </AuButton>
+</div>
 
 <AuHr />
 
-<AuButton
-  {{on "click" this.validate}}>
-  validate
-</AuButton>
-
-
-<AuHeading
-  @level={{1}}
-  @skin={{3}}
->
-  Data
-</AuHeading>
-<AuTable
-  @size="large"
->
-  <:title>Test</:title>
-  <:header>
-  <tr>
-    <th>Subject</th>
-    <th>Predicate</th>
-    <th>Object</th>
-  </tr>
-  </:header>
-  <:body>
-  {{#each this.datasetTriples as |triple|}}
-    <tr>
-      <td>{{triple.subject}}</td>
-      <td>{{triple.predicate}}</td>
-      <td>{{triple.object}}
-        {{#if (eq triple.object.datatype.value "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString")}}
-          @{{triple.object.language}}
-        {{else}}
-          {{#if triple.object.datatype.value}}
-            ^^{{triple.object.datatype}}
-          {{/if}}
-        {{/if}}
-      </td>
-    </tr>
-  {{/each}}
-  </:body>
-</AuTable>
+<div class="au-o-box au-o-box--large">
+  <AuTable @size="large">
+    <:title>Source graph data</:title>
+    <:header>
+      <tr>
+        <th>Subject</th>
+        <th>Predicate</th>
+        <th>Object</th>
+      </tr>
+    </:header>
+    <:body>
+      {{#each this.datasetTriples as |triple|}}
+        <tr>
+          <td>{{triple.subject}}</td>
+          <td>{{triple.predicate}}</td>
+          <td>{{triple.object}}
+            {{#if
+              (eq
+                triple.object.datatype.value
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"
+              )
+            }}
+              @{{triple.object.language}}
+            {{else}}
+              {{#if triple.object.datatype.value}}
+                ^^{{triple.object.datatype}}
+              {{/if}}
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </:body>
+  </AuTable>
+</div>
