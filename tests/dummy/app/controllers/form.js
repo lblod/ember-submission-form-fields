@@ -1,9 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import {
-  importTriplesForForm,
-  validateForm,
-} from '@lblod/ember-submission-form-fields';
+import { validateForm } from '@lblod/ember-submission-form-fields';
 import { action } from '@ember/object';
 
 export default class FormController extends Controller {
@@ -37,11 +34,6 @@ export default class FormController extends Controller {
   }
 
   setTriplesForTables() {
-    this.datasetTriples = importTriplesForForm(this.form, {
-      ...this.graphs,
-      sourceNode: this.sourceNode,
-      store: this.formStore,
-    });
     this.datasetTriples = this.formStore.match(
       undefined,
       undefined,
