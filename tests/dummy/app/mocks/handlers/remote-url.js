@@ -19,33 +19,6 @@ export const remoteUrlHandlers = [
 
     return HttpResponse.json(generateJsonApiResponse(data));
   }),
-  http.get('/files/:id/download', async ({ params }) => {
-    await delay();
-
-    const mockFiles = {
-      1: { path: '/mock-files/dummy.html', type: '', filename: 'dummy.html' },
-      2: { path: '/mock-files/dummy.pdf', type: '', filename: 'dummy.pdf' },
-    };
-
-    let file = mockFiles[params.id];
-
-    if (!file) {
-      // Someone created a new remote-url and then switched to read-only mode
-      // We can't access the data they entered, so we just use the first mock file for now
-      file = Object.values(mockFiles).at(0);
-    }
-
-    const buffer = await fetch(file.path).then((response) =>
-      response.arrayBuffer()
-    );
-
-    return HttpResponse.arrayBuffer(buffer, {
-      headers: {
-        // This matches the response of the file-service
-        'content-disposition': `attachment; filename="${file.filename}"`,
-      },
-    });
-  }),
 ];
 
 function generateJsonApiResponse(mockData) {

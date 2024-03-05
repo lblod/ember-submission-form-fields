@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { remoteUrlHandlers } from './handlers/remote-url';
+import { filesHandlers } from './handlers/files';
 
 export const handlers = [
   http.post('/case-number-generator/generate', ({ request }) => {
@@ -9,4 +10,5 @@ export const handlers = [
     return HttpResponse.json([`${prefix}1234`]);
   }),
   ...remoteUrlHandlers,
+  ...filesHandlers,
 ];

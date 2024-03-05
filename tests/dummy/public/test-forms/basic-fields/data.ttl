@@ -66,6 +66,14 @@ eurio:currencyInput a eurio:MonetaryAmount ;
     nie:url "https://www.vlaanderen.be/lokaal-bestuur/loket-voor-lokale-besturen/toezicht"^^<http://www.w3.org/2001/XMLSchema#string>;
     <http://redpencil.data.gift/vocabularies/http/requestHeader> <http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e>.
 
+# File upload
+esff:source-node ext:filesValue
+    <http://ember-submission-form-fields/mock-file-service/files/2>,
+    <http://ember-submission-form-fields/mock-file-service/files/3>.
+
+<http://ember-submission-form-fields/mock-file-service/files/2> a nfo:FileDataObject .
+<http://ember-submission-form-fields/mock-file-service/files/3> a nfo:FileDataObject .
+
 # Vlabel opcentiem
 <http://ember-submission-form-fields/source-node> <http://lblod.data.gift/vocabularies/besluit/taxRate> <http://data.lblod.info/tax-rates/1>.
 <http://data.lblod.info/tax-rates/1> <http://schema.org/price> 123, 456.

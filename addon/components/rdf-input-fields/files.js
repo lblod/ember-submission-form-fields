@@ -12,7 +12,10 @@ import {
   RDF,
   removeDatasetForSimpleFormValue,
 } from '@lblod/submission-form-helpers';
+import { downloadZip } from 'client-zip';
+import { task, dropTask } from 'ember-concurrency';
 import { NamedNode } from 'rdflib';
+import { triggerZipDownload } from '../../-private/utils/download';
 
 class FileField {
   @tracked errors = [];
@@ -38,11 +41,19 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   constructor() {
     super(...arguments);
-    this.loadProvidedValue();
+    this.loadProvidedValue.perform();
     this.args.formStore.registerObserver(
       this.onStoreUpdate.bind(this),
       this.inputId
     );
+  }
+
+  get canDownloadZip() {
+    if (!this.args.show || this.loadProvidedValue.isRunning) {
+      return false;
+    }
+
+    return this.files.length > 1;
   }
 
   get containsRemoteUrls() {
@@ -66,7 +77,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
     super.updateValidations();
   }
 
-  async loadProvidedValue() {
+  loadProvidedValue = task(async () => {
     const matches = triplesForPath(this.storeOptions);
 
     for (let uri of matches.values) {
@@ -75,7 +86,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
         this.files.pushObject(file);
       }
     }
-  }
+  });
 
   isFileDataObject(subject) {
     const fileDataObjectType = new NamedNode(
@@ -166,4 +177,21 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
     this.files.removeObject(fileField);
     // general validation of the field is handled by onStoreUpdate()
   }
+
+  downloadAsZip = dropTask(async () => {
+    const promises = this.files.map((file) => {
+      return fetch(file.record.downloadLink);
+    });
+
+    try {
+      const files = await Promise.all(promises);
+      const zipBlob = await downloadZip(files).blob();
+      triggerZipDownload(zipBlob, 'gebundelde-bestanden.zip');
+    } catch (error) {
+      console.error(error);
+      this.toaster.error(
+        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.'
+      );
+    }
+  });
 }
