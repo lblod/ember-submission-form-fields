@@ -3,16 +3,30 @@ import {
   generatorsForNode,
   triplesForGenerator,
 } from '@lblod/submission-form-helpers';
-import { getRootNodeForm, getTopLevelSections } from '../utils/model-factory';
+import {
+  getRootNodeForm,
+  getTopLevelSections,
+  getTopLevelFields,
+} from '../utils/model-factory';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
+import { A } from '@ember/array';
+import { restartableTask } from 'ember-concurrency';
+import Section from '@lblod/ember-submission-form-fields/models/section';
+import { action } from '@ember/object';
 
 export default class RdfForm extends Component {
   sections = []; // NOTE don't think this needs to be an ember array as it will never change
   isLast = isLast;
+  topLevelElements = A([]);
 
   constructor() {
     super(...arguments);
 
+    this.setupRdfForm.perform();
+  }
+
+  setupRdfForm = restartableTask(async () => {
+    this.topLevelElements = A([]);
     this.runGenerator({
       store: this.args.formStore,
       graphs: this.args.graphs,
@@ -24,7 +38,14 @@ export default class RdfForm extends Component {
       graphs: this.args.graphs,
       form: this.args.form,
     });
-  }
+    this.topLevelElements.pushObjects(this.sections);
+
+    const fields = getTopLevelFields({
+      store: this.args.formStore,
+      graphs: this.args.graphs,
+    });
+    this.topLevelElements.pushObjects(fields);
+  });
 
   runGenerator({ store, graphs, sourceNode }) {
     const rootNode = getRootNodeForm({
@@ -71,5 +92,14 @@ export default class RdfForm extends Component {
     });
 
     return triples;
+  }
+
+  get topLevelModels() {
+    return this.topLevelElements;
+  }
+
+  @action
+  isSectionModel(model) {
+    return model instanceof Section;
   }
 }

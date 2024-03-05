@@ -1,19 +1,25 @@
 <div class="au-o-grid au-o-grid--small" ...attributes>
-  {{#each this.sections as |section|}}
-    <FormSection
-      class={{@groupClass}}
-      @form={{@form}}
-      @section={{section}}
-      @formStore={{@formStore}}
-      @graphs={{@graphs}}
-      @sourceNode={{@sourceNode}}
-      @forceShowErrors={{@forceShowErrors}}
-      @cacheConditionals={{@cacheConditionals}}
-      @last={{this.isLast this.sections section}}
-      @show={{@show}}
-      @level={{@level}}
-      @useNewListingLayout={{@useNewListingLayout}}
-      {{!Temporary argument so we don't break the css hacks in the LPDC module}}
-    />
-  {{/each}}
+  {{#if this.setupRdfForm.isRunning}}
+    <AuLoader />
+  {{else}}
+    {{#each this.topLevelModels as |model|}}
+      {{#if (this.isSectionModel model)}}
+        <FormSection
+          class={{@groupClass}}
+          @form={{@form}}
+          @section={{model}}
+          @formStore={{@formStore}}
+          @graphs={{@graphs}}
+          @sourceNode={{@sourceNode}}
+          @forceShowErrors={{@forceShowErrors}}
+          @cacheConditionals={{@cacheConditionals}}
+          @last={{this.isLast this.sections model}}
+          @show={{@show}}
+          @level={{@level}}
+          @useNewListingLayout={{@useNewListingLayout}}
+          {{!Temporary argument so we don't break the css hacks in the LPDC module}}
+        />
+      {{/if}}
+    {{/each}}
+  {{/if}}
 </div>
