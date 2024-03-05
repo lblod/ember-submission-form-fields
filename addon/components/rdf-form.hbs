@@ -21,7 +21,9 @@
         />
       {{/if}}
       {{#if (this.isFieldModel model)}}
-        <div class="au-u-margin-left">
+        <div
+          class="au-o-flow au-u-margin-left au-u-margin-right au-u-margin-top"
+        >
           {{#let
             (component-for-display-type model.displayType show=@show)
             as |FormField|
