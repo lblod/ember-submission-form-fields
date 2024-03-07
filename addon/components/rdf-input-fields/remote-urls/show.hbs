@@ -1,54 +1,76 @@
-<AuLabel for={{this.inputId}}>
-  {{@field.label}}
-</AuLabel>
+<div class="au-u-flex au-u-flex--between au-u-margin-bottom">
+  <AuLabel>
+    {{@field.label}}
+  </AuLabel>
 
-<ul class="au-o-flow au-o-flow--tiny">
-  {{#each this.remoteUrls as |remoteUrl|}}
-    <li class="au-c-card au-o-box au-o-box--small">
-      <AuInput @disabled={{true}} @width="block" value={{remoteUrl.address}} />
-      <div class="au-u-margin-top-tiny">
-        <AuLinkExternal
-          @icon="external-link"
-          @iconAlignment="left"
-          href={{remoteUrl.address}}
-        >
-          Bekijk link
-        </AuLinkExternal>
-
-        {{! NOTE TO THE DESIGNER:
-          if you wish to provide more information to designer about the status, you could use
-          remoteUrl.downloadOngoing or remoteUrl.downloadFailed
-        }}
-        {{#if remoteUrl.downloadSuccess}}
-          <a
-            href={{remoteUrl.downloadLink}}
-            class="au-c-link au-u-margin-left-small"
-            download
-          >
-            <AuIcon @icon="file" @alignment="left" />
-            Download opgeslagen pagina*
-          </a>
-        {{/if}}
-      </div>
-    </li>
-  {{/each}}
-</ul>
-
-<AuHelpText class="au-u-margin-bottom-tiny">
-  {{#if this.remoteUrls}}
-    <sup>*</sup>Op het moment van versturen, wordt er een versie gedownload van
-    de pagina die op de link te vinden is.
-  {{else}}
-    Er werden geen links toegevoegd.
+  {{#if this.canDownloadZip}}
+    <AuButton
+      @skin="secondary"
+      @loading={{this.downloadAsZip.isRunning}}
+      @loadingMessage=".zip aan het genereren"
+      {{on "click" this.downloadAsZip.perform}}
+    >
+      Download alle links als .zip
+    </AuButton>
   {{/if}}
-</AuHelpText>
+</div>
 
-{{#if this.hasRemoteUrlErrors}}
-  <AuAlert
-    @skin="error"
-    @icon="info-circle"
-    @size="small"
-  >
-    Er ging iets fout bij het ophalen van de addressen.
-  </AuAlert>
+{{#if this.loadRemoteUrls.isIdle}}
+  {{#if this.remoteUrls}}
+    <AuHelpText
+      @skin="secondary"
+      @size="small"
+      class="au-u-flex au-u-flex--vertical-center au-u-margin-bottom-tiny"
+    >
+      <AuIcon @icon="circle-info" @alignment="left" @size="large" />
+      Bij het indienen wordt er een kopie van het document in de link
+      gegenereerd en opgeslagen.
+    </AuHelpText>
+
+    <ul class="au-o-flow au-o-flow--tiny">
+      {{#each this.remoteUrls as |remoteUrl|}}
+        <li class="remote-url-list-card au-o-box au-o-box--small">
+          <div class="au-u-flex au-u-flex--between">
+            <AuLinkExternal
+              @icon="external-link"
+              href={{remoteUrl.address}}
+            >{{remoteUrl.address}}</AuLinkExternal>
+            <div>
+              {{#if remoteUrl.downloadSuccess}}
+                <AuLinkExternal
+                  @icon="download"
+                  href={{remoteUrl.downloadLink}}
+                  class="au-u-margin-left-small"
+                  download
+                >
+                  Download
+                </AuLinkExternal>
+              {{/if}}
+            </div>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    {{#if this.hasRemoteUrlErrors}}
+      <AuAlert @skin="error" @icon="info-circle" @size="small">
+        Er ging iets fout bij het ophalen van de addressen.
+      </AuAlert>
+    {{else}}
+      <AuHelpText class="au-u-margin-bottom-tiny">
+        Er werden geen links toegevoegd.
+      </AuHelpText>
+    {{/if}}
+  {{/if}}
+{{else}}
+  {{! TODO: Remove this check once we drop Appuniversum v2 support }}
+  {{#if
+    (macroCondition
+      (macroDependencySatisfies "@appuniversum/ember-appuniversum" "^3.2.0")
+    )
+  }}
+    <AuLoader @centered={{false}} @hideMessage={{true}}>Links aan het laden</AuLoader>
+  {{else}}
+    <AuLoader @padding="small" />
+  {{/if}}
 {{/if}}

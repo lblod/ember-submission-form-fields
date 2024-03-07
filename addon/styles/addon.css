@@ -66,3 +66,33 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+/* remote-url field */
+.remote-url-list-card {
+  background-color: var(--au-white);
+  border: 0.1rem solid var(--au-gray-300);
+  border-radius: var(--au-radius);
+}
+
+.remote-url-list-card .au-c-icon {
+  /* This prevents the icon from shrinking if the container is too small. It should probably be moved to Appuniversum */
+  flex-shrink: 0;
+}
+
+/* Files field */
+.sf-files-card {
+  /* The Appuniversum version is lighter than the remote-url one, so this makes it consistent */
+  border-color: var(--au-gray-300) !important;
+}
+
+/* The design has a smaller variant of the file-card that matches the remote-url one.
+   TODO: Should we add this to Appuniversum itself?
+*/
+.sf-files-card--small {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.sf-files-card--small > div.au-u-margin-top-tiny {
+  margin-top: 0 !important;
+}
