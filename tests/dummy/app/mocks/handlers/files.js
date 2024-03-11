@@ -40,10 +40,12 @@ export const filesHandlers = [
       file = Object.values(mockFiles).at(0);
     }
 
-    const buffer = await fetch(file.path).then((response) =>
-      response.arrayBuffer()
-    );
+    const response = await fetch(file.path);
+    if (!response.ok) {
+      return response;
+    }
 
+    const buffer = await response.arrayBuffer();
     return HttpResponse.arrayBuffer(buffer, {
       headers: {
         // This matches the response of the file-service

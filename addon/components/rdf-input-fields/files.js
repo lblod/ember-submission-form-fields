@@ -36,6 +36,7 @@ class FileField {
 
 export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @service store;
+  @service toaster;
   @tracked files = A();
   inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.
 
@@ -180,7 +181,15 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   downloadAsZip = dropTask(async () => {
     const promises = this.files.map((file) => {
-      return fetch(file.record.downloadLink);
+      return fetch(file.record.downloadLink).then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Something went wrong while trying to download '${file.record.downloadLink}': ${response.status} ${response.statusText}`
+          );
+        }
+
+        return response;
+      });
     });
 
     try {
