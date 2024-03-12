@@ -1,7 +1,7 @@
 ## v2.19.0 (2024-03-12)
 
 #### :rocket: Enhancement
-* [#181](https://github.com/lblod/ember-submission-form-fields/pull/181) Add bulk download support ([@Windvis](https://github.com/Windvis))
+* [#181](https://github.com/lblod/ember-submission-form-fields/pull/181) Add bulk download support to the files and remote-url fields ([@Windvis](https://github.com/Windvis))
 
 #### :bug: Bug Fix
 * [#180](https://github.com/lblod/ember-submission-form-fields/pull/180) Fix some auto focus related issues ([@Windvis](https://github.com/Windvis))
