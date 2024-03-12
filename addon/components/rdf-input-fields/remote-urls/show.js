@@ -92,7 +92,15 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
   downloadAsZip = task(async () => {
     const promises = this.downloadableRemoteUrls.map((remoteUrl) => {
-      return fetch(remoteUrl.downloadLink);
+      return fetch(remoteUrl.downloadLink).then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Something went wrong while trying to download '${remoteUrl.downloadLink}': ${response.status} ${response.statusText}`
+          );
+        }
+
+        return response;
+      });
     });
 
     try {
