@@ -64,6 +64,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     );
 
     if (orderStatement) {
+      // This is also passing NaN if the value is a string
       return parseInt(orderStatement.value);
     }
 
