@@ -120,6 +120,19 @@ ext:radioButtonsField a form:Field ;
 ext:mainFg form:hasField ext:radioButtonsField .
 
 ##########################################################
+# Radio buttons with orderby
+##########################################################
+ext:radioButtonsWithOrderByField a form:Field ;
+    sh:name "Radio buttons with orderBy" ;
+    sh:order 211 ;
+    sh:path ext:radioButtonsValue ;
+    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","orderBy": "http://purl.org/linked-data/cube#order"}""" ;
+    form:displayType displayTypes:conceptSchemeRadioButtons ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:radioButtonsWithOrderByField .
+
+##########################################################
 # Input
 ##########################################################
 ext:inputField a form:Field ;
