@@ -14,35 +14,64 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   }
 
   loadOptions() {
-    const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+    let orderBy = null;
 
     if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
       return;
     }
 
+    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+      orderBy = new namedNode(fieldOptions.orderBy);
+    }
+
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.args.formStore
-      .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
+      .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
         const label = this.args.formStore.any(
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          this.metaGraph
         );
         return {
           value: t.subject.value,
           nodeValue: t.subject,
           label: label && label.value,
+          order: this.getOrderForOption(orderBy, t.subject),
         };
       });
-    this.options.sort(byLabel);
+
+    if (orderBy) {
+      this.options.sort(byOrder);
+    } else {
+      this.options.sort(byLabel);
+    }
   }
 
   @action
   updateValue(option) {
     setTimeout(() => super.updateValue(option.nodeValue), 1);
+  }
+
+  getOrderForOption(orderBy, tripleSubject) {
+    const orderStatement = this.args.formStore.any(
+      tripleSubject,
+      orderBy,
+      undefined,
+      this.metaGraph
+    );
+
+    if (orderStatement) {
+      return parseInt(orderStatement.value);
+    }
+
+    return 0;
+  }
+
+  get metaGraph() {
+    return this.args.graphs.metaGraph;
   }
 }
 
@@ -50,4 +79,8 @@ function byLabel(a, b) {
   const textA = a.label.toUpperCase();
   const textB = b.label.toUpperCase();
   return textA < textB ? -1 : textA > textB ? 1 : 0;
+}
+
+function byOrder(a, b) {
+  return a.order - b.order;
 }
