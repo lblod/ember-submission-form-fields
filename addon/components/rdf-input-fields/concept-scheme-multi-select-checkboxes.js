@@ -47,50 +47,66 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
   }
 
   loadOptions() {
-    const store = this.args.formStore;
-    const { sourceGraph, metaGraph } = this.args.graphs;
     const path = this.args.field.rdflibPath;
-    const options = this.args.field.options;
+    const fieldOptions = this.args.field.options;
+    let orderBy = null;
 
     if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
       return;
     }
 
-    const scheme = new namedNode(options.conceptScheme);
+    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+      orderBy = new namedNode(fieldOptions.orderBy);
+    }
 
-    let orderBy;
-    if (options.orderBy) orderBy = new namedNode(options.orderBy);
-
-    this.options = store
-      .match(undefined, SKOS('inScheme'), scheme, metaGraph)
+    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    this.options = this.store
+      .match(undefined, SKOS('inScheme'), conceptScheme, this.graphs.metaGraph)
       .map((t) => {
         const subject = t.subject;
-        const label = store.any(
+        const label = this.store.any(
           subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          this.graphs.metaGraph
         ).value;
-        const provided = !!store.any(
+        const provided = !!this.store.any(
           this.storeOptions.sourceNode,
           path,
           subject,
-          sourceGraph
+          this.graphs.sourceGraph
         );
-
-        let order = 0;
-        if (orderBy)
-          order = parseInt(
-            store.any(subject, orderBy, undefined, metaGraph).value
-          );
 
         return {
           subject,
           label,
           provided,
-          order,
+          order: this.getOrderForOption(orderBy, t.subject),
         };
       });
-    this.options.sort((a, b) => a.order - b.order);
+
+    this.options.sort((a, b) =>
+      a.order.localeCompare(b.order, undefined, { numeric: true })
+    );
+  }
+
+  getOrderForOption(orderBy, tripleSubject) {
+    const orderStatement = this.store.any(
+      tripleSubject,
+      orderBy,
+      undefined,
+      this.graphs.metaGraph
+    );
+
+    // must be string because above we are using string.localCompare
+    return `${orderStatement?.value ?? ''}`;
+  }
+
+  get store() {
+    return this.args.formStore;
+  }
+
+  get graphs() {
+    return this.args.graphs;
   }
 }
