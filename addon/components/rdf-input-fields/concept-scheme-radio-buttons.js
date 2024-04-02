@@ -64,8 +64,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     );
 
     if (orderStatement) {
-      // This is also passing NaN if the value is a string
-      return parseInt(orderStatement.value);
+      return orderStatement.value;
     }
 
     return 0;
@@ -83,5 +82,5 @@ function byLabel(a, b) {
 }
 
 function byOrder(a, b) {
-  return a.order - b.order;
+  return a.order.localeCompare(b.order, undefined, { numeric: true });
 }
