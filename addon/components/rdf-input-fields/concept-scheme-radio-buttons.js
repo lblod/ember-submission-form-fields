@@ -63,11 +63,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
       this.metaGraph
     );
 
-    if (orderStatement) {
-      return `${orderStatement.value ?? ''}`;
-    }
-
-    return 0;
+    return `${orderStatement?.value ?? ''}`;
   }
 
   get metaGraph() {
