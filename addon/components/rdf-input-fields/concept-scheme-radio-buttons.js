@@ -64,7 +64,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     );
 
     if (orderStatement) {
-      return orderStatement.value;
+      return `${orderStatement.value ?? ''}`;
     }
 
     return 0;
