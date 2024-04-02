@@ -26,10 +26,10 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     }
 
     const conceptScheme = new namedNode(fieldOptions.conceptScheme);
-    this.options = this.args.formStore
+    this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
-        const label = this.args.formStore.any(
+        const label = this.store.any(
           t.subject,
           SKOS('prefLabel'),
           undefined,
@@ -56,7 +56,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   }
 
   getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.args.formStore.any(
+    const orderStatement = this.store.any(
       tripleSubject,
       orderBy,
       undefined,
@@ -68,6 +68,10 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
 
   get metaGraph() {
     return this.args.graphs.metaGraph;
+  }
+
+  get store() {
+    return this.args.formStore;
   }
 }
 
