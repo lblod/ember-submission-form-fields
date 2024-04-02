@@ -63,6 +63,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
       this.metaGraph
     );
 
+    // This MUST be a string so our byOrder sorting function returns the correct result
     return `${orderStatement?.value ?? ''}`;
   }
 
