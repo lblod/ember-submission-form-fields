@@ -1,3 +1,8 @@
+## v2.20.0 (2024-04-03)
+
+#### :rocket: Enhancement
+* [#184](https://github.com/lblod/ember-submission-form-fields/pull/184) [SFB-248] Conceptscheme radio buttons with order by property in form:options ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
 ## v2.19.0 (2024-03-12)
 
 #### :rocket: Enhancement
