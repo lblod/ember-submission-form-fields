@@ -13,8 +13,9 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
 
     if (e.target && e.target.value) {
       this.value = e.target.inputmask.unmaskedvalue();
-
-      super.updateValue(this.value);
+    } else {
+      this.value = null;
     }
+    super.updateValue(this.value);
   }
 }
