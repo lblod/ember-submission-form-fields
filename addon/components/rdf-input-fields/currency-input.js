@@ -23,8 +23,8 @@ export default class RdfInputFieldsCurrencyInputComponent extends SimpleInputFie
   }
 
   // Took this over from numerical-input.js
-  // When value 0 is filled in this added as that value
-  // When just updating the value with Number(0) no value is written to the path
+  // When value 0 is filled it will be recognized as a deciaml or intiger
+  // instead of an invalid value
   get datatype() {
     const number = Number(this.value);
     if (!Number.isNaN(number) && Number.isFinite(number)) {
