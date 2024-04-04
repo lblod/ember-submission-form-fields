@@ -90,7 +90,7 @@ ext:errorCurrencyInput a form:Field ;
       a form:RequiredConstraint ;
       form:grouping form:Bag ;
       sh:resultMessage "This field is required" ;
-      sh:path ext:errorInputValue ;
+      sh:path ext:currencyInputValue ;
     ] ;
     form:partOf ext:errorSection .
 
