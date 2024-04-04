@@ -1,3 +1,8 @@
+## v2.20.1 (2024-04-04)
+
+#### :bug: Bug Fix
+* [#184](https://github.com/lblod/ember-submission-form-fields/pull/184) V2.20.0 failed. This version will have the feature of v2.20.0 ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
 ## v2.20.0 (2024-04-03)
 
 #### :rocket: Enhancement
