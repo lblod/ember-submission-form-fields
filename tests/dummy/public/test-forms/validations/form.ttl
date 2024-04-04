@@ -10,6 +10,7 @@ ext:mainForm a form:Form, form:TopLevelForm ;
     form:includes ext:errorNumericalInput ;
     form:includes ext:errorTextArea ;
     form:includes ext:errorSelect ;
+    form:includes ext:errorCurrencyInput ;
 
     # Warning fields
     form:includes ext:warningInput ;
@@ -77,6 +78,19 @@ ext:errorSelect a form:Field ;
       form:customValue <http://example-concept-schemes/concepts/grault> ;
       sh:resultMessage "Wrong choice!" ;
       sh:path ext:errorSelectValue ;
+    ] ;
+    form:partOf ext:errorSection .
+
+ext:errorCurrencyInput a form:Field ;
+    sh:name "Currency input" ;
+    sh:order 50 ;
+    form:displayType displayTypes:currencyInput ;
+    sh:path ext:currencyInputValue ;
+    form:validatedBy [
+      a form:RequiredConstraint ;
+      form:grouping form:Bag ;
+      sh:resultMessage "This field is required" ;
+      sh:path ext:errorInputValue ;
     ] ;
     form:partOf ext:errorSection .
 
