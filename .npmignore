@@ -25,6 +25,7 @@
 /.template-lintrc.js
 /.travis.yml
 /.watchmanconfig
+/.woodpecker/
 /bower.json
 /CONTRIBUTING.md
 /ember-cli-build.js
