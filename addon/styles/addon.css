@@ -109,5 +109,17 @@
   color: var(--au-gray-700);
   background-color: var(--au-gray-200);
   border-radius: 100%;
-  margin-left: 0.5rem;
+  margin-left: -2.5rem;
+}
+
+.number-input-no-spin::-webkit-inner-spin-button,
+.number-input-no-spin::-webkit-outer-spin-button {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input-no-spin {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -moz-appearance: textfield;
 }
