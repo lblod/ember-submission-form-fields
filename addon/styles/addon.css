@@ -96,3 +96,18 @@
 .sf-files-card--small > div.au-u-margin-top-tiny {
   margin-top: 0 !important;
 }
+
+.center-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-clear-btn {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  color: var(--au-gray-700);
+  background-color: var(--au-gray-200);
+  border-radius: 100%;
+  margin-left: 0.5rem;
+}

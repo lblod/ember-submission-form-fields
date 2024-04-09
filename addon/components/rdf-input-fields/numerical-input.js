@@ -3,6 +3,7 @@ import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { XSD } from '@lblod/submission-form-helpers';
 import { literal } from 'rdflib';
+import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
 
 export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFieldComponent {
   inputId = 'input-' + guidFor(this);
@@ -13,6 +14,15 @@ export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFi
     this.value = e.target.value;
     const number = literal(Number(this.value), this.datatype);
     super.updateValue(number);
+  }
+
+  @action
+  clear() {
+    this.value = null;
+    updateSimpleFormValue(this.storeOptions, undefined, this.nodeValue);
+    this.hasBeenFocused = true;
+    this.loadProvidedValue();
+    super.updateValidations();
   }
 
   get datatype() {

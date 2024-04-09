@@ -8,17 +8,27 @@
     {{@field.label}}
   </AuLabel>
 {{/unless}}
-<AuInput
-  @error={{this.hasErrors}}
-  @disabled={{@show}}
-  @width={{if @inTable "block"}}
-  @warning={{this.hasWarnings}}
-  id={{this.inputId}}
-  lang="nl-BE"
-  type="number"
-  value={{this.value}}
-  {{on "change" this.updateValue}}
-/>
+
+<div class="center-container">
+  <AuInput
+    @error={{this.hasErrors}}
+    @disabled={{@show}}
+    @width={{if @inTable "block"}}
+    @warning={{this.hasWarnings}}
+    id={{this.inputId}}
+    lang="nl-BE"
+    type="number"
+    value={{this.value}}
+    {{on "change" this.updateValue}}
+  />
+  <AuIcon
+    @icon="x"
+    class="input-clear-btn"
+    role="button"
+    {{on "mouseup" this.clear}}
+    {{on "touchstart" this.clear}}
+  />
+</div>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
