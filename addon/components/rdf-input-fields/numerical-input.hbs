@@ -9,19 +9,17 @@
   </AuLabel>
 {{/unless}}
 
-<div>
-  <AuInput
-    @error={{this.hasErrors}}
-    @disabled={{@show}}
-    @width={{if @inTable "block"}}
-    @warning={{this.hasWarnings}}
-    id={{this.inputId}}
-    lang="nl-BE"
-    type="number"
-    value={{this.value}}
-    {{on "change" this.updateValue}}
-  />
-</div>
+<AuInput
+  @error={{this.hasErrors}}
+  @disabled={{@show}}
+  @width={{if @inTable "block"}}
+  @warning={{this.hasWarnings}}
+  id={{this.inputId}}
+  lang="nl-BE"
+  type="number"
+  value={{this.value}}
+  {{on "change" this.updateValue}}
+/>
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
