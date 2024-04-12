@@ -29,18 +29,17 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     this.loadProvidedValue();
   }
 
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+      searchEnabled: EXT('searchEnabled'),
+    };
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const conceptScheme = this.findFieldOption(
-      'conceptScheme',
-      EXT('conceptScheme'),
-      'node'
-    );
-    const isSearchEnabled = this.findFieldOption(
-      'searchEnabled',
-      EXT('searchEnabled'),
-      'boolean'
-    );
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+    const isSearchEnabled = this.findFieldOption('searchEnabled', 'boolean');
 
     if (!conceptScheme) {
       return;

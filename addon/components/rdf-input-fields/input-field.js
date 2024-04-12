@@ -136,7 +136,17 @@ export default class InputFieldComponent extends Component {
     );
   }
 
-  findFieldOption(propertyName, predicate, returnType = 'string') {
+  getOptionPredicates() {
+    return {};
+  }
+
+  findFieldOption(propertyName, returnType = 'string') {
+    const predicate = this.getOptionPredicates()[propertyName];
+
+    if (!predicate) {
+      return this.searchValueInFormOptions(propertyName, returnType);
+    }
+
     const predicateValue = this.storeOptions.store.any(
       this.fieldSubject,
       predicate,
@@ -148,6 +158,10 @@ export default class InputFieldComponent extends Component {
       return valueToType(predicateValue.value, returnType);
     }
 
+    return this.searchValueInFormOptions(propertyName, returnType);
+  }
+
+  searchValueInFormOptions(propertyName, returnType) {
     const fieldOptions = this.storeOptions.store.any(
       this.fieldSubject,
       FORM('options'),
