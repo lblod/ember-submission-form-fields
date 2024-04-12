@@ -21,15 +21,6 @@ export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFi
     }
   }
 
-  @action
-  clear() {
-    this.value = null;
-    updateSimpleFormValue(this.storeOptions, undefined, this.nodeValue);
-    this.hasBeenFocused = true;
-    this.loadProvidedValue();
-    super.updateValidations();
-  }
-
   get datatype() {
     const number = Number(this.value);
     if (!Number.isNaN(number) && Number.isFinite(number)) {

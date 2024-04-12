@@ -9,9 +9,8 @@
   </AuLabel>
 {{/unless}}
 
-<div class="center-container">
+<div>
   <AuInput
-    class={{if @field.options.allowClear "number-input-no-spin"}}
     @error={{this.hasErrors}}
     @disabled={{@show}}
     @width={{if @inTable "block"}}
@@ -22,15 +21,6 @@
     value={{this.value}}
     {{on "change" this.updateValue}}
   />
-  {{#if @field.options.allowClear}}
-    <AuIcon
-      @icon="x"
-      class="input-clear-btn"
-      role="button"
-      {{on "mouseup" this.clear}}
-      {{on "touchstart" this.clear}}
-    />
-  {{/if}}
 </div>
 
 {{#each this.errors as |error|}}
