@@ -7,7 +7,8 @@ import {
   validationResultsForField,
   validationsForFieldWithType,
 } from '@lblod/submission-form-helpers';
-import { NamedNode, Namespace } from 'rdflib';
+import { Namespace } from 'rdflib';
+import { valueToType } from '../../utils/value-to-type';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
 const SH_WARNING = SHACL('Warning');
@@ -173,24 +174,4 @@ export default class InputFieldComponent extends Component {
 
 function invalidResults(validationResults) {
   return validationResults.filter((result) => !result.valid);
-}
-
-function valueToType(value, returnType) {
-  if (returnType == 'string') {
-    return `${value}`;
-  }
-
-  if (returnType == 'boolean') {
-    if (typeof value == 'string') {
-      return value == '1';
-    }
-
-    return value;
-  }
-
-  if (returnType == 'node') {
-    return new NamedNode(`${value}`);
-  }
-
-  return value;
 }
