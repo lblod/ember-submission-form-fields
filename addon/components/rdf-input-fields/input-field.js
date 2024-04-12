@@ -7,9 +7,13 @@ import {
   validationResultsForField,
   validationsForFieldWithType,
 } from '@lblod/submission-form-helpers';
+import { Namespace } from 'rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
 const SH_WARNING = SHACL('Warning');
+
+// TODO: Move EXT to the helpers namespaces.js
+export const EXT = new Namespace('http://mu.semte.ch/vocabularies/ext/');
 
 /**
  * Abstract input-field component providing a base class
@@ -107,6 +111,10 @@ export default class InputFieldComponent extends Component {
     };
   }
 
+  get fieldSubject() {
+    return this.args.field.uri;
+  }
+
   willDestroy() {
     super.willDestroy(...arguments);
     if (!this.args.cacheConditionals) {
@@ -125,6 +133,41 @@ export default class InputFieldComponent extends Component {
         severity: SH_WARNING,
       })
     );
+  }
+
+  findFieldOption(propertyName, predicate) {
+    const predicateValue = this.storeOptions.store.any(
+      this.fieldSubject,
+      predicate,
+      undefined,
+      this.storeOptions.formGraph
+    );
+
+    if (predicateValue) {
+      return predicateValue.value;
+    }
+
+    const fieldOptions = this.storeOptions.store.any(
+      this.fieldSubject,
+      FORM('options'),
+      undefined,
+      this.storeOptions.formGraph
+    );
+
+    if (!fieldOptions) {
+      return null;
+    }
+
+    let options = {};
+    try {
+      options = JSON.parse(fieldOptions.value);
+
+      if (options[propertyName]) {
+        return options[propertyName];
+      }
+    } catch {
+      return null;
+    }
   }
 }
 
