@@ -144,17 +144,7 @@ export default class InputFieldComponent extends Component {
     );
 
     if (predicateValue) {
-      const value = predicateValue.value;
-      const formatMap = {
-        ['string']: value,
-        ['boolean']: value == '1',
-      };
-
-      if (!Object.keys(formatMap).includes(returnType)) {
-        return value;
-      }
-
-      return formatMap[returnType];
+      return valueToType(predicateValue.value, returnType);
     }
 
     const fieldOptions = this.storeOptions.store.any(
@@ -173,7 +163,7 @@ export default class InputFieldComponent extends Component {
       options = JSON.parse(fieldOptions.value);
 
       if (options[propertyName]) {
-        return options[propertyName];
+        return valueToType(options[propertyName], returnType);
       }
     } catch {
       return null;
@@ -183,4 +173,20 @@ export default class InputFieldComponent extends Component {
 
 function invalidResults(validationResults) {
   return validationResults.filter((result) => !result.valid);
+}
+
+function valueToType(value, returnType) {
+  if (returnType == 'string') {
+    return `${value}`;
+  }
+
+  if (returnType == 'boolean') {
+    if (typeof value == 'string') {
+      return value == '1';
+    }
+
+    return value;
+  }
+
+  return value;
 }
