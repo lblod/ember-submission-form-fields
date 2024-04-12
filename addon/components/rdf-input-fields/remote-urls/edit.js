@@ -186,7 +186,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   @action
   addUrlField() {
-    const uuid = uuidv4()
+    const uuid = uuidv4();
     const remoteUrl = new RemoteUrl({
       uuid,
       uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
@@ -203,7 +203,11 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     remoteUrl.address = event.target.value.trim();
     const address = remoteUrl.address;
     this.removeRemoteDataObject(remoteUrl.uri);
-    this.insertRemoteDataObject({ uuid: remoteUrl.uuid, uri: remoteUrl.uri, address });
+    this.insertRemoteDataObject({
+      uuid: remoteUrl.uuid,
+      uri: remoteUrl.uri,
+      address,
+    });
     this.hasBeenFocused = true;
     const errors = this.validationErrorsForAddress(address).map(
       (e) => e.resultMessage
