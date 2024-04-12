@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 
 import { valueToType } from '@lblod/ember-submission-form-fields/utils/value-to-type';
+import { isNamedNode } from 'rdflib';
 
 module('Unit | Utility | value to type', function () {
   test('Can proccess a value of type function to the possible returntypes', function (assert) {
@@ -68,5 +69,14 @@ module('Unit | Utility | value to type', function () {
     assert.deepEqual(typeof oneToTrue, 'boolean');
     assert.false(zeroToFalse);
     assert.true(oneToTrue);
+  });
+  test('When  passing a uri it can convert it to a node', function (assert) {
+    const uri = `https://semantic.works/`;
+
+    const uriNode = valueToType(uri, 'node');
+
+    assert.deepEqual(typeof uri, 'string');
+    assert.true(isNamedNode(uriNode));
+    assert.deepEqual(uriNode.value, uri);
   });
 });
