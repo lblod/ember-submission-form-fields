@@ -135,7 +135,7 @@ export default class InputFieldComponent extends Component {
     );
   }
 
-  findFieldOption(propertyName, predicate) {
+  findFieldOption(propertyName, predicate, returnType = 'string') {
     const predicateValue = this.storeOptions.store.any(
       this.fieldSubject,
       predicate,
@@ -144,7 +144,17 @@ export default class InputFieldComponent extends Component {
     );
 
     if (predicateValue) {
-      return predicateValue.value;
+      const value = predicateValue.value;
+      const formatMap = {
+        ['string']: value,
+        ['boolean']: value == '1',
+      };
+
+      if (!Object.keys(formatMap).includes(returnType)) {
+        return value;
+      }
+
+      return formatMap[returnType];
     }
 
     const fieldOptions = this.storeOptions.store.any(
