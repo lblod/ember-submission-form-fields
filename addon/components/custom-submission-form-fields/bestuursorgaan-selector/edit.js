@@ -7,7 +7,8 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode, Namespace } from 'rdflib';
+import { Namespace } from 'rdflib';
+import { EXT } from '../../rdf-input-fields/input-field';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -27,10 +28,19 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
     this.loadProvidedValue();
   }
 
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+    };
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = this.args.field.options;
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+
+    if (!conceptScheme) {
+      return;
+    }
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)

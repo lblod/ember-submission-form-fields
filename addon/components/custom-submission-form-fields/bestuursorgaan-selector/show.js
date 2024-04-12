@@ -4,7 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import { next } from '@ember/runloop';
-import { namedNode, Namespace } from 'rdflib';
+import { Namespace } from 'rdflib';
+import { EXT } from '../../rdf-input-fields/input-field';
 
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
@@ -23,10 +24,19 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
     });
   }
 
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+    };
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = this.args.field.options;
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+
+    if (!conceptScheme) {
+      return;
+    }
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
