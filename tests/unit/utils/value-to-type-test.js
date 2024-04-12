@@ -16,6 +16,19 @@ module('Unit | Utility | value to type', function () {
     assert.deepEqual(typeof valueAsBoolean, 'boolean');
     assert.false(valueAsBoolean);
   });
+  test('Can proccess a value of type object to the possible returntypes', function (assert) {
+    const myObject = {
+      property: 'value',
+    };
+
+    const valueAsString = valueToType(myObject, 'string');
+    const valueAsBoolean = valueToType(myObject, 'boolean');
+
+    assert.deepEqual(typeof myObject, 'object');
+    assert.deepEqual(typeof valueAsString, 'string');
+    assert.deepEqual(typeof valueAsBoolean, 'boolean');
+    assert.false(valueAsBoolean);
+  });
   test('Can proccess a value of type string to the possible returntypes', function (assert) {
     const myString = 'qunit';
 
