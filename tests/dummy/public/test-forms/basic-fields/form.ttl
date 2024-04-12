@@ -12,6 +12,7 @@
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 @prefix eurio: <http://data.europa.eu/s66#> .
 @prefix exampleConceptSchemes: <http://example-concept-schemes/concept-schemes/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
 
 
 
@@ -132,6 +133,17 @@ ext:radioButtonsWithOrderByField a form:Field ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:radioButtonsWithOrderByField .
+
+ext:radioButtonsWithOptionPredicatesField a form:Field ;
+    sh:name "Radio buttons with form:options as separate predicates" ;
+    sh:order 211 ;
+    sh:path ext:radioButtonsValue ;
+    ext:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    ext:orderBy qb:order ;
+    form:displayType displayTypes:conceptSchemeRadioButtons ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:radioButtonsWithOptionPredicatesField .
 
 ##########################################################
 # Input

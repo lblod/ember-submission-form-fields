@@ -2,8 +2,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
-import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { EXT } from './input-field';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
@@ -13,19 +12,21 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     this.loadOptions();
   }
 
-  loadOptions() {
-    const fieldOptions = this.args.field.options;
-    let orderBy = null;
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+      orderBy: EXT('orderBy'),
+    };
+  }
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+  loadOptions() {
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+    const orderBy = this.findFieldOption('orderBy', 'node');
+
+    if (!conceptScheme) {
       return;
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
-    }
-
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
