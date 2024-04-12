@@ -7,8 +7,6 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
-import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { EXT } from './input-field';
 
 function byLabel(a, b) {
@@ -33,9 +31,10 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const conceptSchemeUri = this.findFieldOption(
+    const conceptScheme = this.findFieldOption(
       'conceptScheme',
-      EXT('conceptScheme')
+      EXT('conceptScheme'),
+      'node'
     );
     const isSearchEnabled = this.findFieldOption(
       'searchEnabled',
@@ -43,7 +42,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
       'boolean'
     );
 
-    if (!conceptSchemeUri) {
+    if (!conceptScheme) {
       return;
     }
     /**
@@ -52,8 +51,6 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     if (isSearchEnabled !== undefined || isSearchEnabled !== null) {
       this.searchEnabled = isSearchEnabled;
     }
-
-    const conceptScheme = new namedNode(conceptSchemeUri);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)

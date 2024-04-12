@@ -7,7 +7,7 @@ import {
   validationResultsForField,
   validationsForFieldWithType,
 } from '@lblod/submission-form-helpers';
-import { Namespace } from 'rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 
 const MAX_LENGTH_URI = 'http://lblod.data.gift/vocabularies/forms/MaxLength';
 const SH_WARNING = SHACL('Warning');
@@ -186,6 +186,10 @@ function valueToType(value, returnType) {
     }
 
     return value;
+  }
+
+  if (returnType == 'node') {
+    return new NamedNode(`${value}`);
   }
 
   return value;

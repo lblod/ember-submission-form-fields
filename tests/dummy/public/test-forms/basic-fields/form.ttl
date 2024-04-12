@@ -11,6 +11,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 @prefix eurio: <http://data.europa.eu/s66#> .
+@prefix exampleConceptSchemes: <http://example-concept-schemes/concept-schemes/> .
 
 
 
@@ -253,7 +254,7 @@ ext:conceptSchemeSelectorWithOptionPredicatesField a form:Field ;
     sh:name "Select with form:options as separate predicates" ;
     sh:order 270 ;
     sh:path ext:conceptSchemeSelectorValue ;
-    ext:conceptScheme "http://example-concept-schemes/concept-schemes/foo-bar-baz" ;
+    ext:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     ext:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeSelector ;
     sh:group ext:mainPg .
