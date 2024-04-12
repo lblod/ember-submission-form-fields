@@ -54,4 +54,19 @@ module('Unit | Utility | value to type', function () {
     assert.deepEqual(valueAsBoolean, myBooleanTrue);
     assert.true(valueAsBoolean);
   });
+  test('When string value ois zero or one it can be converte to a boolean true/false', function (assert) {
+    const stringZero = '0';
+    const stringOne = '1';
+
+    const zeroToFalse = valueToType(stringZero, 'boolean');
+    const oneToTrue = valueToType(stringOne, 'boolean');
+
+    assert.deepEqual(typeof stringZero, 'string');
+    assert.deepEqual(typeof stringOne, 'string');
+
+    assert.deepEqual(typeof zeroToFalse, 'boolean');
+    assert.deepEqual(typeof oneToTrue, 'boolean');
+    assert.false(zeroToFalse);
+    assert.true(oneToTrue);
+  });
 });
