@@ -28,4 +28,17 @@ module('Unit | Utility | value to type', function () {
     assert.deepEqual(typeof valueAsBoolean, 'boolean');
     assert.false(valueAsBoolean);
   });
+  test('Can proccess a value of type boolean to the possible returntypes', function (assert) {
+    const myBooleanTrue = true;
+
+    const valueAsString = valueToType(myBooleanTrue, 'string');
+    const valueAsBoolean = valueToType(myBooleanTrue, 'boolean');
+
+    assert.deepEqual(typeof myBooleanTrue, 'boolean');
+    assert.deepEqual(typeof valueAsString, 'string');
+    assert.deepEqual(valueAsString, `${myBooleanTrue}`);
+    assert.deepEqual(typeof valueAsBoolean, 'boolean');
+    assert.deepEqual(valueAsBoolean, myBooleanTrue);
+    assert.true(valueAsBoolean);
+  });
 });
