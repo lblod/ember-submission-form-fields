@@ -108,6 +108,22 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesField .
 
+ext:conceptSchemeMultiSelectCheckboxesWithOptionPredicatesFieldField a form:Field ;
+    sh:name "Concept scheme multi select checkbox with form:options as separate predicates" ;
+    sh:order 192 ;
+    sh:path ext:conceptSchemeMultiSelectCheckboxesValue ;
+    form:validatedBy
+      [ a form:RequiredConstraint ;
+        form:grouping form:Bag ;
+        sh:resultMessage "Dit veld is verplicht."@nl;
+        sh:path ext:conceptSchemeMultiSelectCheckboxesValue] ;
+    ext:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    ext:orderBy qb:order ;
+    form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
+    sh:group ext:mainPg.
+
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesWithOptionPredicatesFieldField .
+
 ##########################################################
 # Radio buttons
 ##########################################################

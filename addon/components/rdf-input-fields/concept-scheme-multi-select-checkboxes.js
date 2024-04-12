@@ -7,8 +7,7 @@ import {
   SKOS,
   triplesForPath,
 } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
-import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { EXT } from './input-field';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -46,20 +45,22 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     setTimeout(() => update(option), 1);
   }
 
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+      orderBy: EXT('orderBy'),
+    };
+  }
+
   loadOptions() {
     const path = this.args.field.rdflibPath;
-    const fieldOptions = this.args.field.options;
-    let orderBy = null;
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+    const orderBy = this.findFieldOption('orderBy', 'node');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+    if (!conceptScheme) {
       return;
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
-    }
-
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.graphs.metaGraph)
       .map((t) => {
