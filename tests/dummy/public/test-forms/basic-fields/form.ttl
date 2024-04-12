@@ -249,6 +249,17 @@ ext:conceptSchemeSelectorField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
 
+ext:conceptSchemeSelectorWithOptionPredicatesField a form:Field ;
+    sh:name "Select with form:options as separate predicates" ;
+    sh:order 270 ;
+    sh:path ext:conceptSchemeSelectorValue ;
+    ext:conceptScheme "http://example-concept-schemes/concept-schemes/foo-bar-baz" ;
+    ext:searchEnabled false ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:conceptSchemeSelectorWithOptionPredicatesField .
+
 ##########################################################
 # Multi selector
 ##########################################################
