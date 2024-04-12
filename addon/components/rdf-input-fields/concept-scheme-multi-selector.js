@@ -8,8 +8,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { namedNode } from 'rdflib';
-import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { EXT } from './input-field';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -34,21 +33,26 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     this.loadProvidedValue();
   }
 
+  getOptionPredicates() {
+    return {
+      conceptScheme: EXT('conceptScheme'),
+      searchEnabled: EXT('searchEnabled'),
+    };
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
-    const fieldOptions = this.args.field.options;
+    const conceptScheme = this.findFieldOption('conceptScheme', 'node');
+    const isSearchEnabled = this.findFieldOption('searchEnabled', 'boolean');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+    if (!conceptScheme) {
       return;
     }
-
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
-
     /**
      * NOTE: Most forms are now implemented to have a default "true" behavior
      */
-    if (fieldOptions.searchEnabled !== undefined) {
-      this.searchEnabled = fieldOptions.searchEnabled;
+    if (isSearchEnabled !== undefined || isSearchEnabled !== null) {
+      this.searchEnabled = isSearchEnabled;
     }
 
     this.options = this.args.formStore

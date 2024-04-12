@@ -286,6 +286,17 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
 
+ext:conceptSchemeMultiSelectorWithOptionPredicatesField a form:Field ;
+    sh:name "Multiselect with form:options as separate predicates" ;
+    sh:order 280 ;
+    sh:path ext:conceptSchemeMultiSelectorValue ;
+    ext:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    ext:searchEnabled false ; # This is not even working with the json options for this component
+    form:displayType displayTypes:conceptSchemeMultiSelector ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectorWithOptionPredicatesField .
+
 
 ##########################################################
 # Urls
