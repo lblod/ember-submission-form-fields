@@ -7,8 +7,12 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
+import { Namespace, namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+
+const FORM_OPTION = new Namespace(
+  'http://mu.semte.ch/vocabularies/ext/form-option'
+);
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -33,12 +37,23 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+    let conceptScheme = null;
 
     if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
-    }
+      const scheme = this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('conceptScheme'),
+        undefined,
+        this.args.graphs.formGraph
+      );
+      if (!scheme) {
+        return;
+      }
 
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = scheme;
+    } else {
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    }
 
     /**
      * NOTE: Most forms are now implemented to have a default "true" behavior
@@ -50,6 +65,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
       .map((t) => {
+        console.log({ t });
         const label = this.args.formStore.any(
           t.subject,
           SKOS('prefLabel'),
