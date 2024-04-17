@@ -11,8 +11,8 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 @prefix eurio: <http://data.europa.eu/s66#> .
-
-
+@prefix formOption: <http://mu.semte.ch/vocabularies/ext/form-option> .
+@prefix exampleConceptSchemes: <http://example-concept-schemes/concept-schemes/> .
 
 ##########################################################
 # form
@@ -248,6 +248,17 @@ ext:conceptSchemeSelectorField a form:Field ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
+
+ext:conceptSchemeSelectorWithFormOptionPredicatesField a form:Field ;
+    sh:name "Select with form options" ;
+    sh:order 270 ;
+    sh:path ext:conceptSchemeSelectorValue ;
+    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    formOption:searchEnabled true ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:conceptSchemeSelectorWithFormOptionPredicatesField .
 
 ##########################################################
 # Multi selector
