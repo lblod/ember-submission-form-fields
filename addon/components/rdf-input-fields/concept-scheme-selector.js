@@ -77,7 +77,6 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
       .map((t) => {
-        console.log({ t });
         const label = this.args.formStore.any(
           t.subject,
           SKOS('prefLabel'),
