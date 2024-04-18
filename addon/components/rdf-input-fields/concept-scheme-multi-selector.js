@@ -10,6 +10,7 @@ import InputFieldComponent from '@lblod/ember-submission-form-fields/components/
 import { restartableTask, timeout } from 'ember-concurrency';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { FORM_OPTION } from '../../utils/namespaces';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -34,21 +35,40 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     this.loadProvidedValue();
   }
 
+  // Duplicate method in conceptscheme selector
+  // Difference in this.store
+  findFieldOptionByPredicate(predicate) {
+    return this.args.formStore.any(
+      this.args.field.uri,
+      FORM_OPTION(predicate),
+      undefined,
+      this.args.graphs.formGraph
+    );
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
+    let isSearchEnabled = this.findFieldOptionByPredicate('searchEnabled');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        return;
+      }
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
-
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
 
     /**
      * NOTE: Most forms are now implemented to have a default "true" behavior
      */
-    if (fieldOptions.searchEnabled !== undefined) {
+    if (!isSearchEnabled) {
+      if (!hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
+        return;
+      }
       this.searchEnabled = fieldOptions.searchEnabled;
+    } else {
+      this.searchEnabled = isSearchEnabled == '1' ? true : false;
     }
 
     this.options = this.args.formStore
