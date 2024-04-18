@@ -38,18 +38,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    let conceptScheme = this.args.formStore.any(
-      this.args.field.uri,
-      FORM_OPTION('conceptScheme'),
-      undefined,
-      this.args.graphs.formGraph
-    );
-    let isSearchEnabled = this.args.formStore.any(
-      this.args.field.uri,
-      FORM_OPTION('searchEnabled'),
-      undefined,
-      this.args.graphs.formGraph
-    );
+    let { conceptScheme, isSearchEnabled } = this.getFieldOptionsByPredicates();
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
@@ -125,4 +114,21 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
       value.label.toLowerCase().includes(term.toLowerCase())
     );
   });
+
+  getFieldOptionsByPredicates() {
+    return {
+      conceptScheme: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('conceptScheme'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+      isSearchEnabled: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('searchEnabled'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+    };
+  }
 }

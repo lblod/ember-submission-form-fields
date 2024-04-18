@@ -50,18 +50,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
   loadOptions() {
     const path = this.args.field.rdflibPath;
     const fieldOptions = this.args.field.options;
-    let conceptScheme = this.store.any(
-      this.args.field.uri,
-      FORM_OPTION('conceptScheme'),
-      undefined,
-      this.args.graphs.formGraph
-    );
-    let orderBy = this.store.any(
-      this.args.field.uri,
-      FORM_OPTION('orderBy'),
-      undefined,
-      this.args.graphs.formGraph
-    );
+    let { conceptScheme, orderBy } = this.getFieldOptionsByPredicates();
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
@@ -116,6 +105,23 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
 
     // must be string because above we are using string.localCompare
     return `${orderStatement?.value ?? ''}`;
+  }
+
+  getFieldOptionsByPredicates() {
+    return {
+      conceptScheme: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('conceptScheme'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+      orderBy: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('orderBy'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+    };
   }
 
   get store() {
