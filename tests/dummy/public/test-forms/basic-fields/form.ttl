@@ -13,6 +13,7 @@
 @prefix eurio: <http://data.europa.eu/s66#> .
 @prefix formOption: <http://mu.semte.ch/vocabularies/ext/form-option> .
 @prefix exampleConceptSchemes: <http://example-concept-schemes/concept-schemes/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
 
 ##########################################################
 # form
@@ -119,9 +120,6 @@ ext:radioButtonsField a form:Field ;
 
 ext:mainFg form:hasField ext:radioButtonsField .
 
-##########################################################
-# Radio buttons with orderby
-##########################################################
 ext:radioButtonsWithOrderByField a form:Field ;
     sh:name "Radio buttons with orderBy" ;
     sh:order 211 ;
@@ -131,6 +129,17 @@ ext:radioButtonsWithOrderByField a form:Field ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:radioButtonsWithOrderByField .
+
+ext:radioButtonsWithFormOptionPredicatesField a form:Field ;
+    sh:name "Radio buttons with form options" ;
+    sh:order 212 ;
+    sh:path ext:radioButtonsValue ;
+    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    formOption:orderBy qb:order ;
+    form:displayType displayTypes:conceptSchemeRadioButtons ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:radioButtonsWithFormOptionPredicatesField .
 
 ##########################################################
 # Input
