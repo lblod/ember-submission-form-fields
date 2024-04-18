@@ -282,6 +282,17 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
 
+ext:conceptSchemeMultiSelectorWithFormOptionPredicatesField a form:Field ;
+    sh:name "Multiselect with form options" ;
+    sh:order 281 ;
+    sh:path ext:conceptSchemeMultiSelectorValue ;
+    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    formOption:searchEnabled false ;
+    form:displayType displayTypes:conceptSchemeMultiSelector ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectorWithFormOptionPredicatesField .
+
 
 ##########################################################
 # Urls
