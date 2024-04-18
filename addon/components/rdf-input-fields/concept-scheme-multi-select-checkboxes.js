@@ -9,6 +9,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { FORM_OPTION } from '../../utils/namespaces';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -46,20 +47,36 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     setTimeout(() => update(option), 1);
   }
 
+  // Duplicate method in conceptscheme selector
+  // Difference in this.store
+  findFieldOptionByPredicate(predicate) {
+    return this.store.any(
+      this.args.field.uri,
+      FORM_OPTION(predicate),
+      undefined,
+      this.args.graphs.formGraph
+    );
+  }
+
   loadOptions() {
     const path = this.args.field.rdflibPath;
     const fieldOptions = this.args.field.options;
-    let orderBy = null;
+    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
+    let orderBy = this.findFieldOptionByPredicate('orderBy');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        return;
+      }
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
+    if (!orderBy) {
+      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+        orderBy = new namedNode(fieldOptions.orderBy);
+      }
     }
 
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.graphs.metaGraph)
       .map((t) => {
