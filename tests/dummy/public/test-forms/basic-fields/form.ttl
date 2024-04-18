@@ -107,8 +107,8 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesField .
 
-ext:conceptSchemeMultiSelectCheckboxesWithFormOptionPredicatesField a form:Field ;
-    sh:name "Concept scheme multi select checkbox with form options" ;
+ext:conceptSchemeMultiSelectCheckboxesOptionsField a form:Field ;
+    sh:name "Concept scheme multi select checkbox with predicate field options" ;
     sh:order 193 ;
     sh:path ext:conceptSchemeMultiSelectCheckboxesValue ;
     form:validatedBy
@@ -121,7 +121,7 @@ ext:conceptSchemeMultiSelectCheckboxesWithFormOptionPredicatesField a form:Field
     form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
     sh:group ext:mainPg.
 
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesWithFormOptionPredicatesField .
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesOptionsField .
 
 ##########################################################
 # Radio buttons
@@ -146,8 +146,8 @@ ext:radioButtonsWithOrderByField a form:Field ;
 
 ext:mainFg form:hasField ext:radioButtonsWithOrderByField .
 
-ext:radioButtonsWithFormOptionPredicatesField a form:Field ;
-    sh:name "Radio buttons with form options" ;
+ext:radioButtonsOptionsField a form:Field ;
+    sh:name "Radio buttons with predicate field options" ;
     sh:order 212 ;
     sh:path ext:radioButtonsValue ;
     formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
@@ -155,7 +155,7 @@ ext:radioButtonsWithFormOptionPredicatesField a form:Field ;
     form:displayType displayTypes:conceptSchemeRadioButtons ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:radioButtonsWithFormOptionPredicatesField .
+ext:mainFg form:hasField ext:radioButtonsOptionsField .
 
 ##########################################################
 # Input
@@ -274,16 +274,16 @@ ext:conceptSchemeSelectorField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
 
-ext:conceptSchemeSelectorWithFormOptionPredicatesField a form:Field ;
-    sh:name "Select with form options" ;
-    sh:order 270 ;
+ext:conceptSchemeSelectorOptionsField a form:Field ;
+    sh:name "Select with predicate field options" ;
+    sh:order 271 ;
     sh:path ext:conceptSchemeSelectorValue ;
     formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     formOption:searchEnabled true ;
     form:displayType displayTypes:conceptSchemeSelector ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:conceptSchemeSelectorWithFormOptionPredicatesField .
+ext:mainFg form:hasField ext:conceptSchemeSelectorOptionsField .
 
 ##########################################################
 # Multi selector
@@ -298,8 +298,8 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
 
-ext:conceptSchemeMultiSelectorWithFormOptionPredicatesField a form:Field ;
-    sh:name "Multiselect with form options" ;
+ext:conceptSchemeMultiSelectorOptionsField a form:Field ;
+    sh:name "Multiselect with predicate field options" ;
     sh:order 281 ;
     sh:path ext:conceptSchemeMultiSelectorValue ;
     formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
@@ -307,7 +307,7 @@ ext:conceptSchemeMultiSelectorWithFormOptionPredicatesField a form:Field ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectorWithFormOptionPredicatesField .
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectorOptionsField .
 
 
 ##########################################################
