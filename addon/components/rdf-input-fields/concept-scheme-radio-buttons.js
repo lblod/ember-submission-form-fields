@@ -4,6 +4,7 @@ import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/compo
 import { SKOS } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { FORM_OPTION } from '../../utils/namespaces';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
@@ -13,19 +14,35 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     this.loadOptions();
   }
 
+  // Duplicate method in conceptscheme selector
+  // Difference in this.store
+  findFieldOptionByPredicate(predicate) {
+    return this.store.any(
+      this.args.field.uri,
+      FORM_OPTION(predicate),
+      undefined,
+      this.args.graphs.formGraph
+    );
+  }
+
   loadOptions() {
     const fieldOptions = this.args.field.options;
-    let orderBy = null;
+    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
+    let orderBy = this.findFieldOptionByPredicate('orderBy');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        return;
+      }
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
+    if (!orderBy) {
+      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+        orderBy = new namedNode(fieldOptions.orderBy);
+      }
     }
 
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
