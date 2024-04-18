@@ -7,12 +7,9 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { Namespace, namedNode } from 'rdflib';
+import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
-
-const FORM_OPTION = new Namespace(
-  'http://mu.semte.ch/vocabularies/ext/form-option'
-);
+import { FORM_OPTION } from '../../utils/namespaces';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
