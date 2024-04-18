@@ -47,32 +47,25 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
     let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
+    let isSearchEnabled = this.findFieldOptionByPredicate('searchEnabled');
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
         return;
       }
-
       conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
     /**
      * NOTE: Most forms are now implemented to have a default "true" behavior
      */
-    if (!hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
-      const isEnabled = this.args.formStore.any(
-        this.args.field.uri,
-        FORM_OPTION('searchEnabled'),
-        undefined,
-        this.args.graphs.formGraph
-      );
-      if (!isEnabled) {
+    if (!isSearchEnabled) {
+      if (!hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
         return;
       }
-
-      this.searchEnabled = isEnabled == '1' ? true : false;
-    } else {
       this.searchEnabled = fieldOptions.searchEnabled;
+    } else {
+      this.searchEnabled = isSearchEnabled == '1' ? true : false;
     }
 
     this.options = this.args.formStore
