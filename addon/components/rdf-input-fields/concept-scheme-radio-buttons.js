@@ -14,21 +14,20 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     this.loadOptions();
   }
 
-  // Duplicate method in conceptscheme selector
-  // Difference in this.store
-  findFieldOptionByPredicate(predicate) {
-    return this.store.any(
+  loadOptions() {
+    const fieldOptions = this.args.field.options;
+    let conceptScheme = this.store.any(
       this.args.field.uri,
-      FORM_OPTION(predicate),
+      FORM_OPTION('conceptScheme'),
       undefined,
       this.args.graphs.formGraph
     );
-  }
-
-  loadOptions() {
-    const fieldOptions = this.args.field.options;
-    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
-    let orderBy = this.findFieldOptionByPredicate('orderBy');
+    let orderBy = this.store.any(
+      this.args.field.uri,
+      FORM_OPTION('orderBy'),
+      undefined,
+      this.args.graphs.formGraph
+    );
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
