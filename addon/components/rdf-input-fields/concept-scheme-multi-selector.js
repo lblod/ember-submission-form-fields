@@ -8,7 +8,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { namedNode } from 'rdflib';
+import { Literal, namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FORM_OPTION } from '../../utils/namespaces';
 
@@ -56,7 +56,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
       }
       this.searchEnabled = fieldOptions.searchEnabled;
     } else {
-      this.searchEnabled = isSearchEnabled == '1' ? true : false;
+      this.searchEnabled = Literal.toJS(isSearchEnabled);
     }
 
     this.options = this.args.formStore
