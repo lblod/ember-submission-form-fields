@@ -34,24 +34,25 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     this.loadProvidedValue();
   }
 
+  findFieldOptionByPredicate(predicate) {
+    return this.args.formStore.any(
+      this.args.field.uri,
+      FORM_OPTION(predicate),
+      undefined,
+      this.args.graphs.formGraph
+    );
+  }
+
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    let conceptScheme = null;
+    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      const scheme = this.args.formStore.any(
-        this.args.field.uri,
-        FORM_OPTION('conceptScheme'),
-        undefined,
-        this.args.graphs.formGraph
-      );
-      if (!scheme) {
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
         return;
       }
 
-      conceptScheme = scheme;
-    } else {
       conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
