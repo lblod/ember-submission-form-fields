@@ -35,22 +35,21 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     this.loadProvidedValue();
   }
 
-  // Duplicate method in conceptscheme selector
-  // Difference in this.store
-  findFieldOptionByPredicate(predicate) {
-    return this.args.formStore.any(
-      this.args.field.uri,
-      FORM_OPTION(predicate),
-      undefined,
-      this.args.graphs.formGraph
-    );
-  }
-
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
-    let isSearchEnabled = this.findFieldOptionByPredicate('searchEnabled');
+    let conceptScheme = this.args.formStore.any(
+      this.args.field.uri,
+      FORM_OPTION('conceptScheme'),
+      undefined,
+      this.args.graphs.formGraph
+    );
+    let isSearchEnabled = this.args.formStore.any(
+      this.args.field.uri,
+      FORM_OPTION('searchEnabled'),
+      undefined,
+      this.args.graphs.formGraph
+    );
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {

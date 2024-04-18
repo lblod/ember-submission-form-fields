@@ -47,22 +47,21 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     setTimeout(() => update(option), 1);
   }
 
-  // Duplicate method in conceptscheme selector
-  // Difference in this.store
-  findFieldOptionByPredicate(predicate) {
-    return this.store.any(
-      this.args.field.uri,
-      FORM_OPTION(predicate),
-      undefined,
-      this.args.graphs.formGraph
-    );
-  }
-
   loadOptions() {
     const path = this.args.field.rdflibPath;
     const fieldOptions = this.args.field.options;
-    let conceptScheme = this.findFieldOptionByPredicate('conceptScheme');
-    let orderBy = this.findFieldOptionByPredicate('orderBy');
+    let conceptScheme = this.store.any(
+      this.args.field.uri,
+      FORM_OPTION('conceptScheme'),
+      undefined,
+      this.args.graphs.formGraph
+    );
+    let orderBy = this.store.any(
+      this.args.field.uri,
+      FORM_OPTION('orderBy'),
+      undefined,
+      this.args.graphs.formGraph
+    );
 
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
