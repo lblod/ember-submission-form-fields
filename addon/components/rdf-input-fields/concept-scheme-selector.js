@@ -7,7 +7,7 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
+import { Literal, namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FORM_OPTION } from '../../utils/namespaces';
 
@@ -52,7 +52,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
       }
       this.searchEnabled = fieldOptions.searchEnabled;
     } else {
-      this.searchEnabled = isSearchEnabled == '1' ? true : false;
+      this.searchEnabled = Literal.toJS(isSearchEnabled);
     }
 
     this.options = this.args.formStore
