@@ -4,6 +4,7 @@ import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/compo
 import { SKOS } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { FORM_OPTION } from '../../utils/namespaces';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
@@ -15,17 +16,21 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
 
   loadOptions() {
     const fieldOptions = this.args.field.options;
-    let orderBy = null;
+    let { conceptScheme, orderBy } = this.getFieldOptionsByPredicates();
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        return;
+      }
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
+    if (!orderBy) {
+      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+        orderBy = new namedNode(fieldOptions.orderBy);
+      }
     }
 
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
@@ -65,6 +70,23 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
 
     // This MUST be a string so our byOrder sorting function returns the correct result
     return `${orderStatement?.value ?? ''}`;
+  }
+
+  getFieldOptionsByPredicates() {
+    return {
+      conceptScheme: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('conceptScheme'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+      orderBy: this.args.formStore.any(
+        this.args.field.uri,
+        FORM_OPTION('orderBy'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+    };
   }
 
   get metaGraph() {
