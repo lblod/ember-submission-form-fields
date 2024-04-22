@@ -101,27 +101,12 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
         form:grouping form:Bag ;
         sh:resultMessage "Dit veld is verplicht."@nl;
         sh:path ext:conceptSchemeMultiSelectCheckboxesValue] ;
-    form:options  """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
-    form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
-    sh:group ext:mainPg.
-
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesField .
-
-ext:conceptSchemeMultiSelectCheckboxesOptionsField a form:Field ;
-    sh:name "Concept scheme multi select checkbox with predicate field options" ;
-    sh:order 193 ;
-    sh:path ext:conceptSchemeMultiSelectCheckboxesValue ;
-    form:validatedBy
-      [ a form:RequiredConstraint ;
-        form:grouping form:Bag ;
-        sh:resultMessage "Dit veld is verplicht."@nl;
-        sh:path ext:conceptSchemeMultiSelectCheckboxesValue] ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
     sh:group ext:mainPg.
 
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesOptionsField .
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesField .
 
 ##########################################################
 # Radio buttons
@@ -130,22 +115,12 @@ ext:radioButtonsField a form:Field ;
     sh:name "Radio buttons" ;
     sh:order 210 ;
     sh:path ext:radioButtonsValue ;
-    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz", "orderBy": "http://purl.org/linked-data/cube#order"}""" ;
-    form:displayType displayTypes:conceptSchemeRadioButtons ;
-    sh:group ext:mainPg .
-
-ext:mainFg form:hasField ext:radioButtonsField .
-
-ext:radioButtonsOptionsField a form:Field ;
-    sh:name "Radio buttons with predicate field options" ;
-    sh:order 212 ;
-    sh:path ext:radioButtonsValue ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeRadioButtons ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:radioButtonsOptionsField .
+ext:mainFg form:hasField ext:radioButtonsField .
 
 ##########################################################
 # Input
@@ -258,22 +233,12 @@ ext:conceptSchemeSelectorField a form:Field ;
     sh:name "Select" ;
     sh:order 270 ;
     sh:path ext:conceptSchemeSelectorValue ;
-    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeSelector ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
-
-ext:conceptSchemeSelectorOptionsField a form:Field ;
-    sh:name "Select with predicate field options" ;
-    sh:order 271 ;
-    sh:path ext:conceptSchemeSelectorValue ;
-    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
-    fieldOption:searchEnabled true ;
-    form:displayType displayTypes:conceptSchemeSelector ;
-    sh:group ext:mainPg .
-
-ext:mainFg form:hasField ext:conceptSchemeSelectorOptionsField .
 
 ##########################################################
 # Multi selector
@@ -282,23 +247,12 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
     sh:name "Multiselect" ;
     sh:order 280 ;
     sh:path ext:conceptSchemeMultiSelectorValue ;
-    form:options """{"conceptScheme":"http://example-concept-schemes/concept-schemes/foo-bar-baz","searchEnabled":false}""" ;
-    form:displayType displayTypes:conceptSchemeMultiSelector ;
-    sh:group ext:mainPg .
-
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
-
-ext:conceptSchemeMultiSelectorOptionsField a form:Field ;
-    sh:name "Multiselect with predicate field options" ;
-    sh:order 281 ;
-    sh:path ext:conceptSchemeMultiSelectorValue ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     sh:group ext:mainPg .
 
-ext:mainFg form:hasField ext:conceptSchemeMultiSelectorOptionsField .
-
+ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
 
 ##########################################################
 # Urls
