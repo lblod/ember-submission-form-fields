@@ -21,14 +21,12 @@ const REQUEST_HEADER = new namedNode(
 const RPIO_HTTP = new Namespace(
   'http://redpencil.data.gift/vocabularies/http/'
 );
-const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
 
 class RemoteUrl {
   @tracked errors = [];
   @tracked address;
 
-  constructor({ uuid, uri, address, errors }) {
-    this.uuid = uuid;
+  constructor({ uri, address, errors }) {
     this.uri = uri;
     this.address = address;
     this.errors = errors;
@@ -150,7 +148,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     removeSimpleFormValue(new NamedNode(uri), this.storeOptions); // remove hasPart
   }
 
-  insertRemoteDataObject({ uuid, uri, address }) {
+  insertRemoteDataObject({ uri, address }) {
     const triples = [
       {
         subject: uri,
@@ -158,12 +156,6 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
         object: new NamedNode(
           'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
         ),
-        graph: this.storeOptions.sourceGraph,
-      },
-      {
-        subject: uri,
-        predicate: MU('uuid'),
-        object: uuid,
         graph: this.storeOptions.sourceGraph,
       },
       {
@@ -186,10 +178,8 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   @action
   addUrlField() {
-    const uuid = uuidv4();
     const remoteUrl = new RemoteUrl({
-      uuid,
-      uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
+      uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuidv4()}`),
       address: '',
       errors: [],
     });
@@ -203,11 +193,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     remoteUrl.address = event.target.value.trim();
     const address = remoteUrl.address;
     this.removeRemoteDataObject(remoteUrl.uri);
-    this.insertRemoteDataObject({
-      uuid: remoteUrl.uuid,
-      uri: remoteUrl.uri,
-      address,
-    });
+    this.insertRemoteDataObject({ uri: remoteUrl.uri, address });
     this.hasBeenFocused = true;
     const errors = this.validationErrorsForAddress(address).map(
       (e) => e.resultMessage
