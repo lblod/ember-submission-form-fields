@@ -11,7 +11,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
 @prefix eurio: <http://data.europa.eu/s66#> .
-@prefix formOption: <http://mu.semte.ch/vocabularies/ext/form-option> .
+@prefix fieldOption: <http://lblod.data.gift/vocabularies/field-options/> .
 @prefix exampleConceptSchemes: <http://example-concept-schemes/concept-schemes/> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 
@@ -116,8 +116,8 @@ ext:conceptSchemeMultiSelectCheckboxesOptionsField a form:Field ;
         form:grouping form:Bag ;
         sh:resultMessage "Dit veld is verplicht."@nl;
         sh:path ext:conceptSchemeMultiSelectCheckboxesValue] ;
-    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
-    formOption:orderBy qb:order ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
     sh:group ext:mainPg.
 
@@ -140,8 +140,8 @@ ext:radioButtonsOptionsField a form:Field ;
     sh:name "Radio buttons with predicate field options" ;
     sh:order 212 ;
     sh:path ext:radioButtonsValue ;
-    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
-    formOption:orderBy qb:order ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeRadioButtons ;
     sh:group ext:mainPg .
 
@@ -268,8 +268,8 @@ ext:conceptSchemeSelectorOptionsField a form:Field ;
     sh:name "Select with predicate field options" ;
     sh:order 271 ;
     sh:path ext:conceptSchemeSelectorValue ;
-    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
-    formOption:searchEnabled true ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:searchEnabled true ;
     form:displayType displayTypes:conceptSchemeSelector ;
     sh:group ext:mainPg .
 
@@ -292,8 +292,8 @@ ext:conceptSchemeMultiSelectorOptionsField a form:Field ;
     sh:name "Multiselect with predicate field options" ;
     sh:order 281 ;
     sh:path ext:conceptSchemeMultiSelectorValue ;
-    formOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
-    formOption:searchEnabled false ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     sh:group ext:mainPg .
 
