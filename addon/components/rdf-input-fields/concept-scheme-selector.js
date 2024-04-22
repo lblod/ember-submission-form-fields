@@ -9,7 +9,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import { Literal, namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
-import { FORM_OPTION } from '../../utils/namespaces';
+import { FIELD_OPTION } from '../../utils/namespaces';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -108,13 +108,13 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     return {
       conceptScheme: this.args.formStore.any(
         this.args.field.uri,
-        FORM_OPTION('conceptScheme'),
+        FIELD_OPTION('conceptScheme'),
         undefined,
         this.args.graphs.formGraph
       ),
       isSearchEnabled: this.args.formStore.any(
         this.args.field.uri,
-        FORM_OPTION('searchEnabled'),
+        FIELD_OPTION('searchEnabled'),
         undefined,
         this.args.graphs.formGraph
       ),

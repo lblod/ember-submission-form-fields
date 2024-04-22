@@ -9,7 +9,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
-import { FORM_OPTION } from '../../utils/namespaces';
+import { FIELD_OPTION } from '../../utils/namespaces';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -111,13 +111,13 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
     return {
       conceptScheme: this.args.formStore.any(
         this.args.field.uri,
-        FORM_OPTION('conceptScheme'),
+        FIELD_OPTION('conceptScheme'),
         undefined,
         this.args.graphs.formGraph
       ),
       orderBy: this.args.formStore.any(
         this.args.field.uri,
-        FORM_OPTION('orderBy'),
+        FIELD_OPTION('orderBy'),
         undefined,
         this.args.graphs.formGraph
       ),
