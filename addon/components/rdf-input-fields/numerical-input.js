@@ -10,7 +10,7 @@ import { FORM_OPTION } from '@lblod/ember-submission-form-fields/utils/namespace
 export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFieldComponent {
   inputId = 'input-' + guidFor(this);
 
-  @tracked allowClear = false;
+  @tracked allowClear;
 
   constructor() {
     super(...arguments);
@@ -27,7 +27,7 @@ export default class RdfInputFieldsNumericalInputComponent extends SimpleInputFi
     );
     if (!allowClear) {
       if (!hasValidFieldOptions(this.args.field, ['allowClear'])) {
-        return;
+        this.allowClear = false;
       }
       this.allowClear = this.args.field.options.allowClear;
     } else {
