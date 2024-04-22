@@ -129,7 +129,6 @@ ext:inputField a form:Field ;
     sh:name "Simple input" ;
     sh:order 220 ;
     sh:path ext:inputValue ;
-    form:options """{}""" ;
     form:displayType displayTypes:defaultInput ;
     sh:group ext:mainPg .
 
@@ -142,7 +141,6 @@ ext:currencyInputField a form:Field ;
     sh:name "Currency input" ;
     sh:order 221 ;
     sh:path (ext:currencyInputValue eurio:value) ;
-    form:options """{}""" ;
     form:displayType displayTypes:currencyInput ;
     sh:group ext:mainPg .
 
