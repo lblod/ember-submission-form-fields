@@ -1,5 +1,5 @@
 import { Namespace } from 'rdflib';
 
-export const FORM_OPTION = new Namespace(
-  'http://mu.semte.ch/vocabularies/ext/form-option'
+export const FIELD_OPTION = new Namespace(
+  'http://lblod.data.gift/vocabularies/field-options/'
 );
