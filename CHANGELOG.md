@@ -1,3 +1,11 @@
+## v2.22.0 (2024-04-23)
+
+#### :rocket: Enhancement
+* [#189](https://github.com/lblod/ember-submission-form-fields/pull/189) LMB-326: Support field options as separate predicates ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
+#### :bug: Bug Fix
+* [#190](https://github.com/lblod/ember-submission-form-fields/pull/190) Remove the data from the store when clearing the numerical-input field ([@bfidlers](https://github.com/bfidlers))
+
 ## v2.21.0 (2024-04-10)
 
 #### :rocket: Enhancement
