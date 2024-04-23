@@ -9,6 +9,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import { namedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
+import { FIELD_OPTION } from '../../utils/namespaces';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -49,17 +50,21 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
   loadOptions() {
     const path = this.args.field.rdflibPath;
     const fieldOptions = this.args.field.options;
-    let orderBy = null;
+    let { conceptScheme, orderBy } = this.getFieldOptionsByPredicates();
 
-    if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
-      return;
+    if (!conceptScheme) {
+      if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        return;
+      }
+      conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
-    if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-      orderBy = new namedNode(fieldOptions.orderBy);
+    if (!orderBy) {
+      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+        orderBy = new namedNode(fieldOptions.orderBy);
+      }
     }
 
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
     this.options = this.store
       .match(undefined, SKOS('inScheme'), conceptScheme, this.graphs.metaGraph)
       .map((t) => {
@@ -100,6 +105,23 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
 
     // must be string because above we are using string.localCompare
     return `${orderStatement?.value ?? ''}`;
+  }
+
+  getFieldOptionsByPredicates() {
+    return {
+      conceptScheme: this.args.formStore.any(
+        this.args.field.uri,
+        FIELD_OPTION('conceptScheme'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+      orderBy: this.args.formStore.any(
+        this.args.field.uri,
+        FIELD_OPTION('orderBy'),
+        undefined,
+        this.args.graphs.formGraph
+      ),
+    };
   }
 
   get store() {
