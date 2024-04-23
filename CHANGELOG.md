@@ -1,3 +1,11 @@
+## v2.21.0 (2024-04-10)
+
+#### :rocket: Enhancement
+* [#187](https://github.com/lblod/ember-submission-form-fields/pull/187) add mu:uuid when creating remote-url ([@aatauil](https://github.com/aatauil))
+
+#### :bug: Bug Fix
+* [#185](https://github.com/lblod/ember-submission-form-fields/pull/185) SFB-224: Required validation on currency input ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
 ## v2.20.1 (2024-04-04)
 
 #### :bug: Bug Fix
