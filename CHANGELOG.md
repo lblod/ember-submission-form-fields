@@ -1,3 +1,8 @@
+## v2.22.1 (2024-04-24)
+
+#### :bug: Bug Fix
+* [#191](https://github.com/lblod/ember-submission-form-fields/pull/191) LMB-326: update the uri to form-field-options ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
 ## v2.22.0 (2024-04-23)
 
 #### :rocket: Enhancement
