@@ -50,7 +50,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
     if (!isSearchEnabled) {
-      this.searchEnabled  = false;
+      this.searchEnabled = false;
       if (hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
         this.searchEnabled = fieldOptions.searchEnabled;
       }
