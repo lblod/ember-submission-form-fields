@@ -1,3 +1,8 @@
+## v2.22.2 (2024-07-16)
+
+#### :bug: Bug Fix
+* [#192](https://github.com/lblod/ember-submission-form-fields/pull/192) Ensure searchEnabled option may be left unspecified for concept-scheme-selector components ([@cecemel](https://github.com/cecemel))
+
 ## v2.22.1 (2024-04-24)
 
 #### :bug: Bug Fix
