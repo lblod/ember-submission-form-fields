@@ -39,10 +39,10 @@ fields:main-star-no-search-old a form:Field ;
 
 
 fields:main-star-search-old a form:Field ;
-    sh:name "Rating 2: Old version ConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:name "Rating 2: Old version ConceptSchemeSelector, `searchEnabled` specified to false. " ;
     sh:order 102 ;
     sh:path ext:rating_2 ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":true}""" ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeSelector ;
     form:partOf sections:singleCodelist .
 
@@ -55,11 +55,11 @@ fields:main-star-no-search-new a form:Field ;
     form:partOf sections:singleCodelist .
 
 fields:main-star-search-new a form:Field ;
-    sh:name "Rating 4: New version ConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:name "Rating 4: New version ConceptSchemeSelector, `searchEnabled` specified to false. " ;
     sh:order 104 ;
     sh:path ext:rating_4 ;
     <http://lblod.data.gift/vocabularies/form-field-options/conceptScheme> <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a>;
-    <http://lblod.data.gift/vocabularies/form-field-options/searchEnabled> "true"^^xsd:boolean;
+    <http://lblod.data.gift/vocabularies/form-field-options/searchEnabled> "false"^^xsd:boolean;
     form:displayType displayTypes:conceptSchemeSelector ;
     form:partOf sections:singleCodelist .
 
@@ -80,10 +80,10 @@ fields:multi-main-star-no-search-old a form:Field ;
 
 
 fields:multi-main-star-search-old a form:Field ;
-    sh:name "Rating 2: Old version MultiConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:name "Rating 2: Old version MultiConceptSchemeSelector, `searchEnabled` specified to false. " ;
     sh:order 102 ;
     sh:path ext:rating_multi_2 ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":true}""" ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     form:partOf sections:multiCodelist .
 
@@ -96,10 +96,10 @@ fields:multi-main-star-no-search-new a form:Field ;
     form:partOf sections:multiCodelist .
 
 fields:multi-main-star-search-new a form:Field ;
-    sh:name "Rating 4: New version MultiConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:name "Rating 4: New version MultiConceptSchemeSelector, `searchEnabled` specified to false. " ;
     sh:order 104 ;
     sh:path ext:rating_multi_4 ;
     <http://lblod.data.gift/vocabularies/form-field-options/conceptScheme> <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a>;
-    <http://lblod.data.gift/vocabularies/form-field-options/searchEnabled> "true"^^xsd:boolean;
+    <http://lblod.data.gift/vocabularies/form-field-options/searchEnabled> "false"^^xsd:boolean;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
     form:partOf sections:multiCodelist .
