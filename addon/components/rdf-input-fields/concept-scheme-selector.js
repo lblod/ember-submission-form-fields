@@ -47,10 +47,6 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
      * NOTE: Most forms are now implemented to have a default "true" behavior
      */
     if (!isSearchEnabled) {
-      if (!hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
-        return;
-      }
-      this.searchEnabled = fieldOptions.searchEnabled;
     } else {
       this.searchEnabled = Literal.toJS(isSearchEnabled);
     }
