@@ -1,0 +1,63 @@
+@prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+@prefix displayTypes: <http://lblod.data.gift/display-types/> .
+@prefix fields: <http://data.lblod.info/fields/> .
+@prefix sections: <http://data.lblod.info/fields/sections/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+##########################################################
+# form
+##########################################################
+
+form:main a form:Form, form:TopLevelForm ;
+    form:includes sections:main ;
+    form:includes fields:main-star-no-search-old;
+    form:includes fields:main-star-search-old;
+    form:includes fields:main-star-no-search-new;
+    form:includes fields:main-star-search-new.
+
+##########################################################
+#  property-group
+##########################################################
+sections:singleCodelist a form:Section;
+    sh:description "parent property-group, used to group fields and property-groups together";
+    sh:name "Single code list value" ;
+    sh:order 1 .
+
+##########################################################
+# Dropdown
+##########################################################
+fields:main-star-no-search-old a form:Field ;
+    sh:name "Rating 1: Old version ConceptSchemeSelector, `searchEnabled` not specified. " ;
+    sh:order 101 ;
+    sh:path ext:rating_1 ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a"}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:partOf sections:singleCodelist .
+
+
+fields:main-star-search-old a form:Field ;
+    sh:name "Rating 2: Old version ConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:order 102 ;
+    sh:path ext:rating_2 ;
+    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":true}""" ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:partOf sections:singleCodelist .
+
+fields:main-star-no-search-new a form:Field ;
+    sh:name "Rating 3: New version ConceptSchemeSelector, `searchEnabled` not specified. " ;
+    sh:order 103 ;
+    sh:path ext:rating_3 ;
+    <http://lblod.data.gift/vocabularies/form-field-options/conceptScheme> <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a>;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:partOf sections:singleCodelist .
+
+fields:main-star-search-new a form:Field ;
+    sh:name "Rating 4: New version ConceptSchemeSelector, `searchEnabled` specified to true. " ;
+    sh:order 104 ;
+    sh:path ext:rating_4 ;
+    <http://lblod.data.gift/vocabularies/form-field-options/conceptScheme> <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a>;
+    <http://lblod.data.gift/vocabularies/form-field-options/searchEnabled> "true"^^xsd:boolean;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:partOf sections:singleCodelist .
