@@ -38,23 +38,26 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
+
+    // Note: a mix of old spec and new spec is possible here.
+    // Maybe add validation to enforce useage of one of the two specifications.
     let { conceptScheme, isSearchEnabled } = this.getFieldOptionsByPredicates();
 
+    // New form-spec for conceptScheme didn't yield result; trying old form-spec
     if (!conceptScheme) {
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
+        // No conceptScheme found hence this component can't work.
         return;
       }
       conceptScheme = new namedNode(fieldOptions.conceptScheme);
     }
 
-    /**
-     * NOTE: Most forms are now implemented to have a default "true" behavior
-     */
+    // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
     if (!isSearchEnabled) {
-      if (!hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
-        return;
+      this.searchEnabled  = false;
+      if (hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
+        this.searchEnabled = fieldOptions.searchEnabled;
       }
-      this.searchEnabled = fieldOptions.searchEnabled;
     } else {
       this.searchEnabled = Literal.toJS(isSearchEnabled);
     }
