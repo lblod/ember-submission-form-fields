@@ -54,8 +54,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
     if (!isSearchEnabled) {
-      this.searchEnabled = false;
-      if (hasValidFieldOptions(this.args.field, ['searchEnabled'])) {
+      if (fieldOptions.searchEnabled !== undefined) {
         this.searchEnabled = fieldOptions.searchEnabled;
       }
     } else {
