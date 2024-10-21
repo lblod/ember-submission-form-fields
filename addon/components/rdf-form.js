@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import {
   generatorsForNode,
   triplesForGenerator,
+  triplesForLazyGenerator,
 } from '@lblod/submission-form-helpers';
 import { getRootNodeForm, getTopLevelSections } from '../utils/model-factory';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
@@ -38,7 +39,11 @@ export default class RdfForm extends Component {
     });
 
     if (generators.initGenerators.length) {
-      const dataset = triplesForGenerator(generators.initGenerators[0], {
+      let generatorFunction = triplesForGenerator;
+      if (this.args.lazyGenerators) {
+        generatorFunction = triplesForLazyGenerator;
+      }
+      const dataset = generatorFunction(generators.initGenerators[0], {
         store,
         sourceNode,
         formGraph: graphs.formGraph,
