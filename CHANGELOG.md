@@ -1,3 +1,9 @@
+## v2.23.0 (2024-10-22)
+
+#### :rocket: Enhancement
+* [#193](https://github.com/lblod/ember-submission-form-fields/pull/193) Experimental: optionally use lazy generators in forms ([@rahien](https://github.com/rahien))
+
+
 ## v2.22.2 (2024-07-16)
 
 #### :bug: Bug Fix
@@ -223,7 +229,7 @@
 ## v2.2.0 (2022-10-25)
 
 #### :rocket: Enhancement
-* [#102](https://github.com/lblod/ember-submission-form-fields/pull/102) Add a Heading component ([@FangioD](https://github.com/FangioD)) 
+* [#102](https://github.com/lblod/ember-submission-form-fields/pull/102) Add a Heading component ([@FangioD](https://github.com/FangioD))
 
 ## v2.1.1 (2022-10-17)
 
