@@ -25,6 +25,12 @@ export default class FieldModel {
       undefined,
       formGraph
     );
+    this.rdflibDisplayShow = store.any(
+      uri,
+      FORM('displayShow'),
+      undefined,
+      formGraph
+    );
     this.rdflibPath = store.any(uri, SHACL('path'), undefined, formGraph);
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);
@@ -75,6 +81,12 @@ export default class FieldModel {
   rdflibDisplayType = null;
   get displayType() {
     return this.rdflibDisplayType && this.rdflibDisplayType.value;
+  }
+
+  @tracked
+  rdflibDisplayShow = null;
+  get displayShow() {
+    return (this.rdflibDisplayShow && this.rdflibDisplayShow.value) === '1';
   }
 
   @tracked
