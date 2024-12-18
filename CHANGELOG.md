@@ -1,3 +1,9 @@
+## v2.23.1 (2024-12-18)
+
+#### :rocket: Enhancement
+
+* [#196](https://github.com/lblod/ember-submission-form-fields/pull/196) Allow HTML to be rendered in alert ([@benjay10](https://github.com/benjay10))
+
 ## v2.23.0 (2024-10-22)
 
 #### :rocket: Enhancement
