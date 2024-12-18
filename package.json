@@ -1,6 +1,6 @@
 {
   "name": "@lblod/ember-submission-form-fields",
-  "version": "2.23.0",
+  "version": "2.24.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
