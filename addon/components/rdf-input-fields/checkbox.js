@@ -9,7 +9,9 @@ export default class RdfInputFieldsCheckboxComponent extends SimpleInputFieldCom
     const matches = triplesForPath(this.storeOptions);
     if (matches.values.length > 0) {
       this.nodeValue = matches.values[0];
-      this.value = matches.values[0].value === '1'; // There is a bug in conversion from rdflib
+      // There is a bug in conversion from rdflib
+      this.value =
+        matches.values[0].value === '1' || matches.values[0].value === 'true';
     }
   }
 
