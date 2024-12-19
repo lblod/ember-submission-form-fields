@@ -159,6 +159,20 @@ ext:numericalInputField a form:Field ;
 ext:mainFg form:hasField ext:numericalInputField .
 
 ##########################################################
+# Disabled input
+##########################################################
+ext:disabledInputField a form:Field ;
+    sh:name "Disabled input" ;
+    sh:order 223 ;
+    sh:path ext:inputValue ;
+    form:displayType displayTypes:defaultInput ;
+    form:displayShow true ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:disabledInputField .
+
+
+##########################################################
 # Text area
 ##########################################################
 ext:textAreaField a form:Field ;
