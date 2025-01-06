@@ -42,7 +42,13 @@
             @skin="link"
             @icon="bin"
             @iconAlignment="left"
-            {{on "click" (fn this.removeRemoteUrl remoteUrl)}}
+            {{!template-lint-disable no-pointer-down-event-binding}}
+            {{!
+              We use the mousedown event because it is triggered before the `blur` event of the input element.
+              This is needed because the blur event displays validation messages if the input is empty which displace the button
+              and as a result, the click event wouldn't be triggered.
+            }}
+            {{on "mousedown" (fn this.removeRemoteUrl remoteUrl)}}
           >
             Verwijder&nbsp;link
           </AuButton>
