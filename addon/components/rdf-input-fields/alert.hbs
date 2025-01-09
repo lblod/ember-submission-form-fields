@@ -6,5 +6,6 @@
   @skin={{this.options.skin}}
   class="au-u-margin-bottom-none"
 >
-  {{@field.label}}
+  {{! template-lint-disable no-triple-curlies}}
+  {{{@field.label}}}
 </AuAlert>
