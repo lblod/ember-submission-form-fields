@@ -1,3 +1,17 @@
+## v2.24.1 (2025-01-06)
+
+#### :bug: Bug Fix
+* [#197](https://github.com/lblod/ember-submission-form-fields/pull/197) [DL-5449] Fix an issue with the "RemoteUrl" field ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#198](https://github.com/lblod/ember-submission-form-fields/pull/198) Fix the Embroider test scenarios ([@Windvis](https://github.com/Windvis))
+
+## v2.24.0 (2024-12-18)
+
+#### :rocket: Enhancement
+
+* [#196](https://github.com/lblod/ember-submission-form-fields/pull/196) Allow HTML to be rendered in alert ([@benjay10](https://github.com/benjay10))
+
 ## v2.23.0 (2024-10-22)
 
 #### :rocket: Enhancement
