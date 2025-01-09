@@ -1,6 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 
 import { SHACL, FORM } from '@lblod/submission-form-helpers';
+import { Literal } from 'rdflib';
 
 export default class FieldModel {
   @tracked
@@ -22,6 +23,12 @@ export default class FieldModel {
     this.rdflibDisplayType = store.any(
       uri,
       FORM('displayType'),
+      undefined,
+      formGraph
+    );
+    this.rdflibDisplayShow = store.any(
+      uri,
+      FORM('displayShow'),
       undefined,
       formGraph
     );
@@ -75,6 +82,14 @@ export default class FieldModel {
   rdflibDisplayType = null;
   get displayType() {
     return this.rdflibDisplayType && this.rdflibDisplayType.value;
+  }
+
+  @tracked
+  rdflibDisplayShow = null;
+  get displayShow() {
+    return this.rdflibDisplayShow
+      ? Literal.toJs(this.rdflibDisplayShow)
+      : false;
   }
 
   @tracked

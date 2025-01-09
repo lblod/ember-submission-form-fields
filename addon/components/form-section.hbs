@@ -59,7 +59,7 @@
         {{else}}
           <div class="au-u-margin-bottom-small">
             {{#let
-              (component-for-display-type field.displayType show=@show)
+              (component-for-display-type field.displayType show=(or @show field.displayShow))
               as |FormField|
             }}
               <FormField
@@ -70,7 +70,7 @@
                 @sourceNode={{@sourceNode}}
                 @forceShowErrors={{@forceShowErrors}}
                 @cacheConditionals={{@cacheConditionals}}
-                @show={{@show}}
+                @show={{or @show field.displayShow}}
               />
             {{/let}}
 
