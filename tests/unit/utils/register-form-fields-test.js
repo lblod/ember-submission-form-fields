@@ -27,13 +27,13 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(EditComponent, FieldComponent);
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(ShowComponent, FieldComponent);
   });
@@ -47,13 +47,13 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(EditComponent, FieldComponent);
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(EditComponent, FieldComponent);
   });
@@ -69,7 +69,7 @@ module('Unit | Utility | registerFormFields', function (hooks) {
 
     let ComponentOverride = setComponentTemplate(
       hbs`override`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
     registerFormFields([
       {
@@ -79,22 +79,22 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new edit component'
+      'it returns the new edit component',
     );
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(
       ShowComponent,
       FieldComponent,
-      'it returns the previous show component'
+      'it returns the previous show component',
     );
 
     registerFormFields([
@@ -106,22 +106,22 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new edit component'
+      'it returns the new edit component',
     );
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new show component'
+      'it returns the new show component',
     );
   });
 
@@ -154,7 +154,7 @@ module('Unit | Utility | registerFormFields', function (hooks) {
 
     let ComponentOverride = setComponentTemplate(
       hbs`override`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
 
     assert.throws(() => {

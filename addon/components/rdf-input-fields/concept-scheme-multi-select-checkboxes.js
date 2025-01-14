@@ -34,7 +34,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
        * NOTE: Retrieve option from store, if found we assume it was selected before and needs to be removed
        */
       const matches = triplesForPath(this.storeOptions, true).values.map(
-        (value) => value.value
+        (value) => value.value,
       );
       if (matches.includes(option.subject.value)) {
         removeDatasetForSimpleFormValue(option.subject, this.storeOptions);
@@ -73,13 +73,13 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
           subject,
           SKOS('prefLabel'),
           undefined,
-          this.graphs.metaGraph
+          this.graphs.metaGraph,
         ).value;
         const provided = !!this.store.any(
           this.storeOptions.sourceNode,
           path,
           subject,
-          this.graphs.sourceGraph
+          this.graphs.sourceGraph,
         );
 
         return {
@@ -91,7 +91,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
       });
 
     this.options.sort((a, b) =>
-      a.order.localeCompare(b.order, undefined, { numeric: true })
+      a.order.localeCompare(b.order, undefined, { numeric: true }),
     );
   }
 
@@ -100,7 +100,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
       tripleSubject,
       orderBy,
       undefined,
-      this.graphs.metaGraph
+      this.graphs.metaGraph,
     );
 
     // must be string because above we are using string.localCompare
@@ -113,13 +113,13 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       orderBy: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('orderBy'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

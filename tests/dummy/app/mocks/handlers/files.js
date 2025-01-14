@@ -66,7 +66,7 @@ export const filesHandlers = [
     }
 
     return HttpResponse.json(
-      generateFileJsonApiResponse(params.id, attributesFromFile(file))
+      generateFileJsonApiResponse(params.id, attributesFromFile(file)),
     );
   }),
   // Retrieve file records by uri

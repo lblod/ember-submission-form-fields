@@ -38,7 +38,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          this.metaGraph
+          this.metaGraph,
         );
         return {
           value: t.subject.value,
@@ -65,7 +65,7 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
       tripleSubject,
       orderBy,
       undefined,
-      this.metaGraph
+      this.metaGraph,
     );
 
     // This MUST be a string so our byOrder sorting function returns the correct result
@@ -78,13 +78,13 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       orderBy: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('orderBy'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

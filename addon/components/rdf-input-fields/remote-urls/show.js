@@ -66,14 +66,14 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
   isRemoteDataObject(subject) {
     const remoteDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
     );
     return (
       this.args.formStore.match(
         subject,
         RDF('type'),
         remoteDataObjectType,
-        this.args.sourceGraph
+        this.args.sourceGraph,
       ).length > 0
     );
   }
@@ -95,7 +95,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       return fetch(remoteUrl.downloadLink).then((response) => {
         if (!response.ok) {
           throw new Error(
-            `Something went wrong while trying to download '${remoteUrl.downloadLink}': ${response.status} ${response.statusText}`
+            `Something went wrong while trying to download '${remoteUrl.downloadLink}': ${response.status} ${response.statusText}`,
           );
         }
 
@@ -110,7 +110,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
     } catch (error) {
       console.error(error);
       this.toaster.error(
-        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.'
+        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.',
       );
     }
   });

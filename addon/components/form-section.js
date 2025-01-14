@@ -17,7 +17,7 @@ const childIsSection = helper(function ([child]) {
   return (
     child &&
     [SECTION_DISPLAY_TYPE, PROPERTY_GROUP_DISPLAY_TYPE].includes(
-      child.displayType
+      child.displayType,
     )
   );
 });
@@ -123,7 +123,7 @@ export default class SubmissionFormSectionComponent extends Component {
 
     // 2) calculate to be removed
     const deletes = this.children.filter(
-      (rendered) => !children.find((child) => child.uri.equals(rendered.uri))
+      (rendered) => !children.find((child) => child.uri.equals(rendered.uri)),
     );
 
     // 4) remove the "unwanted" children
@@ -137,7 +137,7 @@ export default class SubmissionFormSectionComponent extends Component {
 
     for (const child of children) {
       const existingField = this.children.find((eField) =>
-        eField.uri.equals(child.uri)
+        eField.uri.equals(child.uri),
       );
       if (existingField) {
         mergedChildren.pushObject(existingField);
@@ -151,7 +151,7 @@ export default class SubmissionFormSectionComponent extends Component {
     // 6) update the validation
     this.validations = validationResultsForField(
       section.uri,
-      this.storeOptions
+      this.storeOptions,
     );
 
     this.register(); // NOTE: to make sure we get notified on user input

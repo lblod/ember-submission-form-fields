@@ -20,11 +20,11 @@ module('Unit | Utility | display-type', function () {
 
     let EditComponent = setComponentTemplate(
       hbs`edit`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
     let ShowComponent = setComponentTemplate(
       hbs`show`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
 
     test('it returns a component for a given display type URI', function (assert) {
@@ -40,22 +40,21 @@ module('Unit | Utility | display-type', function () {
       assert.strictEqual(
         FieldComponent,
         EditComponent,
-        'it returns the edit component'
+        'it returns the edit component',
       );
 
       FieldComponent = getComponentForDisplayType(
         TEST_DISPLAY_TYPE,
         true,
-        'it returns the show component'
+        'it returns the show component',
       );
       assert.strictEqual(FieldComponent, ShowComponent);
     });
 
     test('it throws an error if a display type has no corresponding component', function (assert) {
-      assert.expect(1);
       assert.throws(() => {
         let FieldComponent = getComponentForDisplayType(
-          'http://lblod.data.gift/display-types/not-registered'
+          'http://lblod.data.gift/display-types/not-registered',
         );
 
         assert.notOk(FieldComponent, 'no component class was returned');

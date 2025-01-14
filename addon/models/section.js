@@ -24,7 +24,7 @@ export default class SectionModel {
       uri,
       SHACL('description'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibHelp = store.any(uri, FORM('help'), undefined, formGraph);
     this.rdflibOptions = store.any(uri, FORM('options'), undefined, formGraph);

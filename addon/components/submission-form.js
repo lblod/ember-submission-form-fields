@@ -19,7 +19,7 @@ export default class SubmissionFormComponent extends Component {
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
-        this.args.graphs.metaGraph
+        this.args.graphs.metaGraph,
       );
     }, this.observerLabel);
 
@@ -29,7 +29,7 @@ export default class SubmissionFormComponent extends Component {
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
-        this.args.graphs.metaGraph
+        this.args.graphs.metaGraph,
       );
     });
   }
@@ -73,7 +73,7 @@ export default class SubmissionFormComponent extends Component {
     //Add the new fields, keep the existing ones
     updatedFields.forEach((field, i) => {
       const existingField = this.fields.find((eField) =>
-        eField.uri.equals(field.uri)
+        eField.uri.equals(field.uri),
       );
       if (existingField) {
         this.fields.replace(i, 1, [existingField]);

@@ -60,7 +60,7 @@ export default class InputFieldComponent extends Component {
       this.constraints.some(
         (constraint) =>
           constraint.type.value ===
-          'http://lblod.data.gift/vocabularies/forms/RequiredConstraint'
+          'http://lblod.data.gift/vocabularies/forms/RequiredConstraint',
       )
     );
   }
@@ -69,12 +69,12 @@ export default class InputFieldComponent extends Component {
     const { store, formGraph } = this.storeOptions;
 
     const constraint = this.constraints.find(
-      (constraint) => constraint.type.value === MAX_LENGTH_URI
+      (constraint) => constraint.type.value === MAX_LENGTH_URI,
     );
     if (constraint) {
       return Number(
         store.any(constraint.constraintUri, FORM('max'), undefined, formGraph)
-          .value
+          .value,
       );
     }
     return constraint;
@@ -116,14 +116,14 @@ export default class InputFieldComponent extends Component {
 
   updateValidations() {
     this.errorValidations = invalidResults(
-      validationResultsForField(this.args.field.uri, this.storeOptions)
+      validationResultsForField(this.args.field.uri, this.storeOptions),
     );
 
     this.warningValidations = invalidResults(
       validationResultsForField(this.args.field.uri, {
         ...this.storeOptions,
         severity: SH_WARNING,
-      })
+      }),
     );
   }
 }

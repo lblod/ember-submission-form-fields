@@ -80,7 +80,7 @@ export default class ListingComponent extends Component {
         getOrder(
           lastSubForm.sourceNode,
           this.formStore,
-          this.graphs.sourceGraph
+          this.graphs.sourceGraph,
         ) || 0;
     }
 
@@ -183,12 +183,12 @@ export default class ListingComponent extends Component {
     const currentOrder = getOrder(
       subform.sourceNode,
       this.formStore,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
     const otherOrder = getOrder(
       otherSubform.sourceNode,
       this.formStore,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
 
     // TODO: Both removeStatements and addAll will trigger the observer system
@@ -300,7 +300,7 @@ export default class ListingComponent extends Component {
     // 2) calculate to be removed
     const deletes = currentSubForms.filter(
       (rendered) =>
-        !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
+        !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode)),
     );
 
     // 3) remove the "unwanted" children
@@ -316,7 +316,7 @@ export default class ListingComponent extends Component {
 
     for (const child of subForms) {
       const existingField = currentSubForms.find((eField) =>
-        eField.sourceNode.equals(child.sourceNode)
+        eField.sourceNode.equals(child.sourceNode),
       );
       if (existingField) {
         mergedChildren.push(existingField);
