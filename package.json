@@ -29,12 +29,13 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
+    "@babel/core": "7.26.0",
     "@embroider/macros": "^1.13.5",
     "@lblod/submission-form-helpers": "^2.10.2",
     "client-zip": "^2.4.4",
     "clipboardy": "^3.0.0",
     "ember-auto-import": "^2.7.2",
-    "ember-cli-babel": "^7.26.11",
+    "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-version-checker": "^5.1.2",
     "ember-concurrency": "^2.3.2 || ^3.0.0 || ^4.0.2",
