@@ -1,3 +1,8 @@
+## v2.24.2 (2025-01-14)
+
+#### :bug: Bug Fix
+* [#195](https://github.com/lblod/ember-submission-form-fields/pull/195) Fix "true" value handling in boolean components (checkbox/switch) ([@x-m-el](https://github.com/x-m-el))
+
 ## v2.24.1 (2025-01-06)
 
 #### :bug: Bug Fix
