@@ -8,6 +8,7 @@ import {
   SHACL,
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 import ListingList from '@lblod/ember-submission-form-fields/components/listing/list';
 import ListingTable from '@lblod/ember-submission-form-fields/components/listing/table';

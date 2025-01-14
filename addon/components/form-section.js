@@ -4,6 +4,7 @@ import { A } from '@ember/array';
 import { getChildrenForSection } from '../utils/model-factory';
 import { guidFor } from '@ember/object/internals';
 import { validationResultsForField } from '@lblod/submission-form-helpers';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
 import {

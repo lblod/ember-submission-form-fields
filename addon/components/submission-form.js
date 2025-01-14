@@ -4,6 +4,7 @@ import { fieldsForForm } from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 
 export default class SubmissionFormComponent extends Component {
