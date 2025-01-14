@@ -51,7 +51,7 @@ export default class RdfForm extends Component {
       });
 
       store.addAll(
-        this.rescopeGeneratedTriples(dataset, { sourceNode, graphs })
+        this.rescopeGeneratedTriples(dataset, { sourceNode, graphs }),
       );
     }
   }

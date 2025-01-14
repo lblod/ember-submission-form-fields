@@ -6,7 +6,7 @@ import { SHACL } from '@lblod/submission-form-helpers';
 import { Namespace } from 'rdflib';
 
 const DATE_RANGE = new Namespace(
-  'http://data.lblod.info/form-fields/date-range/'
+  'http://data.lblod.info/form-fields/date-range/',
 );
 
 export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldComponent {
@@ -35,13 +35,13 @@ export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldCo
         store.any(field.uri, DATE_RANGE('from'), undefined, formGraph),
         SHACL('path'),
         undefined,
-        formGraph
+        formGraph,
       ),
       to: store.any(
         store.any(field.uri, DATE_RANGE('to'), undefined, formGraph),
         SHACL('path'),
         undefined,
-        formGraph
+        formGraph,
       ),
     };
 
@@ -99,7 +99,7 @@ export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldCo
       this.storeOptions.sourceNode,
       predicate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     this.storeOptions.store.removeStatements(triples);
   }

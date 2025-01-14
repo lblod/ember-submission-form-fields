@@ -64,7 +64,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          metaGraph,
         );
         return { subject: t.subject, label: label && label.value };
       });
@@ -79,7 +79,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find((opt) =>
-        matches.find((m) => m.equals(opt.subject))
+        matches.find((m) => m.equals(opt.subject)),
       );
     }
   }
@@ -91,10 +91,10 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
     // Cleanup old value(s) in the store
     const matches = triplesForPath(this.storeOptions, true).values;
     const matchingOptions = matches.filter((m) =>
-      this.options.find((opt) => m.equals(opt.subject))
+      this.options.find((opt) => m.equals(opt.subject)),
     );
     matchingOptions.forEach((m) =>
-      updateSimpleFormValue(this.storeOptions, undefined, m)
+      updateSimpleFormValue(this.storeOptions, undefined, m),
     );
 
     // Insert new value in the store
@@ -112,13 +112,13 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       isSearchEnabled: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('searchEnabled'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

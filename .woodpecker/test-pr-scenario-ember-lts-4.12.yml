@@ -6,7 +6,7 @@ steps:
   test:
     image: danlynn/ember-cli:5.2.1-node_18.17
     commands:
-      - npx ember try:one embroider-safe
+      - npx ember try:one ember-lts-4.12
 when:
   event: pull_request
 

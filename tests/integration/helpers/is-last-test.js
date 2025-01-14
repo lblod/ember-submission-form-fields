@@ -30,7 +30,7 @@ module('Integration | Helper | is-last', function (hooks) {
       .dom()
       .hasText(
         'false',
-        'it returns `false` if the first argument is not an array'
+        'it returns `false` if the first argument is not an array',
       );
   });
 });

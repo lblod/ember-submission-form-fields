@@ -8,6 +8,7 @@ import {
   SHACL,
 } from '@lblod/submission-form-helpers';
 import { getSubFormsForNode } from '../utils/model-factory';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 import ListingList from '@lblod/ember-submission-form-fields/components/listing/list';
 import ListingTable from '@lblod/ember-submission-form-fields/components/listing/table';
@@ -80,7 +81,7 @@ export default class ListingComponent extends Component {
         getOrder(
           lastSubForm.sourceNode,
           this.formStore,
-          this.graphs.sourceGraph
+          this.graphs.sourceGraph,
         ) || 0;
     }
 
@@ -183,12 +184,12 @@ export default class ListingComponent extends Component {
     const currentOrder = getOrder(
       subform.sourceNode,
       this.formStore,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
     const otherOrder = getOrder(
       otherSubform.sourceNode,
       this.formStore,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
 
     // TODO: Both removeStatements and addAll will trigger the observer system
@@ -300,7 +301,7 @@ export default class ListingComponent extends Component {
     // 2) calculate to be removed
     const deletes = currentSubForms.filter(
       (rendered) =>
-        !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode))
+        !subForms.find((child) => child.sourceNode.equals(rendered.sourceNode)),
     );
 
     // 3) remove the "unwanted" children
@@ -316,7 +317,7 @@ export default class ListingComponent extends Component {
 
     for (const child of subForms) {
       const existingField = currentSubForms.find((eField) =>
-        eField.sourceNode.equals(child.sourceNode)
+        eField.sourceNode.equals(child.sourceNode),
       );
       if (existingField) {
         mergedChildren.push(existingField);

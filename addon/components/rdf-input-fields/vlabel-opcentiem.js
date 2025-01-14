@@ -12,7 +12,7 @@ const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
 
 const TaxRateType = new NamedNode(`${lblodBesluit}/TaxRate`);
 const hasAdditionalTaxRate = new NamedNode(
-  `${lblodBesluit}/hasAdditionalTaxRate`
+  `${lblodBesluit}/hasAdditionalTaxRate`,
 );
 const schemaPrice = new NamedNode(`http://schema.org/price`);
 const taxRate = new NamedNode(`${lblodBesluit}/taxRate`);
@@ -73,7 +73,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
           this.sourceNode,
           taxRate,
           this.taxRateSubject,
-          this.storeOptions.sourceGraph
+          this.storeOptions.sourceGraph,
         ).length > 0
       );
   }
@@ -84,7 +84,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
         this.taxRateSubject,
         schemaPrice,
         undefined,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
@@ -109,7 +109,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.storeOptions.sourceNode,
       hasAdditionalTaxRate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     if (statements.length > 0) {
       this.differentiatie = statements[0].object.value == '1'; // There is a bug in conversion from rdflib
@@ -121,7 +121,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.storeOptions.sourceNode,
       hasAdditionalTaxRate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     this.storeOptions.store.removeStatements(statements);
 
@@ -159,7 +159,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.taxRateSubject,
       undefined,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     const triples = [
       ...taxRateTriples,
@@ -221,7 +221,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       if (!this.hasPrices) this.removeTaxRate();
     }
     this.taxEntries = this.taxEntries.filter(
-      (taxEntry) => taxEntry !== taxEntryToRemove
+      (taxEntry) => taxEntry !== taxEntryToRemove,
     );
 
     this.hasBeenFocused = true;

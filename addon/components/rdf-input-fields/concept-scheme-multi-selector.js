@@ -68,7 +68,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          metaGraph,
         );
         return { subject: t.subject, label: label && label.value };
       });
@@ -79,7 +79,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     if (this.isValid) {
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.filter((opt) =>
-        matches.find((m) => m.equals(opt.subject))
+        matches.find((m) => m.equals(opt.subject)),
       );
     }
   }
@@ -91,7 +91,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     // Retrieve options in store
     const matches = triplesForPath(this.storeOptions, true).values;
     const matchingOptions = matches.filter((m) =>
-      this.options.find((opt) => m.equals(opt.subject))
+      this.options.find((opt) => m.equals(opt.subject)),
     );
 
     // Cleanup old value(s) in the store
@@ -103,7 +103,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     options
       .filter((opt) => !matchingOptions.find((m) => opt.subject.equals(m)))
       .forEach((option) =>
-        updateSimpleFormValue(this.storeOptions, option.subject)
+        updateSimpleFormValue(this.storeOptions, option.subject),
       );
 
     this.hasBeenFocused = true;
@@ -113,7 +113,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
   search = restartableTask(async (term) => {
     await timeout(600);
     return this.options.filter((value) =>
-      value.label.toLowerCase().includes(term.toLowerCase())
+      value.label.toLowerCase().includes(term.toLowerCase()),
     );
   });
 
@@ -123,13 +123,13 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       isSearchEnabled: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('searchEnabled'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

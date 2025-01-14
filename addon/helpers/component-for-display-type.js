@@ -3,7 +3,7 @@ import { getComponentForDisplayType } from '@lblod/ember-submission-form-fields/
 
 export default helper(function componentForDisplayType(
   [displayType],
-  { show }
+  { show },
 ) {
   return getComponentForDisplayType(displayType, show);
 });

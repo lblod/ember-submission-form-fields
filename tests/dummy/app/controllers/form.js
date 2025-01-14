@@ -38,7 +38,7 @@ export default class FormController extends Controller {
       undefined,
       undefined,
       undefined,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
   }
 

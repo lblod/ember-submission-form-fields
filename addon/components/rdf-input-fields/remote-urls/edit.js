@@ -15,11 +15,11 @@ import { autofocus } from '../../../-private/modifiers/autofocus';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
 const REQUEST_HEADER = new namedNode(
-  'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e'
+  'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e',
 );
 
 const RPIO_HTTP = new Namespace(
-  'http://redpencil.data.gift/vocabularies/http/'
+  'http://redpencil.data.gift/vocabularies/http/',
 );
 const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -64,7 +64,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     this.loadProvidedValue();
     this.args.formStore.registerObserver(
       this.onStoreUpdate.bind(this),
-      this.observerLabel
+      this.observerLabel,
     );
   }
 
@@ -98,14 +98,14 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   isRemoteDataObject(subject) {
     const remoteDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
     );
     return (
       this.storeOptions.store.match(
         subject,
         RDF('type'),
         remoteDataObjectType,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
@@ -115,13 +115,13 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       uri,
       NIE('url'),
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
 
     if (urlTriples.length) {
       const address = urlTriples[0].object.value;
       const errors = this.validationErrorsForAddress(address).map(
-        (e) => e.resultMessage
+        (e) => e.resultMessage,
       );
 
       if (urlTriples.length > 1)
@@ -142,7 +142,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       uri,
       undefined,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     if (remoteObjecTs.length) {
       this.storeOptions.store.removeStatements(remoteObjecTs);
@@ -156,7 +156,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
         subject: uri,
         predicate: RDF('type'),
         object: new NamedNode(
-          'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+          'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
         ),
         graph: this.storeOptions.sourceGraph,
       },
@@ -210,7 +210,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     });
     this.hasBeenFocused = true;
     const errors = this.validationErrorsForAddress(address).map(
-      (e) => e.resultMessage
+      (e) => e.resultMessage,
     );
     remoteUrl.errors = errors; // update validations specific for the address
     // general validation of the field is handled by onStoreUpdate()
@@ -220,7 +220,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   removeRemoteUrl(remoteUrlToRemove) {
     this.removeRemoteDataObject(remoteUrlToRemove.uri);
     this.remoteUrls = this.remoteUrls.filter(
-      (remoteUrl) => remoteUrl !== remoteUrlToRemove
+      (remoteUrl) => remoteUrl !== remoteUrlToRemove,
     );
     this.hasBeenFocused = true;
     // general validation of the field is handled by onStoreUpdate()
@@ -230,7 +230,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     return validationResultsForFieldPart(
       { values: [{ value: address }] },
       this.args.field.uri,
-      this.storeOptions
+      this.storeOptions,
     ).filter((r) => !r.valid);
   }
 }

@@ -3,6 +3,7 @@ import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 import { namedNode, Namespace } from 'rdflib';
 
@@ -35,7 +36,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          metaGraph,
         );
         return { subject: t.subject, label: label && label.value };
       });
@@ -49,7 +50,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find((opt) =>
-        matches.find((m) => m.equals(opt.subject))
+        matches.find((m) => m.equals(opt.subject)),
       );
     }
   }
@@ -102,7 +103,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
       bestuursorgaanInTimeUri,
       MANDAAT('isTijdspecialisatieVan'),
       undefined,
-      graph
+      graph,
     )[0];
 
     let orgaanClassification = undefined;
@@ -111,7 +112,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
         bestuursorgaan.object,
         BESLUIT('classificatie'),
         undefined,
-        graph
+        graph,
       )[0];
     }
 
@@ -125,7 +126,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
       bestuursorgaanUri,
       BESLUIT('bestuurt'),
       undefined,
-      graph
+      graph,
     )[0];
 
     let eenheidClassification = undefined;
@@ -134,7 +135,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
         bestuurseenheid.object,
         BESLUIT('classificatie'),
         undefined,
-        undefined
+        undefined,
       )[0];
     }
 

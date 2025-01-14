@@ -21,7 +21,7 @@ module.exports = {
     if (dep.gte('4.0.0')) {
       // ember-concurrency v4+ requires a custom babel transform. Once we drop ember-concurrency v3 support we can remove this conditional registration.
       this.options.babel.plugins.push(
-        require.resolve('ember-concurrency/async-arrow-task-transform')
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
       );
     }
   },

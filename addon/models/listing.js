@@ -26,7 +26,7 @@ export default class ListingModel {
       uri,
       SHACL('minCount'),
       undefined,
-      formGraph
+      formGraph,
     );
     if (rdflibMinCount) {
       this.minCount = Literal.toJS(rdflibMinCount);
@@ -35,19 +35,19 @@ export default class ListingModel {
       uri,
       SHACL('maxCount'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibCanRemove = store.any(
       uri,
       FORM('canRemove'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibAddLabel = store.any(
       uri,
       FORM('addLabel'),
       undefined,
-      formGraph
+      formGraph,
     );
 
     this.removeLabel =
@@ -97,7 +97,7 @@ export default class ListingModel {
       this.uri,
       FORM('canChangeOrder'),
       undefined,
-      this.formGraph
+      this.formGraph,
     );
 
     return literal ? Literal.toJS(literal) : false;

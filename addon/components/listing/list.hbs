@@ -14,8 +14,8 @@
           @level={{@level}}
           @onRemoveEntry={{@removeEntry}}
           @canRemove={{@canRemove}}
-          @canMoveUp={{(and @canChangeOrder (not isFirst))}}
-          @canMoveDown={{(and @canChangeOrder (not isLast))}}
+          @canMoveUp={{and @canChangeOrder (not isFirst)}}
+          @canMoveDown={{and @canChangeOrder (not isLast)}}
           @moveUp={{fn @moveUp subForm}}
           @moveDown={{fn @moveDown subForm}}
           @useNewListingLayout={{true}}
@@ -56,8 +56,8 @@
             @level={{@level}}
             @onRemoveEntry={{@removeEntry}}
             @canRemove={{@canRemove}}
-            @canMoveUp={{(and @canChangeOrder (not isFirst))}}
-            @canMoveDown={{(and @canChangeOrder (not isLast))}}
+            @canMoveUp={{and @canChangeOrder (not isFirst)}}
+            @canMoveDown={{and @canChangeOrder (not isLast)}}
             @moveUp={{fn @moveUp subForm}}
             @moveDown={{fn @moveDown subForm}}
           />

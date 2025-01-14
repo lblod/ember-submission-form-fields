@@ -19,7 +19,7 @@ export default class ListingTableComponent extends Component {
       listingTableNode,
       FORM('each'),
       undefined,
-      graphs.formGraph
+      graphs.formGraph,
     );
 
     this.title = this.getTableTitle(tableSubForm);
@@ -38,7 +38,7 @@ export default class ListingTableComponent extends Component {
         listingTableNode,
         FORM('showTableRowIndex'),
         undefined,
-        graphs.formGraph
+        graphs.formGraph,
       )?.value || false;
 
     if (this.showRowIndex) {
@@ -46,7 +46,7 @@ export default class ListingTableComponent extends Component {
         listingTableNode,
         FORM('tableIndexLabel'),
         undefined,
-        graphs.formGraph
+        graphs.formGraph,
       )?.value;
     }
   }
@@ -54,7 +54,7 @@ export default class ListingTableComponent extends Component {
   getTableTitle(tableForm) {
     let formTitleTriple = this.args.formStore.any(
       tableForm,
-      SHACL('name', undefined, this.args.graphs.formGraph)
+      SHACL('name', undefined, this.args.graphs.formGraph),
     );
 
     return formTitleTriple?.value;

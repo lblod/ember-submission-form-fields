@@ -44,28 +44,28 @@ export function registerFormFields(customFields) {
 
 export function registerComponentsForDisplayType(
   formFields = [],
-  shouldBeRegisteredAsBuiltIn = true
+  shouldBeRegisteredAsBuiltIn = true,
 ) {
   assert(
     'The form fields should be provided as an array',
-    Array.isArray(formFields)
+    Array.isArray(formFields),
   );
 
   formFields.forEach(({ displayType, edit, show }) => {
     assert(
       '`displayType` is required when registering a form field',
-      typeof displayType === 'string'
+      typeof displayType === 'string',
     );
 
     assert(
       `Registering a component for the '${displayType}' display type isn't allowed since a built-in component already handles it.`,
       !BUILT_IN_SHOW_COMPONENTS.has(displayType) &&
-        !BUILT_IN_EDIT_COMPONENTS.has(displayType)
+        !BUILT_IN_EDIT_COMPONENTS.has(displayType),
     );
 
     assert(
       `The edit component is required when registering custom fields`,
-      Boolean(edit)
+      Boolean(edit),
     );
 
     if (shouldBeRegisteredAsBuiltIn) {
@@ -125,7 +125,7 @@ export function getComponentForDisplayType(displayType, show) {
     `No ${
       show ? 'show (or edit)' : 'edit'
     } component has been registered for display type "${displayType}".`,
-    component
+    component,
   );
 
   return component;

@@ -45,7 +45,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
     this.loadProvidedValue.perform();
     this.args.formStore.registerObserver(
       this.onStoreUpdate.bind(this),
-      this.inputId
+      this.inputId,
     );
   }
 
@@ -63,7 +63,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
         undefined,
         FORM('displayType'),
         new NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
-        this.storeOptions.formGraph
+        this.storeOptions.formGraph,
       ).length > 0
     );
   }
@@ -91,14 +91,14 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   isFileDataObject(subject) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     return (
       this.storeOptions.store.match(
         subject,
         RDF('type'),
         fileDataObjectType,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
@@ -127,7 +127,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   insertFileDataObject(fileUri) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     const typeT = {
       subject: new NamedNode(fileUri),
@@ -141,7 +141,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   removeFileDataObject(fileUri) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     const typeT = {
       subject: new NamedNode(fileUri),
@@ -165,7 +165,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @action
   async removeFile(file) {
     const fileField = this.files.find(
-      (f) => f.record && f.record.uri == file.uri
+      (f) => f.record && f.record.uri == file.uri,
     );
     this.removeFileDataObject(file.uri);
     try {
@@ -184,7 +184,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
       return fetch(file.record.downloadLink).then((response) => {
         if (!response.ok) {
           throw new Error(
-            `Something went wrong while trying to download '${file.record.downloadLink}': ${response.status} ${response.statusText}`
+            `Something went wrong while trying to download '${file.record.downloadLink}': ${response.status} ${response.statusText}`,
           );
         }
 
@@ -199,7 +199,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
     } catch (error) {
       console.error(error);
       this.toaster.error(
-        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.'
+        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.',
       );
     }
   });

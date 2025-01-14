@@ -18,10 +18,10 @@ import { V2 } from './constants';
 
 function createPropertyTreeFromFields(
   fields,
-  { store, formGraph, sourceGraph, sourceNode }
+  { store, formGraph, sourceGraph, sourceNode },
 ) {
   let mappedFields = fields.map((field) =>
-    sectionContainingItem(field, { store, formGraph })
+    sectionContainingItem(field, { store, formGraph }),
   );
 
   const sections = mappedFields.reduce((acc, item) => {
@@ -45,7 +45,7 @@ function createPropertyTreeFromFields(
   }
 
   const sortedSections = Object.values(sections).sort(
-    (a, b) => a.order - b.order
+    (a, b) => a.order - b.order,
   );
 
   let sortedFields = sortedSections;
@@ -78,7 +78,7 @@ export function getTopLevelSections({ store, graphs, form }) {
 
   //TODO: this is really not clear this is a belongsToRelation + doubt nesting is really is used.
   const top = sections.filter(
-    (section) => !sectionContainingItem(section, { store, formGraph })
+    (section) => !sectionContainingItem(section, { store, formGraph }),
   );
 
   let filteredGroups = [];
@@ -99,7 +99,7 @@ export function getTopLevelSections({ store, graphs, form }) {
 
       if (
         formItems.find((item) =>
-          store.any(form, FORM('includes'), item.subject, formGraph)
+          store.any(form, FORM('includes'), item.subject, formGraph),
         )
       ) {
         toplevelSubFormGroups.push(group);
@@ -113,7 +113,7 @@ export function getTopLevelSections({ store, graphs, form }) {
       if (
         formItems.find(
           (item) =>
-            !store.any(undefined, FORM('includes'), item.subject, formGraph)
+            !store.any(undefined, FORM('includes'), item.subject, formGraph),
         )
       ) {
         toplevelFormGroups.push(group);
@@ -136,17 +136,17 @@ export function getRootNodeForm({ store, graphs }) {
 
 export function getSubFormsForNode(
   { store, graphs, node, sourceNode },
-  formPath = FORM('each')
+  formPath = FORM('each'),
 ) {
   const subForms = store
     .match(undefined, RDF('type'), FORM('SubForm'), graphs.formGraph)
     .map((t) => t.subject);
   const top = subForms.filter((subForm) =>
-    store.any(node, formPath, subForm, graphs.formGraph)
+    store.any(node, formPath, subForm, graphs.formGraph),
   );
   return top.map(
     (subform) =>
-      new SubForm(subform, { store, formGraph: graphs.formGraph, sourceNode })
+      new SubForm(subform, { store, formGraph: graphs.formGraph, sourceNode }),
   );
 }
 
@@ -173,7 +173,7 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
 
   // NOTE: retrieve the sections from the children and process them
   let sections = children.filter(
-    (child) => !!itemIsSection(child, { store, formGraph })
+    (child) => !!itemIsSection(child, { store, formGraph }),
   );
   if (sections.length) {
     sections = sections
@@ -186,27 +186,27 @@ export function getChildrenForSection(section, { form, store, graphs, node }) {
               formGraph,
             });
             return fieldSection.value === section.value;
-          }).length !== 0
+          }).length !== 0,
       )
       .map((section) => new Section(section, { store, formGraph }));
   }
 
   const listings = children
     .filter((child) =>
-      store.any(child, RDF('type'), FORM('Listing'), graphs.formGraph)
+      store.any(child, RDF('type'), FORM('Listing'), graphs.formGraph),
     )
     .filter((child) => conditionals.map((t) => t.value).includes(child.value))
     .map((child) => new Listing(child, { store, formGraph: graphs.formGraph }));
 
   const fields = children
     .filter((child) =>
-      store.any(child, RDF('type'), FORM('Field'), graphs.formGraph)
+      store.any(child, RDF('type'), FORM('Field'), graphs.formGraph),
     )
     .filter((child) => conditionals.map((t) => t.value).includes(child.value))
     .map((child) => new Field(child, { store, formGraph: graphs.formGraph }));
 
   return [...sections, ...listings, ...fields].sort(
-    (a, b) => a.order - b.order
+    (a, b) => a.order - b.order,
   );
 }
 
