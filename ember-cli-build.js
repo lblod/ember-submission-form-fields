@@ -2,12 +2,25 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
+const webpackConfig = {
+  resolve: {
+    fallback: {
+      // @frogcat/ttl2jsonld (which is a dependency of rdflib) conditionally requires this here: https://github.com/frogcat/ttl2jsonld/blob/686ae54dd13c5769750a0dd879c5551c8e1ca7ad/ttl2jsonld.js#L4617
+      // We disable this import for our test app, but it's likely that consuming apps will also run into this, so we should find a solution, or document that this is needed.
+      url: false,
+    },
+  },
+};
+
 module.exports = function (defaults) {
   const customBuildConfig = {
     // Add options here
     '@appuniversum/ember-appuniversum': {
       dutchDatePickerLocalization: true,
       disableWormholeElement: true,
+    },
+    autoImport: {
+      webpack: webpackConfig,
     },
   };
 
@@ -55,15 +68,7 @@ module.exports = function (defaults) {
     ],
     compatAdapters,
     packagerOptions: {
-      webpackConfig: {
-        resolve: {
-          fallback: {
-            // @frogcat/ttl2jsonld (which is a dependency of rdflib) conditionally requires this here: https://github.com/frogcat/ttl2jsonld/blob/686ae54dd13c5769750a0dd879c5551c8e1ca7ad/ttl2jsonld.js#L4617
-            // We disable this import for our test app, but it's likely that consuming apps will also run into this, so we should find a solution, or document that this is needed.
-            url: false,
-          },
-        },
-      },
+      webpackConfig,
     },
   });
 };
