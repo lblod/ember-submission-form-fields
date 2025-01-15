@@ -1,3 +1,12 @@
+## v2.25.0 (2025-01-15)
+
+#### :rocket: Enhancement
+* [#201](https://github.com/lblod/ember-submission-form-fields/pull/201) Add support for ember-truth-helpers v4 ([@Windvis](https://github.com/Windvis))
+* [#199](https://github.com/lblod/ember-submission-form-fields/pull/199) Add support for ember-concurrency v4 and power select v8 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#200](https://github.com/lblod/ember-submission-form-fields/pull/200) Update to Ember 5.12 LTS ([@Windvis](https://github.com/Windvis))
+
 ## v2.24.2 (2025-01-14)
 
 #### :bug: Bug Fix
