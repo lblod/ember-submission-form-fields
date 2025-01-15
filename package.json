@@ -33,7 +33,7 @@
     "@embroider/macros": "^1.13.5",
     "@lblod/submission-form-helpers": "^2.10.2",
     "client-zip": "^2.4.4",
-    "clipboardy": "^3.0.0",
+    "clipboardy": "^4.0.0",
     "ember-auto-import": "^2.8.1",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
