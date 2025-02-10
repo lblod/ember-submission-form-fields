@@ -4,9 +4,15 @@
     @required={{this.isRequired}}
     @warning={{this.hasWarnings}}
     for={{this.inputId}}
+    class={{if
+      (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
+      "au-u-margin-bottom-none"
+    }}
   >
     {{@field.label}}
   </AuLabel>
+
+  <this.HelpText @field={{@field}} />
 
   {{#if @field.description}}
     <p class="au-u-light au-u-margin-bottom-tiny">{{@field.description}}</p>

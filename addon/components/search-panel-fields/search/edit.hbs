@@ -1,6 +1,13 @@
-<AuLabel for={{this.inputId}}>
+<AuLabel
+  for={{this.inputId}}
+  class={{if
+    (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
+    "au-u-margin-bottom-none"
+  }}
+>
   {{@field.label}}
 </AuLabel>
+<this.HelpText @field={{@field}} />
 <AuInput
   @width="block"
   class="au-u-margin-bottom-tiny"
@@ -8,8 +15,13 @@
   value={{this.value}}
   {{on "input" (perform this.search)}}
 />
-{{!-- for now this is hardcoded --}}
-<a href="/help#help-zoekresultaten" class="au-c-link" target="_blank" rel="noopener noreferrer">
-  <AuIcon @icon="info-circle" @alignment="left"/>
+{{! for now this is hardcoded }}
+<a
+  href="/help#help-zoekresultaten"
+  class="au-c-link"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <AuIcon @icon="info-circle" @alignment="left" />
   Waarom zijn mijn zoekresultaten onvolledig?
 </a>

@@ -3,9 +3,16 @@
   @warnings={{this.hasWarnings}}
   @required={{this.isRequired}}
   for={{this.inputId}}
+  class={{if
+    (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
+    "au-u-margin-bottom-none"
+  }}
 >
   {{@field.label}}
 </AuLabel>
+
+<this.HelpText @field={{@field}} />
+
 <div class={{if this.hasErrors "ember-power-select--error"}}>
   <PowerSelectMultiple
     @triggerId={{this.inputId}}

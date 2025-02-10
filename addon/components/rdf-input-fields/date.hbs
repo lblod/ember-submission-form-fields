@@ -4,9 +4,25 @@
     @required={{this.isRequired}}
     @warning={{this.hasWarnings}}
     for={{this.inputId}}
+    class={{if
+      (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
+      "au-u-margin-bottom-none"
+    }}
   >
     {{@field.label}}
   </AuLabel>
+  <this.HelpText @field={{@field}} />
+
+  {{#if (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))}}
+    {{#unless @show}}
+      <AuHelpText
+        @error={{this.hasErrors}}
+        class="au-u-margin-top-none au-u-margin-bottom-tiny"
+      >
+        Datum formaat: DD-MM-JJJJ
+      </AuHelpText>
+    {{/unless}}
+  {{/if}}
 {{/unless}}
 <div class={{unless @inTable "au-o-grid au-o-grid--flush"}}>
   <div class={{unless @inTable "au-o-grid__item au-u-3-4"}}>
@@ -23,11 +39,14 @@
   </div>
 </div>
 
-{{#if (not (or @show @inTable))}}
-  <AuHelpText @error={{this.hasErrors}}>
-    Datum formaat: DD-MM-JJJJ
-  </AuHelpText>
-{{/if}}
+{{!template-lint-disable simple-unless}}
+{{#unless (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))}}
+  {{#if (not (or @show @inTable))}}
+    <AuHelpText @error={{this.hasErrors}}>
+      Datum formaat: DD-MM-JJJJ
+    </AuHelpText>
+  {{/if}}
+{{/unless}}
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>
 {{/each}}
