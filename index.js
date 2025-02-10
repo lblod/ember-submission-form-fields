@@ -6,11 +6,25 @@ module.exports = {
     babel: {
       plugins: [],
     },
+    '@embroider/macros': {
+      setOwnConfig: {
+        helpTextBelowLabel: false,
+      },
+    },
   },
 
   init() {
     this._super.init.apply(this, arguments);
     this.maybeAddConcurrencyPlugin();
+  },
+
+  included: function (app) {
+    this._super.included.apply(this, arguments);
+    let addonOptions = app.options[this.name];
+    if (addonOptions) {
+      let ownConfig = this.options['@embroider/macros'].setOwnConfig;
+      Object.assign(ownConfig, addonOptions);
+    }
   },
 
   maybeAddConcurrencyPlugin() {
