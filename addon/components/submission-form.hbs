@@ -3,7 +3,8 @@
     @icon="info-circle"
     @title="Gelieve per besluit of besluitenlijst één dossier aan te maken."
     @skin="info"
-    @size="small" />
+    @size="small"
+  />
 {{/unless}}
 <div class="au-c-form">
   <ul class="au-o-grid au-o-grid--small">
@@ -22,9 +23,15 @@
               @forceShowErrors={{@forceShowErrors}}
               @show={{@show}}
             />
-            {{#unless @show}}
-              {{! template-lint-disable no-triple-curlies}}
-              <AuHelpText>{{{field.help}}}</AuHelpText>
+
+            {{! template-lint-disable simple-unless}}
+            {{#unless
+              (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))
+            }}
+              {{#unless @show}}
+                {{! template-lint-disable no-triple-curlies}}
+                <AuHelpText>{{{field.help}}}</AuHelpText>
+              {{/unless}}
             {{/unless}}
           {{/let}}
         </li>
