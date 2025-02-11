@@ -13,6 +13,8 @@ import {
 } from '../models/section';
 import { LISTING_TYPE } from '../models/listing';
 import { helper } from '@ember/component/helper';
+import componentForDisplayType from '../-private/helpers/component-for-display-type';
+import Listing from './listing';
 
 const childIsSection = helper(function ([child]) {
   return (
@@ -31,6 +33,8 @@ export default class SubmissionFormSectionComponent extends Component {
   @tracked children = A();
   @tracked validations = [];
   isLast = isLast;
+  componentForDisplayType = componentForDisplayType;
+  Listing = Listing;
 
   observerLabel = `section-${guidFor(this)}`;
 
