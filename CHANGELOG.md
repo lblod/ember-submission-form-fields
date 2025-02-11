@@ -1,3 +1,14 @@
+## v2.26.0 (2025-02-11)
+
+#### :rocket: Enhancement
+* [#202](https://github.com/lblod/ember-submission-form-fields/pull/202) [SFB-263] Add a new `helpTextBelowLabel` build option ([@Windvis](https://github.com/Windvis))
+
+#### :bug: Bug Fix
+* [#203](https://github.com/lblod/ember-submission-form-fields/pull/203) Fix an issue with Rdflib v2.2.36 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#204](https://github.com/lblod/ember-submission-form-fields/pull/204) Remove unneeded app exports ([@Windvis](https://github.com/Windvis))
+
 ## v2.25.0 (2025-01-15)
 
 #### :rocket: Enhancement
