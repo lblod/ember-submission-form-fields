@@ -72,6 +72,7 @@ ext:checkboxField a form:Field ;
     sh:order 190 ;
     sh:path ext:checkboxValue ;
     form:displayType displayTypes:checkbox ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:checkboxField .
@@ -84,7 +85,7 @@ ext:switchField a form:Field ;
     sh:order 191 ;
     sh:path ext:switchValue;
     form:displayType displayTypes:switch ;
-
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:switchField .
@@ -104,6 +105,7 @@ ext:conceptSchemeMultiSelectCheckboxesField a form:Field ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeMultiSelectCheckboxes ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg.
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectCheckboxesField .
@@ -118,6 +120,7 @@ ext:radioButtonsField a form:Field ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:orderBy qb:order ;
     form:displayType displayTypes:conceptSchemeRadioButtons ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:radioButtonsField .
@@ -130,6 +133,7 @@ ext:inputField a form:Field ;
     sh:order 220 ;
     sh:path ext:inputValue ;
     form:displayType displayTypes:defaultInput ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:inputField .
@@ -142,6 +146,7 @@ ext:currencyInputField a form:Field ;
     sh:order 221 ;
     sh:path (ext:currencyInputValue eurio:value) ;
     form:displayType displayTypes:currencyInput ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:currencyInputField .
@@ -154,6 +159,7 @@ ext:numericalInputField a form:Field ;
     sh:order 222 ;
     sh:path ext:numericalInputValue;
     form:displayType displayTypes:numericalInput ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:numericalInputField .
@@ -172,6 +178,8 @@ ext:textAreaField a form:Field ;
       form:max "100" ;
       sh:resultMessage "Max. karakters overschreden." ;
       sh:path ext:textAreaValue ];
+    form:help """Some form annotation""" ;
+    # sh:description """Some description""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:textAreaField .
@@ -184,6 +192,7 @@ ext:dateField a form:Field ;
     sh:order 240 ;
     sh:path ext:dateValue ;
     form:displayType displayTypes:date ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:dateField .
@@ -195,6 +204,7 @@ ext:datePickerField a form:Field ;
     sh:name "Datepicker" ;
     sh:order 241 ;
     sh:path ext:datePickerValue ;
+    form:help """Some form annotation""" ;
     form:displayType displayTypes:datePicker ;
     sh:group ext:mainPg .
 
@@ -208,6 +218,7 @@ ext:dateTimeField a form:Field ;
     sh:order 250 ;
     sh:path ext:dateTimeValue ;
     form:displayType displayTypes:dateTime ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:dateTimeField .
@@ -220,6 +231,7 @@ ext:dateRangeField a form:Field ;
     sh:order 260 ;
     sh:path ext:dateRangeValueu ;
     form:displayType displayTypes:dateRange ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:dateRangeField .
@@ -234,6 +246,7 @@ ext:conceptSchemeSelectorField a form:Field ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeSelector ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
@@ -248,6 +261,7 @@ ext:conceptSchemeMultiSelectorField a form:Field ;
     fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
     fieldOption:searchEnabled false ;
     form:displayType displayTypes:conceptSchemeMultiSelector ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:conceptSchemeMultiSelectorField .
@@ -260,6 +274,7 @@ ext:remoteUrlsField a form:Field ;
     sh:order 310 ;
     sh:path ext:remoteUrlsValue;
     form:displayType displayTypes:remoteUrls ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:remoteUrlsField .
@@ -272,6 +287,7 @@ ext:filesField a form:Field ;
     sh:order 320 ;
     sh:path ext:filesValue ;
     form:displayType displayTypes:files ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:filesField .
@@ -290,6 +306,7 @@ ext:searchField a form:Field ;
       form:grouping form:Bag ;
       sh:resultMessage "Dit veld is verplicht." ;
       sh:path ext:searchValue ] ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 ext:mainFg form:hasField ext:searchField .
@@ -323,6 +340,7 @@ ext:vLabelOpcentiemField a form:Field ;
         sh:resultMessage "Slechts één instantie van opcentiem wordt aanvaard"@nl
     ];
     form:displayType displayTypes:vLabelOpcentiem ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg .
 
 fields:f3c1f62e-0fc6-4440-8208-7a0ef49fb28c a form:Field ;
@@ -359,6 +377,7 @@ ext:caseNumberField a form:Field ;
       ] ;
     form:options  """{"prefix" : "some-prefix-"}""" ;
     form:displayType displayTypes:caseNumber ;
+    form:help """Some form annotation""" ;
     sh:group ext:mainPg.
 
 ext:mainFg form:hasField ext:caseNumberField .

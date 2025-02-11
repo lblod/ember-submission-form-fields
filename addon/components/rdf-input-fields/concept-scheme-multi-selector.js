@@ -7,6 +7,7 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
@@ -20,6 +21,7 @@ function byLabel(a, b) {
 
 export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
+  HelpText = HelpText;
 
   @tracked selected = null;
   @tracked options = [];

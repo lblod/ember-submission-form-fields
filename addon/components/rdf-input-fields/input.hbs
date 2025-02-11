@@ -4,6 +4,10 @@
     @warning={{this.hasWarnings}}
     @required={{this.isRequired}}
     for={{this.inputId}}
+    class={{if
+      (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
+      "au-u-margin-bottom-none"
+    }}
   >
     {{@field.label}}
     {{#unless @show}}
@@ -15,6 +19,7 @@
       {{/if}}
     {{/unless}}
   </AuLabel>
+  <this.HelpText @field={{@field}} />
 {{/unless}}
 
 <AuInput

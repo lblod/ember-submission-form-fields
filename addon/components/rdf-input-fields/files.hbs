@@ -1,10 +1,11 @@
-<div class="au-u-flex au-u-flex--between au-u-margin-bottom">
+<div class="au-u-flex au-u-flex--between">
   <AuLabel
     @error={{this.hasErrors}}
     @required={{this.isRequired}}
     @requiredLabel={{if this.containsRemoteUrls "Enkel indien geen links"}}
     @warning={{this.hasWarnings}}
     for={{this.inputId}}
+    class="au-u-margin-bottom-none"
   >
     {{@field.label}}
   </AuLabel>
@@ -20,6 +21,7 @@
     </AuButton>
   {{/if}}
 </div>
+<this.HelpText @field={{@field}} />
 
 {{#if this.loadProvidedValue.isIdle}}
   {{#if this.files}}

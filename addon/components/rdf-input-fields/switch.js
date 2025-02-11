@@ -1,6 +1,7 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { Literal } from 'rdflib';
 
@@ -8,6 +9,7 @@ import { Literal } from 'rdflib';
 
 export default class FormInputFieldsSwitchEditComponent extends SimpleInputFieldComponent {
   inputId = 'switch-' + guidFor(this);
+  HelpText = HelpText;
 
   loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);

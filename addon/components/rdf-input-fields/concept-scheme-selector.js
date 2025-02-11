@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import {
   SKOS,
   triplesForPath,
@@ -19,6 +20,7 @@ function byLabel(a, b) {
 
 export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
+  HelpText = HelpText;
 
   @tracked selected = null;
   @tracked options = [];

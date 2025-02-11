@@ -39,6 +39,11 @@
   width: 100%;
 }
 
+/* Used to override the AuFieldset gap, so the help text is positioned correctly */
+.sf-u-gap-initial {
+  gap: initial !important;
+}
+
 .currency-input {
   display: flex;
   flex-direction: row nowrap;

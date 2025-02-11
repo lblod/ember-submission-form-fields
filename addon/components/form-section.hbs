@@ -74,10 +74,13 @@
               />
             {{/let}}
 
-            {{#if field.help}}
-              {{! template-lint-disable no-triple-curlies}}
-              <AuHelpText>{{{field.help}}}</AuHelpText>
-            {{/if}}
+            {{! template-lint-disable simple-unless}}
+            {{#unless (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))}}
+              {{#if field.help}}
+                {{! template-lint-disable no-triple-curlies}}
+                <AuHelpText>{{{field.help}}}</AuHelpText>
+              {{/if}}
+            {{/unless}}
           </div>
         {{/if}}
       {{/if}}

@@ -1,0 +1,8 @@
+{{#if (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))}}
+  {{#if @field.help}}
+    {{! template-lint-disable no-triple-curlies}}
+    <AuHelpText
+      class="au-u-margin-top-none au-u-margin-bottom-tiny"
+    >{{{@field.help}}}</AuHelpText>
+  {{/if}}
+{{/if}}

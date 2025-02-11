@@ -1,4 +1,5 @@
-import { assert } from '@ember/debug';
+import { assert, deprecate } from '@ember/debug';
+import { getOwnConfig, macroCondition } from '@embroider/macros';
 
 // Basic fields
 import AlertComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/alert';
@@ -37,6 +38,28 @@ const CUSTOM_EDIT_COMPONENTS = new Map();
 const CUSTOM_SHOW_COMPONENTS = new Map();
 
 export function registerFormFields(customFields) {
+  if (macroCondition(!getOwnConfig().helpTextBelowLabel)) {
+    deprecate(
+      `\
+The way the help text of a form field is displayed is going to change. Fields will become responsible for displaying their help text instead of it being added below the field automatically.
+This makes the setup more flexible but it does mean custom fields need to do some manual changes.
+
+More information in the migration guide: https://github.com/lblod/ember-submission-form-fields/pull/202
+
+`,
+      false,
+      {
+        id: '@lblod/ember-submission-form-fields.help-text-position',
+        until: '3.0.0',
+        for: '@lblod/ember-submission-form-fields',
+        since: {
+          available: '2.26.0',
+          enabled: '2.26.0',
+        },
+      },
+    );
+  }
+
   registerComponentsForDisplayType(customFields, false);
 }
 

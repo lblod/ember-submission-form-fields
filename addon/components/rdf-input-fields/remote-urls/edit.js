@@ -12,6 +12,7 @@ import { NamedNode, Namespace } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { guidFor } from '@ember/object/internals';
 import { autofocus } from '../../../-private/modifiers/autofocus';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
 const REQUEST_HEADER = new NamedNode(
@@ -46,6 +47,7 @@ class RemoteUrl {
 export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
   inputId = `remote-urls-${guidFor(this)}`;
   autofocus = autofocus;
+  HelpText = HelpText;
 
   get inputFor() {
     if (this.remoteUrls.length) {

@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import {
   addSimpleFormValue,
@@ -13,6 +14,7 @@ import { FIELD_OPTION } from '../../utils/namespaces';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
+  HelpText = HelpText;
 
   constructor() {
     super(...arguments);

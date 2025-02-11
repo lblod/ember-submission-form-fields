@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,6 +41,7 @@ class TaxEntry {
 export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldComponent {
   amountColumnId = 'amount-column-' + guidFor(this);
   autofocus = autofocus;
+  HelpText = HelpText;
 
   @tracked taxRateSubject = null;
   @tracked taxEntries = [];

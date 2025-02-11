@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import clipboardy from 'clipboardy';
 
 /**
@@ -35,6 +36,7 @@ import clipboardy from 'clipboardy';
  */
 export default class RdfInputFieldsCaseNumberComponent extends SimpleInputFieldComponent {
   id = 'case-number-' + guidFor(this);
+  HelpText = HelpText;
 
   @tracked error;
 

@@ -2,11 +2,13 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { triplesForPath, XSD } from '@lblod/submission-form-helpers';
 import { literal } from 'rdflib';
 
 export default class RdfInputFieldsDateTimeComponent extends SimpleInputFieldComponent {
   inputId = 'date-time-' + guidFor(this);
+  HelpText = HelpText;
 
   @tracked value = null;
   @tracked hour = null;

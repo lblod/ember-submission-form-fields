@@ -5,6 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import {
   addSimpleFormValue,
   FORM,
@@ -39,6 +40,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @service toaster;
   @tracked files = A();
   inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.
+  HelpText = HelpText;
 
   constructor() {
     super(...arguments);
