@@ -7,7 +7,7 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode, Namespace } from 'rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 
 function byLabel(a, b) {
   const textA = a.label.toUpperCase();
@@ -30,7 +30,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = new NamedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)

@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
+import { NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
 
@@ -22,12 +22,12 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     if (!orderBy) {
       if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-        orderBy = new namedNode(fieldOptions.orderBy);
+        orderBy = new NamedNode(fieldOptions.orderBy);
       }
     }
 

@@ -7,7 +7,7 @@ import {
   triplesForPath,
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
-import { Literal, namedNode } from 'rdflib';
+import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
 
@@ -45,7 +45,7 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         // No conceptScheme found hence this component can't work.
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
