@@ -6,10 +6,12 @@ import {
 } from '@lblod/submission-form-helpers';
 import { getRootNodeForm, getTopLevelSections } from '../utils/model-factory';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
+import FormSection from './form-section';
 
 export default class RdfForm extends Component {
   sections = []; // NOTE don't think this needs to be an ember array as it will never change
   isLast = isLast;
+  FormSection = FormSection;
 
   constructor() {
     super(...arguments);

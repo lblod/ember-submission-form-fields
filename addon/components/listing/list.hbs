@@ -2,7 +2,7 @@
   <div class="au-o-flow" ...attributes>
     {{#each @subForms as |subForm index|}}
       {{#let (eq index 0) (this.isLast @subForms subForm) as |isFirst isLast|}}
-        <SubForm
+        <this.SubForm
           @subForm={{subForm}}
           @formStore={{@formStore}}
           @graphs={{@graphs}}
@@ -44,7 +44,7 @@
           (eq index 0) (this.isLast @subForms subForm)
           as |isFirst isLast|
         }}
-          <SubForm
+          <this.SubForm
             @subForm={{subForm}}
             @formStore={{@formStore}}
             @graphs={{@graphs}}

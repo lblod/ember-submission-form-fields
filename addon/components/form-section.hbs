@@ -25,18 +25,20 @@
     {{#each this.children as |field|}}
       {{#if field.displayType}}
         {{#if (this.childIsSection field)}}
-          <FormSection
-            @level={{this.nextLevel}}
-            @form={{@form}}
-            @section={{field}}
-            @formStore={{@formStore}}
-            @graphs={{@graphs}}
-            @sourceNode={{@sourceNode}}
-            @forceShowErrors={{@forceShowErrors}}
-            @cacheConditionals={{@cacheConditionals}}
-            @show={{@show}}
-            @useNewListingLayout={{@useNewListingLayout}}
-          />
+          {{#let this as |FormSection|}}
+            <FormSection
+              @level={{this.nextLevel}}
+              @form={{@form}}
+              @section={{field}}
+              @formStore={{@formStore}}
+              @graphs={{@graphs}}
+              @sourceNode={{@sourceNode}}
+              @forceShowErrors={{@forceShowErrors}}
+              @cacheConditionals={{@cacheConditionals}}
+              @show={{@show}}
+              @useNewListingLayout={{@useNewListingLayout}}
+            />
+          {{/let}}
           {{#if @last}}
             {{#if (not (this.isLast this.children field))}}
               <AuHr @size="large" />
@@ -45,7 +47,7 @@
             <AuHr @size="large" />
           {{/if}}
         {{else if (this.childIsListing field)}}
-          <Listing
+          <this.Listing
             @level={{this.nextLevel}}
             @listing={{field}}
             @formStore={{@formStore}}
@@ -59,7 +61,7 @@
         {{else}}
           <div class="au-u-margin-bottom-small">
             {{#let
-              (component-for-display-type field.displayType show=@show)
+              (this.componentForDisplayType field.displayType show=@show)
               as |FormField|
             }}
               <FormField
@@ -75,7 +77,9 @@
             {{/let}}
 
             {{! template-lint-disable simple-unless}}
-            {{#unless (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))}}
+            {{#unless
+              (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))
+            }}
               {{#if field.help}}
                 {{! template-lint-disable no-triple-curlies}}
                 <AuHelpText>{{{field.help}}}</AuHelpText>

@@ -6,9 +6,11 @@ import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
 /* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
+import componentForDisplayType from '../-private/helpers/component-for-display-type';
 
 export default class SubmissionFormComponent extends Component {
   @tracked fields = A();
+  componentForDisplayType = componentForDisplayType;
 
   observerLabel = `form-root-${guidFor(this)}`;
 

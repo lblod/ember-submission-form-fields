@@ -4,8 +4,10 @@ import {
   getTopLevelSections,
 } from '@lblod/ember-submission-form-fields/utils/model-factory';
 import OrderButtonGroup from '@lblod/ember-submission-form-fields/components/listing/order-button-group';
+import componentForDisplayType from '../../../-private/helpers/component-for-display-type';
 
 export default class ListingTableRow extends Component {
+  componentForDisplayType = componentForDisplayType;
   OrderButtonGroup = OrderButtonGroup;
 
   constructor() {
