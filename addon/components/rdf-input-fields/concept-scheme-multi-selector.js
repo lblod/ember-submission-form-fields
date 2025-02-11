@@ -8,7 +8,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { Literal, namedNode } from 'rdflib';
+import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
 
@@ -49,7 +49,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
         // No conceptScheme found hence this component can't work.
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.

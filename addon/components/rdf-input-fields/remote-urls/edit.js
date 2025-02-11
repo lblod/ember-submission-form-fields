@@ -8,13 +8,13 @@ import {
   removeSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { RDF, NIE } from '@lblod/submission-form-helpers';
-import { namedNode, NamedNode, Namespace } from 'rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { guidFor } from '@ember/object/internals';
 import { autofocus } from '../../../-private/modifiers/autofocus';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
-const REQUEST_HEADER = new namedNode(
+const REQUEST_HEADER = new NamedNode(
   'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e',
 );
 
@@ -189,7 +189,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     const uuid = uuidv4();
     const remoteUrl = new RemoteUrl({
       uuid,
-      uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
+      uri: new NamedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
       address: '',
       errors: [],
     });

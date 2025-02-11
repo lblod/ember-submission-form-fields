@@ -5,7 +5,7 @@ import { triplesForPath } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 /* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
-import { namedNode, Namespace } from 'rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
@@ -27,7 +27,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorShowCompone
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = new NamedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
