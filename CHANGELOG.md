@@ -1,3 +1,8 @@
+## v2.26.1 (2025-02-25)
+
+#### :bug: Bug Fix
+* [#205](https://github.com/lblod/ember-submission-form-fields/pull/205) Fix an issue with nested form sections ([@Windvis](https://github.com/Windvis))
+
 ## v2.26.0 (2025-02-11)
 
 #### :rocket: Enhancement
