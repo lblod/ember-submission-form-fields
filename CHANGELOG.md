@@ -1,3 +1,8 @@
+## v2.26.2 (2025-03-11)
+
+#### :bug: Bug Fix
+* [#206](https://github.com/lblod/ember-submission-form-fields/pull/206) [DL-6466] Don't trim the search field values ([@Windvis](https://github.com/Windvis))
+
 ## v2.26.1 (2025-02-25)
 
 #### :bug: Bug Fix
