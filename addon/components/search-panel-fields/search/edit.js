@@ -9,7 +9,7 @@ export default class FormSearchPanelFieldsSearchEditComponent extends SimpleInpu
 
   search = restartableTask(async (event) => {
     await timeout(250);
-    this.value = event.target.value.trim();
+    this.value = event.target.value;
     this.updateValue(this.value);
   });
 }
