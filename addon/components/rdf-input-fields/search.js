@@ -9,6 +9,6 @@ export default class RdfInputFieldsSearchComponent extends SimpleInputFieldCompo
 
   search = restartableTask(async (event) => {
     await timeout(250);
-    this.updateValue(event.target.value.trim());
+    this.updateValue(event.target.value);
   });
 }
