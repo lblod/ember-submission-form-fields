@@ -20,6 +20,7 @@ export default class InputFieldComponent extends Component {
   @tracked warningValidations = [];
 
   @tracked hasBeenFocused = false;
+  @tracked isLoadingValidations = false;
 
   constructor() {
     super(...arguments);
@@ -27,6 +28,10 @@ export default class InputFieldComponent extends Component {
   }
 
   get canShowValidationMessages() {
+    if (this.isLoadingValidations) {
+      return false;
+    }
+
     return this.hasBeenFocused || this.args.forceShowErrors;
   }
 
@@ -115,16 +120,20 @@ export default class InputFieldComponent extends Component {
   }
 
   updateValidations() {
-    this.errorValidations = invalidResults(
+    this.isLoadingValidations = true;
+    Promise.all([
       validationResultsForField(this.args.field.uri, this.storeOptions),
-    );
-
-    this.warningValidations = invalidResults(
       validationResultsForField(this.args.field.uri, {
         ...this.storeOptions,
         severity: SH_WARNING,
       }),
-    );
+    ])
+      .then(([errors, warnings]) => {
+        this.errorValidations = invalidResults(errors);
+        this.warningValidations = invalidResults(warnings);
+        this.isLoadingValidations = false;
+      })
+      .catch(() => (this.isLoadingValidations = false));
   }
 }
 
