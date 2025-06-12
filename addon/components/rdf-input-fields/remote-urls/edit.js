@@ -90,8 +90,9 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
     for (let uri of matches.values) {
       if (this.isRemoteDataObject(uri)) {
-        const remoteUrl = this.retrieveRemoteDataObject(uri);
-        persistedUrls.push(remoteUrl);
+        this.retrieveRemoteDataObject(uri).then((remoteUrl) =>
+          persistedUrls.push(remoteUrl),
+        );
       }
     }
 
@@ -112,7 +113,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     );
   }
 
-  retrieveRemoteDataObject(uri) {
+  async retrieveRemoteDataObject(uri) {
     const urlTriples = this.storeOptions.store.match(
       uri,
       NIE('url'),
@@ -122,9 +123,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
     if (urlTriples.length) {
       const address = urlTriples[0].object.value;
-      const errors = this.validationErrorsForAddress(address).map(
-        (e) => e.resultMessage,
-      );
+      const errors = await this.validationErrorMessagesForAddress(address);
 
       if (urlTriples.length > 1)
         errors.push('Veld kan maximaal 1 URL bevatten');
@@ -201,7 +200,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   @action
-  updateRemoteUrl(remoteUrl, event) {
+  async updateRemoteUrl(remoteUrl, event) {
     remoteUrl.address = event.target.value.trim();
     const address = remoteUrl.address;
     this.removeRemoteDataObject(remoteUrl.uri);
@@ -211,10 +210,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       address,
     });
     this.hasBeenFocused = true;
-    const errors = this.validationErrorsForAddress(address).map(
-      (e) => e.resultMessage,
-    );
-    remoteUrl.errors = errors; // update validations specific for the address
+    remoteUrl.errors = await this.validationErrorMessagesForAddress(address); // update validations specific for the address
     // general validation of the field is handled by onStoreUpdate()
   }
 
@@ -228,11 +224,15 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     // general validation of the field is handled by onStoreUpdate()
   }
 
-  validationErrorsForAddress(address) {
-    return validationResultsForFieldPart(
+  async validationErrorMessagesForAddress(address) {
+    const validationResults = await validationResultsForFieldPart(
       { values: [{ value: address }] },
       this.args.field.uri,
       this.storeOptions,
-    ).filter((r) => !r.valid);
+    );
+
+    return validationResults
+      .filter((r) => !r.valid)
+      .map((e) => e.resultMessage);
   }
 }
