@@ -154,9 +154,8 @@ export default class SubmissionFormSectionComponent extends Component {
     this.children = mergedChildren;
 
     // 6) update the validation
-    this.validations = validationResultsForField(
-      section.uri,
-      this.storeOptions,
+    validationResultsForField(section.uri, this.storeOptions).then(
+      (validations) => (this.validations = validations),
     );
 
     this.register(); // NOTE: to make sure we get notified on user input
