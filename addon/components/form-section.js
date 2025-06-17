@@ -1,21 +1,24 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+
 import { A } from '@ember/array';
-import { getChildrenForSection } from '../utils/model-factory';
-import { guidFor } from '@ember/object/internals';
-import { validationResultsForField } from '@lblod/submission-form-helpers';
 /* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
+import { helper } from '@ember/component/helper';
+import { guidFor } from '@ember/object/internals';
+
+import { task } from 'ember-concurrency';
+import { validationResultsForField } from '@lblod/submission-form-helpers';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
+
+import { getChildrenForSection } from '../utils/model-factory';
 import {
   PROPERTY_GROUP_DISPLAY_TYPE,
   SECTION_DISPLAY_TYPE,
 } from '../models/section';
 import { LISTING_TYPE } from '../models/listing';
-import { helper } from '@ember/component/helper';
 import componentForDisplayType from '../-private/helpers/component-for-display-type';
 import Listing from './listing';
-import { task } from 'ember-concurrency';
 
 const childIsSection = helper(function ([child]) {
   return (
