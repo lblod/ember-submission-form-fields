@@ -155,9 +155,12 @@ export function getSubFormsForNode(
  *
  * @returns list of children for the given section, in order.
  */
-export function getChildrenForSection(section, { form, store, graphs, node }) {
+export async function getChildrenForSection(
+  section,
+  { form, store, graphs, node },
+) {
   const formGraph = graphs.formGraph;
-  const conditionals = fieldsForForm(form, {
+  const conditionals = await fieldsForForm(form, {
     store,
     formGraph,
     sourceGraph: graphs.sourceGraph,
