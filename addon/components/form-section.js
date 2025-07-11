@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 
 import { A } from '@ember/array';
-/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
-import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import { helper } from '@ember/component/helper';
 import { guidFor } from '@ember/object/internals';
@@ -48,13 +46,11 @@ export default class SubmissionFormSectionComponent extends Component {
   constructor() {
     super(...arguments);
 
-    next(this, () => {
-      this.update.perform(this.args.section, {
-        form: this.args.form,
-        store: this.args.formStore,
-        graphs: this.args.graphs,
-        node: this.args.sourceNode,
-      });
+    this.update.perform(this.args.section, {
+      form: this.args.form,
+      store: this.args.formStore,
+      graphs: this.args.graphs,
+      node: this.args.sourceNode,
     });
   }
 
@@ -117,12 +113,6 @@ export default class SubmissionFormSectionComponent extends Component {
     { restartable: true },
     async (section, { form, store, graphs, node }) => {
       this.deregister(); // NOTE: to prevent calling ourself up again with changes
-
-      // If the component is being destroyed we don't need to update our children since those are being destroyed as well
-      // This prevents an observer loop where children remove triples which causes all observers to get notified.
-      if (this.isDestroying) {
-        return;
-      }
 
       // 1) retrieve the to be rendered children (!!could be nested sections or fields) for this section
       const children = await getChildrenForSection(section, {
