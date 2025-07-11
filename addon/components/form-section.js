@@ -133,7 +133,7 @@ export default class SubmissionFormSectionComponent extends Component {
       }
 
       // 5. create a new list to render, merging already (rendered) children, with new children.
-      // We don't want to re-render components, to avoid flickering behaviour and state loss.
+      // We don't want to re-render components, to avoid flickering behavior and state loss.
       const mergedChildren = A();
 
       for (const child of children) {
@@ -150,8 +150,9 @@ export default class SubmissionFormSectionComponent extends Component {
       this.children = mergedChildren;
 
       // 6) update the validation
-      validationResultsForField(section.uri, this.storeOptions).then(
-        (validations) => (this.validations = validations),
+      this.validations = await validationResultsForField(
+        section.uri,
+        this.storeOptions,
       );
 
       this.register(); // NOTE: to make sure we get notified on user input
