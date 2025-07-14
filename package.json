@@ -31,7 +31,7 @@
   "dependencies": {
     "@babel/core": "7.26.0",
     "@embroider/macros": "^1.13.5",
-    "@lblod/submission-form-helpers": "^2.10.2",
+    "@lblod/submission-form-helpers": "^3.0.0",
     "client-zip": "^2.4.4",
     "clipboardy": "^4.0.0",
     "ember-auto-import": "^2.8.1",
