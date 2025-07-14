@@ -113,8 +113,5 @@
   },
   "msw": {
     "workerDirectory": "tests/dummy/public"
-  },
-  "volta": {
-    "node": "18.20.5"
   }
 }
