@@ -1,3 +1,18 @@
+## v3.0.0 (2025-07-14)
+
+> [!NOTE]
+> The v2 -> v3 migration guide can be found [here](https://github.com/lblod/ember-submission-form-fields/pull/213).
+
+#### :boom: Breaking Change
+* [#211](https://github.com/lblod/ember-submission-form-fields/pull/211) Drop support for Ember < v5.12 ([@Windvis](https://github.com/Windvis))
+* [#210](https://github.com/lblod/ember-submission-form-fields/pull/210) Remove deprecated code ([@Windvis](https://github.com/Windvis))
+* [#209](https://github.com/lblod/ember-submission-form-fields/pull/209) Convert `@lblod/submission-form-helpers` to a peerDependency ([@Windvis](https://github.com/Windvis))
+* [#208](https://github.com/lblod/ember-submission-form-fields/pull/208) Drop support for old dependencies ([@Windvis](https://github.com/Windvis))
+* [#207](https://github.com/lblod/ember-submission-form-fields/pull/207) LMB-1513 | Async custom validations ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
+#### :house: Internal
+* [#212](https://github.com/lblod/ember-submission-form-fields/pull/212) Update to node 22 ([@Windvis](https://github.com/Windvis))
+
 ## v2.26.2 (2025-03-11)
 
 #### :bug: Bug Fix
