@@ -23,16 +23,6 @@
               @forceShowErrors={{@forceShowErrors}}
               @show={{@show}}
             />
-
-            {{! template-lint-disable simple-unless}}
-            {{#unless
-              (macroCondition (macroGetOwnConfig "helpTextBelowLabel"))
-            }}
-              {{#unless @show}}
-                {{! template-lint-disable no-triple-curlies}}
-                <AuHelpText>{{{field.help}}}</AuHelpText>
-              {{/unless}}
-            {{/unless}}
           {{/let}}
         </li>
       {{/if}}
