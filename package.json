@@ -31,7 +31,6 @@
   "dependencies": {
     "@babel/core": "7.26.0",
     "@embroider/macros": "^1.13.5",
-    "@lblod/submission-form-helpers": "^3.0.0",
     "client-zip": "^2.4.4",
     "clipboardy": "^4.0.0",
     "ember-auto-import": "^2.8.1",
@@ -47,6 +46,7 @@
   },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^3.7.0",
+    "@lblod/submission-form-helpers": "^3.0.0",
     "ember-data": "^5.0.0",
     "ember-power-select": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "ember-source": ">= 4.0.0"
@@ -61,6 +61,7 @@
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@lblod/submission-form-helpers": "^3.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
     "ember-basic-dropdown": "^8.3.0",
