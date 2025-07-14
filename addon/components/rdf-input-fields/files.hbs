@@ -69,14 +69,5 @@
     {{/each}}
   {{/unless}}
 {{else}}
-  {{! TODO: Remove this check once we drop Appuniversum v2 support }}
-  {{#if
-    (macroCondition
-      (macroDependencySatisfies "@appuniversum/ember-appuniversum" "^3.2.0")
-    )
-  }}
-    <AuLoader @centered={{false}} @hideMessage={{true}}>Bestanden aan het laden</AuLoader>
-  {{else}}
-    <AuLoader @padding="small" />
-  {{/if}}
+  <AuLoader @centered={{false}} @hideMessage={{true}}>Bestanden aan het laden</AuLoader>
 {{/if}}
