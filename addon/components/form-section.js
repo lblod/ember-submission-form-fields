@@ -1,18 +1,20 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+
 import { A } from '@ember/array';
-import { getChildrenForSection } from '../utils/model-factory';
+import { tracked } from '@glimmer/tracking';
+import { helper } from '@ember/component/helper';
 import { guidFor } from '@ember/object/internals';
+
+import { task } from 'ember-concurrency';
 import { validationResultsForField } from '@lblod/submission-form-helpers';
-/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
-import { next } from '@ember/runloop';
 import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last';
+
+import { getChildrenForSection } from '../utils/model-factory';
 import {
   PROPERTY_GROUP_DISPLAY_TYPE,
   SECTION_DISPLAY_TYPE,
 } from '../models/section';
 import { LISTING_TYPE } from '../models/listing';
-import { helper } from '@ember/component/helper';
 import componentForDisplayType from '../-private/helpers/component-for-display-type';
 import Listing from './listing';
 
@@ -44,13 +46,11 @@ export default class SubmissionFormSectionComponent extends Component {
   constructor() {
     super(...arguments);
 
-    next(this, () => {
-      this.update(this.args.section, {
-        form: this.args.form,
-        store: this.args.formStore,
-        graphs: this.args.graphs,
-        node: this.args.sourceNode,
-      });
+    this.update.perform(this.args.section, {
+      form: this.args.form,
+      store: this.args.formStore,
+      graphs: this.args.graphs,
+      node: this.args.sourceNode,
     });
   }
 
@@ -96,7 +96,7 @@ export default class SubmissionFormSectionComponent extends Component {
 
   register() {
     this.args.formStore.registerObserver(() => {
-      this.update(this.args.section, {
+      this.update.perform(this.args.section, {
         form: this.args.form,
         store: this.args.formStore,
         graphs: this.args.graphs,
@@ -109,56 +109,53 @@ export default class SubmissionFormSectionComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  update(section, { form, store, graphs, node }) {
-    this.deregister(); // NOTE: to prevent calling ourself up again with changes
+  update = task(
+    { restartable: true },
+    async (section, { form, store, graphs, node }) => {
+      this.deregister(); // NOTE: to prevent calling ourself up again with changes
 
-    // If the component is being destroyed we don't need to update our children since those are being destroyed as well
-    // This prevents an observer loop where children remove triples which causes all observers to get notified.
-    if (this.isDestroying) {
-      return;
-    }
+      // 1) retrieve the to be rendered children (!!could be nested sections or fields) for this section
+      const children = await getChildrenForSection(section, {
+        form,
+        store,
+        graphs,
+        node,
+      });
 
-    // 1) retrieve the to be rendered children (!!could be nested sections or fields) for this section
-    const children = getChildrenForSection(section, {
-      form,
-      store,
-      graphs,
-      node,
-    });
-
-    // 2) calculate to be removed
-    const deletes = this.children.filter(
-      (rendered) => !children.find((child) => child.uri.equals(rendered.uri)),
-    );
-
-    // 4) remove the "unwanted" children
-    if (deletes.length) {
-      this.children.removeObjects(deletes);
-    }
-
-    // 5. create a new list to render, merging already (rendered) children, with new children.
-    // We don't want to re-render components, to avoid flickering behaviour and state loss.
-    const mergedChildren = A();
-
-    for (const child of children) {
-      const existingField = this.children.find((eField) =>
-        eField.uri.equals(child.uri),
+      // 2) calculate to be removed
+      const deletes = this.children.filter(
+        (rendered) => !children.find((child) => child.uri.equals(rendered.uri)),
       );
-      if (existingField) {
-        mergedChildren.pushObject(existingField);
-      } else {
-        mergedChildren.pushObject(child);
+
+      // 4) remove the "unwanted" children
+      if (deletes.length) {
+        this.children.removeObjects(deletes);
       }
-    }
 
-    this.children = mergedChildren;
+      // 5. create a new list to render, merging already (rendered) children, with new children.
+      // We don't want to re-render components, to avoid flickering behavior and state loss.
+      const mergedChildren = A();
 
-    // 6) update the validation
-    this.validations = validationResultsForField(
-      section.uri,
-      this.storeOptions,
-    );
+      for (const child of children) {
+        const existingField = this.children.find((eField) =>
+          eField.uri.equals(child.uri),
+        );
+        if (existingField) {
+          mergedChildren.pushObject(existingField);
+        } else {
+          mergedChildren.pushObject(child);
+        }
+      }
 
-    this.register(); // NOTE: to make sure we get notified on user input
-  }
+      this.children = mergedChildren;
+
+      // 6) update the validation
+      this.validations = await validationResultsForField(
+        section.uri,
+        this.storeOptions,
+      );
+
+      this.register(); // NOTE: to make sure we get notified on user input
+    },
+  );
 }
