@@ -4,10 +4,7 @@
     @required={{this.isRequired}}
     @warning={{this.hasWarnings}}
     for={{this.inputId}}
-    class={{if
-      (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
-      "au-u-margin-bottom-none"
-    }}
+    class={{if @field.help "au-u-margin-bottom-none"}}
   >
     {{@field.label}}
   </AuLabel>
@@ -31,7 +28,10 @@
 />
 {{#unless @show}}
   {{#if this.maxLength}}
-    <AuPill @skin={{unless this.hasRemainingCharacters "error"}} class="au-u-margin-top-tiny">Resterende karakters: {{this.remainingCharacters}}</AuPill>
+    <AuPill
+      @skin={{unless this.hasRemainingCharacters "error"}}
+      class="au-u-margin-top-tiny"
+    >Resterende karakters: {{this.remainingCharacters}}</AuPill>
   {{/if}}
 {{/unless}}
 {{#each this.errors as |error|}}
