@@ -14,14 +14,6 @@ const webpackConfig = {
 
 module.exports = function (defaults) {
   const customBuildConfig = {
-    // TODO: Remove this once we release v3
-    '@lblod/ember-submission-form-fields': {
-      helpTextBelowLabel: true,
-    },
-    '@appuniversum/ember-appuniversum': {
-      dutchDatePickerLocalization: true,
-      disableWormholeElement: true,
-    },
     autoImport: {
       webpack: webpackConfig,
     },
