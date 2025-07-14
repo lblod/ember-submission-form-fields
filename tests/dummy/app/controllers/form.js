@@ -43,13 +43,12 @@ export default class FormController extends Controller {
   }
 
   @action
-  validate() {
-    const result = validateForm(this.form, {
+  async validate() {
+    const isValid = await validateForm(this.form, {
       ...this.graphs,
       sourceNode: this.sourceNode,
       store: this.formStore,
     });
-
-    this.forceShowErrors = !result;
+    this.forceShowErrors = !isValid;
   }
 }

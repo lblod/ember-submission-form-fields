@@ -1,9 +1,6 @@
 <AuLabel
   for={{this.inputId}}
-  class={{if
-    (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
-    "au-u-margin-bottom-none"
-  }}
+  class={{if @field.help "au-u-margin-bottom-none"}}
 >
   {{@field.label}}
 </AuLabel>

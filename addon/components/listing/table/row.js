@@ -22,11 +22,13 @@ export default class ListingTableRow extends Component {
       form: this.args.subForm.uri,
     });
 
-    this.fields = getChildrenForSection(sections[0], {
+    getChildrenForSection(sections[0], {
       form: this.args.subForm.uri,
       store,
       graphs,
       node,
+    }).then((fields) => {
+      this.fields = fields;
     });
   }
 

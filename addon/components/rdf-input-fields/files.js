@@ -111,7 +111,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
         'filter[:uri:]': uri.value,
         page: { size: 1 },
       });
-      const file = files.slice()[0]; // TODO: remove .slice once we support only Ember Data 4.8+
+      const file = files[0];
       if (file) return new FileField({ record: file, errors: [] });
       else
         return new FileField({

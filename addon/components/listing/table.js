@@ -24,14 +24,15 @@ export default class ListingTableComponent extends Component {
 
     this.title = this.getTableTitle(tableSubForm);
 
-    let fields = fieldsForForm(tableSubForm, {
+    fieldsForForm(tableSubForm, {
       store,
       formGraph: graphs.formGraph,
       sourceGraph: graphs.sourceGraph,
       metaGraph: graphs.metaGraph,
       sourceNode: listingTableNode,
+    }).then((fields) => {
+      this.tableHeaders = this.getTableHeaders(fields);
     });
-    this.tableHeaders = this.getTableHeaders(fields);
 
     this.showRowIndex =
       store.any(

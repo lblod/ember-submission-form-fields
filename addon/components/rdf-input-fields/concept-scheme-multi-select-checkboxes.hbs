@@ -1,10 +1,4 @@
-<AuFieldset
-  class={{if
-    (and (macroGetOwnConfig "helpTextBelowLabel") @field.help)
-    "sf-u-gap-initial"
-  }}
-  as |f|
->
+<AuFieldset class={{if @field.help "sf-u-gap-initial"}} as |f|>
   <f.legend
     @required={{this.isRequired}}
     @requiredLabel={{this.requiredLabel}}
