@@ -42,8 +42,8 @@ export default class SubmissionFormComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  getSections(store, formGraph, sourceGraph, sourceNode, metaGraph) {
-    let fieldUris = fieldsForForm(this.args.form, {
+  async getSections(store, formGraph, sourceGraph, sourceNode, metaGraph) {
+    let fieldUris = await fieldsForForm(this.args.form, {
       store,
       formGraph,
       sourceGraph,
