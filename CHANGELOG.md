@@ -1,3 +1,8 @@
+## v3.0.1 (2025-11-13)
+
+#### :bug: Bug Fix
+* [#214](https://github.com/lblod/ember-submission-form-fields/pull/214) Fix a `SubmissionForm` issue ([@Windvis](https://github.com/Windvis))
+
 ## v3.0.0 (2025-07-14)
 
 > [!NOTE]
