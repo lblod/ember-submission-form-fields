@@ -1,3 +1,8 @@
+## v3.1.0 (2025-11-26)
+
+#### :rocket: Enhancement
+* [#215](https://github.com/lblod/ember-submission-form-fields/pull/215) [SFB-264] Add support for show-only custom fields ([@Windvis](https://github.com/Windvis))
+
 ## v3.0.1 (2025-11-13)
 
 #### :bug: Bug Fix
