@@ -11,7 +11,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 module('Unit | Utility | display-type', function () {
   module('getComponentForDisplayType', function (hooks) {
-    hooks.beforeEach(function () {
+    hooks.afterEach(function () {
       resetBuiltInComponentRegistrations();
       resetCustomComponentRegistrations();
     });
@@ -58,6 +58,22 @@ module('Unit | Utility | display-type', function () {
         );
 
         assert.notOk(FieldComponent, 'no component class was returned');
+      }, 'it throws an error');
+    });
+
+    test('it throws an error if the edit component is requested but only a show component was registered', function (assert) {
+      registerComponentsForDisplayType([
+        {
+          displayType: TEST_DISPLAY_TYPE,
+          show: ShowComponent,
+        },
+      ]);
+
+      let FieldComponent = getComponentForDisplayType(TEST_DISPLAY_TYPE, true);
+
+      assert.strictEqual(FieldComponent, ShowComponent);
+      assert.throws(() => {
+        getComponentForDisplayType(TEST_DISPLAY_TYPE);
       }, 'it throws an error');
     });
   });

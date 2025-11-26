@@ -167,14 +167,13 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     }, /Registering a component for the 'http:\/\/lblod\.data\.gift\/display-types\/built-in' display type isn't allowed since a built-in component already handles it./);
   });
 
-  test('it throws an error if no edit component is provided', function (assert) {
+  test('it throws an error if no components are provided', function (assert) {
     assert.throws(() => {
       registerFormFields([
         {
           displayType: 'http://lblod.data.gift/display-types/hello',
-          show: ShowComponent,
         },
       ]);
-    }, /The edit component is required when registering custom fields/);
+    }, /A show or edit component is required when registering custom fields/);
   });
 });
