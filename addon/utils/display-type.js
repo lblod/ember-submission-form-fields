@@ -64,8 +64,8 @@ export function registerComponentsForDisplayType(
     );
 
     assert(
-      `The edit component is required when registering custom fields`,
-      Boolean(edit),
+      `A show or edit component is required when registering custom fields`,
+      Boolean(edit) || Boolean(show),
     );
 
     if (shouldBeRegisteredAsBuiltIn) {
