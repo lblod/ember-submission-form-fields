@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { SHACL, FORM, fieldsForForm } from '@lblod/submission-form-helpers';
 import ListingTableRow from './table/row';
 import Field from '@lblod/ember-submission-form-fields/models/field';
@@ -7,6 +8,8 @@ import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last
 export default class ListingTableComponent extends Component {
   ListingTableRow = ListingTableRow;
   isLast = isLast;
+
+  @tracked tableHeaders = [];
 
   constructor() {
     super(...arguments);
