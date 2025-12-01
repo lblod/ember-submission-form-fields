@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import {
   getChildrenForSection,
   getTopLevelSections,
@@ -9,6 +10,8 @@ import componentForDisplayType from '../../../-private/helpers/component-for-dis
 export default class ListingTableRow extends Component {
   componentForDisplayType = componentForDisplayType;
   OrderButtonGroup = OrderButtonGroup;
+
+  @tracked fields = [];
 
   constructor() {
     super(...arguments);
