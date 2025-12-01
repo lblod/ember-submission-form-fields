@@ -1,3 +1,9 @@
+## v3.1.1 (2025-12-01)
+
+#### :bug: Bug Fix
+* [#217](https://github.com/lblod/ember-submission-form-fields/pull/217) Add some extra whitespace to the files component ([@Windvis](https://github.com/Windvis))
+* [#216](https://github.com/lblod/ember-submission-form-fields/pull/216) Fix a listing rendering issue ([@Windvis](https://github.com/Windvis))
+
 ## v3.1.0 (2025-11-26)
 
 #### :rocket: Enhancement
