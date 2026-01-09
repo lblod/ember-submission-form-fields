@@ -14,6 +14,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @service toaster;
 
   @tracked remoteUrls;
+  @tracked sourceDocumentUrls;
+  @tracked attachmentUrls;
   @tracked hasRemoteUrlErrors = false;
 
   constructor() {
@@ -48,6 +50,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   loadRemoteUrls = task(async () => {
     const matches = triplesForPath(this.storeOptions);
     const remoteUrls = [];
+    const sourceDocumentUrls = [];
+    const attachmentUrls = [];
 
     for (let uri of matches.values) {
       try {
@@ -61,7 +65,17 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       }
     }
 
+    for (const remoteUrl of remoteUrls) {
+      const creator = await remoteUrl.creator;
+      if (creator === 'http://lblod.data.gift/services/automatic-submission-service')
+        sourceDocumentUrls.push(remoteUrl);
+      if (creator === 'http://lblod.data.gift/services/import-submission-service')
+        attachmentUrls.push(remoteUrl);
+
     this.remoteUrls = remoteUrls;
+    this.sourceDocumentUrls = sourceDocumentUrls;
+    this.attachmentUrls = attachmentUrls;
+    }
   });
 
   isRemoteDataObject(subject) {
