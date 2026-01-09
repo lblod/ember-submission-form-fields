@@ -93,14 +93,15 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   }
 
   async loadRemoteDataObjectRecord(remoteObjectUri) {
-    const remoteUrls = await this.store.query('remote-url', {
+    const remoteUrls = await this.store.query('remote-data-object', {
       'filter[:uri:]': remoteObjectUri.value,
       page: { size: 1 },
+      include: 'file',
     });
     if (remoteUrls.length) {
       return remoteUrls[0];
     } else {
-      throw `No remote-url could be found for ${remoteObjectUri}`;
+      throw `No remote-data-object could be found for ${remoteObjectUri}`;
     }
   }
 
