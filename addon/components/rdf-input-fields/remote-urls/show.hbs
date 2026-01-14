@@ -1,6 +1,20 @@
 <div class="au-u-flex au-u-flex--between au-u-margin-bottom">
   <AuLabel>
     {{@field.label}}
+    <AuTooltip @placement="right" as |tooltip|>
+      <AuBadge
+        {{tooltip.target}}
+        @skin="border"
+        @icon="question-circle"
+        @size="small"
+        class="au-u-margin-left-small"
+      >
+      </AuBadge>
+      <tooltip.Content>
+        Bij het indienen wordt er een kopie van het document in de link
+        gegenereerd en opgeslagen.
+      </tooltip.Content>
+    </AuTooltip>
   </AuLabel>
 
   {{#if this.canDownloadZip}}
@@ -18,16 +32,6 @@
 
 {{#if this.loadRemoteUrls.isIdle}}
   {{#if this.remoteUrls}}
-    <AuHelpText
-      @skin="secondary"
-      @size="small"
-      class="au-u-flex au-u-flex--vertical-center au-u-margin-bottom-tiny"
-    >
-      <AuIcon @icon="circle-info" @alignment="left" @size="large" />
-      Bij het indienen wordt er een kopie van het document in de link
-      gegenereerd en opgeslagen.
-    </AuHelpText>
-
     <AuHelpText
       @skin="secondary"
       @size="large"
