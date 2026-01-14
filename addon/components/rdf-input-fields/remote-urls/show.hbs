@@ -1,11 +1,26 @@
 <div class="au-u-flex au-u-flex--between au-u-margin-bottom">
   <AuLabel>
     {{@field.label}}
+    <AuTooltip @placement="right" as |tooltip|>
+      <AuBadge
+        {{tooltip.target}}
+        @skin="border"
+        @icon="question-circle"
+        @size="small"
+        class="au-u-margin-left-small"
+      >
+      </AuBadge>
+      <tooltip.Content>
+        Bij het indienen wordt er een kopie van het document in de link
+        gegenereerd en opgeslagen.
+      </tooltip.Content>
+    </AuTooltip>
   </AuLabel>
 
   {{#if this.canDownloadZip}}
     <AuButton
-      @skin="secondary"
+      @skin="primary"
+      @icon="download"
       @loading={{this.downloadAsZip.isRunning}}
       @loadingMessage=".zip aan het genereren"
       {{on "click" this.downloadAsZip.perform}}
@@ -19,42 +34,39 @@
   {{#if this.remoteUrls}}
     <AuHelpText
       @skin="secondary"
-      @size="small"
-      class="au-u-flex au-u-flex--vertical-center au-u-margin-bottom-tiny"
+      @size="large"
+      class="au-u-bold au-u-margin"
     >
-      <AuIcon @icon="circle-info" @alignment="left" @size="large" />
-      Bij het indienen wordt er een kopie van het document in de link
-      gegenereerd en opgeslagen.
+      Brondocumenten
     </AuHelpText>
-
     <ul class="au-o-flow au-o-flow--tiny">
-      {{#each this.remoteUrls as |remoteUrl|}}
-        <li class="remote-url-list-card au-o-box au-o-box--small">
-          <div class="au-u-flex au-u-flex--between">
-            <AuLinkExternal
-              @icon="external-link"
-              href={{remoteUrl.address}}
-            >{{remoteUrl.address}}</AuLinkExternal>
-            <div>
-              {{#if remoteUrl.downloadSuccess}}
-                <AuLinkExternal
-                  @icon="download"
-                  href={{remoteUrl.downloadLink}}
-                  class="au-u-margin-left-small"
-                  download
-                >
-                  Download
-                </AuLinkExternal>
-              {{/if}}
-            </div>
-          </div>
-        </li>
+      {{#each this.sourceDocumentUrls as |remoteUrl|}}
+        <this.RemoteDataObject
+          @model={{remoteUrl}}
+        ></this.RemoteDataObject>
       {{/each}}
     </ul>
+
+    {{#if this.attachmentUrls}}
+      <AuHelpText
+        @skin="secondary"
+        @size="large"
+        class="au-u-bold au-u-margin"
+      >
+        Bijlagen
+      </AuHelpText>
+      <ul class="au-o-flow au-o-flow--tiny">
+        {{#each this.attachmentUrls as |remoteUrl|}}
+          <this.RemoteDataObject
+            @model={{remoteUrl}}
+          ></this.RemoteDataObject>
+        {{/each}}
+      </ul>
+    {{/if}}
   {{else}}
     {{#if this.hasRemoteUrlErrors}}
       <AuAlert @skin="error" @icon="info-circle" @size="small">
-        Er ging iets fout bij het ophalen van de addressen.
+        Er ging iets fout bij het ophalen van de adressen.
       </AuAlert>
     {{else}}
       <AuHelpText class="au-u-margin-bottom-tiny">

@@ -8,13 +8,18 @@ import { downloadZip } from 'client-zip';
 import { RDF } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { triggerZipDownload } from '../../../-private/utils/download';
+import FormInputFieldsRemoteUrlsRemoteDataObjectComponent from './remote-data-object';
 
 export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @service store;
   @service toaster;
 
   @tracked remoteUrls;
+  @tracked sourceDocumentUrls;
+  @tracked attachmentUrls;
   @tracked hasRemoteUrlErrors = false;
+
+  RemoteDataObject = FormInputFieldsRemoteUrlsRemoteDataObjectComponent;
 
   constructor() {
     super(...arguments);
@@ -48,6 +53,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   loadRemoteUrls = task(async () => {
     const matches = triplesForPath(this.storeOptions);
     const remoteUrls = [];
+    const sourceDocumentUrls = [];
+    const attachmentUrls = [];
 
     for (let uri of matches.values) {
       try {
@@ -61,7 +68,18 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       }
     }
 
+    for (const remoteUrl of remoteUrls) {
+      const creator = await remoteUrl.creator;
+      if (creator === 'http://lblod.data.gift/services/automatic-submission-service'
+          || creator === 'http://lblod.data.gift/services/validate-submission-service')
+        sourceDocumentUrls.push(remoteUrl);
+      if (creator === 'http://lblod.data.gift/services/import-submission-service')
+        attachmentUrls.push(remoteUrl);
+
     this.remoteUrls = remoteUrls;
+    this.sourceDocumentUrls = sourceDocumentUrls;
+    this.attachmentUrls = attachmentUrls;
+    }
   });
 
   isRemoteDataObject(subject) {
@@ -79,14 +97,15 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   }
 
   async loadRemoteDataObjectRecord(remoteObjectUri) {
-    const remoteUrls = await this.store.query('remote-url', {
+    const remoteUrls = await this.store.query('remote-data-object', {
       'filter[:uri:]': remoteObjectUri.value,
       page: { size: 1 },
+      include: 'file',
     });
     if (remoteUrls.length) {
       return remoteUrls[0];
     } else {
-      throw `No remote-url could be found for ${remoteObjectUri}`;
+      throw `No remote-data-object could be found for ${remoteObjectUri}`;
     }
   }
 
