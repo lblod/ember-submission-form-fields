@@ -1,0 +1,98 @@
+{{#if @model.downloadFailed}}
+  <li class="remote-url-list-card au-o-box au-o-box--small">
+    <div class="au-u-flex au-u-flex--between">
+      <div>
+        <AuLabel
+          @error={{true}}
+        >
+          Bestand onbeschikbaar
+          <AuTooltip @placement="right" as |tooltip|>
+            <AuBadge
+              {{tooltip.target}}
+              @skin="border"
+              @icon="question-circle"
+              @size="small"
+              class="au-u-margin-left-small"
+            >
+            </AuBadge>
+            <tooltip.Content>
+              Dit bestand kon niet worden gedownload tijdens de inzending van
+              dit document. Probeer onderstaande URL om het alsog te proberen
+              raadplegen.
+            </tooltip.Content>
+          </AuTooltip>
+        </AuLabel>
+        <AuLinkExternal
+          @icon="external-link"
+          href={{@model.source}}
+        >
+          {{@model.source}}
+        </AuLinkExternal>
+      </div>
+      <div>
+        {{#if @model.downloadSuccess}}
+          <AuLinkExternal
+            @icon="download"
+            @skin="button"
+            href={{@model.downloadLink}}
+            class="au-u-margin-left-small"
+            download
+          >
+            Download
+          </AuLinkExternal>
+        {{/if}}
+      </div>
+    </div>
+  </li>
+{{else}}
+  <li class="remote-url-list-card au-o-box au-o-box--small">
+    <div class="au-u-flex au-u-flex--between">
+      <div>
+        <AuLabel>
+          {{@model.file.filenameWithoutExtension}}
+          <AuTooltip @placement="right" as |tooltip|>
+            <AuBadge
+              {{tooltip.target}}
+              @skin="border"
+              @icon="question-circle"
+              @size="small"
+              class="au-u-margin-left-small"
+            >
+            </AuBadge>
+            <tooltip.Content>
+              Mogelijk is deze bestandsnaam cryptisch. Soms is het niet mogelijk om de originele bestandsnaam te tonen, nog om een degelijke bestandsnaam te tonen.
+            </tooltip.Content>
+          </AuTooltip>
+        </AuLabel>
+        <div class="au-u-margin-bottom-small">
+          <AuPill
+            @icon="file"
+            class="au-u-margin-right-tiny"
+          >
+            {{@model.file.extensionFormatted}}
+          </AuPill>
+          {{@model.file.humanReadableSize}}
+        </div>
+        <AuLinkExternal
+          @icon="external-link"
+          href={{@model.source}}
+        >
+          {{@model.source}}
+        </AuLinkExternal>
+      </div>
+      <div>
+        {{#if @model.downloadSuccess}}
+          <AuLinkExternal
+            @icon="download"
+            @skin="button"
+            href={{@model.downloadLink}}
+            class="au-u-margin-left-small"
+            download
+          >
+            Download
+          </AuLinkExternal>
+        {{/if}}
+      </div>
+    </div>
+  </li>
+{{/if}}

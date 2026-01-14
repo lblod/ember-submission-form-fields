@@ -8,6 +8,7 @@ import { downloadZip } from 'client-zip';
 import { RDF } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { triggerZipDownload } from '../../../-private/utils/download';
+import FormInputFieldsRemoteUrlsRemoteDataObjectComponent from './remote-data-object';
 
 export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @service store;
@@ -17,6 +18,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @tracked sourceDocumentUrls;
   @tracked attachmentUrls;
   @tracked hasRemoteUrlErrors = false;
+
+  RemoteDataObject = FormInputFieldsRemoteUrlsRemoteDataObjectComponent;
 
   constructor() {
     super(...arguments);
