@@ -67,7 +67,8 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
     for (const remoteUrl of remoteUrls) {
       const creator = await remoteUrl.creator;
-      if (creator === 'http://lblod.data.gift/services/automatic-submission-service')
+      if (creator === 'http://lblod.data.gift/services/automatic-submission-service'
+          || creator === 'http://lblod.data.gift/services/validate-submission-service')
         sourceDocumentUrls.push(remoteUrl);
       if (creator === 'http://lblod.data.gift/services/import-submission-service')
         attachmentUrls.push(remoteUrl);
