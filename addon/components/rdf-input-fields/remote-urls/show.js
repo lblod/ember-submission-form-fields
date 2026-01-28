@@ -60,7 +60,6 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
         this.hasRemoteUrlErrors = true;
       }
     }
-
     this.remoteUrls = remoteUrls;
   });
 

@@ -84,18 +84,16 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     return this.remoteUrls.some((url) => url.isInvalid);
   }
 
-  loadProvidedValue() {
+  async loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    let persistedUrls = [];
+    const persistedUrls = [];
 
     for (let uri of matches.values) {
       if (this.isRemoteDataObject(uri)) {
-        this.retrieveRemoteDataObject(uri).then((remoteUrl) =>
-          persistedUrls.push(remoteUrl),
-        );
+        const remoteUrl = await this.retrieveRemoteDataObject(uri);
+        persistedUrls.push(remoteUrl);
       }
     }
-
     this.remoteUrls = persistedUrls;
   }
 
