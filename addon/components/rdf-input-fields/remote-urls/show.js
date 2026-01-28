@@ -47,13 +47,12 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
   loadRemoteUrls = task(async () => {
     const matches = triplesForPath(this.storeOptions);
-    const remoteUrls = [];
 
     for (let uri of matches.values) {
       try {
         if (this.isRemoteDataObject(uri)) {
           const record = await this.loadRemoteDataObjectRecord(uri);
-          remoteUrls.push(record);
+          this.remoteUrls = [...this.remoteUrls, record];
         }
       } catch (error) {
         console.error(error);
@@ -61,7 +60,6 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       }
     }
 
-    this.remoteUrls = remoteUrls;
   });
 
   isRemoteDataObject(subject) {
