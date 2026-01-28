@@ -1,3 +1,8 @@
+## v3.1.2 (2026-01-28)
+
+#### :bug: Bug Fix
+* [#219](https://github.com/lblod/ember-submission-form-fields/pull/219) [DL-7151] Fix the data loading in the remote-url field ([@cecemel](https://github.com/cecemel))
+
 ## v3.1.1 (2025-12-01)
 
 #### :bug: Bug Fix
