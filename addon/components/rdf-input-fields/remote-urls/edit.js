@@ -86,7 +86,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
 
   async loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    let persistedUrls = [];
+    const persistedUrls = [];
 
     for (let uri of matches.values) {
       if (this.isRemoteDataObject(uri)) {

@@ -47,7 +47,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
   loadRemoteUrls = task(async () => {
     const matches = triplesForPath(this.storeOptions);
-    let remoteUrls = [];
+    const remoteUrls = [];
 
     for (let uri of matches.values) {
       try {
