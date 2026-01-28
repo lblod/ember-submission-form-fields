@@ -47,18 +47,20 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
 
   loadRemoteUrls = task(async () => {
     const matches = triplesForPath(this.storeOptions);
+    let remoteUrls = [];
 
     for (let uri of matches.values) {
       try {
         if (this.isRemoteDataObject(uri)) {
           const record = await this.loadRemoteDataObjectRecord(uri);
-          this.remoteUrls = [...this.remoteUrls, record];
+          remoteUrls.push(record);
         }
       } catch (error) {
         console.error(error);
         this.hasRemoteUrlErrors = true;
       }
     }
+    this.remoteUrls = remoteUrls;
   });
 
   isRemoteDataObject(subject) {
