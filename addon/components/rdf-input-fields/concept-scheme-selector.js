@@ -18,6 +18,10 @@ function byLabel(a, b) {
   return textA < textB ? -1 : textA > textB ? 1 : 0;
 }
 
+function byOrder(a, b) {
+  return a.order.localeCompare(b.order, undefined, { numeric: true });
+}
+
 export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
   HelpText = HelpText;
@@ -34,12 +38,12 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
   }
 
   loadOptions() {
-    const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
 
     // Note: a mix of old spec and new spec is possible here.
     // Maybe add validation to enforce useage of one of the two specifications.
-    let { conceptScheme, isSearchEnabled } = this.getFieldOptionsByPredicates();
+    let { conceptScheme, isSearchEnabled, orderBy } =
+      this.getFieldOptionsByPredicates();
 
     // New form-spec for conceptScheme didn't yield result; trying old form-spec
     if (!conceptScheme) {
@@ -48,6 +52,12 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         return;
       }
       conceptScheme = new NamedNode(fieldOptions.conceptScheme);
+    }
+
+    if (!orderBy) {
+      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
+        orderBy = new NamedNode(fieldOptions.orderBy);
+      }
     }
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
@@ -59,18 +69,26 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
       this.searchEnabled = Literal.toJS(isSearchEnabled);
     }
 
-    this.options = this.args.formStore
-      .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
+    this.options = this.store
+      .match(undefined, SKOS('inScheme'), conceptScheme, this.metaGraph)
       .map((t) => {
-        const label = this.args.formStore.any(
+        const label = this.store.any(
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph,
+          this.metaGraph,
         );
-        return { subject: t.subject, label: label && label.value };
+        return {
+          subject: t.subject,
+          label: label && label.value,
+          order: this.getOrderForOption(orderBy, t.subject),
+        };
       });
-    this.options.sort(byLabel);
+    if (orderBy) {
+      this.options.sort(byOrder);
+    } else {
+      this.options.sort(byLabel);
+    }
   }
 
   loadProvidedValue() {
@@ -122,6 +140,31 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         undefined,
         this.args.graphs.formGraph,
       ),
+      orderBy: this.args.formStore.any(
+        this.args.field.uri,
+        FIELD_OPTION('orderBy'),
+        undefined,
+        this.args.graphs.formGraph,
+      ),
     };
+  }
+
+  getOrderForOption(orderBy, tripleSubject) {
+    const orderStatement = this.store.any(
+      tripleSubject,
+      orderBy,
+      undefined,
+      this.metaGraph,
+    );
+
+    return `${orderStatement?.value ?? ''}`;
+  }
+
+  get metaGraph() {
+    return this.args.graphs.metaGraph;
+  }
+
+  get store() {
+    return this.args.formStore;
   }
 }

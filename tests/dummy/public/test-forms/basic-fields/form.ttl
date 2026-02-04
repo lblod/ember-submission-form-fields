@@ -252,6 +252,22 @@ ext:conceptSchemeSelectorField a form:Field ;
 ext:mainFg form:hasField ext:conceptSchemeSelectorField .
 
 ##########################################################
+# Dropdown custom orderBy
+##########################################################
+ext:conceptSchemeSelectorFieldOrderBy a form:Field ;
+    sh:name "Select with custom ordering" ;
+    sh:order 270 ;
+    sh:path ext:conceptSchemeSelectorValue ;
+    fieldOption:conceptScheme exampleConceptSchemes:foo-bar-baz ;
+    fieldOption:searchEnabled false ;
+    fieldOption:orderBy qb:order ;
+    form:displayType displayTypes:conceptSchemeSelector ;
+    form:help """Some form annotation""" ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:conceptSchemeSelectorFieldOrderBy .
+
+##########################################################
 # Multi selector
 ##########################################################
 ext:conceptSchemeMultiSelectorField a form:Field ;
