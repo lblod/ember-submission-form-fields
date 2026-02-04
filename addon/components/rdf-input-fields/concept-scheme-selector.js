@@ -11,16 +11,7 @@ import {
 import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
-
-function byOrder(a, b) {
-  return a.order.localeCompare(b.order, undefined, { numeric: true });
-}
+import { byLabel, byOrder, getOrderForOption } from '../../-private/utils/sort';
 
 export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
@@ -54,12 +45,6 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
       conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
-    if (!orderBy) {
-      if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-        orderBy = new NamedNode(fieldOptions.orderBy);
-      }
-    }
-
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
     if (!isSearchEnabled) {
       if (fieldOptions.searchEnabled !== undefined) {
@@ -81,7 +66,12 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         return {
           subject: t.subject,
           label: label && label.value,
-          order: this.getOrderForOption(orderBy, t.subject),
+          order: getOrderForOption(
+            orderBy,
+            t.subject,
+            this.store,
+            this.metaGraph,
+          ),
         };
       });
     if (orderBy) {
@@ -147,17 +137,6 @@ export default class RdfInputFieldsConceptSchemeSelectorComponent extends InputF
         this.args.graphs.formGraph,
       ),
     };
-  }
-
-  getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.store.any(
-      tripleSubject,
-      orderBy,
-      undefined,
-      this.metaGraph,
-    );
-
-    return `${orderStatement?.value ?? ''}`;
   }
 
   get metaGraph() {

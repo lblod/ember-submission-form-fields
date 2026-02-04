@@ -11,6 +11,7 @@ import {
 import { NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
+import { byOrder, getOrderForOption } from '../../-private/utils/sort';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
@@ -88,25 +89,16 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
           subject,
           label,
           provided,
-          order: this.getOrderForOption(orderBy, t.subject),
+          order: getOrderForOption(
+            orderBy,
+            t.subject,
+            this.store,
+            this.graphs.metaGraph,
+          ),
         };
       });
 
-    this.options.sort((a, b) =>
-      a.order.localeCompare(b.order, undefined, { numeric: true }),
-    );
-  }
-
-  getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.store.any(
-      tripleSubject,
-      orderBy,
-      undefined,
-      this.graphs.metaGraph,
-    );
-
-    // must be string because above we are using string.localCompare
-    return `${orderStatement?.value ?? ''}`;
+    this.options.sort(byOrder);
   }
 
   getFieldOptionsByPredicates() {
