@@ -1,3 +1,8 @@
+## v3.2.0 (2026-02-05)
+
+#### :rocket: Enhancement
+* [#220](https://github.com/lblod/ember-submission-form-fields/pull/220) [DGS-333] Add custom ordering logic support to the concept-scheme-selector field ([@DamonKennes](https://github.com/DamonKennes))
+
 ## v3.1.2 (2026-01-28)
 
 #### :bug: Bug Fix
