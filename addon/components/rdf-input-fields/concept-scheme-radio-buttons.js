@@ -6,6 +6,7 @@ import { SKOS } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
+import { byLabel, byOrder, getOrderForOption } from '../../-private/utils/sort';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
@@ -46,7 +47,12 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
           value: t.subject.value,
           nodeValue: t.subject,
           label: label && label.value,
-          order: this.getOrderForOption(orderBy, t.subject),
+          order: getOrderForOption(
+            orderBy,
+            t.subject,
+            this.store,
+            this.metaGraph,
+          ),
         };
       });
 
@@ -60,18 +66,6 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   @action
   updateValue(option) {
     setTimeout(() => super.updateValue(option.nodeValue), 1);
-  }
-
-  getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.store.any(
-      tripleSubject,
-      orderBy,
-      undefined,
-      this.metaGraph,
-    );
-
-    // This MUST be a string so our byOrder sorting function returns the correct result
-    return `${orderStatement?.value ?? ''}`;
   }
 
   getFieldOptionsByPredicates() {
@@ -98,14 +92,4 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   get store() {
     return this.args.formStore;
   }
-}
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
-
-function byOrder(a, b) {
-  return a.order.localeCompare(b.order, undefined, { numeric: true });
 }

@@ -12,12 +12,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
+import { byLabel } from '../../-private/utils/sort';
 
 export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);

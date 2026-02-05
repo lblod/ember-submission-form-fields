@@ -8,12 +8,7 @@ import {
 } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
 import { NamedNode, Namespace } from 'rdflib';
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
+import { byLabel } from '../../../-private/utils/sort';
 
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
