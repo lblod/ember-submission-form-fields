@@ -1,3 +1,8 @@
+## v3.3.0 (2026-02-12)
+
+#### :rocket: Enhancement
+* [#221](https://github.com/lblod/ember-submission-form-fields/pull/221) Add support for ember-truth-helpers v5 ([@elpoelma](https://github.com/elpoelma))
+
 ## v3.2.0 (2026-02-05)
 
 #### :rocket: Enhancement
