@@ -1,49 +1,4 @@
-{{#if @remoteDataObject.downloadFailed}}
-  <li class="remote-url-list-card au-o-box au-o-box--small">
-    <div class="au-u-flex au-u-flex--between">
-      <div>
-        <AuLabel
-          @error={{true}}
-        >
-          Bestand onbeschikbaar
-          <AuTooltip @placement="right" as |tooltip|>
-            <AuBadge
-              {{tooltip.target}}
-              @skin="border"
-              @icon="question-circle"
-              @size="small"
-              class="au-u-margin-left-small"
-            >
-            </AuBadge>
-            <tooltip.Content>
-              Het bestand kon niet worden gedownload bij de inzending. Probeer
-              het via de onderstaande link.
-            </tooltip.Content>
-          </AuTooltip>
-        </AuLabel>
-        <AuLinkExternal
-          @icon="external-link"
-          href={{@remoteDataObject.source}}
-        >
-          {{@remoteDataObject.source}}
-        </AuLinkExternal>
-      </div>
-      <div>
-        {{#if (this.downloadSuccess @remoteDataObject)}}
-          <AuLinkExternal
-            @icon="download"
-            @skin="button"
-            href={{this.downloadLink @remoteDataObject}}
-            class="au-u-margin-left-small"
-            download
-          >
-            Download
-          </AuLinkExternal>
-        {{/if}}
-      </div>
-    </div>
-  </li>
-{{else}}
+{{#if (this.downloadSuccess @remoteDataObject)}}
   <li class="remote-url-list-card au-o-box au-o-box--small">
     <div class="au-u-flex au-u-flex--between">
       <div>
@@ -73,6 +28,49 @@
           </AuPill>
           {{this.humanReadableSize @remoteDataObject.file}}
         </div>
+        <AuLinkExternal
+          @icon="external-link"
+          href={{@remoteDataObject.source}}
+        >
+          {{@remoteDataObject.source}}
+        </AuLinkExternal>
+      </div>
+      <div>
+        <AuLinkExternal
+          @icon="download"
+          @skin="button"
+          href={{this.downloadLink @remoteDataObject}}
+          class="au-u-margin-left-small"
+          download
+        >
+          Download
+        </AuLinkExternal>
+      </div>
+    </div>
+  </li>
+{{else}}
+  <li class="remote-url-list-card au-o-box au-o-box--small">
+    <div class="au-u-flex au-u-flex--between">
+      <div>
+        <AuLabel
+          @error={{true}}
+        >
+          Bestand onbeschikbaar
+          <AuTooltip @placement="right" as |tooltip|>
+            <AuBadge
+              {{tooltip.target}}
+              @skin="border"
+              @icon="question-circle"
+              @size="small"
+              class="au-u-margin-left-small"
+            >
+            </AuBadge>
+            <tooltip.Content>
+              Het bestand kon niet worden gedownload bij de inzending. Probeer
+              het via de onderstaande link.
+            </tooltip.Content>
+          </AuTooltip>
+        </AuLabel>
         <AuLinkExternal
           @icon="external-link"
           href={{@remoteDataObject.source}}
