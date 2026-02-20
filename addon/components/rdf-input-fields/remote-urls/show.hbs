@@ -32,21 +32,22 @@
 
 {{#if this.loadRemoteUrls.isIdle}}
   {{#if this.remoteUrls}}
-    <AuHelpText
-      @skin="secondary"
-      @size="large"
-      class="au-u-bold au-u-margin"
-    >
-      Brondocumenten
-    </AuHelpText>
-    <ul class="au-o-flow au-o-flow--tiny">
-      {{#each this.sourceDocumentUrls as |remoteUrl|}}
-        <this.RemoteDataObjectInfoCard
-          @remoteDataObject={{remoteUrl}}
-        ></this.RemoteDataObjectInfoCard>
-      {{/each}}
-    </ul>
-
+    {{#if this.sourceDocumentUrls}}
+      <AuHelpText
+        @skin="secondary"
+        @size="large"
+        class="au-u-bold au-u-margin"
+      >
+        Brondocumenten
+      </AuHelpText>
+      <ul class="au-o-flow au-o-flow--tiny">
+        {{#each this.sourceDocumentUrls as |remoteUrl|}}
+          <this.RemoteDataObjectInfoCard
+            @remoteDataObject={{remoteUrl}}
+          ></this.RemoteDataObjectInfoCard>
+        {{/each}}
+      </ul>
+    {{/if}}
     {{#if this.attachmentUrls}}
       <AuHelpText
         @skin="secondary"
