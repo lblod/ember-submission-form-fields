@@ -41,9 +41,9 @@
     </AuHelpText>
     <ul class="au-o-flow au-o-flow--tiny">
       {{#each this.sourceDocumentUrls as |remoteUrl|}}
-        <this.RemoteDataObject
+        <this.RemoteDataObjectInfoCard
           @model={{remoteUrl}}
-        ></this.RemoteDataObject>
+        ></this.RemoteDataObjectInfoCard>
       {{/each}}
     </ul>
 
@@ -57,9 +57,9 @@
       </AuHelpText>
       <ul class="au-o-flow au-o-flow--tiny">
         {{#each this.attachmentUrls as |remoteUrl|}}
-          <this.RemoteDataObject
+          <this.RemoteDataObjectInfoCard
             @model={{remoteUrl}}
-          ></this.RemoteDataObject>
+          ></this.RemoteDataObjectInfoCard>
         {{/each}}
       </ul>
     {{/if}}
