@@ -1,4 +1,4 @@
-{{#if @model.downloadFailed}}
+{{#if @remoteDataObject.downloadFailed}}
   <li class="remote-url-list-card au-o-box au-o-box--small">
     <div class="au-u-flex au-u-flex--between">
       <div>
@@ -23,17 +23,17 @@
         </AuLabel>
         <AuLinkExternal
           @icon="external-link"
-          href={{@model.source}}
+          href={{@remoteDataObject.source}}
         >
-          {{@model.source}}
+          {{@remoteDataObject.source}}
         </AuLinkExternal>
       </div>
       <div>
-        {{#if (this.downloadSuccess @model)}}
+        {{#if (this.downloadSuccess @remoteDataObject)}}
           <AuLinkExternal
             @icon="download"
             @skin="button"
-            href={{this.downloadLink @model}}
+            href={{this.downloadLink @remoteDataObject}}
             class="au-u-margin-left-small"
             download
           >
@@ -48,7 +48,7 @@
     <div class="au-u-flex au-u-flex--between">
       <div>
         <AuLabel>
-          {{this.filenameWithoutExtension @model.file}}
+          {{this.filenameWithoutExtension @remoteDataObject.file}}
           <AuTooltip @placement="right" as |tooltip|>
             <AuBadge
               {{tooltip.target}}
@@ -69,23 +69,23 @@
             @icon="file"
             class="au-u-margin-right-tiny"
           >
-            {{this.extensionFormatted @model.file}}
+            {{this.extensionFormatted @remoteDataObject.file}}
           </AuPill>
-          {{this.humanReadableSize @model.file}}
+          {{this.humanReadableSize @remoteDataObject.file}}
         </div>
         <AuLinkExternal
           @icon="external-link"
-          href={{@model.source}}
+          href={{@remoteDataObject.source}}
         >
-          {{@model.source}}
+          {{@remoteDataObject.source}}
         </AuLinkExternal>
       </div>
       <div>
-        {{#if (this.downloadSuccess @model)}}
+        {{#if (this.downloadSuccess @remoteDataObject)}}
           <AuLinkExternal
             @icon="download"
             @skin="button"
-            href={{this.downloadLink @model}}
+            href={{this.downloadLink @remoteDataObject}}
             class="au-u-margin-left-small"
             download
           >

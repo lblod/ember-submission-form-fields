@@ -42,7 +42,7 @@
     <ul class="au-o-flow au-o-flow--tiny">
       {{#each this.sourceDocumentUrls as |remoteUrl|}}
         <this.RemoteDataObjectInfoCard
-          @model={{remoteUrl}}
+          @remoteDataObject={{remoteUrl}}
         ></this.RemoteDataObjectInfoCard>
       {{/each}}
     </ul>
@@ -58,7 +58,7 @@
       <ul class="au-o-flow au-o-flow--tiny">
         {{#each this.attachmentUrls as |remoteUrl|}}
           <this.RemoteDataObjectInfoCard
-            @model={{remoteUrl}}
+            @remoteDataObject={{remoteUrl}}
           ></this.RemoteDataObjectInfoCard>
         {{/each}}
       </ul>
