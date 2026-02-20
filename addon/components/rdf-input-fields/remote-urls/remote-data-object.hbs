@@ -29,11 +29,11 @@
         </AuLinkExternal>
       </div>
       <div>
-        {{#if @model.downloadSuccess}}
+        {{#if (this.downloadSuccess @model)}}
           <AuLinkExternal
             @icon="download"
             @skin="button"
-            href={{@model.downloadLink}}
+            href={{this.downloadLink @model}}
             class="au-u-margin-left-small"
             download
           >
@@ -48,7 +48,7 @@
     <div class="au-u-flex au-u-flex--between">
       <div>
         <AuLabel>
-          {{@model.file.filenameWithoutExtension}}
+          {{this.filenameWithoutExtension @model.file}}
           <AuTooltip @placement="right" as |tooltip|>
             <AuBadge
               {{tooltip.target}}
@@ -69,9 +69,9 @@
             @icon="file"
             class="au-u-margin-right-tiny"
           >
-            {{@model.file.extensionFormatted}}
+            {{this.extensionFormatted @model.file}}
           </AuPill>
-          {{@model.file.humanReadableSize}}
+          {{this.humanReadableSize @model.file}}
         </div>
         <AuLinkExternal
           @icon="external-link"
@@ -81,11 +81,11 @@
         </AuLinkExternal>
       </div>
       <div>
-        {{#if @model.downloadSuccess}}
+        {{#if (this.downloadSuccess @model)}}
           <AuLinkExternal
             @icon="download"
             @skin="button"
-            href={{@model.downloadLink}}
+            href={{this.downloadLink @model}}
             class="au-u-margin-left-small"
             download
           >
