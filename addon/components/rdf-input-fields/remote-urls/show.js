@@ -68,18 +68,31 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       }
     }
 
+    // Filter the remote data objects by their creator. There are 3 ways a
+    // remote data object is linked to a submission:
+    // The automatic-submission-service downloads the source document for an
+    // automatic submission (= sent it by an external party).
+    // The validate-submission-service links the uploaded files to a submission
+    // when it is created in Loket.
+    // The import-submission-service is responsible for creating attachments to
+    // automatic submissions when they are being processed.
     for (const remoteUrl of remoteUrls) {
-      const creator = await remoteUrl.creator;
-      if (creator === 'http://lblod.data.gift/services/automatic-submission-service'
-          || creator === 'http://lblod.data.gift/services/validate-submission-service')
-        sourceDocumentUrls.push(remoteUrl);
-      if (creator === 'http://lblod.data.gift/services/import-submission-service')
-        attachmentUrls.push(remoteUrl);
+      const creator = remoteUrl.creator;
+      switch (creator) {
+        case 'http://lblod.data.gift/services/import-submission-service':
+          attachmentUrls.push(remoteUrl);
+          break;
+        case 'http://lblod.data.gift/services/automatic-submission-service':
+        case 'http://lblod.data.gift/services/validate-submission-service':
+        default:
+          sourceDocumentUrls.push(remoteUrl);
+          break;
+      }
+    }
 
     this.remoteUrls = remoteUrls;
     this.sourceDocumentUrls = sourceDocumentUrls;
     this.attachmentUrls = attachmentUrls;
-    }
   });
 
   isRemoteDataObject(subject) {
