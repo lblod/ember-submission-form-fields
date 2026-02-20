@@ -9,6 +9,7 @@ import { RDF } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { triggerZipDownload } from '../../../-private/utils/download';
 import RemoteDataObjectInfoCard from './remote-data-object-info-card';
+import * as remoteDataObjectHelpers from '@lblod/ember-submission-form-fields/-private/helpers/remoteDataObject';
 
 export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @service store;
@@ -20,6 +21,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   @tracked hasRemoteUrlErrors = false;
 
   RemoteDataObjectInfoCard = RemoteDataObjectInfoCard;
+  downloadSuccess = remoteDataObjectHelpers.downloadSuccess;
 
   constructor() {
     super(...arguments);
@@ -47,7 +49,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
   }
 
   get downloadableRemoteUrls() {
-    return this.remoteUrls.filter((remoteUrl) => remoteUrl.downloadSuccess);
+    return this.remoteUrls.filter((remoteUrl) => this.downloadSuccess);
   }
 
   loadRemoteUrls = task(async () => {
