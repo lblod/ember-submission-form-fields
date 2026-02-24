@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 
 export const remoteUrlHandlers = [
-  http.get('/remote-urls', async ({ request }) => {
+  http.get('/remote-data-objects', async ({ request }) => {
     await delay();
 
     const url = new URL(request.url);
@@ -26,9 +26,9 @@ function generateJsonApiResponse(mockData) {
     data: [
       {
         id: mockData.id,
-        type: 'remote-urls',
+        type: 'remote-data-object',
         attributes: {
-          address: mockData.address,
+          source: mockData.address,
           created: '2024-02-29T14:47:59.126Z',
           modified: '2024-02-29T14:47:59.126Z',
           'download-status':
@@ -44,12 +44,12 @@ function generateJsonApiResponse(mockData) {
 }
 
 const mockData = {
-  'http://data.lblod.info/remote-url/1': {
+  'http://data.lblod.info/remote-data-object/1': {
     id: '1',
     address:
       'https://www.vlaanderen.be/lokaal-bestuur/loket-voor-lokale-besturen',
   },
-  'http://data.lblod.info/remote-url/2': {
+  'http://data.lblod.info/remote-data-object/2': {
     id: '2',
     address:
       'https://www.vlaanderen.be/lokaal-bestuur/loket-voor-lokale-besturen/toezicht',

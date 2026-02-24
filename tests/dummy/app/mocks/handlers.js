@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { remoteUrlHandlers } from './handlers/remote-url';
+import { remoteUrlHandlers } from './handlers/remote-data-object';
 import { filesHandlers } from './handlers/files';
 
 export const handlers = [
