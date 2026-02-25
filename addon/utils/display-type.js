@@ -58,12 +58,6 @@ export function registerComponentsForDisplayType(
     );
 
     assert(
-      `Registering a component for the '${displayType}' display type isn't allowed since a built-in component already handles it.`,
-      !BUILT_IN_SHOW_COMPONENTS.has(displayType) &&
-        !BUILT_IN_EDIT_COMPONENTS.has(displayType),
-    );
-
-    assert(
       `A show or edit component is required when registering custom fields`,
       Boolean(edit) || Boolean(show),
     );
@@ -106,19 +100,19 @@ export function getComponentForDisplayType(displayType, show) {
   let component;
 
   if (show) {
-    component = BUILT_IN_SHOW_COMPONENTS.get(displayType);
-  }
-
-  if (!component) {
-    component = BUILT_IN_EDIT_COMPONENTS.get(displayType);
-  }
-
-  if (show && !component) {
     component = CUSTOM_SHOW_COMPONENTS.get(displayType);
   }
 
   if (!component) {
     component = CUSTOM_EDIT_COMPONENTS.get(displayType);
+  }
+
+  if (show && !component) {
+    component = BUILT_IN_SHOW_COMPONENTS.get(displayType);
+  }
+
+  if (!component) {
+    component = BUILT_IN_EDIT_COMPONENTS.get(displayType);
   }
 
   assert(
