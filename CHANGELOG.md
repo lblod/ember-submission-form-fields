@@ -1,3 +1,8 @@
+## v3.4.0 (2026-02-25)
+
+#### :rocket: Enhancement
+* [#222](https://github.com/lblod/ember-submission-form-fields/pull/222) Make it possible to override the built-in fields ([@Windvis](https://github.com/Windvis))
+
 ## v3.3.0 (2026-02-12)
 
 #### :rocket: Enhancement
