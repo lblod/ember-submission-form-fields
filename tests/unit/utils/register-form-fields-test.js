@@ -144,7 +144,7 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     }, /`displayType` is required when registering a form field/);
   });
 
-  test('it throws an error when trying to override a built-in display type', function (assert) {
+  test('it can override a built-in display type', function (assert) {
     registerComponentsForDisplayType([
       {
         displayType: 'http://lblod.data.gift/display-types/built-in',
@@ -157,14 +157,19 @@ module('Unit | Utility | registerFormFields', function (hooks) {
       templateOnlyComponent(),
     );
 
-    assert.throws(() => {
+    try {
       registerFormFields([
         {
           displayType: 'http://lblod.data.gift/display-types/built-in',
           edit: ComponentOverride,
         },
       ]);
-    }, /Registering a component for the 'http:\/\/lblod\.data\.gift\/display-types\/built-in' display type isn't allowed since a built-in component already handles it./);
+      assert.step('nothing went wrong');
+    } catch (error) {
+      assert.step('something went wrong');
+    }
+
+    assert.verifySteps(['nothing went wrong']);
   });
 
   test('it throws an error if no components are provided', function (assert) {

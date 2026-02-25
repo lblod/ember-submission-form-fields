@@ -51,6 +51,50 @@ module('Unit | Utility | display-type', function () {
       assert.strictEqual(FieldComponent, ShowComponent);
     });
 
+    test('it prioritizes custom components over the built-in ones for a specific display type', function (assert) {
+      registerComponentsForDisplayType([
+        {
+          displayType: TEST_DISPLAY_TYPE,
+          edit: EditComponent,
+          show: ShowComponent,
+        },
+      ]);
+
+      const CustomEditComponent = setComponentTemplate(
+        hbs`custom edit`,
+        templateOnlyComponent(),
+      );
+      const CustomShowComponent = setComponentTemplate(
+        hbs`custom show`,
+        templateOnlyComponent(),
+      );
+
+      registerComponentsForDisplayType(
+        [
+          {
+            displayType: TEST_DISPLAY_TYPE,
+            edit: CustomEditComponent,
+            show: CustomShowComponent,
+          },
+        ],
+        false,
+      );
+
+      let FieldComponent = getComponentForDisplayType(TEST_DISPLAY_TYPE);
+      assert.strictEqual(
+        FieldComponent,
+        CustomEditComponent,
+        'it returns the custom edit component',
+      );
+
+      FieldComponent = getComponentForDisplayType(
+        TEST_DISPLAY_TYPE,
+        true,
+        'it returns the custom show component',
+      );
+      assert.strictEqual(FieldComponent, CustomShowComponent);
+    });
+
     test('it throws an error if a display type has no corresponding component', function (assert) {
       assert.throws(() => {
         let FieldComponent = getComponentForDisplayType(
