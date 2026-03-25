@@ -12,7 +12,7 @@
       {{#if field.displayType}}
         <li class="au-o-grid__item au-u-1-1">
           {{#let
-            (this.componentForDisplayType field.displayType show=(or @show field.displayShow))
+            (this.componentForDisplayType field.displayType show=(or @show field.disabled))
             as |FormField|
           }}
             <FormField
@@ -21,7 +21,7 @@
               @graphs={{@graphs}}
               @sourceNode={{@sourceNode}}
               @forceShowErrors={{@forceShowErrors}}
-              @show={{or @show field.displayShow}}
+              @show={{or @show field.disabled}}
             />
           {{/let}}
         </li>

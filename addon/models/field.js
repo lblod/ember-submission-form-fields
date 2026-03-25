@@ -26,11 +26,11 @@ export default class FieldModel {
       undefined,
       formGraph,
     );
-    this.rdflibDisplayShow = store.any(
+    this.rdflibFieldDisabled = store.any(
       uri,
-      FORM('displayShow'),
+      FORM('fieldDisabled'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibPath = store.any(uri, SHACL('path'), undefined, formGraph);
     this.rdflibScope = store.any(uri, FORM('scope'), undefined, formGraph);
@@ -85,10 +85,10 @@ export default class FieldModel {
   }
 
   @tracked
-  rdflibDisplayShow = null;
-  get displayShow() {
-    return this.rdflibDisplayShow
-      ? Literal.toJS(this.rdflibDisplayShow)
+  rdflibFieldDisabled = null;
+  get disabled() {
+    return this.rdflibFieldDisabled
+      ? Literal.toJS(this.rdflibFieldDisabled)
       : false;
   }
 
