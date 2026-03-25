@@ -27,13 +27,13 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(EditComponent, FieldComponent);
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(ShowComponent, FieldComponent);
   });
@@ -47,13 +47,13 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(EditComponent, FieldComponent);
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(EditComponent, FieldComponent);
   });
@@ -69,7 +69,7 @@ module('Unit | Utility | registerFormFields', function (hooks) {
 
     let ComponentOverride = setComponentTemplate(
       hbs`override`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
     registerFormFields([
       {
@@ -79,22 +79,22 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     let FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new edit component'
+      'it returns the new edit component',
     );
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(
       ShowComponent,
       FieldComponent,
-      'it returns the previous show component'
+      'it returns the previous show component',
     );
 
     registerFormFields([
@@ -106,22 +106,22 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     ]);
 
     FieldComponent = getComponentForDisplayType(
-      'http://lblod.data.gift/display-types/hello'
+      'http://lblod.data.gift/display-types/hello',
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new edit component'
+      'it returns the new edit component',
     );
 
     FieldComponent = getComponentForDisplayType(
       'http://lblod.data.gift/display-types/hello',
-      true
+      true,
     );
     assert.strictEqual(
       ComponentOverride,
       FieldComponent,
-      'it returns the new show component'
+      'it returns the new show component',
     );
   });
 
@@ -144,7 +144,7 @@ module('Unit | Utility | registerFormFields', function (hooks) {
     }, /`displayType` is required when registering a form field/);
   });
 
-  test('it throws an error when trying to override a built-in display type', function (assert) {
+  test('it can override a built-in display type', function (assert) {
     registerComponentsForDisplayType([
       {
         displayType: 'http://lblod.data.gift/display-types/built-in',
@@ -154,27 +154,31 @@ module('Unit | Utility | registerFormFields', function (hooks) {
 
     let ComponentOverride = setComponentTemplate(
       hbs`override`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
 
-    assert.throws(() => {
+    try {
       registerFormFields([
         {
           displayType: 'http://lblod.data.gift/display-types/built-in',
           edit: ComponentOverride,
         },
       ]);
-    }, /Registering a component for the 'http:\/\/lblod\.data\.gift\/display-types\/built-in' display type isn't allowed since a built-in component already handles it./);
+      assert.step('nothing went wrong');
+    } catch (error) {
+      assert.step('something went wrong');
+    }
+
+    assert.verifySteps(['nothing went wrong']);
   });
 
-  test('it throws an error if no edit component is provided', function (assert) {
+  test('it throws an error if no components are provided', function (assert) {
     assert.throws(() => {
       registerFormFields([
         {
           displayType: 'http://lblod.data.gift/display-types/hello',
-          show: ShowComponent,
         },
       ]);
-    }, /The edit component is required when registering custom fields/);
+    }, /A show or edit component is required when registering custom fields/);
   });
 });

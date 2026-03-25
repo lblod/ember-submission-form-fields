@@ -9,7 +9,7 @@ const FORM_GRAPHS = {
 };
 
 const SOURCE_NODE = new NamedNode(
-  'http://ember-submission-form-fields/source-node'
+  'http://ember-submission-form-fields/source-node',
 );
 
 const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
@@ -40,7 +40,7 @@ export default class FormRoute extends Route {
       undefined,
       RDF('type'),
       FORM('Form'),
-      FORM_GRAPHS.formGraph
+      FORM_GRAPHS.formGraph,
     );
 
     this.form = form;

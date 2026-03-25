@@ -5,6 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import {
   addSimpleFormValue,
   FORM,
@@ -39,13 +40,14 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @service toaster;
   @tracked files = A();
   inputId = `files-${guidFor(this)}`; // TODO for now this doesn't work on the <AuFileUpload /> component.
+  HelpText = HelpText;
 
   constructor() {
     super(...arguments);
     this.loadProvidedValue.perform();
     this.args.formStore.registerObserver(
       this.onStoreUpdate.bind(this),
-      this.inputId
+      this.inputId,
     );
   }
 
@@ -63,7 +65,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
         undefined,
         FORM('displayType'),
         new NamedNode('http://lblod.data.gift/display-types/remoteUrls'),
-        this.storeOptions.formGraph
+        this.storeOptions.formGraph,
       ).length > 0
     );
   }
@@ -91,14 +93,14 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   isFileDataObject(subject) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     return (
       this.storeOptions.store.match(
         subject,
         RDF('type'),
         fileDataObjectType,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
@@ -109,7 +111,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
         'filter[:uri:]': uri.value,
         page: { size: 1 },
       });
-      const file = files.slice()[0]; // TODO: remove .slice once we support only Ember Data 4.8+
+      const file = files[0];
       if (file) return new FileField({ record: file, errors: [] });
       else
         return new FileField({
@@ -127,7 +129,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   insertFileDataObject(fileUri) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     const typeT = {
       subject: new NamedNode(fileUri),
@@ -141,7 +143,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
 
   removeFileDataObject(fileUri) {
     const fileDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject',
     );
     const typeT = {
       subject: new NamedNode(fileUri),
@@ -165,7 +167,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
   @action
   async removeFile(file) {
     const fileField = this.files.find(
-      (f) => f.record && f.record.uri == file.uri
+      (f) => f.record && f.record.uri == file.uri,
     );
     this.removeFileDataObject(file.uri);
     try {
@@ -184,7 +186,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
       return fetch(file.record.downloadLink).then((response) => {
         if (!response.ok) {
           throw new Error(
-            `Something went wrong while trying to download '${file.record.downloadLink}': ${response.status} ${response.statusText}`
+            `Something went wrong while trying to download '${file.record.downloadLink}': ${response.status} ${response.statusText}`,
           );
         }
 
@@ -199,7 +201,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
     } catch (error) {
       console.error(error);
       this.toaster.error(
-        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.'
+        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.',
       );
     }
   });

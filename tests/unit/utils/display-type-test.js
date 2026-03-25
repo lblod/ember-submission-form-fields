@@ -11,7 +11,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 module('Unit | Utility | display-type', function () {
   module('getComponentForDisplayType', function (hooks) {
-    hooks.beforeEach(function () {
+    hooks.afterEach(function () {
       resetBuiltInComponentRegistrations();
       resetCustomComponentRegistrations();
     });
@@ -20,11 +20,11 @@ module('Unit | Utility | display-type', function () {
 
     let EditComponent = setComponentTemplate(
       hbs`edit`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
     let ShowComponent = setComponentTemplate(
       hbs`show`,
-      templateOnlyComponent()
+      templateOnlyComponent(),
     );
 
     test('it returns a component for a given display type URI', function (assert) {
@@ -40,25 +40,84 @@ module('Unit | Utility | display-type', function () {
       assert.strictEqual(
         FieldComponent,
         EditComponent,
-        'it returns the edit component'
+        'it returns the edit component',
       );
 
       FieldComponent = getComponentForDisplayType(
         TEST_DISPLAY_TYPE,
         true,
-        'it returns the show component'
+        'it returns the show component',
       );
       assert.strictEqual(FieldComponent, ShowComponent);
     });
 
+    test('it prioritizes custom components over the built-in ones for a specific display type', function (assert) {
+      registerComponentsForDisplayType([
+        {
+          displayType: TEST_DISPLAY_TYPE,
+          edit: EditComponent,
+          show: ShowComponent,
+        },
+      ]);
+
+      const CustomEditComponent = setComponentTemplate(
+        hbs`custom edit`,
+        templateOnlyComponent(),
+      );
+      const CustomShowComponent = setComponentTemplate(
+        hbs`custom show`,
+        templateOnlyComponent(),
+      );
+
+      registerComponentsForDisplayType(
+        [
+          {
+            displayType: TEST_DISPLAY_TYPE,
+            edit: CustomEditComponent,
+            show: CustomShowComponent,
+          },
+        ],
+        false,
+      );
+
+      let FieldComponent = getComponentForDisplayType(TEST_DISPLAY_TYPE);
+      assert.strictEqual(
+        FieldComponent,
+        CustomEditComponent,
+        'it returns the custom edit component',
+      );
+
+      FieldComponent = getComponentForDisplayType(
+        TEST_DISPLAY_TYPE,
+        true,
+        'it returns the custom show component',
+      );
+      assert.strictEqual(FieldComponent, CustomShowComponent);
+    });
+
     test('it throws an error if a display type has no corresponding component', function (assert) {
-      assert.expect(1);
       assert.throws(() => {
         let FieldComponent = getComponentForDisplayType(
-          'http://lblod.data.gift/display-types/not-registered'
+          'http://lblod.data.gift/display-types/not-registered',
         );
 
         assert.notOk(FieldComponent, 'no component class was returned');
+      }, 'it throws an error');
+    });
+
+    test('it throws an error if the edit component is requested but only a show component was registered', function (assert) {
+      registerComponentsForDisplayType([
+        {
+          displayType: TEST_DISPLAY_TYPE,
+          show: ShowComponent,
+        },
+      ]);
+
+      let FieldComponent = getComponentForDisplayType(TEST_DISPLAY_TYPE, true);
+
+      assert.strictEqual(FieldComponent, ShowComponent);
+      assert.throws(() => {
+        getComponentForDisplayType(TEST_DISPLAY_TYPE);
       }, 'it throws an error');
     });
   });

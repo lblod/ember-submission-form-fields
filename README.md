@@ -2,12 +2,10 @@
 
 This addon provides form and form-fields components to create and edit submissions. In-depth information, usage instructions, and comprehensive details about ember-submission-form-fields can be found in the [Wiki](https://github.com/lblod/ember-submission-form-fields/wiki).
 
-
 ## Compatibility
 
-* Ember.js v3.28 or above
-* Ember CLI v3.28 or above
-* Node.js v14 or above
+* Ember.js v5.12 or above
+* Ember CLI v5.12 or above
 * ember-auto-import v2+
 
 

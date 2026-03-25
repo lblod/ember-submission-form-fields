@@ -7,13 +7,8 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode, Namespace } from 'rdflib';
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
+import { NamedNode, Namespace } from 'rdflib';
+import { byLabel } from '../../../-private/utils/sort';
 
 export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
@@ -30,7 +25,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
   loadOptions() {
     const metaGraph = this.args.graphs.metaGraph;
     const fieldOptions = this.args.field.options;
-    const conceptScheme = new namedNode(fieldOptions.conceptScheme);
+    const conceptScheme = new NamedNode(fieldOptions.conceptScheme);
 
     this.options = this.args.formStore
       .match(undefined, SKOS('inScheme'), conceptScheme, metaGraph)
@@ -39,7 +34,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          metaGraph,
         );
         return { subject: t.subject, label: label && label.value };
       });
@@ -54,7 +49,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
       // The validation makes sure the matching value is the sole one.
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.find((opt) =>
-        matches.find((m) => m.equals(opt.subject))
+        matches.find((m) => m.equals(opt.subject)),
       );
     }
   }
@@ -67,21 +62,21 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
     // Cleanup old value(s) in the store
     const matches = triplesForPath(this.storeOptions, true).values;
     const matchingOptions = matches.filter((m) =>
-      this.options.find((opt) => m.equals(opt.subject))
+      this.options.find((opt) => m.equals(opt.subject)),
     );
     matchingOptions.forEach((m) =>
-      updateSimpleFormValue(this.storeOptions, undefined, m)
+      updateSimpleFormValue(this.storeOptions, undefined, m),
     );
     matchingOptions.forEach((m) => {
       const [bestuursorgaanToDelete, orgaanClassificationToDelete] =
         this.getPathToOrgaanClassification(
           m.subject,
-          this.storeOptions.sourceGraph
+          this.storeOptions.sourceGraph,
         );
       const [bestuurseenheidToDelete, eenheidClassificationToDelete] =
         this.getPathToEenheidClassification(
           bestuursorgaanToDelete.object,
-          this.storeOptions.sourceGraph
+          this.storeOptions.sourceGraph,
         );
 
       this.storeOptions.store.removeStatements([
@@ -146,7 +141,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
       bestuursorgaanInTimeUri,
       MANDAAT('isTijdspecialisatieVan'),
       undefined,
-      graph
+      graph,
     )[0];
 
     let orgaanClassification = undefined;
@@ -155,7 +150,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
         bestuursorgaan.object,
         BESLUIT('classificatie'),
         undefined,
-        graph
+        graph,
       )[0];
     }
 
@@ -169,7 +164,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
       bestuursorgaanUri,
       BESLUIT('bestuurt'),
       undefined,
-      graph
+      graph,
     )[0];
 
     let eenheidClassification = undefined;
@@ -178,7 +173,7 @@ export default class CustomSubmissionFormFieldsBestuursorgaanSelectorEditCompone
         bestuurseenheid.object,
         BESLUIT('classificatie'),
         undefined,
-        undefined
+        undefined,
       )[0];
     }
 

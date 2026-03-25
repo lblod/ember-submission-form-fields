@@ -4,10 +4,13 @@ import { fieldsForForm } from '@lblod/submission-form-helpers';
 import { createPropertyTreeFromFields } from '../utils/model-factory';
 import { A } from '@ember/array';
 import { guidFor } from '@ember/object/internals';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
+import componentForDisplayType from '../-private/helpers/component-for-display-type';
 
 export default class SubmissionFormComponent extends Component {
   @tracked fields = A();
+  componentForDisplayType = componentForDisplayType;
 
   observerLabel = `form-root-${guidFor(this)}`;
 
@@ -19,7 +22,7 @@ export default class SubmissionFormComponent extends Component {
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
-        this.args.graphs.metaGraph
+        this.args.graphs.metaGraph,
       );
     }, this.observerLabel);
 
@@ -29,7 +32,7 @@ export default class SubmissionFormComponent extends Component {
         this.args.graphs.formGraph,
         this.args.graphs.sourceGraph,
         this.args.sourceNode,
-        this.args.graphs.metaGraph
+        this.args.graphs.metaGraph,
       );
     });
   }
@@ -39,8 +42,8 @@ export default class SubmissionFormComponent extends Component {
     this.args.formStore.deregisterObserver(this.observerLabel);
   }
 
-  getSections(store, formGraph, sourceGraph, sourceNode, metaGraph) {
-    let fieldUris = fieldsForForm(this.args.form, {
+  async getSections(store, formGraph, sourceGraph, sourceNode, metaGraph) {
+    let fieldUris = await fieldsForForm(this.args.form, {
       store,
       formGraph,
       sourceGraph,
@@ -73,7 +76,7 @@ export default class SubmissionFormComponent extends Component {
     //Add the new fields, keep the existing ones
     updatedFields.forEach((field, i) => {
       const existingField = this.fields.find((eField) =>
-        eField.uri.equals(field.uri)
+        eField.uri.equals(field.uri),
       );
       if (existingField) {
         this.fields.replace(i, 1, [existingField]);

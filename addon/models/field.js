@@ -16,7 +16,7 @@ export default class FieldModel {
       uri,
       SHACL('description'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibHelp = store.any(uri, FORM('help'), undefined, formGraph);
     this.rdflibOrder = store.any(uri, SHACL('order'), undefined, formGraph);
@@ -24,7 +24,7 @@ export default class FieldModel {
       uri,
       FORM('displayType'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibDisplayShow = store.any(
       uri,
@@ -39,14 +39,14 @@ export default class FieldModel {
       uri,
       FORM('defaultValue'),
       undefined,
-      formGraph
+      formGraph,
     );
 
     this.rdflibLanguage = store.any(
       uri,
       FORM('language'),
       undefined,
-      formGraph
+      formGraph,
     );
 
     if (this.rdflibPath) {

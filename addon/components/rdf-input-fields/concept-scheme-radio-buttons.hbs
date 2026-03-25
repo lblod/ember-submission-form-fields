@@ -1,4 +1,4 @@
-<AuFieldset as |f|>
+<AuFieldset class={{if @field.help "sf-u-gap-initial"}} as |f|>
   <f.legend
     @required={{this.isRequired}}
     @error={{this.hasErrors}}
@@ -7,6 +7,7 @@
     {{@field.label}}
   </f.legend>
   <f.content>
+    <this.HelpText @field={{@field}} />
     <ul>
       {{#each this.options as |option|}}
         <li>

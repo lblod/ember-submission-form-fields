@@ -2,6 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from './input-field';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { updateSimpleFormValue } from '@lblod/submission-form-helpers';
+/* eslint-disable ember/no-runloop -- TODO: replace next with a different pattern */
 import { next } from '@ember/runloop';
 import { isLiteral, Literal } from 'rdflib';
 

@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { SHACL, FORM, fieldsForForm } from '@lblod/submission-form-helpers';
 import ListingTableRow from './table/row';
 import Field from '@lblod/ember-submission-form-fields/models/field';
@@ -7,6 +8,8 @@ import isLast from '@lblod/ember-submission-form-fields/-private/helpers/is-last
 export default class ListingTableComponent extends Component {
   ListingTableRow = ListingTableRow;
   isLast = isLast;
+
+  @tracked tableHeaders = [];
 
   constructor() {
     super(...arguments);
@@ -19,26 +22,27 @@ export default class ListingTableComponent extends Component {
       listingTableNode,
       FORM('each'),
       undefined,
-      graphs.formGraph
+      graphs.formGraph,
     );
 
     this.title = this.getTableTitle(tableSubForm);
 
-    let fields = fieldsForForm(tableSubForm, {
+    fieldsForForm(tableSubForm, {
       store,
       formGraph: graphs.formGraph,
       sourceGraph: graphs.sourceGraph,
       metaGraph: graphs.metaGraph,
       sourceNode: listingTableNode,
+    }).then((fields) => {
+      this.tableHeaders = this.getTableHeaders(fields);
     });
-    this.tableHeaders = this.getTableHeaders(fields);
 
     this.showRowIndex =
       store.any(
         listingTableNode,
         FORM('showTableRowIndex'),
         undefined,
-        graphs.formGraph
+        graphs.formGraph,
       )?.value || false;
 
     if (this.showRowIndex) {
@@ -46,7 +50,7 @@ export default class ListingTableComponent extends Component {
         listingTableNode,
         FORM('tableIndexLabel'),
         undefined,
-        graphs.formGraph
+        graphs.formGraph,
       )?.value;
     }
   }
@@ -54,7 +58,7 @@ export default class ListingTableComponent extends Component {
   getTableTitle(tableForm) {
     let formTitleTriple = this.args.formStore.any(
       tableForm,
-      SHACL('name', undefined, this.args.graphs.formGraph)
+      SHACL('name', undefined, this.args.graphs.formGraph),
     );
 
     return formTitleTriple?.value;

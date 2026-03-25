@@ -38,18 +38,17 @@ export default class FormController extends Controller {
       undefined,
       undefined,
       undefined,
-      this.graphs.sourceGraph
+      this.graphs.sourceGraph,
     );
   }
 
   @action
-  validate() {
-    const result = validateForm(this.form, {
+  async validate() {
+    const isValid = await validateForm(this.form, {
       ...this.graphs,
       sourceNode: this.sourceNode,
       store: this.formStore,
     });
-
-    this.forceShowErrors = !result;
+    this.forceShowErrors = !isValid;
   }
 }

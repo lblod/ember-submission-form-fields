@@ -2,16 +2,18 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { SHACL } from '@lblod/submission-form-helpers';
 import { Namespace } from 'rdflib';
 
 const DATE_RANGE = new Namespace(
-  'http://data.lblod.info/form-fields/date-range/'
+  'http://data.lblod.info/form-fields/date-range/',
 );
 
 export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldComponent {
   inputId = 'date-range-from' + guidFor(this);
   inputIdTo = `date-range-to-${guidFor(this)}`;
+  HelpText = HelpText;
 
   @tracked from;
   @tracked to;
@@ -35,13 +37,13 @@ export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldCo
         store.any(field.uri, DATE_RANGE('from'), undefined, formGraph),
         SHACL('path'),
         undefined,
-        formGraph
+        formGraph,
       ),
       to: store.any(
         store.any(field.uri, DATE_RANGE('to'), undefined, formGraph),
         SHACL('path'),
         undefined,
-        formGraph
+        formGraph,
       ),
     };
 
@@ -99,7 +101,7 @@ export default class RdfInputFieldsDateRangeComponent extends SimpleInputFieldCo
       this.storeOptions.sourceNode,
       predicate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     this.storeOptions.store.removeStatements(triples);
   }

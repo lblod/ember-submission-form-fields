@@ -1,3 +1,89 @@
+## v3.4.0 (2026-02-25)
+
+#### :rocket: Enhancement
+* [#222](https://github.com/lblod/ember-submission-form-fields/pull/222) Make it possible to override the built-in fields ([@Windvis](https://github.com/Windvis))
+
+## v3.3.0 (2026-02-12)
+
+#### :rocket: Enhancement
+* [#221](https://github.com/lblod/ember-submission-form-fields/pull/221) Add support for ember-truth-helpers v5 ([@elpoelma](https://github.com/elpoelma))
+
+## v3.2.0 (2026-02-05)
+
+#### :rocket: Enhancement
+* [#220](https://github.com/lblod/ember-submission-form-fields/pull/220) [DGS-333] Add custom ordering logic support to the concept-scheme-selector field ([@DamonKennes](https://github.com/DamonKennes))
+
+## v3.1.2 (2026-01-28)
+
+#### :bug: Bug Fix
+* [#219](https://github.com/lblod/ember-submission-form-fields/pull/219) [DL-7151] Fix the data loading in the remote-url field ([@cecemel](https://github.com/cecemel))
+
+## v3.1.1 (2025-12-01)
+
+#### :bug: Bug Fix
+* [#217](https://github.com/lblod/ember-submission-form-fields/pull/217) Add some extra whitespace to the files component ([@Windvis](https://github.com/Windvis))
+* [#216](https://github.com/lblod/ember-submission-form-fields/pull/216) Fix a listing rendering issue ([@Windvis](https://github.com/Windvis))
+
+## v3.1.0 (2025-11-26)
+
+#### :rocket: Enhancement
+* [#215](https://github.com/lblod/ember-submission-form-fields/pull/215) [SFB-264] Add support for show-only custom fields ([@Windvis](https://github.com/Windvis))
+
+## v3.0.1 (2025-11-13)
+
+#### :bug: Bug Fix
+* [#214](https://github.com/lblod/ember-submission-form-fields/pull/214) Fix a `SubmissionForm` issue ([@Windvis](https://github.com/Windvis))
+
+## v3.0.0 (2025-07-14)
+
+> [!NOTE]
+> The v2 -> v3 migration guide can be found [here](https://github.com/lblod/ember-submission-form-fields/pull/213).
+
+#### :boom: Breaking Change
+* [#211](https://github.com/lblod/ember-submission-form-fields/pull/211) Drop support for Ember < v5.12 ([@Windvis](https://github.com/Windvis))
+* [#210](https://github.com/lblod/ember-submission-form-fields/pull/210) Remove deprecated code ([@Windvis](https://github.com/Windvis))
+* [#209](https://github.com/lblod/ember-submission-form-fields/pull/209) Convert `@lblod/submission-form-helpers` to a peerDependency ([@Windvis](https://github.com/Windvis))
+* [#208](https://github.com/lblod/ember-submission-form-fields/pull/208) Drop support for old dependencies ([@Windvis](https://github.com/Windvis))
+* [#207](https://github.com/lblod/ember-submission-form-fields/pull/207) LMB-1513 | Async custom validations ([@JonasVanHoof](https://github.com/JonasVanHoof))
+
+#### :house: Internal
+* [#212](https://github.com/lblod/ember-submission-form-fields/pull/212) Update to node 22 ([@Windvis](https://github.com/Windvis))
+
+## v2.26.2 (2025-03-11)
+
+#### :bug: Bug Fix
+* [#206](https://github.com/lblod/ember-submission-form-fields/pull/206) [DL-6466] Don't trim the search field values ([@Windvis](https://github.com/Windvis))
+
+## v2.26.1 (2025-02-25)
+
+#### :bug: Bug Fix
+* [#205](https://github.com/lblod/ember-submission-form-fields/pull/205) Fix an issue with nested form sections ([@Windvis](https://github.com/Windvis))
+
+## v2.26.0 (2025-02-11)
+
+#### :rocket: Enhancement
+* [#202](https://github.com/lblod/ember-submission-form-fields/pull/202) [SFB-263] Add a new `helpTextBelowLabel` build option ([@Windvis](https://github.com/Windvis))
+
+#### :bug: Bug Fix
+* [#203](https://github.com/lblod/ember-submission-form-fields/pull/203) Fix an issue with Rdflib v2.2.36 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#204](https://github.com/lblod/ember-submission-form-fields/pull/204) Remove unneeded app exports ([@Windvis](https://github.com/Windvis))
+
+## v2.25.0 (2025-01-15)
+
+#### :rocket: Enhancement
+* [#201](https://github.com/lblod/ember-submission-form-fields/pull/201) Add support for ember-truth-helpers v4 ([@Windvis](https://github.com/Windvis))
+* [#199](https://github.com/lblod/ember-submission-form-fields/pull/199) Add support for ember-concurrency v4 and power select v8 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#200](https://github.com/lblod/ember-submission-form-fields/pull/200) Update to Ember 5.12 LTS ([@Windvis](https://github.com/Windvis))
+
+## v2.24.2 (2025-01-14)
+
+#### :bug: Bug Fix
+* [#195](https://github.com/lblod/ember-submission-form-fields/pull/195) Fix "true" value handling in boolean components (checkbox/switch) ([@x-m-el](https://github.com/x-m-el))
+
 ## v2.24.1 (2025-01-06)
 
 #### :bug: Bug Fix

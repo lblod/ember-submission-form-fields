@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { RDF, triplesForPath } from '@lblod/submission-form-helpers';
 import { NamedNode } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +13,7 @@ const lblodBesluit = `http://lblod.data.gift/vocabularies/besluit`;
 
 const TaxRateType = new NamedNode(`${lblodBesluit}/TaxRate`);
 const hasAdditionalTaxRate = new NamedNode(
-  `${lblodBesluit}/hasAdditionalTaxRate`
+  `${lblodBesluit}/hasAdditionalTaxRate`,
 );
 const schemaPrice = new NamedNode(`http://schema.org/price`);
 const taxRate = new NamedNode(`${lblodBesluit}/taxRate`);
@@ -40,6 +41,7 @@ class TaxEntry {
 export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldComponent {
   amountColumnId = 'amount-column-' + guidFor(this);
   autofocus = autofocus;
+  HelpText = HelpText;
 
   @tracked taxRateSubject = null;
   @tracked taxEntries = [];
@@ -73,7 +75,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
           this.sourceNode,
           taxRate,
           this.taxRateSubject,
-          this.storeOptions.sourceGraph
+          this.storeOptions.sourceGraph,
         ).length > 0
       );
   }
@@ -84,7 +86,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
         this.taxRateSubject,
         schemaPrice,
         undefined,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
@@ -109,7 +111,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.storeOptions.sourceNode,
       hasAdditionalTaxRate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     if (statements.length > 0) {
       this.differentiatie = statements[0].object.value == '1'; // There is a bug in conversion from rdflib
@@ -121,7 +123,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.storeOptions.sourceNode,
       hasAdditionalTaxRate,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     this.storeOptions.store.removeStatements(statements);
 
@@ -159,7 +161,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       this.taxRateSubject,
       undefined,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     const triples = [
       ...taxRateTriples,
@@ -221,7 +223,7 @@ export default class RdfInputFieldsVlabelOpcentiemComponent extends InputFieldCo
       if (!this.hasPrices) this.removeTaxRate();
     }
     this.taxEntries = this.taxEntries.filter(
-      (taxEntry) => taxEntry !== taxEntryToRemove
+      (taxEntry) => taxEntry !== taxEntryToRemove,
     );
 
     this.hasBeenFocused = true;

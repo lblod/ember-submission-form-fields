@@ -25,7 +25,8 @@
     {{#each this.children as |field|}}
       {{#if field.displayType}}
         {{#if (this.childIsSection field)}}
-          <FormSection
+          {{! TODO: find a way to recursively invoke a component in strict mode so we can remove the app export }}
+          <Private::FormSection
             @level={{this.nextLevel}}
             @form={{@form}}
             @section={{field}}
@@ -45,7 +46,7 @@
             <AuHr @size="large" />
           {{/if}}
         {{else if (this.childIsListing field)}}
-          <Listing
+          <this.Listing
             @level={{this.nextLevel}}
             @listing={{field}}
             @formStore={{@formStore}}
@@ -59,7 +60,7 @@
         {{else}}
           <div class="au-u-margin-bottom-small">
             {{#let
-              (component-for-display-type field.displayType show=(or @show field.displayShow))
+              (this.componentForDisplayType field.displayType show=(or @show field.displayShow))
               as |FormField|
             }}
               <FormField
@@ -73,11 +74,6 @@
                 @show={{or @show field.displayShow}}
               />
             {{/let}}
-
-            {{#if field.help}}
-              {{! template-lint-disable no-triple-curlies}}
-              <AuHelpText>{{{field.help}}}</AuHelpText>
-            {{/if}}
           </div>
         {{/if}}
       {{/if}}

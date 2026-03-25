@@ -3,9 +3,22 @@
   @required={{this.isRequired}}
   @warning={{this.hasWarnings}}
   for={{this.inputId}}
+  class={{if @field.help "au-u-margin-bottom-none"}}
 >
   {{@field.label}}
 </AuLabel>
+
+<this.HelpText @field={{@field}} />
+
+{{#unless @show}}
+  <AuHelpText
+    @error={{this.hasErrors}}
+    class="au-u-margin-top-none au-u-margin-bottom-tiny"
+  >
+    Datum formaat: DD-MM-JJJJ
+  </AuHelpText>
+{{/unless}}
+
 <div class="au-o-grid au-o-grid--flush">
   <div class="au-o-grid__item au-u-3-4">
     <AuDatePicker
@@ -19,12 +32,6 @@
     />
   </div>
 </div>
-
-{{#unless @show}}
-  <AuHelpText @error={{this.hasErrors}}>
-    Datum formaat: DD-MM-JJJJ
-  </AuHelpText>
-{{/unless}}
 
 {{#each this.errors as |error|}}
   <AuHelpText @error={{true}}>{{error.resultMessage}}</AuHelpText>

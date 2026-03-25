@@ -12,13 +12,13 @@ export default class SubFormModel {
       this.uri,
       SHACL('name'),
       undefined,
-      formGraph
+      formGraph,
     );
     this.rdflibRemoveLabel = store.any(
       uri,
       FORM('removeLabel'),
       undefined,
-      formGraph
+      formGraph,
     );
   }
 

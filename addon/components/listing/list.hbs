@@ -2,7 +2,7 @@
   <div class="au-o-flow" ...attributes>
     {{#each @subForms as |subForm index|}}
       {{#let (eq index 0) (this.isLast @subForms subForm) as |isFirst isLast|}}
-        <SubForm
+        <this.SubForm
           @subForm={{subForm}}
           @formStore={{@formStore}}
           @graphs={{@graphs}}
@@ -14,8 +14,8 @@
           @level={{@level}}
           @onRemoveEntry={{@removeEntry}}
           @canRemove={{@canRemove}}
-          @canMoveUp={{(and @canChangeOrder (not isFirst))}}
-          @canMoveDown={{(and @canChangeOrder (not isLast))}}
+          @canMoveUp={{and @canChangeOrder (not isFirst)}}
+          @canMoveDown={{and @canChangeOrder (not isLast)}}
           @moveUp={{fn @moveUp subForm}}
           @moveDown={{fn @moveDown subForm}}
           @useNewListingLayout={{true}}
@@ -44,7 +44,7 @@
           (eq index 0) (this.isLast @subForms subForm)
           as |isFirst isLast|
         }}
-          <SubForm
+          <this.SubForm
             @subForm={{subForm}}
             @formStore={{@formStore}}
             @graphs={{@graphs}}
@@ -56,8 +56,8 @@
             @level={{@level}}
             @onRemoveEntry={{@removeEntry}}
             @canRemove={{@canRemove}}
-            @canMoveUp={{(and @canChangeOrder (not isFirst))}}
-            @canMoveDown={{(and @canChangeOrder (not isLast))}}
+            @canMoveUp={{and @canChangeOrder (not isFirst)}}
+            @canMoveDown={{and @canChangeOrder (not isLast)}}
             @moveUp={{fn @moveUp subForm}}
             @moveDown={{fn @moveDown subForm}}
           />

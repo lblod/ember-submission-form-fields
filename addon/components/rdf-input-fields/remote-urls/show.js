@@ -60,20 +60,19 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
         this.hasRemoteUrlErrors = true;
       }
     }
-
     this.remoteUrls = remoteUrls;
   });
 
   isRemoteDataObject(subject) {
     const remoteDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
     );
     return (
       this.args.formStore.match(
         subject,
         RDF('type'),
         remoteDataObjectType,
-        this.args.sourceGraph
+        this.args.sourceGraph,
       ).length > 0
     );
   }
@@ -84,7 +83,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       page: { size: 1 },
     });
     if (remoteUrls.length) {
-      return remoteUrls.slice()[0]; // TODO: remove .slice once we support only Ember Data 4.8+
+      return remoteUrls[0];
     } else {
       throw `No remote-url could be found for ${remoteObjectUri}`;
     }
@@ -95,7 +94,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
       return fetch(remoteUrl.downloadLink).then((response) => {
         if (!response.ok) {
           throw new Error(
-            `Something went wrong while trying to download '${remoteUrl.downloadLink}': ${response.status} ${response.statusText}`
+            `Something went wrong while trying to download '${remoteUrl.downloadLink}': ${response.status} ${response.statusText}`,
           );
         }
 
@@ -110,7 +109,7 @@ export default class FormInputFieldsRemoteUrlsShowComponent extends Component {
     } catch (error) {
       console.error(error);
       this.toaster.error(
-        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.'
+        'Het .zip bestand kon niet gegenereerd worden. Probeer later opnieuw.',
       );
     }
   });

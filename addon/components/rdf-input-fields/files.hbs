@@ -1,10 +1,11 @@
-<div class="au-u-flex au-u-flex--between au-u-margin-bottom">
+<div class="au-u-flex au-u-flex--between">
   <AuLabel
     @error={{this.hasErrors}}
     @required={{this.isRequired}}
     @requiredLabel={{if this.containsRemoteUrls "Enkel indien geen links"}}
     @warning={{this.hasWarnings}}
     for={{this.inputId}}
+    class="au-u-margin-bottom-none"
   >
     {{@field.label}}
   </AuLabel>
@@ -20,10 +21,11 @@
     </AuButton>
   {{/if}}
 </div>
+<this.HelpText @field={{@field}} />
 
 {{#if this.loadProvidedValue.isIdle}}
   {{#if this.files}}
-    <ul class="au-o-flow au-o-flow--tiny au-u-margin-bottom-small">
+    <ul class="au-o-flow au-o-flow--tiny au-u-margin-top au-u-margin-bottom-small">
       {{#each this.files as |fileField|}}
         {{#if fileField.record}}
           {{#let fileField.record as |file|}}
@@ -67,14 +69,5 @@
     {{/each}}
   {{/unless}}
 {{else}}
-  {{! TODO: Remove this check once we drop Appuniversum v2 support }}
-  {{#if
-    (macroCondition
-      (macroDependencySatisfies "@appuniversum/ember-appuniversum" "^3.2.0")
-    )
-  }}
-    <AuLoader @centered={{false}} @hideMessage={{true}}>Bestanden aan het laden</AuLoader>
-  {{else}}
-    <AuLoader @padding="small" />
-  {{/if}}
+  <AuLoader @centered={{false}} @hideMessage={{true}}>Bestanden aan het laden</AuLoader>
 {{/if}}

@@ -1,13 +1,16 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import SimpleInputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/simple-value-input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { SKOS } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
+import { NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
+import { byLabel, byOrder, getOrderForOption } from '../../-private/utils/sort';
 
 export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends SimpleInputFieldComponent {
   @tracked options = [];
+  HelpText = HelpText;
 
   constructor() {
     super(...arguments);
@@ -22,12 +25,12 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     if (!orderBy) {
       if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-        orderBy = new namedNode(fieldOptions.orderBy);
+        orderBy = new NamedNode(fieldOptions.orderBy);
       }
     }
 
@@ -38,13 +41,18 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          this.metaGraph
+          this.metaGraph,
         );
         return {
           value: t.subject.value,
           nodeValue: t.subject,
           label: label && label.value,
-          order: this.getOrderForOption(orderBy, t.subject),
+          order: getOrderForOption(
+            orderBy,
+            t.subject,
+            this.store,
+            this.metaGraph,
+          ),
         };
       });
 
@@ -60,31 +68,19 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
     setTimeout(() => super.updateValue(option.nodeValue), 1);
   }
 
-  getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.store.any(
-      tripleSubject,
-      orderBy,
-      undefined,
-      this.metaGraph
-    );
-
-    // This MUST be a string so our byOrder sorting function returns the correct result
-    return `${orderStatement?.value ?? ''}`;
-  }
-
   getFieldOptionsByPredicates() {
     return {
       conceptScheme: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       orderBy: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('orderBy'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }
@@ -96,14 +92,4 @@ export default class RdfInputFieldsConceptSchemeRadioButtonsComponent extends Si
   get store() {
     return this.args.formStore;
   }
-}
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
-
-function byOrder(a, b) {
-  return a.order.localeCompare(b.order, undefined, { numeric: true });
 }

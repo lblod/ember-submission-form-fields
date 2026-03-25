@@ -16,7 +16,7 @@
   {{/if}}
   {{#each this.fields as |field|}}
     {{#let
-      (component-for-display-type field.displayType show=(or @show field.displayShow))
+      (this.componentForDisplayType field.displayType show=(or @show field.displayShow))
       as |FormField|
     }}
       <td>

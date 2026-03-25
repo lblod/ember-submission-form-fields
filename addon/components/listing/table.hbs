@@ -53,8 +53,8 @@
             @removeLabel={{@listing.removeLabel}}
             @showIndex={{this.showRowIndex}}
             @index={{index}}
-            @canMoveUp={{(and @canChangeOrder (not isFirst))}}
-            @canMoveDown={{(and @canChangeOrder (not isLast))}}
+            @canMoveUp={{and @canChangeOrder (not isFirst)}}
+            @canMoveDown={{and @canChangeOrder (not isLast)}}
             @moveUp={{fn @moveUp subForm}}
             @moveDown={{fn @moveDown subForm}}
           />

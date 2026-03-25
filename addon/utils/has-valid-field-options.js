@@ -1,7 +1,7 @@
 export function hasValidFieldOptions(fieldModel, requiredProperties = []) {
   if (!fieldModel.options) {
     console.error(
-      `Options are invalid. For field Field "${fieldModel.label}" (${fieldModel.displayType})`
+      `Options are invalid. For field Field "${fieldModel.label}" (${fieldModel.displayType})`,
     );
 
     return false;
@@ -17,7 +17,7 @@ export function hasValidFieldOptions(fieldModel, requiredProperties = []) {
   if (missingProperties.length !== 0) {
     console.warn(
       `Field "${fieldModel.label}" (${fieldModel.displayType}) is missing keys: `,
-      missingProperties.join(', ')
+      missingProperties.join(', '),
     );
 
     return false;

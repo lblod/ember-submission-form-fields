@@ -1,6 +1,6 @@
 steps:
   install:
-    image: node:18
+    image: node:22
     commands:
       - npm ci
   release:
@@ -10,4 +10,4 @@ steps:
         from_secret: npm_access_token
 when:
   event: tag
-  tag: v*
+  ref: refs/tags/v*

@@ -7,19 +7,16 @@ import {
   updateSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { Literal, namedNode } from 'rdflib';
+import { Literal, NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
-
-function byLabel(a, b) {
-  const textA = a.label.toUpperCase();
-  const textB = b.label.toUpperCase();
-  return textA < textB ? -1 : textA > textB ? 1 : 0;
-}
+import { byLabel } from '../../-private/utils/sort';
 
 export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends InputFieldComponent {
   inputId = 'select-' + guidFor(this);
+  HelpText = HelpText;
 
   @tracked selected = null;
   @tracked options = [];
@@ -49,7 +46,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
         // No conceptScheme found hence this component can't work.
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     // SearchEnabled hasn't been found in the new spec, let's try matching it with the old spec.
@@ -68,7 +65,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
           t.subject,
           SKOS('prefLabel'),
           undefined,
-          metaGraph
+          metaGraph,
         );
         return { subject: t.subject, label: label && label.value };
       });
@@ -79,7 +76,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     if (this.isValid) {
       const matches = triplesForPath(this.storeOptions, true).values;
       this.selected = this.options.filter((opt) =>
-        matches.find((m) => m.equals(opt.subject))
+        matches.find((m) => m.equals(opt.subject)),
       );
     }
   }
@@ -91,7 +88,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     // Retrieve options in store
     const matches = triplesForPath(this.storeOptions, true).values;
     const matchingOptions = matches.filter((m) =>
-      this.options.find((opt) => m.equals(opt.subject))
+      this.options.find((opt) => m.equals(opt.subject)),
     );
 
     // Cleanup old value(s) in the store
@@ -103,7 +100,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
     options
       .filter((opt) => !matchingOptions.find((m) => opt.subject.equals(m)))
       .forEach((option) =>
-        updateSimpleFormValue(this.storeOptions, option.subject)
+        updateSimpleFormValue(this.storeOptions, option.subject),
       );
 
     this.hasBeenFocused = true;
@@ -113,7 +110,7 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
   search = restartableTask(async (term) => {
     await timeout(600);
     return this.options.filter((value) =>
-      value.label.toLowerCase().includes(term.toLowerCase())
+      value.label.toLowerCase().includes(term.toLowerCase()),
     );
   });
 
@@ -123,13 +120,13 @@ export default class RdfInputFieldsConceptSchemeMultiSelectorComponent extends I
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       isSearchEnabled: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('searchEnabled'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

@@ -3,7 +3,8 @@
     @icon="info-circle"
     @title="Gelieve per besluit of besluitenlijst één dossier aan te maken."
     @skin="info"
-    @size="small" />
+    @size="small"
+  />
 {{/unless}}
 <div class="au-c-form">
   <ul class="au-o-grid au-o-grid--small">
@@ -11,7 +12,7 @@
       {{#if field.displayType}}
         <li class="au-o-grid__item au-u-1-1">
           {{#let
-            (component-for-display-type field.displayType show=(or @show field.displayShow))
+            (this.componentForDisplayType field.displayType show=(or @show field.displayShow))
             as |FormField|
           }}
             <FormField
@@ -22,10 +23,6 @@
               @forceShowErrors={{@forceShowErrors}}
               @show={{or @show field.displayShow}}
             />
-            {{#unless (or @show field.displayShow)}}
-              {{! template-lint-disable no-triple-curlies}}
-              <AuHelpText>{{{field.help}}}</AuHelpText>
-            {{/unless}}
           {{/let}}
         </li>
       {{/if}}

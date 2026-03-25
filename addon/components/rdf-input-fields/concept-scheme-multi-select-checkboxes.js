@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 import InputFieldComponent from '@lblod/ember-submission-form-fields/components/rdf-input-fields/input-field';
 import {
   addSimpleFormValue,
@@ -7,12 +8,14 @@ import {
   SKOS,
   triplesForPath,
 } from '@lblod/submission-form-helpers';
-import { namedNode } from 'rdflib';
+import { NamedNode } from 'rdflib';
 import { hasValidFieldOptions } from '../../utils/has-valid-field-options';
 import { FIELD_OPTION } from '../../utils/namespaces';
+import { byOrder, getOrderForOption } from '../../-private/utils/sort';
 
 export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent extends InputFieldComponent {
   @tracked options = [];
+  HelpText = HelpText;
 
   constructor() {
     super(...arguments);
@@ -34,7 +37,7 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
        * NOTE: Retrieve option from store, if found we assume it was selected before and needs to be removed
        */
       const matches = triplesForPath(this.storeOptions, true).values.map(
-        (value) => value.value
+        (value) => value.value,
       );
       if (matches.includes(option.subject.value)) {
         removeDatasetForSimpleFormValue(option.subject, this.storeOptions);
@@ -56,12 +59,12 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
       if (!hasValidFieldOptions(this.args.field, ['conceptScheme'])) {
         return;
       }
-      conceptScheme = new namedNode(fieldOptions.conceptScheme);
+      conceptScheme = new NamedNode(fieldOptions.conceptScheme);
     }
 
     if (!orderBy) {
       if (hasValidFieldOptions(this.args.field, ['orderBy'])) {
-        orderBy = new namedNode(fieldOptions.orderBy);
+        orderBy = new NamedNode(fieldOptions.orderBy);
       }
     }
 
@@ -73,38 +76,29 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
           subject,
           SKOS('prefLabel'),
           undefined,
-          this.graphs.metaGraph
+          this.graphs.metaGraph,
         ).value;
         const provided = !!this.store.any(
           this.storeOptions.sourceNode,
           path,
           subject,
-          this.graphs.sourceGraph
+          this.graphs.sourceGraph,
         );
 
         return {
           subject,
           label,
           provided,
-          order: this.getOrderForOption(orderBy, t.subject),
+          order: getOrderForOption(
+            orderBy,
+            t.subject,
+            this.store,
+            this.graphs.metaGraph,
+          ),
         };
       });
 
-    this.options.sort((a, b) =>
-      a.order.localeCompare(b.order, undefined, { numeric: true })
-    );
-  }
-
-  getOrderForOption(orderBy, tripleSubject) {
-    const orderStatement = this.store.any(
-      tripleSubject,
-      orderBy,
-      undefined,
-      this.graphs.metaGraph
-    );
-
-    // must be string because above we are using string.localCompare
-    return `${orderStatement?.value ?? ''}`;
+    this.options.sort(byOrder);
   }
 
   getFieldOptionsByPredicates() {
@@ -113,13 +107,13 @@ export default class RDFInputFieldsConceptSchemeMultiSelectCheckboxesComponent e
         this.args.field.uri,
         FIELD_OPTION('conceptScheme'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
       orderBy: this.args.formStore.any(
         this.args.field.uri,
         FIELD_OPTION('orderBy'),
         undefined,
-        this.args.graphs.formGraph
+        this.args.graphs.formGraph,
       ),
     };
   }

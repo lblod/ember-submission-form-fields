@@ -8,18 +8,19 @@ import {
   removeSimpleFormValue,
 } from '@lblod/submission-form-helpers';
 import { RDF, NIE } from '@lblod/submission-form-helpers';
-import { namedNode, NamedNode, Namespace } from 'rdflib';
+import { NamedNode, Namespace } from 'rdflib';
 import { v4 as uuidv4 } from 'uuid';
 import { guidFor } from '@ember/object/internals';
 import { autofocus } from '../../../-private/modifiers/autofocus';
+import HelpText from '@lblod/ember-submission-form-fields/components/private/help-text';
 
 const REMOTE_URI_TEMPLATE = 'http://data.lblod.info/remote-url/';
-const REQUEST_HEADER = new namedNode(
-  'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e'
+const REQUEST_HEADER = new NamedNode(
+  'http://data.lblod.info/request-headers/29b14d06-e584-45d6-828a-ce1f0c018a8e',
 );
 
 const RPIO_HTTP = new Namespace(
-  'http://redpencil.data.gift/vocabularies/http/'
+  'http://redpencil.data.gift/vocabularies/http/',
 );
 const MU = new Namespace('http://mu.semte.ch/vocabularies/core/');
 
@@ -46,6 +47,7 @@ class RemoteUrl {
 export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldComponent {
   inputId = `remote-urls-${guidFor(this)}`;
   autofocus = autofocus;
+  HelpText = HelpText;
 
   get inputFor() {
     if (this.remoteUrls.length) {
@@ -64,7 +66,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     this.loadProvidedValue();
     this.args.formStore.registerObserver(
       this.onStoreUpdate.bind(this),
-      this.observerLabel
+      this.observerLabel,
     );
   }
 
@@ -82,47 +84,44 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     return this.remoteUrls.some((url) => url.isInvalid);
   }
 
-  loadProvidedValue() {
+  async loadProvidedValue() {
     const matches = triplesForPath(this.storeOptions);
-    let persistedUrls = [];
+    const persistedUrls = [];
 
     for (let uri of matches.values) {
       if (this.isRemoteDataObject(uri)) {
-        const remoteUrl = this.retrieveRemoteDataObject(uri);
+        const remoteUrl = await this.retrieveRemoteDataObject(uri);
         persistedUrls.push(remoteUrl);
       }
     }
-
     this.remoteUrls = persistedUrls;
   }
 
   isRemoteDataObject(subject) {
     const remoteDataObjectType = new NamedNode(
-      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+      'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
     );
     return (
       this.storeOptions.store.match(
         subject,
         RDF('type'),
         remoteDataObjectType,
-        this.storeOptions.sourceGraph
+        this.storeOptions.sourceGraph,
       ).length > 0
     );
   }
 
-  retrieveRemoteDataObject(uri) {
+  async retrieveRemoteDataObject(uri) {
     const urlTriples = this.storeOptions.store.match(
       uri,
       NIE('url'),
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
 
     if (urlTriples.length) {
       const address = urlTriples[0].object.value;
-      const errors = this.validationErrorsForAddress(address).map(
-        (e) => e.resultMessage
-      );
+      const errors = await this.validationErrorMessagesForAddress(address);
 
       if (urlTriples.length > 1)
         errors.push('Veld kan maximaal 1 URL bevatten');
@@ -142,7 +141,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       uri,
       undefined,
       undefined,
-      this.storeOptions.sourceGraph
+      this.storeOptions.sourceGraph,
     );
     if (remoteObjecTs.length) {
       this.storeOptions.store.removeStatements(remoteObjecTs);
@@ -156,7 +155,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
         subject: uri,
         predicate: RDF('type'),
         object: new NamedNode(
-          'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject'
+          'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject',
         ),
         graph: this.storeOptions.sourceGraph,
       },
@@ -189,7 +188,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
     const uuid = uuidv4();
     const remoteUrl = new RemoteUrl({
       uuid,
-      uri: new namedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
+      uri: new NamedNode(REMOTE_URI_TEMPLATE + `${uuid}`),
       address: '',
       errors: [],
     });
@@ -199,7 +198,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   }
 
   @action
-  updateRemoteUrl(remoteUrl, event) {
+  async updateRemoteUrl(remoteUrl, event) {
     remoteUrl.address = event.target.value.trim();
     const address = remoteUrl.address;
     this.removeRemoteDataObject(remoteUrl.uri);
@@ -209,10 +208,7 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
       address,
     });
     this.hasBeenFocused = true;
-    const errors = this.validationErrorsForAddress(address).map(
-      (e) => e.resultMessage
-    );
-    remoteUrl.errors = errors; // update validations specific for the address
+    remoteUrl.errors = await this.validationErrorMessagesForAddress(address); // update validations specific for the address
     // general validation of the field is handled by onStoreUpdate()
   }
 
@@ -220,17 +216,21 @@ export default class FormInputFieldsRemoteUrlsEditComponent extends InputFieldCo
   removeRemoteUrl(remoteUrlToRemove) {
     this.removeRemoteDataObject(remoteUrlToRemove.uri);
     this.remoteUrls = this.remoteUrls.filter(
-      (remoteUrl) => remoteUrl !== remoteUrlToRemove
+      (remoteUrl) => remoteUrl !== remoteUrlToRemove,
     );
     this.hasBeenFocused = true;
     // general validation of the field is handled by onStoreUpdate()
   }
 
-  validationErrorsForAddress(address) {
-    return validationResultsForFieldPart(
+  async validationErrorMessagesForAddress(address) {
+    const validationResults = await validationResultsForFieldPart(
       { values: [{ value: address }] },
       this.args.field.uri,
-      this.storeOptions
-    ).filter((r) => !r.valid);
+      this.storeOptions,
+    );
+
+    return validationResults
+      .filter((r) => !r.valid)
+      .map((e) => e.resultMessage);
   }
 }
