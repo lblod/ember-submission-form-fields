@@ -1,3 +1,8 @@
+## v3.5.0 (2026-03-25)
+
+#### :rocket: Enhancement
+* [#194](https://github.com/lblod/ember-submission-form-fields/pull/194) Add a `form:fieldDisabled` field option ([@x-m-el](https://github.com/x-m-el))
+
 ## v3.4.0 (2026-02-25)
 
 #### :rocket: Enhancement
