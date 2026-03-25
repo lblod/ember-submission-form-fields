@@ -16,7 +16,7 @@
   {{/if}}
   {{#each this.fields as |field|}}
     {{#let
-      (this.componentForDisplayType field.displayType show=@show)
+      (this.componentForDisplayType field.displayType show=(or @show field.disabled))
       as |FormField|
     }}
       <td>
@@ -28,7 +28,7 @@
           @sourceNode={{@sourceNode}}
           @forceShowErrors={{@forceShowErrors}}
           @cacheConditionals={{@cacheConditionals}}
-          @show={{@show}}
+          @show={{or @show field.disabled}}
           @inTable={{true}}
         />
       </td>

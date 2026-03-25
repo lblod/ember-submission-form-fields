@@ -165,6 +165,21 @@ ext:numericalInputField a form:Field ;
 ext:mainFg form:hasField ext:numericalInputField .
 
 ##########################################################
+# Disabled input
+##########################################################
+ext:disabledInputField a form:Field ;
+    sh:name "Disabled input" ;
+    sh:order 223 ;
+    sh:path ext:inputValue ;
+    form:displayType displayTypes:defaultInput ;
+    form:fieldDisabled true ;
+    form:help """This field is always disabled (even in edit mode) because of the `form:fieldDisabled` predicate""" ;
+    sh:group ext:mainPg .
+
+ext:mainFg form:hasField ext:disabledInputField .
+
+
+##########################################################
 # Text area
 ##########################################################
 ext:textAreaField a form:Field ;
