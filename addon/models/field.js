@@ -88,7 +88,7 @@ export default class FieldModel {
   rdflibDisplayShow = null;
   get displayShow() {
     return this.rdflibDisplayShow
-      ? Literal.toJs(this.rdflibDisplayShow)
+      ? Literal.toJS(this.rdflibDisplayShow)
       : false;
   }
 
