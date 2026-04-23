@@ -11,24 +11,49 @@
 <this.HelpText @field={{@field}} />
 
 <div class={{if this.hasErrors "ember-power-select--error"}}>
-  <PowerSelectMultiple
-    @triggerId={{this.inputId}}
-    @search={{perform this.search}}
-    @searchField="label"
-    @searchPlaceholder="Typ hier om te zoeken..."
-    @searchEnabled={{this.searchEnabled}}
-    @selected={{this.selected}}
-    @options={{this.subset}}
-    @onClose={{fn (mut this.hasBeenFocused) true}}
-    @onChange={{this.updateSelection}}
-    @allowClear={{true}}
-    @loadingMessage="Aan het laden..."
-    @noMatchesMessage="Geen resultaten gevonden"
-    @disabled={{@show}}
-    as |concept|
-  >
-    {{concept.label}}
-  </PowerSelectMultiple>
+  {{#if
+    (macroCondition (macroDependencySatisfies "ember-power-select" "^8.11.0"))
+  }}
+    <PowerSelect
+      @triggerId={{this.inputId}}
+      @search={{perform this.search}}
+      @searchField="label"
+      @searchPlaceholder="Typ hier om te zoeken..."
+      @searchEnabled={{this.searchEnabled}}
+      @selected={{this.selected}}
+      @options={{this.subset}}
+      @onClose={{fn (mut this.hasBeenFocused) true}}
+      @onChange={{this.updateSelection}}
+      @allowClear={{true}}
+      @loadingMessage="Aan het laden..."
+      @noMatchesMessage="Geen resultaten gevonden"
+      @disabled={{@show}}
+      @multiple={{true}}
+      as |concept|
+    >
+      {{concept.label}}
+    </PowerSelect>
+  {{else}}
+    {{!TODO: Remove this once we drop support for ember-power-select < v8}}
+    <PowerSelectMultiple
+      @triggerId={{this.inputId}}
+      @search={{perform this.search}}
+      @searchField="label"
+      @searchPlaceholder="Typ hier om te zoeken..."
+      @searchEnabled={{this.searchEnabled}}
+      @selected={{this.selected}}
+      @options={{this.subset}}
+      @onClose={{fn (mut this.hasBeenFocused) true}}
+      @onChange={{this.updateSelection}}
+      @allowClear={{true}}
+      @loadingMessage="Aan het laden..."
+      @noMatchesMessage="Geen resultaten gevonden"
+      @disabled={{@show}}
+      as |concept|
+    >
+      {{concept.label}}
+    </PowerSelectMultiple>
+  {{/if}}
 </div>
 
 {{#each this.errors as |error|}}
