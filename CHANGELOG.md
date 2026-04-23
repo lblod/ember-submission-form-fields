@@ -1,3 +1,10 @@
+## v3.6.0 (2026-04-23)
+
+#### :rocket: Enhancement
+* [#225](https://github.com/lblod/ember-submission-form-fields/pull/225) Resolve the `PowerSelectMultiple` deprecation ([@Windvis](https://github.com/Windvis))
+* [#224](https://github.com/lblod/ember-submission-form-fields/pull/224) Add ember-concurrency v5 support ([@Windvis](https://github.com/Windvis))
+* [#223](https://github.com/lblod/ember-submission-form-fields/pull/223) Resolve the `inject as service` deprecation ([@Windvis](https://github.com/Windvis))
+
 ## v3.5.0 (2026-03-25)
 
 #### :rocket: Enhancement
