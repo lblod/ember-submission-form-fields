@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { triplesForPath } from '@lblod/submission-form-helpers';
 import { task } from 'ember-concurrency';
 import { downloadZip } from 'client-zip';
