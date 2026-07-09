@@ -190,7 +190,7 @@ export default class RdfInputFieldsFilesComponent extends InputFieldComponent {
           );
         }
 
-        return response;
+        return { input: response, name: file.record.filename };
       });
     });
 
