@@ -1,3 +1,8 @@
+## v3.6.1 (2026-07-09)
+
+#### :bug: Bug Fix
+* [#226](https://github.com/lblod/ember-submission-form-fields/pull/226) [DL-7363] Fix downloadAsZip to work with files containing special characters ([@DamonKennes](https://github.com/DamonKennes))
+
 ## v3.6.0 (2026-04-23)
 
 #### :rocket: Enhancement
