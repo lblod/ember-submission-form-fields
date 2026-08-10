@@ -1,3 +1,8 @@
+## v3.7.0 (2026-08-10)
+
+#### :rocket: Enhancement
+* [#227](https://github.com/lblod/ember-submission-form-fields/pull/227) Add support for Appuniversum v4 ([@Windvis](https://github.com/Windvis))
+
 ## v3.6.1 (2026-07-09)
 
 #### :bug: Bug Fix
