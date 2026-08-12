@@ -44,10 +44,16 @@
     "rdflib": "^2.2.19",
     "uuid": "^9.0.0"
   },
+  "overrides": {
+    "@glimmer/component": "^2.0.0"
+  },
+  "overridesComments": {
+    "@glimmer/component": "power-select brings in v2 (so we do as well, but ember-source v5.12 seems to bring in v1. It shouldn't matter since we always use the bundled one with ember-source anyways. This is just to make npm happy."
+  },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^3.7.0 || ^4.0.0",
     "@lblod/submission-form-helpers": "^3.0.0",
-    "ember-power-select": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "ember-power-select": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
     "ember-source": ">= 4.0.0"
   },
   "devDependencies": {
@@ -58,12 +64,12 @@
     "@ember/string": "^4.0.0",
     "@ember/test-helpers": "^5.4.3",
     "@embroider/test-setup": "^4.0.0",
-    "@glimmer/component": "^1.1.2",
+    "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@lblod/submission-form-helpers": "^3.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
-    "ember-basic-dropdown": "^8.3.0",
+    "ember-basic-dropdown": "^9.0.0",
     "ember-cli": "~5.12.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-dependency-checker": "3.3.2",
@@ -76,7 +82,7 @@
     "ember-load-initializers": "^2.1.2",
     "ember-mu-transform-helpers": "^2.1.2",
     "ember-page-title": "^8.2.3",
-    "ember-power-select": "^8.0.0",
+    "ember-power-select": "^9.0.0",
     "ember-qunit": "^8.1.0",
     "ember-resolver": "^12.0.1",
     "ember-source": "~5.12.0",
