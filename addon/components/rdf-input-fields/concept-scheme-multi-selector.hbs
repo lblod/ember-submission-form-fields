@@ -12,7 +12,7 @@
 
 <div class={{if this.hasErrors "ember-power-select--error"}}>
   {{#if
-    (macroCondition (macroDependencySatisfies "ember-power-select" "^8.11.0"))
+    (macroCondition (macroDependencySatisfies "ember-power-select" ">8.11.0"))
   }}
     <PowerSelect
       @triggerId={{this.inputId}}
