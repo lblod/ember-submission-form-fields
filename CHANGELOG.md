@@ -1,3 +1,11 @@
+## v3.8.0 (2026-08-13)
+
+#### :rocket: Enhancement
+* [#229](https://github.com/lblod/ember-submission-form-fields/pull/229) Add support for ember-power-select v9 ([@Windvis](https://github.com/Windvis))
+
+#### :house: Internal
+* [#228](https://github.com/lblod/ember-submission-form-fields/pull/228) Drop the ember-data peerDependency ([@Windvis](https://github.com/Windvis))
+
 ## v3.7.0 (2026-08-10)
 
 #### :rocket: Enhancement
