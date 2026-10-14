@@ -1,3 +1,8 @@
+## v3.8.1 (2026-10-14)
+
+#### :bug: Bug Fix
+* [#231](https://github.com/lblod/ember-submission-form-fields/pull/231) Propagate the `@cacheConditionals` argument ([@Windvis](https://github.com/Windvis))
+
 ## v3.8.0 (2026-08-13)
 
 #### :rocket: Enhancement
