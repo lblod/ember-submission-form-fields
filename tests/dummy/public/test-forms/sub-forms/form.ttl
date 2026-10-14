@@ -1,132 +1,360 @@
 @prefix form: <http://lblod.data.gift/vocabularies/forms/> .
+@prefix fieldOption: <http://lblod.data.gift/vocabularies/form-field-options/> .
 @prefix sh: <http://www.w3.org/ns/shacl#>.
 @prefix mu: <http://mu.semte.ch/vocabularies/core/> .
 @prefix displayTypes: <http://lblod.data.gift/display-types/> .
 @prefix ext: <http://mu.semte.ch/vocabularies/ext/> .
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix skos:	<http://www.w3.org/2004/02/skos/core#> .
+@prefix mu:	<http://mu.semte.ch/vocabularies/core/> .
+@prefix cpsv:	<http://purl.org/vocab/cpsv#> .
+@prefix dct:	<http://purl.org/dc/terms/> .
+@prefix lpdcExt:  <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#> .
+@prefix xkos:	<http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix m8g:	<http://data.europa.eu/m8g/> .
+@prefix dcat:	<http://www.w3.org/ns/dcat#> .
+@prefix belgif:	<http://vocab.belgif.be/ns/publicservice#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix schema: <http://schema.org/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>.
+@prefix ps: <http://vocab.belgif.be/ns/publicservice#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix adres: <https://data.vlaanderen.be/ns/adres#> .
+@prefix eli: <http://data.europa.eu/eli/ontology#> .
 
 ##########################################################
 # form
 ##########################################################
-ext:mainFg a form:FieldGroup.
-
 ext:form a form:Form, form:TopLevelForm ;
-    form:includes ext:listing;
-    form:includes ext:authorName.
+    form:includes ext:titleF;
+    form:includes ext:descriptionF;
+    form:includes ext:additionalDescriptionF;
+    form:includes ext:exceptionF;
+    form:includes ext:requirementHeading;
+    form:includes ext:requirementsL;
+    form:includes ext:rulesHeading;
+    form:includes ext:rulesL;
+    form:includes ext:costsHeading;
+    form:includes ext:costsL;
+    form:includes ext:finAdvHeading;
+    form:includes ext:finAdvL;
+    form:includes ext:regulationitleF;
+    form:includes ext:headerLegalResource ;
+    form:includes ext:legalResourceL;
+    form:includes ext:websitesHeading;
+    form:includes ext:websitesL.
 
 ##########################################################
-#  Listing
+#  property-group: basisinformatie
 ##########################################################
-ext:listing a form:Listing;
-  sh:name "[LISTING] book listing";
-  form:each ext:itemForm;
-  form:scope ext:listingScope;
-  sh:group ext:listingPg;
-  form:createGenerator ext:bookGenerator;
-  sh:order 20 .
-
-##########################################################
-#  listing-scope
-##########################################################
-ext:listingScope a form:Scope;
-  sh:path ext:book.
-
-##########################################################
-#  Subform
-##########################################################
-ext:itemForm a form:SubForm;
-   sh:name "[SUBFORM] book" ;
-   form:includes ext:field;
-   form:includes ext:rating;
-   form:hasFieldGroup ext:fieldGroup.
-
-##########################################################
-#  property-group
-##########################################################
-ext:mainPg a form:PropertyGroup;
-    sh:description "[PROPERTY GROUP] book title";
-    sh:name "[PROPERTY GROUP] book title" ;
+ext:basisinformatiePg a form:PropertyGroup;
+    sh:name "Basisinformatie" ;
+    form:options """{ "level": "2", "skin": "3" }""";
     sh:order 1 .
 
-##########################################################
-#  Listing property-group
-##########################################################
-ext:listingPg a form:PropertyGroup;
-    sh:description "[PROPERTY GROUP] author";
-    sh:name "[PROPERTY GROUP] author" ;
-    sh:order 1 .
-
-##########################################################
-# Field
-##########################################################
-ext:authorName a form:Field ;
-    sh:name "[FIELD] author name" ;
-    sh:order 10 ;
-    sh:path ext:authorName ;
-    form:displayType displayTypes:defaultInput ;
-    sh:group ext:listingPg .
-
-##########################################################
-# Field
-##########################################################
-ext:field a form:Field ;
-    sh:name "[FIELD] book name" ;
-    sh:order 1 ;
-    sh:path ext:prefLabel ;
-    form:displayType displayTypes:defaultInput ;
-    sh:group ext:mainPg .
-
-##########################################################
-# Dropdown
-##########################################################
-ext:rating a form:Field ;
-    sh:name "Select: 1 star => more comments will appear for start 1-star rating" ;
-    sh:order 100 ;
-    sh:path ext:rating ;
-    form:options """{"conceptScheme":"http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a","searchEnabled":false}""" ;
-    form:displayType displayTypes:conceptSchemeSelector ;
-    sh:group ext:mainPg .
-
-ext:fieldGroup form:hasField ext:rating .
-
-##########################################################
-# Condition to trigger 1 star field
-##########################################################
-ext:rating form:hasConditionalFieldGroup ext:solve-star-1-condition.
-
-ext:solve-star-1-condition a form:ConditionalFieldGroup ;
-    form:conditions
-      [ a form:SingleCodelistValue ;
+  ##########################################################
+  #  field: title
+  ##########################################################
+  ext:titleF a form:Field ;
+      sh:order 1 ;
+      sh:name "Titel";
+      sh:path dct:title ;
+      form:validations [
+        a form:RequiredConstraint ;
         form:grouping form:Bag ;
-        sh:path ext:rating ;
-        form:conceptScheme <http://redpencil.data.gift/concept-schemes/21d1250c-6627-4111-934f-f2f7bd8c078a> ;
-        form:customValue <http://redpencil.data.gift/concepts/1770b75a-95d7-4087-93d6-2c9322b7dfee>
-      ] ;
-    form:hasFieldGroup ext:result-from-star-1 .
+        sh:resultMessage "Dit veld is verplicht." ;
+        sh:path dct:title
+      ],
+      [
+        a form:TextMinLength ;
+        form:grouping form:MatchEvery ;
+        form:min "4" ;
+        sh:resultMessage "Voeg inhoudelijk relevante informatie toe." ;
+        sh:severity sh:Warning ;
+        sh:path dct:title
+      ];
+      form:help "Kies een titel die duidelijk is voor de beoogde doelgroep." ;
+      form:options """
+                    {
+                      "conceptHelpText": "Behoud waar mogelijk de titel van het concept.<p><a target='_blank' rel='noopener noreferrer' href='https://abb-vlaanderen.gitbook.io/informatie-lpdc/informatievelden-en-redactietips-voor-lpdc/tips-voor-het-invullen-van-een-productfiche#titel'>Meer info</a></p>",
+                      "helpText": "Controleer of de productfiche die je wil toevoegen weldegelijk dienstverlening is (<a target='_blank' rel='noopener noreferrer' href='https://abb-vlaanderen.gitbook.io/informatie-lpdc/ipdc-and-lpdc/welke-producten-horen-thuis-in-lpdc'>Welke producten horen thuis in LPDC</a>).<p><a target='_blank' rel='noopener noreferrer' href='https://abb-vlaanderen.gitbook.io/informatie-lpdc/informatievelden-en-redactietips-voor-lpdc/tips-voor-het-invullen-van-een-productfiche#titel'>Meer info</a></p>"
+                    }
+                   """;
+      form:displayType displayTypes:defaultInput;
+      sh:group ext:basisinformatiePg .
 
 ##########################################################
-# More comment 1 star rating
+#  property-group: Procedure
 ##########################################################
-ext:moreComment a form:Field ;
-    sh:name "More comment 1 star rating" ;
-    sh:order 220 ;
-    sh:path ext:moreComment ;
-    form:options """{}""" ;
-    form:displayType displayTypes:textArea ;
-    sh:group ext:mainPg .
+ext:rulesPg a form:PropertyGroup;
+    sh:order 6 .
 
-ext:result-from-star-1 form:hasField ext:moreComment .
+ext:rulesHeading a form:Field;
+    sh:order 1;
+    sh:name "Procedure";
+    form:help """Welke stappen moet men doorlopen om dit product of deze dienst te krijgen?""" ;
+    form:options """
+                  {
+                    "level": "2",
+                    "skin": "3",
+                    "pillText": "Het aantal procedures is gewijzigd",
+                    "path": "http://purl.org/vocab/cpsv#follows",
+                    "conceptHelpText": "<strong>Deze info is belangrijk voor de hergebruikers.</strong><p>Laat je de velden leeg, verwijder deze dan via de verwijderknop.</p>",
+                    "helpText": "<strong>Deze info is belangrijk voor de hergebruikers.</strong><p>Laat je de velden leeg, verwijder deze dan via de verwijderknop.</p>"
+                  }
+                 """;
+    form:displayType displayTypes:heading ;
+    sh:group ext:rulesPg.
 
-##########################################################
-#  Generator
-##########################################################
-ext:bookGenerator a form:Generator;
-  form:prototype [
-    form:shape [
-      a ext:Book ;
-      ext:prefLabel ""
-    ]
-  ];
-  form:dataGenerator form:addMuUuid.
+  ##########################################################
+  #  listing-scope: Proceduren
+  ##########################################################
+  ext:rulesS a form:Scope;
+    sh:path cpsv:follows.
+
+  ##########################################################
+  #  Listing: Proceduren
+  ##########################################################
+  ext:rulesL a form:Listing;
+    form:each ext:rulesSf;
+    form:scope ext:rulesS;
+    form:createGenerator ext:rulesG;
+    sh:group ext:rulesPg;
+    form:addLabel "Voeg procedure toe";
+    form:canAdd true;
+    form:canRemove true;
+    sh:maxCount 1;
+    sh:order 2 .
+
+ ##########################################################
+  #  Generator: Proceduren
+  ##########################################################
+  ext:rulesG a form:Generator;
+    form:prototype [
+      form:shape [
+        a cpsv:Rule;
+      ];
+    ];
+    form:dataGenerator form:addMuUuid.
+
+  ##########################################################
+  #  property-group: Proceduren-sub
+  ##########################################################
+  ext:rulesPg-sub a form:PropertyGroup;
+      sh:order 1 .
+
+  ##########################################################
+  #  Subform: Proceduren
+  ##########################################################
+  ext:rulesSf a form:SubForm;
+     form:removeLabel "Verwijder procedure";
+     form:includes ext:ruleTitleF;
+     form:includes ext:ruleDescriptionF;
+     form:includes ext:ruleDigitalApplicationF;
+     form:includes ext:procedureWebsitesHeading;
+     form:includes ext:procedureWebsitesL ;
+     form:includes ext:procedureWebsitesRequiredL .
+
+    ##########################################################
+    # Field: Procedure title
+    ##########################################################
+    ext:ruleTitleF a form:Field ;
+        sh:name "Titel procedure" ;
+        sh:order 1 ;
+        form:validations [
+          a form:RequiredConstraint ;
+          form:grouping form:Bag ;
+          sh:resultMessage "Dit veld is verplicht." ;
+          sh:path dct:title
+        ],
+        [
+          a form:TextMinLength ;
+          form:grouping form:MatchEvery ;
+          form:min "4" ;
+          sh:resultMessage "Voeg inhoudelijk relevante informatie toe, of verwijder deze groep velden via de verwijderknop." ;
+          sh:severity sh:Warning ;
+          sh:path dct:title
+        ];
+        sh:path dct:title ;
+        form:options """
+                      {
+                        "conceptHelpText": "Geef een titel die je op je website zou willen zien, of vul simpelweg 'Procedure' in.<ul><li>Zet geen streepje ('-' of '/')</li></ul>",
+                        "helpText": "Geef een titel die je op je website zou willen zien, of vul simpelweg 'Procedure' in.<ul><li>Zet geen streepje ('-' of '/')</li></ul>"
+                      }
+                    """;
+        form:displayType displayTypes:defaultInput ;
+        sh:group ext:rulesPg-sub .
+
+    ##########################################################
+    # Field: Digitaal aanvraagbaar
+    ##########################################################
+    ext:ruleDigitalApplicationF a form:Field ;
+        sh:name "Digitaal aanvraagbaar" ;
+        sh:order 3 ;
+        sh:path ext:todo ;
+        fieldOption:conceptScheme <http://example-concept-schemes/concept-schemes/foo-bar-baz> ;
+        fieldOption:orderBy <http://purl.org/linked-data/cube#order> ;
+        form:displayType displayTypes:conceptSchemeRadioButtons ;
+        sh:group ext:rulesPg-sub .
+
+        ##########################################################
+        #  property-group: procedureWebsite
+        ##########################################################
+        ext:procedureWebsitesPg a form:PropertyGroup;
+            sh:order 1 .
+
+        ext:procedureWebsitesHeading a form:Field;
+            sh:order 1;
+            sh:name "Website procedure";
+            form:help "Waar kan de eindgebruiker  de aanvraag / procedure online opstarten?";
+            form:options """
+                          {
+                           "level": "3",
+                           "skin": "4",
+                           "pillText":"Het aantal website procedures is gewijzigd",
+                           "path": "https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite",
+                           "conceptHelpText": "<strong>Deze info is belangrijk voor hergebruikers.</strong><p>Laat je de velden leeg, verwijder dez dan via de verwijderknop.</p>",
+                           "helpText": "<strong>Deze info is belangrijk voor hergebruikers.</strong><p>Laat je de velden leeg, verwijder dez dan via de verwijderknop.</p>"
+                          }
+                         """;
+            form:displayType displayTypes:heading ;
+            sh:group ext:procedureWebsitesPg.
+
+        ##########################################################
+        #  listing-scope: ProcedureWebsite
+        ##########################################################
+        ext:procedureWebsitesS a form:Scope;
+          sh:path lpdcExt:hasWebsite.
+
+        ##########################################################
+        #  Listing: ProcedureWebsite
+        ##########################################################
+        ext:procedureWebsitesL a form:Listing;
+          form:each ext:procedureWebsitesSf;
+          form:scope ext:procedureWebsitesS;
+          form:createGenerator ext:procedureWebsitesG;
+          sh:group ext:procedureWebsitesPg;
+          form:addLabel "Voeg website toe";
+          form:canAdd true;
+          form:canRemove true;
+          sh:order 2 ;
+          form:rendersWhen
+            [ a <http://mu.semte.ch/vocabularies/ext/NotSingleCodelistValue>;
+              form:grouping form:Bag ;
+              sh:path ext:todo ;
+              form:conceptScheme <http://example-concept-schemes/concept-schemes/foo-bar-baz> ;
+              form:customValue <http://example-concept-schemes/concepts/foo>
+            ] .
+          # form:rendersWhen
+          #   [ a form:MatchValues ;
+          #     form:grouping form:Bag ;
+          #     sh:path ext:todo ;
+          #     # Tip: you can use form:valuesNotIn to exclude from a list (if triples are found matching the path)
+          #     form:valuesNotIn (
+          #       <http://example-concept-schemes/concepts/foo>
+          #     ) ;
+          #   ] .
+
+        ext:procedureWebsitesRequiredL a form:Listing;
+          form:each ext:procedureWebsitesSf;
+          form:scope ext:procedureWebsitesS;
+          form:createGenerator ext:procedureWebsitesG;
+          sh:group ext:procedureWebsitesPg;
+          form:addLabel "Voeg website toe";
+          sh:minCount 1;
+          form:canAdd true;
+          form:canRemove true;
+          sh:order 2 ;
+
+          form:rendersWhen
+            [ a form:SingleCodelistValue ;
+              form:grouping form:Bag ;
+              sh:path ext:todo ;
+              form:conceptScheme <http://example-concept-schemes/concept-schemes/foo-bar-baz> ;
+              form:customValue <http://example-concept-schemes/concepts/foo>
+            ] .
+
+       ##########################################################
+        #  Generator: ProcedureWebsite
+        ##########################################################
+        ext:procedureWebsitesG a form:Generator;
+          form:prototype [
+            form:shape [
+              a schema:WebSite ;
+            ];
+          ];
+          form:dataGenerator form:addMuUuid.
+
+        ##########################################################
+        #  property-group: ProcedureWebsite-sub
+        ##########################################################
+        ext:procedureWebsitesPg-sub a form:PropertyGroup;
+            sh:order 1 .
+
+        ##########################################################
+        #  Subform: ProcedureWebsite
+        ##########################################################
+        ext:procedureWebsitesSf a form:SubForm;
+           form:removeLabel "Verwijder website";
+           form:includes ext:procedureWebsiteTitleF;
+           form:includes ext:procedureWebsiteDescriptionF;
+           form:includes ext:procedureWebsiteUrlF.
+
+          ##########################################################
+          # Field: ProcedureWebsite title
+          ##########################################################
+          ext:procedureWebsiteTitleF a form:Field ;
+              sh:name "Titel website" ;
+              sh:order 1 ;
+              form:validations [
+                a form:RequiredConstraint ;
+                form:grouping form:Bag ;
+                sh:resultMessage "Dit veld is verplicht." ;
+                sh:path dct:title
+              ],
+              [
+                a form:TextMinLength ;
+                form:grouping form:MatchEvery ;
+                form:min "4" ;
+                sh:resultMessage "Voeg inhoudelijk relevante informatie toe, of verwijder deze groep velden via de verwijderknop." ;
+                sh:severity sh:Warning ;
+                sh:path dct:title
+              ];
+              sh:path dct:title ;
+              form:options """
+                            {
+                              "conceptHelpText": "Dit is de zichtbare tekst van de link of de actieknop waarop de eindgebruiker kan verderklikken.<ul><li>Zet geen streepje ('-' of '/')</li></ul>",
+                              "helpText": "Dit is de zichtbare tekst van de link of de actieknop waarop de eindgebruiker kan verderklikken.<ul><li>Zet geen streepje ('-' of '/')</li></ul>"
+                            }
+                          """;
+              form:displayType displayTypes:defaultInput ;
+              sh:group ext:procedureWebsitesPg-sub .
+
+
+          ##########################################################
+          # Field: ProcedureWebsite url
+          ##########################################################
+          ext:procedureWebsiteUrlF a form:Field ;
+              sh:name "Website URL" ;
+              sh:order 3 ;
+              form:validations
+              [ a form:WebUriConstraint ;
+                form:grouping form:MatchEvery ;
+                sh:resultMessage "Gelieve een geldige URL op te geven. Zorg dat vooraan in de link altijd http:// of https:// staat.";
+                sh:path schema:url
+              ],
+              [
+                a form:RequiredConstraint ;
+                form:grouping form:Bag ;
+                sh:resultMessage "Dit veld is verplicht." ;
+                sh:path schema:url
+              ];
+              sh:path schema:url ;
+              form:options """
+                            {
+                              "conceptHelpText": "Vul de specifieke webpagina in waar men de procedure kan opstarten.<p>Deze URL wordt ingezet als actieknop bij verschillende hergebruikers om de eindgebruiker rechtstreeks naar de start van de procedure door te verwijzen.</p><p><a target='_blank' rel='noopener noreferrer' href='https://abb-vlaanderen.gitbook.io/informatie-lpdc/informatievelden-en-redactietips-voor-lpdc/tips-voor-het-invullen-van-een-productfiche#website-procedure'>Meer info</a></p>",
+                              "helpText": "Vul de specifieke webpagina in waar men de procedure kan opstarten.<p>Deze URL wordt ingezet als actieknop bij verschillende hergebruikers om de eindgebruiker rechtstreeks naar de start van de procedure door te verwijzen.</p><p><a target='_blank' rel='noopener noreferrer' href='https://abb-vlaanderen.gitbook.io/informatie-lpdc/informatievelden-en-redactietips-voor-lpdc/tips-voor-het-invullen-van-een-productfiche#website-procedure'>Meer info</a></p>"
+                            }
+                          """;
+              form:displayType displayTypes:defaultInput ;
+              sh:group ext:procedureWebsitesPg-sub .

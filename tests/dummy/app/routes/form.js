@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { ForkingStore } from '@lblod/ember-submission-form-fields';
+import { registerCustomValidation, SKOS, FORM } from '@lblod/submission-form-helpers';
 import { NamedNode, Namespace } from 'rdflib';
 
 const FORM_GRAPHS = {
@@ -8,11 +9,39 @@ const FORM_GRAPHS = {
   sourceGraph: new NamedNode(`http://data.lblod.info/sourcegraph`),
 };
 
+// We need this to conditionally display a section if no value is selected, or if it's _not_ a specific value.
+registerCustomValidation("http://mu.semte.ch/vocabularies/ext/NotSingleCodelistValue", function (values, options) {
+    const { constraintUri, store, metaGraph } = options;
+    const conceptSchemeUri = store.any(
+      constraintUri,
+      FORM("conceptScheme"),
+      undefined
+    );
+    const concept = store.any(constraintUri, FORM("customValue"), undefined);
+    const matchingValues = values.filter((value) => {
+      const matchCount = store.match(
+        value,
+        SKOS("inScheme"),
+        conceptSchemeUri,
+        metaGraph
+      ).length;
+      return matchCount >= 1;
+    });
+
+    const valueCount = matchingValues.length;
+
+    // If nothing is selected we also want this to return true.
+    if (valueCount === 0)
+      return true;
+
+    return valueCount == 1 && matchingValues[0].value !== concept.value;
+});
+
 const SOURCE_NODE = new NamedNode(
   'http://ember-submission-form-fields/source-node',
 );
 
-const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
+// const FORM = new Namespace('http://lblod.data.gift/vocabularies/forms/');
 const RDF = new Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
 
 const FORM_TITLES = {
